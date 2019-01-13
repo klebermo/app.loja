@@ -396,11 +396,11 @@ function image_upload() {
     };
     var reader  = new FileReader();
     reader.onloadend = function() {
-      var bytes = window.btoa(reader.result);
+      var bytes = reader.result;
       var ext = file.name.split(".").pop();
       xhr.send("bytes="+bytes+"&type="+ext);
     }
-    reader.readAsBinaryString(file);
+    reader.readAsDataURL(file);
   }
 }
 
@@ -427,10 +427,10 @@ function file_upload() {
     };
     var reader  = new FileReader();
     reader.onloadend = function() {
-      var bytes = window.btoa(reader.result);
+      var bytes = reader.result;
       var ext = file.name.split(".").pop();
       xhr.send("bytes="+bytes+"&type="+ext);
     }
-    reader.readAsBinaryString(file);
+    reader.readAsDataURL(file);
   }
 }
