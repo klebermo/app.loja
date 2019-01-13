@@ -1,0 +1,7 @@
+<th:block th:fragment="copy">
+  <aside>
+    <ul>
+      <li th:each="c : ${categorias}"> <a th:href="@{/c/__${c.nome}__}" th:text="${c.nome}"></a> </li>
+    </ul>
+  </aside>
+</th:block>

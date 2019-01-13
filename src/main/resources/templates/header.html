@@ -1,0 +1,25 @@
+<th:block th:fragment="copy">
+  <!DOCTYPE html>
+  <html lang="pt-br">
+  	<head>
+  		<meta charset="utf-8"/>
+  		<meta name="viewport" content="width=device-width,initial-scale=1"/>
+  		<title></title>
+      <link rel="stylesheet" th:href="@{/css/style.css}">
+  	</head>
+  	<body>
+      <header>
+        <nav class="left">
+          <a th:href="@{/}">Titulo</a>
+        </nav>
+        <nav class="right">
+          <a sec:authorize="isAnonymous()" th:href="@{/login}">Login</a>
+          <a sec:authorize="isAnonymous()" th:href="@{/usuario/register}">Cadastro</a>
+          <a href="#" sec:authorize="isAuthenticated()" th:text="${usuario}"></a>
+          <a sec:authorize="hasPermission(#user, 'admin')" th:href="@{/admin}">Admin</a>
+          <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Sair</a>
+        </nav>
+      </header>
+
+      <main>
+</th:block>

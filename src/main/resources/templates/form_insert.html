@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="pt-br">
+  <body>
+    <div id="form-container">
+      <form class="form" id="form" method="post" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/insert}">
+        <div class="container" th:if="${#strings.equals(classe.simpleName, 'Categoria')}">
+          <div class="row">
+            <div class="col-25">
+              <label for="nome">nome</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="nome" name="nome">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="resumo">resumo</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="resumo" name="resumo">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="icone">icone</label>
+            </div>
+            <div class="col-75">
+              <input type="file" accept=".png" class="image-uploader" id="icone" th:attr="data-url=@{/imagem/upload}">
+            </div>
+          </div>
+        </div>
+
+        <div class="container" th:if="${#strings.equals(classe.simpleName, 'Produto')}">
+          <div class="row">
+            <div class="col-25">
+              <label for="nome">nome</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="nome" name="nome">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="categoria">categoria</label>
+            </div>
+            <div class="col-75">
+              <select id="categoria" name="categoria.id">
+                <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nome}"/>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="preco">preco</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="preco" name="preco">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-75">
+              <textarea rows="25" cols="80" id="descricao" name="descricao"></textarea>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="icone">icone</label>
+            </div>
+            <div class="col-75">
+              <input type="file" accept=".png" class="image-uploader" id="icone" th:attr="data-url=@{/imagem/upload}">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="thumbnails">thumbnails</label>
+            </div>
+            <div class="col-75">
+              <input type="file" accept=".jpg .jpeg" class="image-uploader" id="thumbnails" multiple="multiple" th:attr="data-url=@{/imagem/upload}">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="versaoGratuita">versão gratuita</label>
+            </div>
+            <div class="col-75">
+              <input type="file" accept=".exe .dmg .rpm .deb" class="file-uploader" id="versaoGratuita" multiple="multiple" th:attr="data-url=@{/arquivo/upload}">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="versaoPratuita">versão paga</label>
+            </div>
+            <div class="col-75">
+              <input type="file" accept=".exe .dmg .rpm .deb" class="file-uploader" id="versaoPaga" multiple="multiple" th:attr="data-url=@{/arquivo/upload}">
+            </div>
+          </div>
+        </div>
+
+        <div class="container" th:if="${#strings.equals(classe.simpleName, 'Usuario')}">
+          <div class="row">
+            <div class="col-25">
+              <label for="login">login</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="login" name="username">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="senha">senha</label>
+            </div>
+            <div class="col-75">
+              <input type="password" id="senha" name="password">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="firstName">nome</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="firstName" name="firstName">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="lastName">sobrenome</label>
+            </div>
+            <div class="col-75">
+              <input type="text" id="lastName" name="lastName">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="email">e-mail</label>
+            </div>
+            <div class="col-75">
+              <input type="email" id="email" name="email">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-75">
+              <input type="checkbox" id="enabled" name="enabled"> ativo
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-75">
+              <input type="checkbox" id="locked" name="locked"> bloqueado
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="dataExpiracao">data de expiração</label>
+            </div>
+            <div class="col-75">
+              <input type="date" id="dataExpiracao" name="dataExpiracao">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-25">
+              <label for="credenciais">credenciais</label>
+            </div>
+            <div class="col-75">
+              <select size="10" id="credenciais" name="credenciais">
+                <option th:each="credencial : ${credenciais}" th:value="${credencial.id}" th:text="${credencial.nome}"/>
+              </select>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="left">
+        <button class="myButton" id="cancel" onclick="cancel_insert();">Cancelar</button>
+      </div>
+
+      <div class="right">
+        <button class="myButton" id="submit" onclick="submit_insert();">Cadastrar</button>
+      </div>
+    </div>
+  </body>
+</html>

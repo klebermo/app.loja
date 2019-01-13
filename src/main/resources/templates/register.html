@@ -1,0 +1,21 @@
+<div th:replace="header :: copy"></div>
+
+<div class="signin-body">
+  <form method="post" th:action="@{/usuario/register}" class="form-signin">
+    <input class="form-control" type="text" name="username" placeholder="login"/> <br/>
+
+    <input class="form-control" type="password" name="password" placeholder="senha"/> <br/>
+
+    <input class="form-control" type="text" name="firstName" placeholder="nome"/> <br/>
+
+    <input class="form-control" type="text" name="lastName" placeholder="sobrenome"/> <br/>
+
+    <input class="form-control" type="email" name="email" placeholder="email"/> <br/>
+
+    <button class="button" type="submit">cadastrar-se</button><br/>
+
+    <p><a th:href="@{/login}">Já tem cadastro? Clique aqui para efetuar login</a></p>
+  </form>
+</div>
+
+<div th:replace="footer :: copy"></div>

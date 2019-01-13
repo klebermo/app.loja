@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-br">
+  <body>
+    <div id="form-container">
+      <table border>
+        <input type="hidden" id="id" name="id" th:value="${currentUser}"/>
+
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Credencial</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr th:each="credencial : ${credenciais}">
+            <td>
+              <input type="checkbox" th:id="${credencial.nome}" onchange="toggle_credencial()"/>
+            </td>
+
+            <td th:text="${credencial.nome}"></td>
+
+            <td>
+              <ul>
+                <li th:each="autorizacao : ${credencial.autorizacoes}" th:text="${autorizacao.nome}"></li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <div class="left">
+        <button class="myButton" id="cancel" onclick="cancel_credencial();">Cancelar</button>
+      </div>
+    </div>
+  </body>
+</html>

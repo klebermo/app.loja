@@ -1,0 +1,19 @@
+<div th:replace="header :: copy"></div>
+
+<div class="signin-body">
+  <form method="post" th:action="@{/doLogin}" class="form-signin">
+    <input class="form-control" type="text" name="login" placeholder="login"/> <br/>
+
+    <input class="form-control" type="password" name="senha" placeholder="senha"/> <br/>
+
+    <button class="button" type="submit">login</button><br/>
+
+    <label>
+      <input class="checkbox" type="checkbox" value="remember-me"> Remember me </input>
+    </label>
+
+    <p><a th:href="@{/usuario/register}">Não tem cadastro? Clique aqui para se cadatrar</a></p>
+  </form>
+</div>
+
+<div th:replace="footer :: copy"></div>
