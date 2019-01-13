@@ -365,8 +365,6 @@ for (i = 0; i < tab_panel.length; i++)
   tab_panel[i].addEventListener("DOMSubtreeModified", detect_uploader, false);
 
 function detect_uploader() {
-  var id = this.getAttribute("id");
-
   var image_uploader = this.getElementsByClassName("image-uploader");
   for (i = 0; i < image_uploader.length; i++)
     image_uploader[i].addEventListener("change", image_upload, false);
