@@ -54,6 +54,18 @@ public class Home {
       return "index";
     }
 
+    @RequestMapping("/cart")
+    public String cesta(Model model) {
+      model.addAttribute("cart", "cesta");
+      return "index";
+    }
+
+    @RequestMapping("/orders")
+    public String pedidos(Model model) {
+      model.addAttribute("orders", "orders");
+      return "index";
+    }
+
     @ModelAttribute("usuario")
     public org.loja.model.usuario.Usuario usuario() {
       return usuario.findBy("username", SecurityContextHolder.getContext().getAuthentication().getName());
