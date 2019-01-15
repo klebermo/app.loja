@@ -1,6 +1,5 @@
 <th:block th:fragment="copy">
-  <section th:if="${categoria == null and produto == null}">
-    <span th:text="${senha}"/>
+  <section th:if="${categoria == null and produto == null and orders == null and cart == null}">
     <div class="card_categoria" th:each="categoria : ${categorias}">
       <div class="card_produto" th:each="p : ${produtos}" th:if="${#strings.equals(categoria, p.categoria)}">
         <h2 th:text="${p.nome}"></h2>
@@ -29,9 +28,34 @@
       <img th:if="${produto.icone}" th:src="@{/imagem/download/__${produto.icone.id}__}" th:alt="${produto.nome}"/>
       <h1 th:text="${produto.nome}"></h1>
       <h2 th:text="${#numbers.formatCurrency(produto.preco)}"></h2>
-      <a class="button" href="#">Comprar<small>versão pro</small></a>
-      <a class="button" href="#">Baixar<small>versão gratuita</small></a>
+      <a class="button1" href="#">Comprar<small>versão pro</small></a>
+      <a th:each="arq : ${produto.versaoGratuita}" class="button1" th:href="@{/arquivo/download/__${arq.id}__}" th:text="${'Baixar (' + arq.type + ')'}"><small>versão gratuita</small></a>
     </div>
     <span class="produto_descricao" th:utext="${produto.descricao}"></span>
+  </section>
+
+  <section th:if="${orders != null}">
+    <h1>Lista de pedidos</h1>
+    <div class="card_pedido" th:if="${usuario != null and usuario.pedidos != null}" th:each="pedido : ${usuario.pedidos}">
+      <h1 th:text="${pedido.dataCompra}"></h1>
+      <div class="card_produto" th:each="p : ${pedido.produtos}">
+        <h2 th:text="${p.nome}"></h2>
+        <img th:if="${p.icone}" th:src="@{/imagem/download/__${p.icone.id}__}" th:alt="${p.nome}"/>
+        <a th:each="arq : ${produto.versaoPaga}" class="button" th:href="@{/arquivo/download/__${arq.id}__}" th:text="${'Baixar (' + arq.type + ')'}"><small>versão pro</small></a>
+      </div>
+    </div>
+  </section>
+
+  <section th:if="${cart != null}">
+    <div class="card_cesta">
+      <h1>Cesta de compras</h1>
+      <div th:if="${usuario != null and usuario.cesta != null}" th:each="p : ${usuario.cesta.produtos}" class="card_produto_cesta">
+        <img th:if="${p.icone}" th:src="@{/imagem/download/__${p.icone.id}__}" th:alt="${p.nome}"/>
+        <h2 th:text="${p.nome}"></h2>
+        <h3 th:text="${#numbers.formatCurrency(produto.preco)}"></h3>
+        <a href="#">Remover</a>
+      </div>
+    </div>
+    <a class="button1" th:href="@{/paypal/checkout/__${usuario.id}__}">Finalizar compra</a>
   </section>
 </th:block>

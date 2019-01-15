@@ -15,6 +15,8 @@
         <nav class="right">
           <a sec:authorize="isAnonymous()" th:href="@{/login}">Login</a>
           <a sec:authorize="isAnonymous()" th:href="@{/usuario/register}">Cadastro</a>
+          <a sec:authorize="isAuthenticated()" th:href="@{/cart}">Cesta de compras</a>
+          <a sec:authorize="isAuthenticated()" th:href="@{/orders}">Lista de pedidos</a>
           <a href="#" sec:authorize="isAuthenticated()" th:text="${usuario}"></a>
           <a sec:authorize="hasPermission(#user, 'admin')" th:href="@{/admin}">Admin</a>
           <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Sair</a>
