@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.FetchType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -54,6 +55,16 @@ public class Usuario extends Model implements UserDetails {
 
   @Column
   private Boolean locked;
+
+  @OneToOne(fetch = FetchType.EAGER)
+  @Fetch(FetchMode.SELECT)
+  @JsonIgnore
+  private org.loja.model.cesta.Cesta cesta;
+
+  @OneToMany(fetch = FetchType.EAGER)
+  @Fetch(FetchMode.SELECT)
+  @JsonIgnore
+  private Set<org.loja.model.pedido.Pedido> pedidos;
 
   @Override
   public Integer getId() {
@@ -143,6 +154,22 @@ public class Usuario extends Model implements UserDetails {
     if(locked == null)
       this.locked = false;
     this.locked = locked;
+  }
+
+  public org.loja.model.cesta.Cesta getCesta() {
+    return cesta;
+  }
+
+  public void setCesta(org.loja.model.cesta.Cesta cesta) {
+    this.cesta = cesta;
+  }
+
+  public Set<org.loja.model.pedido.Pedido> getPedidos() {
+    return pedidos;
+  }
+
+  public void getPedidos(Set<org.loja.model.pedido.Pedido> pedidos) {
+    this.pedidos = pedidos;
   }
 
   @Override
