@@ -1,20 +1,22 @@
 <div th:replace="header :: copy"></div>
 
-<div class="signin-body">
-  <form method="post" th:action="@{/usuario/register}" class="form-signin">
-    <input class="form-control" type="text" name="username" placeholder="login"/> <br/>
+<div class="card" style="width: 18rem;">
+  <img th:src="@{/images/icon-signup.png}" class="card-img-top" alt="Cadastrar">
+  <form method="post" th:action="@{/usuario/register}">
+    <div class="card-body">
+      <h5 class="card-title">Cadastrar</h5>
+      <p class="card-text">
+        <input class="form-control" type="text" name="username" placeholder="login"/> <br/>
+        <input class="form-control" type="password" name="password" placeholder="senha"/> <br/>
+        <input class="form-control" type="text" name="firstName" placeholder="nome"/> <br/>
+        <input class="form-control" type="text" name="lastName" placeholder="sobrenome"/> <br/>
+        <input class="form-control" type="email" name="email" placeholder="email"/> <br/>
+      </p>
 
-    <input class="form-control" type="password" name="password" placeholder="senha"/> <br/>
+      <button type="submit" class="btn btn-primary">Cadastrar</button>
 
-    <input class="form-control" type="text" name="firstName" placeholder="nome"/> <br/>
-
-    <input class="form-control" type="text" name="lastName" placeholder="sobrenome"/> <br/>
-
-    <input class="form-control" type="email" name="email" placeholder="email"/> <br/>
-
-    <button class="button6" type="submit">cadastrar-se</button><br/>
-
-    <p><a th:href="@{/login}">Já tem cadastro? Clique aqui para efetuar login</a></p>
+      <p><a th:href="@{/login}">Já tem cadastro? Clique aqui para efetuar login</a></p>
+    </div>
   </form>
 </div>
 

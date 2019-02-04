@@ -4,140 +4,132 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <title>Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/style-admin.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"/>
+    <link th:href="@{/css/style-admin.css}" rel="stylesheet">
   </head>
 
   <body>
-    <header>
-      <nav class="left">
-        <a th:href="@{/}">Titulo</a>
-      </nav>
-      <nav class="right">
-        <a href="#" th:text="${usuario}"></a>
-        <a th:href="@{/logout}">Sair</a>
-      </nav>
-    </header>
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" th:href="@{/}">Title</a>
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" th:href="@{/logout}">Sign out</a>
+        </li>
+      </ul>
+    </nav>
 
-    <main>
-      <aside>
-        <ul>
-          <li> <a th:class="${classe == null} ? 'active' : ''" th:href="@{/admin}">inicio</a> </li>
-          <li> <a sec:authorize="hasPermission(#user, 'consulta_categoria')" th:class="${classe != null and #strings.equals(classe.simpleName, 'Categoria')}? 'active' : ''" th:href="@{/categoria/}">categorias</a> </li>
-          <li> <a sec:authorize="hasPermission(#user, 'consulta_produto')" th:class="${classe != null and #strings.equals(classe.simpleName, 'Produto')}? 'active' : ''" th:href="@{/produto/}">produtos</a> </li>
-          <hr/>
-          <li> <a href="#">section 1</a> </li>
-          <li> <a href="#">section 2</a> </li>
-          <li> <a href="#">section 3</a> </li>
-          <li> <a href="#">section 4</a> </li>
-          <li> <a href="#">section 5</a> </li>
-          <hr/>
-          <li> <a sec:authorize="hasPermission(#user, 'consulta_produto')" th:class="${classe != null and #strings.equals(classe.simpleName, 'Usuario')}? 'active' : ''" th:href="@{/usuario/}">usuarios</a> </li>
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item"> <a th:class="${classe == null} ? 'nav-link active' : 'nav-link'" th:href="@{/admin}">inicio</a> </li>
+              <li class="nav-item"> <a sec:authorize="hasPermission(#user, 'consulta_categoria')" th:class="${classe != null and #strings.equals(classe.simpleName, 'Categoria')}? 'nav-link active' : 'nav-link'" th:href="@{/categoria/}">categorias</a> </li>
+              <li class="nav-item"> <a sec:authorize="hasPermission(#user, 'consulta_produto')" th:class="${classe != null and #strings.equals(classe.simpleName, 'Produto')}? 'nav-link active' : 'nav-link'" th:href="@{/produto/}">produtos</a> </li>
+              <li> <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> </li>
+              <li> <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> </li>
+              <li> <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> </li>
+              <li class="nav-item"> <a sec:authorize="hasPermission(#user, 'consulta_produto')" th:class="${classe != null and #strings.equals(classe.simpleName, 'Usuario')}? 'nav-link active' : 'nav-link'" th:href="@{/usuario/}">usuarios</a> </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+
+      <main th:if="${dashboard}" role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      </main>
+
+      <main th:unless="${dashboard}" role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <ul class="nav nav-tabs" id="tabset">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Listagem</a>
+          </li>
+          <li class="nav-item" style="display: none;">
+            <a class="nav-link" href="#">Insert</a>
+          </li>
+          <li class="nav-item" style="display: none;">
+            <a class="nav-link" href="#">Update</a>
+          </li>
+          <li class="nav-item" style="display: none;">
+            <a class="nav-link" href="#">Delete</a>
+          </li>
+
+          <a th:if="${#strings.equals(classe.simpleName, 'Categoria')}" sec:authorize="hasPermission(#user, 'cadastra_categoria')" class="btn btn-primary" onclick="insert_data();">
+            <img th:src="@{/images/icon_insert.png}" alt="Novo item" width=30 height=30/>
+          </a>
+
+          <a th:if="${#strings.equals(classe.simpleName, 'Produto')}" sec:authorize="hasPermission(#user, 'cadastra_produto')" class="btn btn-primary" onclick="insert_data();">
+            <img th:src="@{/images/icon_insert.png}" alt="Novo item" width=30 height=30/>
+          </a>
+
+          <a th:if="${#strings.equals(classe.simpleName, 'Usuario')}" sec:authorize="hasPermission(#user, 'cadastra_usuario')" class="btn btn-primary" onclick="insert_data();">
+            <img th:src="@{/images/icon_insert.png}" alt="Novo item" width=30 height=30/>
+          </a>
+
+          <a th:if="${#strings.equals(classe.simpleName, 'Credencial')}" sec:authorize="hasPermission(#user, 'cadastra_credencial')" class="btn btn-primary" onclick="insert_data();">
+            <img th:src="@{/images/icon_insert.png}" alt="Novo item" width=30 height=30/>
+          </a>
         </ul>
-      </aside>
 
-      <section th:if="${dashboard}">
-      </section>
+        <div class="tab-panel" id="listagem">
+          <p id="table-listagem">
+            <table id="table" th:attr="data-json=@{/__${#strings.toLowerCase(classe.simpleName)}__/list.json}">
+              <thead>
+                <tr id="table-header">
+                  <th>#</th>
+                  <th:block th:each="field : ${classe.declaredFields}">
+                    <th:block th:each="annotation : ${field.declaredAnnotations}">
+                      <th th:if="${#strings.equals(annotation.annotationType().simpleName, 'Column')}" class="column" th:text="${field.name}"></th>
+                    </th:block>
+                  </th:block>
+                  <th></th>
+                </tr>
+              </thead>
 
-      <section th:unless="${dashboard}">
-        <div class="tabset" id="tabset">
-          <input type="radio" name="tabset" id="tab-listagem" aria-controls="listagem" checked>
-          <label for="tab-listagem" id="label-listagem">Listagem</label>
+              <tbody id="table-body">
+              </tbody>
+            </table>
 
-          <input type="radio" name="tabset" id="tab-insert" aria-controls="insert" style="display: none;">
-          <label for="tab-insert" id="label-insert" style="display: none;">Insert</label>
+            <div id="buttons" style="display: none;">
+              <div th:if="${#strings.equals(classe.simpleName, 'Categoria')}" sec:authorize="hasPermission(#user, 'atualiza_categoria')" class="btn_command" data-action="update" th:attr="data-url=@{/images/icon_update.png}" style="display: none;"></div>
+              <div th:if="${#strings.equals(classe.simpleName, 'Produto')}" sec:authorize="hasPermission(#user, 'atualiza_produto')" class="btn_command" data-action="update" th:attr="data-url=@{/images/icon_update.png}" style="display: none;"></div>
+              <div th:if="${#strings.equals(classe.simpleName, 'Usuario')}" sec:authorize="hasPermission(#user, 'atualiza_usuario')" class="btn_command" data-action="update" th:attr="data-url=@{/images/icon_update.png}" style="display: none;"></div>
+              <div th:if="${#strings.equals(classe.simpleName, 'Credencial')}" sec:authorize="hasPermission(#user, 'atualiza_credencial')" class="btn_command" data-action="update" th:attr="data-url=@{/images/icon_update.png}" style="display: none;"></div>
 
-          <input type="radio" name="tabset" id="tab-update" aria-controls="update" style="display: none;">
-          <label for="tab-update" id="label-update" style="display: none;">Update</label>
+              <div th:if="${#strings.equals(classe.simpleName, 'Categoria')}" sec:authorize="hasPermission(#user, 'remove_categoria')" class="btn_command" data-action="delete" th:attr="data-url=@{/images/icon_delete.png}" style="display: none;"></div>
+              <div th:if="${#strings.equals(classe.simpleName, 'Produto')}" sec:authorize="hasPermission(#user, 'remove_produto')" class="btn_command" data-action="delete" th:attr="data-url=@{/images/icon_delete.png}" style="display: none;"></div>
+              <div th:if="${#strings.equals(classe.simpleName, 'Usuario')}" sec:authorize="hasPermission(#user, 'remove_usuario')" class="btn_command"data-action="delete" th:attr="data-url=@{/images/icon_delete.png}" style="display: none;"></div>
+              <div th:if="${#strings.equals(classe.simpleName, 'Credencial')}" sec:authorize="hasPermission(#user, 'remove_credencial')" class="btn_command" data-action="delete" th:attr="data-url=@{/images/icon_delete.png}" style="display: none;"></div>
 
-          <input type="radio" name="tabset" id="tab-delete" aria-controls="delete" style="display: none;">
-          <label for="tab-delete" id="label-delete" style="display: none;">Delete</label>
-
-          <input type="radio" name="tabset" id="tab-credencial" aria-controls="credencial" style="display: none;">
-          <label for="tab-credencial" id="label-credencial" style="display: none;">Credencial</label>
-
-          <div th:if="${#strings.equals(classe.simpleName, 'Categoria')}" sec:authorize="hasPermission(#user, 'cadastra_categoria')" class="right" id="button">
-            <a href="#" class="myButton" onclick="insert_data();">
-              <img th:src="@{/images/icon_insert.png}" alt="Novo item" width=16px height=16px/>
-            </a>
-          </div>
-
-          <div th:if="${#strings.equals(classe.simpleName, 'Produto')}" sec:authorize="hasPermission(#user, 'cadastra_produto')" class="right" id="button">
-            <a href="#" class="myButton" onclick="insert_data();">
-              <img th:src="@{/images/icon_insert.png}" alt="Novo item" width=16px height=16px/>
-            </a>
-          </div>
-
-          <div th:if="${#strings.equals(classe.simpleName, 'Usuario')}" sec:authorize="hasPermission(#user, 'cadastra_usuario')" class="right" id="button">
-            <a href="#" class="myButton" onclick="insert_data();">
-              <img th:src="@{/images/icon_insert.png}" alt="Novo item" width=16px height=16px/>
-            </a>
-          </div>
-
-          <div th:if="${#strings.equals(classe.simpleName, 'Credencial')}" sec:authorize="hasPermission(#user, 'cadastra_credencial')" class="right" id="button">
-            <a href="#" class="myButton" onclick="insert_data();">
-              <img th:src="@{/images/icon_credencial.png}" alt="Novo item" width=16px height=16px/>
-            </a>
-          </div>
-
-          <div class="tab-panels" id="tab-panel">
-            <div class="tab-panel" id="listagem">
-              <p id="table-listagem">
-                <table id="table" th:attr="data-json=@{/__${#strings.toLowerCase(classe.simpleName)}__/list.json}">
-                  <thead>
-                    <tr id="table-header">
-                      <th>#</th>
-                      <th:block th:each="field : ${classe.declaredFields}">
-                        <th:block th:each="annotation : ${field.declaredAnnotations}">
-                          <th th:if="${#strings.equals(annotation.annotationType().simpleName, 'Column')}" class="column" th:text="${field.name}"></th>
-                        </th:block>
-                      </th:block>
-                      <th></th>
-                    </tr>
-                  </thead>
-
-                  <tbody id="table-body">
-                  </tbody>
-                </table>
-              </p>
+              <div th:if="${#strings.equals(classe.simpleName, 'Usuario')}" sec:authorize="hasPermission(#user, 'consulta_credencial')" class="btn_command" data-action="credencial" id="credencialButton" th:attr="data-url=@{/images/icon_credencial.png}" style="display: none;"></div>
             </div>
-
-            <div class="tab-panel" id="insert" style="display: none;" th:attr="data-url=@{/__${#strings.toLowerCase(classe.simpleName)} __/insert}">
-              <p id="form-insert"></p>
-            </div>
-
-            <div class="tab-panel" id="update" style="display: none;" th:attr="data-url=@{/__${#strings.toLowerCase(classe.simpleName)} __/update}">
-              <p id="form-update"></p>
-            </div>
-
-            <div class="tab-panel" id="delete" style="display: none;" th:attr="data-url=@{/__${#strings.toLowerCase(classe.simpleName)} __/delete}">
-              <p id="form-delete"></p>
-            </div>
-
-            <div class="tab-panel" id="credencial" style="display: none;" th:attr="data-url=@{/__${#strings.toLowerCase(classe.simpleName)} __/credenciais}">
-              <p id="form-credenciais"></p>
-            </div>
-          </div>
+          </p>
         </div>
 
-        <div id="buttons">
-          <div th:if="${#strings.equals(classe.simpleName, 'Categoria')}" sec:authorize="hasPermission(#user, 'atualiza_categoria')" class="btn_command" data-action="update" th:attr="data-url=@{/images/icon_update.png}" style="display: none;"></div>
-          <div th:if="${#strings.equals(classe.simpleName, 'Produto')}" sec:authorize="hasPermission(#user, 'atualiza_produto')" class="btn_command" data-action="update" th:attr="data-url=@{/images/icon_update.png}" style="display: none;"></div>
-          <div th:if="${#strings.equals(classe.simpleName, 'Usuario')}" sec:authorize="hasPermission(#user, 'atualiza_usuario')" class="btn_command" data-action="update" th:attr="data-url=@{/images/icon_update.png}" style="display: none;"></div>
-          <div th:if="${#strings.equals(classe.simpleName, 'Credencial')}" sec:authorize="hasPermission(#user, 'atualiza_credencial')" class="btn_command" data-action="update" th:attr="data-url=@{/images/icon_update.png}" style="display: none;"></div>
-
-          <div th:if="${#strings.equals(classe.simpleName, 'Categoria')}" sec:authorize="hasPermission(#user, 'remove_categoria')" class="btn_command" data-action="delete" th:attr="data-url=@{/images/icon_delete.png}" style="display: none;"></div>
-          <div th:if="${#strings.equals(classe.simpleName, 'Produto')}" sec:authorize="hasPermission(#user, 'remove_produto')" class="btn_command" data-action="delete" th:attr="data-url=@{/images/icon_delete.png}" style="display: none;"></div>
-          <div th:if="${#strings.equals(classe.simpleName, 'Usuario')}" sec:authorize="hasPermission(#user, 'remove_usuario')" class="btn_command"data-action="delete" th:attr="data-url=@{/images/icon_delete.png}" style="display: none;"></div>
-          <div th:if="${#strings.equals(classe.simpleName, 'Credencial')}" sec:authorize="hasPermission(#user, 'remove_credencial')" class="btn_command" data-action="delete" th:attr="data-url=@{/images/icon_delete.png}" style="display: none;"></div>
-
-          <div th:if="${#strings.equals(classe.simpleName, 'Usuario')}" sec:authorize="hasPermission(#user, 'consulta_credencial')" class="btn_command" data-action="credencial" id="credencialButton" th:attr="data-url=@{/images/icon_credencial.png}" style="display: none;"></div>
+        <div class="tab-panel" id="insert" style="display: none;" th:attr="data-url=@{/__${#strings.toLowerCase(classe.simpleName)} __/insert}">
+          <p id="form-insert"></p>
         </div>
-      </section>
-    </main>
 
+        <div class="tab-panel" id="update" style="display: none;" th:attr="data-url=@{/__${#strings.toLowerCase(classe.simpleName)} __/update}">
+          <p id="form-update"></p>
+        </div>
+
+        <div class="tab-panel" id="delete" style="display: none;" th:attr="data-url=@{/__${#strings.toLowerCase(classe.simpleName)} __/delete}">
+          <p id="form-delete"></p>
+        </div>
+
+        <div class="tab-panel" id="credencial" style="display: none;" th:attr="data-url=@{/__${#strings.toLowerCase(classe.simpleName)} __/credenciais}">
+          <p id="form-credenciais"></p>
+        </div>
+      </main>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     <script th:src="@{/js/script-admin.js}"></script>
-    <script th:if="${dashboard}">
-    </script>
+
+    <script th:if="${dashboard}"></script>
+
     <script th:unless="${dashboard}">
       load_content();
     </script>
