@@ -21,7 +21,8 @@ public class ImagemService extends org.loja.model.Service<Imagem> {
   }
 
   public Integer upload(String bytes, String type) throws IOException {
-    byte[] bytes_final = Base64.getDecoder().decode(bytes.split(",")[0]);
+    //byte[] bytes_final = Base64.getDecoder().decode(bytes.split(",")[0]);
+    byte[] bytes_final = Base64.getDecoder().decode(bytes);
     BufferedImage src = ImageIO.read(new ByteArrayInputStream(bytes_final));
 
     String file_name = file_path + File.separator + fileName();

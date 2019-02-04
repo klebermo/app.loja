@@ -21,8 +21,8 @@ public class ImagemController extends org.loja.model.Controller<Imagem> {
 
   @RequestMapping(value="upload", method=RequestMethod.POST)
   @ResponseBody
-  public Integer upload(@RequestParam("bytes") String imagem, @RequestParam("type") String type) throws IOException {
-    return this.serv.upload(imagem, type);
+  public Integer upload(@RequestParam("bytes") String bytes, @RequestParam("type") String type) throws IOException {
+    return this.serv.upload(bytes, type);
   }
 
   @RequestMapping("download/{id}")
