@@ -398,9 +398,9 @@ function image_upload() {
     reader.onloadend = function() {
       var bytes = reader.result;
       var ext = file.name.split(".").pop();
-      xhr.send("bytes="+bytes+"&type="+ext);
+      xhr.send("bytes="+window.btoa(bytes)+"&type="+ext);
     }
-    reader.readAsDataURL(file);
+    reader.readAsBinaryString(file);
   }
 }
 
