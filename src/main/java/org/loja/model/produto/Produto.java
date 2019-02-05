@@ -25,6 +25,9 @@ public class Produto extends Model {
   @Column
   private String nome;
 
+  @Column
+  private String resumo;
+
   @Column(length=2097152)
   private String descricao;
 
@@ -64,6 +67,14 @@ public class Produto extends Model {
 
   public void setNome(String nome) {
     this.nome = nome;
+  }
+
+  public String getResumo() {
+    return resumo;
+  }
+
+  public void setResumo(String resumo) {
+    this.resumo = resumo;
   }
 
   public String getDescricao() {
