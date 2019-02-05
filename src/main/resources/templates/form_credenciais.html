@@ -2,9 +2,7 @@
 <html lang="pt-br">
   <body>
     <div id="form-container">
-      <table border>
-        <input type="hidden" id="id" name="id" th:value="${currentUser}"/>
-
+      <table class="table">
         <thead>
           <tr>
             <th>#</th>
@@ -16,7 +14,7 @@
         <tbody>
           <tr th:each="credencial : ${credenciais}">
             <td>
-              <input type="checkbox" th:id="${credencial.nome}" onchange="toggle_credencial()"/>
+              <input type="checkbox" class="form-check-input" th:id="${credencial.nome}" th:checked="${#lists.contains(usuario.credenciais, credencial)}? 'checked' : ''" onchange="toggle_credencial()"/>
             </td>
 
             <td th:text="${credencial.nome}"></td>
@@ -38,9 +36,7 @@
         </tfoot>
       </table>
 
-      <div class="left">
-        <button class="myButton" id="cancel" onclick="cancel_credencial();">Cancelar</button>
-      </div>
+      <button type="button" class="btn btn-link" id="cancel" th:attr="data-id=${usuario.id}" onclick="cancel_credencial(this);">Cancelar</button>
     </div>
   </body>
 </html>
