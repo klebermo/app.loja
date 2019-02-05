@@ -61,15 +61,15 @@ function insert_data() {
         var form_html = doc.getElementById('form-container');
 
         document.getElementById('insert').innerHTML = form_html.innerHTML;
-        document.getElementById('insert-tab').parentNode.removeAttribute('style');
+        document.getElementById('tab-insert').removeAttribute('style');
 
         document.getElementById("listagem-tab").classList.remove('show');
         document.getElementById("listagem-tab").classList.remove('active');
         document.getElementById("listagem").classList.remove('show');
         document.getElementById("listagem").classList.remove('active');
 
-        document.getElementById("tab-insert").classList.add('show');
-        document.getElementById("tab-insert").classList.add('active');
+        document.getElementById("insert-tab").classList.add('show');
+        document.getElementById("insert-tab").classList.add('active');
         document.getElementById('insert').classList.add('show');
         document.getElementById('insert').classList.add('active');
       }
@@ -188,15 +188,57 @@ function delete_data(element) {
 }
 
 function credencial_data(element) {
-  //
-}
+  var id = element.dataset.id;
 
-function toggle_credencial() {
-  //
-}
+  if(document.getElementById('tab_content').contains(document.getElementById("credencial-"+id))) {
+    document.getElementById("listagem-tab").classList.remove('show');
+    document.getElementById("listagem-tab").classList.remove('active');
+    document.getElementById("listagem").classList.remove('show');
+    document.getElementById("listagem").classList.remove('active');
 
-function cancel_credencial() {
-  //
+    document.getElementById("tab-credencial-"+id).classList.add('show');
+    document.getElementById("tab-credencial-"+id).classList.add('active');
+    document.getElementById('credencial-'+id).classList.add('show');
+    document.getElementById('credencial-'+id).classList.add('active');
+  } else {
+    var url = element.dataset.url;
+    url = url + '?id=' + id;
+
+    var tab_credencial = document.getElementById('tab-credencial').cloneNode(true);
+    tab_credencial.setAttribute('id', 'tab-credencial-'+id);
+    tab_credencial.removeAttribute('style');
+
+    var panel_credencial = document.getElementById('credencial').cloneNode(true);
+    panel_credencial.setAttribute('id', 'credencial-'+id);
+
+    document.getElementById("tabset").appendChild(tab_credencial);
+    document.getElementById("tab_content").appendChild(panel_credencial);
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var myObj = this.responseText;
+
+        parser = new DOMParser();
+        var doc = parser.parseFromString(myObj, "text/html");
+        var form_html = doc.getElementById('form-container');
+
+        document.getElementById('credencial-'+id).innerHTML = form_html.innerHTML;
+
+        document.getElementById("listagem-tab").classList.remove('show');
+        document.getElementById("listagem-tab").classList.remove('active');
+        document.getElementById("listagem").classList.remove('show');
+        document.getElementById("listagem").classList.remove('active');
+
+        document.getElementById("tab-credencial-"+id).classList.add('show');
+        document.getElementById("tab-credencial-"+id).classList.add('active');
+        document.getElementById('credencial-'+id).classList.add('show');
+        document.getElementById('credencial-'+id).classList.add('active');
+      }
+    };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+  }
 }
 
 function submit_insert() {
@@ -208,6 +250,7 @@ function submit_insert() {
   xhr.onload = function(event) {
     event.preventDefault();
     document.getElementById('insert').innerHTML = '';
+    document.getElementById('tab-insert').setAttribute('style', 'display: none;');
 
     document.getElementById("listagem-tab").classList.add('show');
     document.getElementById("listagem-tab").classList.add('active');
@@ -265,6 +308,10 @@ function submit_delete(element) {
   xhr.send(formData);
 }
 
+function toggle_credencial() {
+  //
+}
+
 function cancel_insert() {
   document.getElementById('insert').innerHTML = '';
   document.getElementById('insert-tab').parentNode.setAttribute('style', 'display: none;');
@@ -292,6 +339,18 @@ function cancel_delete(element) {
 
   document.getElementById('delete-'+id).remove();
   document.getElementById('tab-delete-'+id).remove();
+
+  document.getElementById("listagem-tab").classList.add('show');
+  document.getElementById("listagem-tab").classList.add('active');
+  document.getElementById("listagem").classList.add('show');
+  document.getElementById("listagem").classList.add('active');
+}
+
+function cancel_credencial(element) {
+  var id = element.dataset.id;
+
+  document.getElementById('credencial-'+id).remove();
+  document.getElementById('tab-credencial-'+id).remove();
 
   document.getElementById("listagem-tab").classList.add('show');
   document.getElementById("listagem-tab").classList.add('active');
@@ -351,7 +410,6 @@ function file_upload() {
 
   for(var i = 0; i<this.files.length; i++) {
     var file = this.files[i];
-    // This code is only for demo ...
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
