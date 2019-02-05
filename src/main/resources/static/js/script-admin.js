@@ -9,14 +9,8 @@ function load_content() {
       var columns = [];
       var foo = document.getElementById('table-header');
       for (var i = 0; i < foo.children.length; i++)
-          if(foo.children[i].hasAttribute('class'))
-            columns.push(foo.children[i].textContent);
-
-      var buttons = [];
-      var foo2 = document.getElementById('buttons');
-      for (var i = 0; i < foo2.children.length; i++)
-        if(foo2.children[i].hasAttribute('class'))
-          buttons.push(foo2.children[i]);
+        if(foo.children[i].hasAttribute('class'))
+          columns.push(foo.children[i].textContent);
 
       for(var x in myObj) {
         var tr = document.createElement("tr");
@@ -36,26 +30,14 @@ function load_content() {
         }
 
         var td2 = document.createElement("td");
-
-        for(var i=0; i<buttons.length; i++) {
-          var b = buttons[i];
-
-          var btn = document.createElement("a");
-          btn.setAttribute("href", "#");
-          btn.setAttribute("class", "myButton");
-          btn.setAttribute("data-id", id);
-          btn.setAttribute("onclick", b.dataset.action+"_data("+id+");");
-          var img = document.createElement("img");
-          img.setAttribute("src", b.dataset.url);
-          img.setAttribute("width", "16px");
-          img.setAttribute("height", "16px");
-          img.setAttribute("alt", b.dataset.action);
-          btn.appendChild(img);
-
-          td2.appendChild(btn);
-        }
-
+        var btn = document.getElementById('buttons').cloneNode(true);
+        for (var i = 0; i < btn.children.length; i++)
+          if(btn.children[i].hasAttribute('data-url'))
+            btn.children[i].setAttribute('data-id', id);
+        btn.removeAttribute('style');
+        td2.appendChild(btn);
         tr.appendChild(td2);
+
         document.getElementById("table-body").appendChild(tr);
       }
     }
@@ -66,7 +48,7 @@ function load_content() {
 }
 
 function insert_data() {
-  if(document.getElementById('tab-insert').style.display === 'none') {
+  if(document.getElementById('insert-tab').parentNode.style.display === 'none') {
     var url = document.getElementById('insert').dataset.url;
 
     var xmlhttp = new XMLHttpRequest();
@@ -78,14 +60,18 @@ function insert_data() {
         var doc = parser.parseFromString(myObj, "text/html");
         var form_html = doc.getElementById('form-container');
 
-        document.getElementById('tab-insert').removeAttribute('style');
-        document.getElementById('label-insert').removeAttribute('style');
-        document.getElementById('insert').removeAttribute('style');
+        document.getElementById('insert').innerHTML = form_html.innerHTML;
+        document.getElementById('insert-tab').parentNode.removeAttribute('style');
 
-        document.getElementById('form-insert').innerHTML = form_html.innerHTML;
+        document.getElementById("listagem-tab").classList.remove('show');
+        document.getElementById("listagem-tab").classList.remove('active');
+        document.getElementById("listagem").classList.remove('show');
+        document.getElementById("listagem").classList.remove('active');
 
-        document.getElementById('tab-insert').checked = true;
-        document.getElementById('tab-listagem').checked = false;
+        document.getElementById("tab-insert").classList.add('show');
+        document.getElementById("tab-insert").classList.add('active');
+        document.getElementById('insert').classList.add('show');
+        document.getElementById('insert').classList.add('active');
       }
     };
     xmlhttp.open("GET", url, true);
@@ -93,29 +79,32 @@ function insert_data() {
   }
 }
 
-function update_data(data_id) {
-  if(document.getElementById('tab-panel').contains(document.getElementById("update-"+data_id))) {
-    document.getElementById('tab-update-'+data_id).setAttribute('checked', 'checked');
-    document.getElementById('tab-listagem').removeAttribute('checked');
+function update_data(element) {
+  var id = element.dataset.id;
+
+  if(document.getElementById('tab_content').contains(document.getElementById("update-"+id))) {
+    document.getElementById("listagem-tab").classList.remove('show');
+    document.getElementById("listagem-tab").classList.remove('active');
+    document.getElementById("listagem").classList.remove('show');
+    document.getElementById("listagem").classList.remove('active');
+
+    document.getElementById("tab-update-"+id).classList.add('show');
+    document.getElementById("tab-update-"+id).classList.add('active');
+    document.getElementById('update-'+id).classList.add('show');
+    document.getElementById('update-'+id).classList.add('active');
   } else {
-    var url = document.getElementById('update').dataset.url;
-    url = url + '?id=' + data_id;
+    var url = element.dataset.url;
+    url = url + '?id=' + id;
 
     var tab_update = document.getElementById('tab-update').cloneNode(true);
-    var label_update = document.getElementById('label-update').cloneNode(true);
+    tab_update.setAttribute('id', 'tab-update-'+id);
+    tab_update.removeAttribute('style');
+
     var panel_update = document.getElementById('update').cloneNode(true);
+    panel_update.setAttribute('id', 'update-'+id);
 
-    tab_update.setAttribute('id', 'tab-update-'+data_id);
-    tab_update.setAttribute('aria-controls', 'update-'+data_id);
-    label_update.setAttribute('id', 'label-update-'+data_id);
-    label_update.setAttribute('for', 'tab-update-'+data_id);
-    panel_update.setAttribute('id', 'update-'+data_id);
-
-    var parent = document.getElementById("button").parentNode;
-    var child = document.getElementById("button");
-    parent.insertBefore(tab_update, child);
-    parent.insertBefore(label_update, child);
-    document.getElementById("tab-panel").appendChild(panel_update);
+    document.getElementById("tabset").appendChild(tab_update);
+    document.getElementById("tab_content").appendChild(panel_update);
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
@@ -126,14 +115,17 @@ function update_data(data_id) {
         var doc = parser.parseFromString(myObj, "text/html");
         var form_html = doc.getElementById('form-container');
 
-        panel_update.innerHTML = form_html.innerHTML;
+        document.getElementById('update-'+id).innerHTML = form_html.innerHTML;
 
-        tab_update.removeAttribute('style');
-        label_update.removeAttribute('style');
-        panel_update.removeAttribute('style');
+        document.getElementById("listagem-tab").classList.remove('show');
+        document.getElementById("listagem-tab").classList.remove('active');
+        document.getElementById("listagem").classList.remove('show');
+        document.getElementById("listagem").classList.remove('active');
 
-        tab_update.checked = true;
-        document.getElementById('tab-listagem').checked = false;
+        document.getElementById("tab-update-"+id).classList.add('show');
+        document.getElementById("tab-update-"+id).classList.add('active');
+        document.getElementById('update-'+id).classList.add('show');
+        document.getElementById('update-'+id).classList.add('active');
       }
     };
     xmlhttp.open("GET", url, true);
@@ -141,29 +133,32 @@ function update_data(data_id) {
   }
 }
 
-function delete_data(data_id) {
-  if(document.getElementById('tab-panel').contains(document.getElementById("delete-"+data_id))) {
-    document.getElementById('tab-delete-'+data_id).setAttribute('checked', 'checked');
-    document.getElementById('tab-listagem').removeAttribute('checked');
+function delete_data(element) {
+  var id = element.dataset.id;
+
+  if(document.getElementById('tab_content').contains(document.getElementById("delete-"+id))) {
+    document.getElementById("listagem-tab").classList.remove('show');
+    document.getElementById("listagem-tab").classList.remove('active');
+    document.getElementById("listagem").classList.remove('show');
+    document.getElementById("listagem").classList.remove('active');
+
+    document.getElementById("tab-delete-"+id).classList.add('show');
+    document.getElementById("tab-delete-"+id).classList.add('active');
+    document.getElementById('delete-'+id).classList.add('show');
+    document.getElementById('delete-'+id).classList.add('active');
   } else {
-    var url = document.getElementById('delete').dataset.url;
-    url = url + '?id=' + data_id;
+    var url = element.dataset.url;
+    url = url + '?id=' + id;
 
-    var tab_delete = document.getElementById('tab-delete').cloneNode(true);
-    var label_delete = document.getElementById('label-delete').cloneNode(true);
-    var panel_delete = document.getElementById('delete').cloneNode(true);
+    var tab_update = document.getElementById('tab-delete').cloneNode(true);
+    tab_update.setAttribute('id', 'tab-delete-'+id);
+    tab_update.removeAttribute('style');
 
-    tab_delete.setAttribute('id', 'tab-delete-'+data_id);
-    tab_delete.setAttribute('aria-controls', 'delete-'+data_id);
-    label_delete.setAttribute('id', 'label-delete-'+data_id);
-    label_delete.setAttribute('for', 'tab-delete-'+data_id);
-    panel_delete.setAttribute('id', 'delete-'+data_id);
+    var panel_update = document.getElementById('delete').cloneNode(true);
+    panel_update.setAttribute('id', 'delete-'+id);
 
-    var parent = document.getElementById("button").parentNode;
-    var child = document.getElementById("button");
-    parent.insertBefore(tab_delete, child);
-    parent.insertBefore(label_delete, child);
-    document.getElementById("tab-panel").appendChild(panel_delete);
+    document.getElementById("tabset").appendChild(tab_update);
+    document.getElementById("tab_content").appendChild(panel_update);
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
@@ -174,14 +169,17 @@ function delete_data(data_id) {
         var doc = parser.parseFromString(myObj, "text/html");
         var form_html = doc.getElementById('form-container');
 
-        panel_delete.innerHTML = form_html.innerHTML;
+        document.getElementById('delete-'+id).innerHTML = form_html.innerHTML;
 
-        tab_delete.removeAttribute('style');
-        label_delete.removeAttribute('style');
-        panel_delete.removeAttribute('style');
+        document.getElementById("listagem-tab").classList.remove('show');
+        document.getElementById("listagem-tab").classList.remove('active');
+        document.getElementById("listagem").classList.remove('show');
+        document.getElementById("listagem").classList.remove('active');
 
-        tab_delete.checked = true;
-        document.getElementById('tab-listagem').checked = false;
+        document.getElementById("tab-delete-"+id).classList.add('show');
+        document.getElementById("tab-delete-"+id).classList.add('active');
+        document.getElementById('delete-'+id).classList.add('show');
+        document.getElementById('delete-'+id).classList.add('active');
       }
     };
     xmlhttp.open("GET", url, true);
@@ -189,52 +187,8 @@ function delete_data(data_id) {
   }
 }
 
-function credencial_data(data_id) {
-  if(document.getElementById('tab-panel').contains(document.getElementById("credencial-"+data_id))) {
-    document.getElementById('tab-credencial-'+data_id).setAttribute('checked', 'checked');
-    document.getElementById('tab-listagem').removeAttribute('checked');
-  } else {
-    var url = document.getElementById('credencial').dataset.url;
-    url = url + '?id=' + data_id;
-
-    var tab_credencial = document.getElementById('tab-credencial').cloneNode(true);
-    var label_credencial = document.getElementById('label-credencial').cloneNode(true);
-    var panel_credencial = document.getElementById('credencial').cloneNode(true);
-
-    tab_credencial.setAttribute('id', 'tab-credencial-'+data_id);
-    tab_credencial.setAttribute('aria-controls', 'credencial-'+data_id);
-    label_credencial.setAttribute('id', 'label-credencial-'+data_id);
-    label_credencial.setAttribute('for', 'tab-credencial-'+data_id);
-    panel_credencial.setAttribute('id', 'credencial-'+data_id);
-
-    var parent = document.getElementById("button").parentNode;
-    var child = document.getElementById("button");
-    parent.insertBefore(tab_credencial, child);
-    parent.insertBefore(label_credencial, child);
-    document.getElementById("tab-panel").appendChild(panel_credencial);
-
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        var myObj = this.responseText;
-
-        parser = new DOMParser();
-        var doc = parser.parseFromString(myObj, "text/html");
-        var form_html = doc.getElementById('form-container');
-
-        panel_credencial.innerHTML = form_html.innerHTML;
-
-        tab_credencial.removeAttribute('style');
-        label_credencial.removeAttribute('style');
-        panel_credencial.removeAttribute('style');
-
-        tab_credencial.checked = true;
-        document.getElementById('tab-listagem').checked = false;
-      }
-    };
-    xmlhttp.open("GET", url, true);
-    xmlhttp.send();
-  }
+function credencial_data(element) {
+  //
 }
 
 function toggle_credencial() {
@@ -242,16 +196,7 @@ function toggle_credencial() {
 }
 
 function cancel_credencial() {
-  var id = document.getElementById('id').value;
-
-  var parent = document.getElementById('tabset');
-  parent.removeChild(document.getElementById('tab-credencial-'+id));
-  parent.removeChild(document.getElementById('label-credencial-'+id));
-  parent = document.getElementById('tab-panel');
-  parent.removeChild(document.getElementById('credencial-'+id));
-
-  document.getElementById('tab-credencial').checked = false;
-  document.getElementById('tab-listagem').checked = true;
+  //
 }
 
 function submit_insert() {
@@ -275,18 +220,7 @@ function submit_insert() {
   xhr.send(formData);
 }
 
-function cancel_insert() {
-  document.getElementById('tab-insert').setAttribute('style', 'display: none;');
-  document.getElementById('label-insert').setAttribute('style', 'display: none;');
-  document.getElementById('insert').setAttribute('style', 'display: none;');
-
-  document.getElementById('form-insert').innerHTML = '';
-
-  document.getElementById('tab-insert').checked = false;
-  document.getElementById('tab-listagem').checked = true;
-}
-
-function submit_update() {
+function submit_update(element) {
   var formData = new FormData(document.getElementById("form"));
   var url = document.getElementById("form").action;
 
@@ -310,20 +244,7 @@ function submit_update() {
   xhr.send(formData);
 }
 
-function cancel_update() {
-  var id = document.getElementById('id').value;
-
-  var parent = document.getElementById('tabset');
-  parent.removeChild(document.getElementById('tab-update-'+id));
-  parent.removeChild(document.getElementById('label-update-'+id));
-  parent = document.getElementById('tab-panel');
-  parent.removeChild(document.getElementById('update-'+id));
-
-  document.getElementById('tab-update').checked = false;
-  document.getElementById('tab-listagem').checked = true;
-}
-
-function submit_delete() {
+function submit_delete(element) {
   var formData = new FormData(document.getElementById("form"));
   var url = document.getElementById("form").action;
 
@@ -346,17 +267,38 @@ function submit_delete() {
   xhr.send(formData);
 }
 
-function cancel_delete() {
-  var id = document.getElementById('id').value;
+function cancel_insert() {
+  document.getElementById('insert').innerHTML = '';
+  document.getElementById('insert-tab').parentNode.setAttribute('style', 'display: none;');
 
-  var parent = document.getElementById('tabset');
-  parent.removeChild(document.getElementById('tab-delete-'+id));
-  parent.removeChild(document.getElementById('label-delete-'+id));
-  parent = document.getElementById('tab-panel');
-  parent.removeChild(document.getElementById('delete-'+id));
+  document.getElementById("listagem-tab").classList.add('show');
+  document.getElementById("listagem-tab").classList.add('active');
+  document.getElementById("listagem").classList.add('show');
+  document.getElementById("listagem").classList.add('active');  
+}
 
-  document.getElementById('tab-delete').checked = false;
-  document.getElementById('tab-listagem').checked = true;
+function cancel_update(element) {
+  var id = element.dataset.id;
+
+  document.getElementById('update-'+id).remove();
+  document.getElementById('tab-update-'+id).remove();
+
+  document.getElementById("listagem-tab").classList.add('show');
+  document.getElementById("listagem-tab").classList.add('active');
+  document.getElementById("listagem").classList.add('show');
+  document.getElementById("listagem").classList.add('active');
+}
+
+function cancel_delete(element) {
+  var id = element.dataset.id;
+
+  document.getElementById('delete-'+id).remove();
+  document.getElementById('tab-delete-'+id).remove();
+
+  document.getElementById("listagem-tab").classList.add('show');
+  document.getElementById("listagem-tab").classList.add('active');
+  document.getElementById("listagem").classList.add('show');
+  document.getElementById("listagem").classList.add('active');
 }
 
 var tab_panel = document.getElementsByClassName("tab-panel");
