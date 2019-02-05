@@ -12,6 +12,7 @@ import org.loja.model.categoria.CategoriaService;
 import org.loja.model.produto.ProdutoService;
 import org.loja.model.usuario.UsuarioService;
 import org.loja.model.credencial.CredencialService;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @ControllerAdvice
 public class Model {
@@ -20,6 +21,9 @@ public class Model {
 
   @Autowired
   private ProdutoService produto;
+
+  @Autowired
+  private UsuarioService usuario;
 
   @Autowired
   private CredencialService credencial;
@@ -32,6 +36,11 @@ public class Model {
   @ModelAttribute("produtos")
   public List<Produto> produtos() {
     return produto.select();
+  }
+
+  @ModelAttribute("usuario")
+  public Usuario usuario() {
+    return usuario.findBy("username", SecurityContextHolder.getContext().getAuthentication().getName());
   }
 
   @ModelAttribute("credenciais")
