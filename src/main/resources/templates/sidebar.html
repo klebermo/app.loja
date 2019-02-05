@@ -1,12 +1,7 @@
 <th:block th:fragment="copy">
-  <aside>
-    <ul>
-      <li th:each="c : ${categorias}"> <a th:href="@{/c/__${c.nome}__}" th:text="${c.nome}"></a> </li>
-    </ul>
-    <div class="list-group">
-      <a th:each="c : ${categorias}" th:href="@{/c/__${c.nome}__}" th:class="${categoria != null and #strings.equals(categoria.nome, c.nome)}? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'" th:text="${c.nome}">
-        Cras justo odio
-      </a>
-    </div>
-  </aside>
+  <div class="list-group">
+    <a th:each="c : ${categorias}" th:href="@{/c/__${c.nome}__}" th:class="${categoria != null and #strings.equals(categoria.nome, c.nome)}? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'" th:text="${c.nome}">
+      Cras justo odio
+    </a>
+  </div>
 </th:block>

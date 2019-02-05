@@ -1,15 +1,14 @@
 <th:block th:fragment="copy">
   <section th:if="${categoria == null and produto == null and orders == null and cart == null}">
-    <div class="container">
-      <div class="row" th:each="categoria : ${categorias}">
-        <div class="col" th:each="p : ${produtos}" th:if="${#strings.equals(categoria, p.categoria)}">
-          <div class="card" style="width: 18rem;">
-            <img th:if="${p.icone}" th:src="@{/imagem/download/__${p.icone.id}__}" class="card-img-top" th:alt="${p.nome}">
-            <div class="card-body">
-              <h5 class="card-title" th:text="${p.nome}">Card title</h5>
-              <p class="card-text" th:text="${p.resumo}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a th:href="@{/p/__${p.nome}__}" class="btn btn-primary">Go somewhere</a>
-            </div>
+    <div th:each="c : ${categorias}" class="row">
+      <div th:each="p : ${produtos}" th:if="${#strings.equals(p.categoria.nome, c.nome)}" class="col">
+        <div class="card" style="width: 18rem;">
+          <img th:if="${p.icone}" th:src="@{/imagem/download/__${p.icone.id}__}" class="mr-3" th:alt="${p.nome}"/>
+          <img th:unless="${p.icone}" th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:alt="${p.nome}"/>
+          <div class="card-body">
+            <h5 class="card-title" th:utext="${p.nome}">Card title</h5>
+            <p class="card-text" th:utext="${p.resumo}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a th:href="@{/p/__${p.nome}__}" class="btn btn-primary">Detalhes</a>
           </div>
         </div>
       </div>
@@ -18,73 +17,52 @@
 
   <section th:if="${categoria != null}">
     <div class="media">
-      <img th:if="${categoria.icone}" th:src="@{/imagem/download/__${categoria.icone.id}__}" class="mr-3" th:alt="${categoria.nome}">
+      <img th:if="${categoria.icone}" th:src="@{/imagem/download/__${categoria.icone.id}__}" class="mr-3" th:alt="${categoria.nome}"/>
+      <img th:unless="${categoria.icone}" th:src="@{/images/icon_category.png}" width=64 height=64 class="mr-3" th:alt="${categoria.nome}"/>
       <div class="media-body">
-        <h5 class="mt-0" th:text="${categoria.nome}">Media heading</h5>
-        <p th:text="${categoria.resumo}">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+        <h5 class="mt-0" th:utext="${categoria.nome}">Media heading</h5>
+        <span th:utext="${categoria.resumo}">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</span>
       </div>
     </div>
-
-    <div class="container">
-      <div class="row">
-        <div th:each="p : ${produtos}" th:if="${#strings.equals(categoria, p.categoria)}" class="col">
-          <div class="card" style="width: 18rem;">
-            <img th:if="${p.icone}" th:src="@{/imagem/download/__${p.icone.id}__}" class="card-img-top" th:alt="${p.nome}">
-            <div class="card-body">
-              <h5 class="card-title" th:text="${p.nome}">Card title</h5>
-              <p class="card-text" th:text="${p.resumo}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a th:href="@{/p/__${p.nome}__}" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-        </div>
+    <div th:each="p : ${produtos}" class="card" style="width: 18rem;">
+      <img th:if="${p.icone}" th:src="@{/imagem/download/__${p.icone.id}__}" class="mr-3" th:alt="${p.nome}"/>
+      <img th:unless="${p.icone}" th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:alt="${p.nome}"/>
+      <div class="card-body">
+        <h5 class="card-title" th:utext="${p.nome}">Card title</h5>
+        <p class="card-text" th:utext="${p.resumo}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a th:href="@{/p/__${p.nome}__}" class="btn btn-primary">Detalhes</a>
       </div>
     </div>
   </section>
 
   <section th:if="${produto != null}">
     <div class="media">
-      <img th:if="${produto.icone}" th:src="@{/imagem/download/__${produto.icone.id}__}" class="mr-3" th:alt="${produto.nome}">
+      <img th:if="${produto.icone}" th:src="@{/imagem/download/__${produto.icone.id}__}" class="mr-3" th:alt="${produto.nome}"/>
+      <img th:unless="${produto.icone}" th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:alt="${produto.nome}"/>
       <div class="media-body">
-        <h5 class="mt-0">
-          <span th:text="${produto.nome}">Media heading</span>
-          <span class="badge badge-secondary" th:text="${#numbers.formatCurrency(produto.preco)}">New</span>
-        </h5>
-        <p th:text="${produto.resumo}">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+        <h5 class="mt-0" th:utext="${produto.nome}">Media heading</h5>
+        <span th:utext="${produto.resumo}">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</span>
+        <div class="row">
+          <div class="col">
+            <button type="button" class="btn btn-primary" th:text="${#numbers.formatCurrency(produto.preco)}"></button>
+          </div>
+          <div class="col">
+            <button type="button" class="btn btn-secondary" id="comprar">Comprar</button>
+          </div>
+          <div class="col">
+            <button type="button" class="btn btn-secondary" id="baixar">Baixar</button>
+          </div>
+        </div>
       </div>
     </div>
-
-    <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-secondary">Comprar</button>
-      <button type="button" class="btn btn-secondary">Baixar</button>
-    </div>
-
     <div class="jumbotron">
-      <p class="lead" th:text="${produto.descricao}">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+      <p class="lead" th:utext="${produto.descricao}">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
     </div>
   </section>
 
   <section th:if="${orders != null}">
-    <h1>Lista de pedidos</h1>
-    <div class="card_pedido" th:if="${usuario != null and usuario.pedidos != null}" th:each="pedido : ${usuario.pedidos}">
-      <h1 th:text="${pedido.dataCompra}"></h1>
-      <div class="card_produto" th:each="p : ${pedido.produtos}">
-        <h2 th:text="${p.nome}"></h2>
-        <img th:if="${p.icone}" th:src="@{/imagem/download/__${p.icone.id}__}" th:alt="${p.nome}"/>
-        <a th:each="arq : ${produto.versaoPaga}" class="button" th:href="@{/arquivo/download/__${arq.id}__}" th:text="${'Baixar (' + arq.type + ')'}"><small>versão pro</small></a>
-      </div>
-    </div>
   </section>
 
   <section th:if="${cart != null}">
-    <div class="card_cesta">
-      <h1>Cesta de compras</h1>
-      <div th:if="${usuario != null and usuario.cesta != null}" th:each="p : ${usuario.cesta.produtos}" class="card_produto_cesta">
-        <img th:if="${p.icone}" th:src="@{/imagem/download/__${p.icone.id}__}" th:alt="${p.nome}"/>
-        <h2 th:text="${p.nome}"></h2>
-        <h3 th:text="${#numbers.formatCurrency(produto.preco)}"></h3>
-        <a href="#">Remover</a>
-      </div>
-    </div>
-    <a class="button1" th:href="@{/paypal/checkout/__${usuario.id}__}">Finalizar compra</a>
   </section>
 </th:block>

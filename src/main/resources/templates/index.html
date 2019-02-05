@@ -1,4 +1,12 @@
 <div th:replace="header :: copy"></div>
-  <div th:replace="sidebar :: copy"></div>
-  <div th:replace="content :: copy"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-4">
+        <div th:replace="sidebar :: copy"></div>
+      </div>
+      <div class="col-8">
+        <div th:replace="content :: copy"></div>
+      </div>
+    </div>
+  </div>
 <div th:replace="footer :: copy"></div>
