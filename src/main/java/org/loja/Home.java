@@ -56,13 +56,13 @@ public class Home {
 
     @RequestMapping("/cart")
     public String cesta(Model model) {
-      model.addAttribute("cart", "cesta");
+      model.addAttribute("cart", usuario().getCesta());
       return "index";
     }
 
     @RequestMapping("/orders")
     public String pedidos(Model model) {
-      model.addAttribute("orders", "orders");
+      model.addAttribute("orders", usuario().getPedidos());
       return "index";
     }
 
