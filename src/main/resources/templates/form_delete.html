@@ -3,16 +3,22 @@
   <body>
     <div id="form-container">
       <form class="form" id="form" method="delete" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/delete}">
-        <input type="hidden" id="id" name="id" th:value="${command.id}"/>
+        <input type="hidden" name="id" th:value="${command.id}" id="id"/>
+
         <p> Confirma remoção do <span th:text="${#strings.toLowerCase(classe.simpleName)}"/> <strong th:text="${command}"/>? </p>
       </form>
 
-      <div class="left">
-        <button class="myButton" id="cancel" onclick="cancel_delete();">Não</button>
-      </div>
-
-      <div class="right">
-        <button class="myButton" id="submit" onclick="submit_delete();">Sim</button>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
+            <button class="btn btn-primary" id="cancel" onclick="cancel_delete(this);" th:attr="data-id=${command.id}">Cancelar</button>
+          </div>
+          <div class="col-sm">
+          </div>
+          <div class="col-sm">
+            <button type="submit" class="btn btn-primary" id="submit" onclick="submit_delete(this);">Remover</button>
+          </div>
+        </div>
       </div>
     </div>
   </body>
