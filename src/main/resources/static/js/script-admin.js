@@ -206,14 +206,14 @@ function submit_insert() {
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url);
   xhr.onload = function(event) {
-    document.getElementById('tab-insert').setAttribute('style', 'display: none;');
-    document.getElementById('label-insert').setAttribute('style', 'display: none;');
-    document.getElementById('insert').setAttribute('style', 'display: none;');
+    event.preventDefault();
+    document.getElementById('insert').innerHTML = '';
 
-    document.getElementById('form-insert').innerHTML = '';
+    document.getElementById("listagem-tab").classList.add('show');
+    document.getElementById("listagem-tab").classList.add('active');
+    document.getElementById("listagem").classList.add('show');
+    document.getElementById("listagem").classList.add('active');
 
-    document.getElementById('tab-insert').checked = false;
-    document.getElementById('tab-listagem').checked = true;
     document.getElementById('table-body').innerHTML = '';
     load_content();
   };
@@ -229,15 +229,14 @@ function submit_update(element) {
   xhr.onload = function(event){
     event.preventDefault();
     var id = document.getElementById('id').value;
+    document.getElementById('tab-update-'+id).remove();
+    document.getElementById('update-'+id).remove();
 
-    var parent = document.getElementById('tabset');
-    parent.removeChild(document.getElementById('tab-update-'+id));
-    parent.removeChild(document.getElementById('label-update-'+id));
-    parent = document.getElementById('tab-panel');
-    parent.removeChild(document.getElementById('update-'+id));
+    document.getElementById("listagem-tab").classList.add('show');
+    document.getElementById("listagem-tab").classList.add('active');
+    document.getElementById("listagem").classList.add('show');
+    document.getElementById("listagem").classList.add('active');
 
-    document.getElementById('tab-update').checked = false;
-    document.getElementById('tab-listagem').checked = true;
     document.getElementById('table-body').innerHTML = '';
     load_content();
   };
@@ -252,15 +251,14 @@ function submit_delete(element) {
   xhr.open("DELETE", url);
   xhr.onload = function(event) {
     var id = document.getElementById('id').value;
+    document.getElementById('tab-delete-'+id).remove();
+    document.getElementById('delete-'+id).remove();
 
-    var parent = document.getElementById('tabset');
-    parent.removeChild(document.getElementById('tab-delete-'+id));
-    parent.removeChild(document.getElementById('label-delete-'+id));
-    parent = document.getElementById('tab-panel');
-    parent.removeChild(document.getElementById('delete-'+id));
+    document.getElementById("listagem-tab").classList.add('show');
+    document.getElementById("listagem-tab").classList.add('active');
+    document.getElementById("listagem").classList.add('show');
+    document.getElementById("listagem").classList.add('active');
 
-    document.getElementById('tab-delete').checked = false;
-    document.getElementById('tab-listagem').checked = true;
     document.getElementById('table-body').innerHTML = '';
     load_content();
   };
@@ -274,7 +272,7 @@ function cancel_insert() {
   document.getElementById("listagem-tab").classList.add('show');
   document.getElementById("listagem-tab").classList.add('active');
   document.getElementById("listagem").classList.add('show');
-  document.getElementById("listagem").classList.add('active');  
+  document.getElementById("listagem").classList.add('active');
 }
 
 function cancel_update(element) {
