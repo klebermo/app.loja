@@ -11,7 +11,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 @Controller
 public class Home {
@@ -56,18 +55,13 @@ public class Home {
 
     @RequestMapping("/cart")
     public String cesta(Model model) {
-      model.addAttribute("cart", usuario().getCesta());
+      model.addAttribute("cart", "cart");
       return "index";
     }
 
     @RequestMapping("/orders")
     public String pedidos(Model model) {
-      model.addAttribute("orders", usuario().getPedidos());
+      model.addAttribute("orders", "orders");
       return "index";
-    }
-
-    @ModelAttribute("usuario")
-    public org.loja.model.usuario.Usuario usuario() {
-      return usuario.findBy("username", SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }
