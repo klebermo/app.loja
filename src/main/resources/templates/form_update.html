@@ -3,9 +3,9 @@
   <body>
     <div id="form-container">
       <form class="form" id="form" method="post" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/update}">
-        <div class="container" th:if="${#strings.equals(classe.simpleName, 'Categoria')}">
-          <input type="hidden" name="id" th:value="${command.id}" id="id"/>
+        <input type="hidden" name="id" th:value="${command.id}" id="id"/>
 
+        <div class="container" th:if="${#strings.equals(classe.simpleName, 'Categoria')}">
           <div class="form-group">
             <label for="nome">Nome</label>
             <input type="text" name="nome" th:value="${command.nome}" class="form-control" id="nome" placeholder="Nome">

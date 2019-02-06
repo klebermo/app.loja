@@ -14,7 +14,7 @@
         <tbody>
           <tr th:each="credencial : ${credenciais}">
             <td>
-              <input type="checkbox" class="form-check-input" th:id="${credencial.nome}" th:checked="${#lists.contains(usuario.credenciais, credencial)}? 'checked' : ''" onchange="toggle_credencial()"/>
+              <input type="checkbox" class="form-check-input" th:id="${credencial.nome}" th:checked="${#lists.contains(command.credenciais, credencial)}? 'checked' : ''" onchange="toggle_credencial()"/>
             </td>
 
             <td th:text="${credencial.nome}"></td>
@@ -36,7 +36,7 @@
         </tfoot>
       </table>
 
-      <button type="button" class="btn btn-link" id="cancel" th:attr="data-id=${usuario.id}" onclick="cancel_credencial(this);">Cancelar</button>
+      <button type="button" class="btn btn-link" id="cancel" th:attr="data-id=${command.id}" onclick="cancel_credencial(this);">Cancelar</button>
     </div>
   </body>
 </html>

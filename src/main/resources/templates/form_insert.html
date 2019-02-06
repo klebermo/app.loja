@@ -3,6 +3,8 @@
   <body>
     <div id="form-container">
       <form class="form" id="form" method="post" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/insert}">
+        <input type="hidden" name="id" value="" id="id"/>
+        
         <div class="container" th:if="${#strings.equals(classe.simpleName, 'Categoria')}">
           <div class="form-group">
             <label for="nome">Nome</label>
