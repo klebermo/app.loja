@@ -4,13 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.loja.model.categoria.CategoriaService;
 import org.loja.model.produto.ProdutoService;
-import org.loja.model.usuario.UsuarioService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
 public class Home {
@@ -19,9 +17,6 @@ public class Home {
 
     @Autowired
     private ProdutoService produto;
-
-    @Autowired
-    private UsuarioService usuario;
 
     @RequestMapping("/")
     public String index() {
