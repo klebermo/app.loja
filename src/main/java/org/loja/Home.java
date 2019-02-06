@@ -18,6 +18,9 @@ public class Home {
     @Autowired
     private ProdutoService produto;
 
+    @Autowired
+    private org.loja.model.usuario.UsuarioService usuario;
+
     @RequestMapping("/")
     public String index() {
       return "index";
@@ -58,5 +61,10 @@ public class Home {
     public String pedidos(Model model) {
       model.addAttribute("orders", "orders");
       return "index";
+    }
+
+    @org.springframework.web.bind.annotation.ModelAttribute("usuario")
+    public org.loja.model.usuario.Usuario usuario() {
+      return usuario.findBy("username", org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }
