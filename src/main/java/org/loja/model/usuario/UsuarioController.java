@@ -35,8 +35,7 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   @RequestMapping(value = "/credenciais", method=RequestMethod.GET)
   @PreAuthorize("hasPermission(#user, 'consulta_'+#this.this.name)")
   public String formCredenciais(Model model, @RequestParam("id") Integer id) {
-    model.addAttribute("currentUser", id);
-    model.addAttribute("credenciaisUser", serv.findBy("id", id).getCredenciais());
+    model.addAttribute("command", serv.findBy("id", id));
     return "form_credenciais";
   }
 }
