@@ -28,7 +28,7 @@
         <span th:utext="${categoria.resumo}">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</span>
       </div>
     </div>
-    <div th:each="p : ${produtos}" th:if="${#strings.equals(p.categoria.nome, c.nome)}" class="card" style="width: 18rem;">
+    <div th:each="p : ${produtos}" th:if="${#strings.equals(p.categoria.nome, categoria.nome)}" class="card" style="width: 18rem;">
       <img th:if="${p.icone}" th:src="@{/imagem/download/__${p.icone.id}__}" class="mr-3" th:alt="${p.nome}"/>
       <img th:unless="${p.icone}" th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:alt="${p.nome}"/>
       <div class="card-body">
