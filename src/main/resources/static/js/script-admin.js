@@ -358,7 +358,7 @@ function cancel_credencial(element) {
   document.getElementById("listagem").classList.add('active');
 }
 
-var tab_panel = document.getElementsByClassName("tab-panel");
+var tab_panel = document.getElementsByClassName("tab-content");
 
 for (i = 0; i < tab_panel.length; i++)
   tab_panel[i].addEventListener("DOMSubtreeModified", detect_uploader, false);
@@ -382,7 +382,7 @@ function image_upload() {
     var file =  this.files[i];
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.setRequestHeader("Content-Type", "application/octet-stream");
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var id = xhr.responseText;
@@ -412,7 +412,7 @@ function file_upload() {
     var file = this.files[i];
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.setRequestHeader("Content-Type", "application/octet-stream");
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var id = xhr.responseText;
