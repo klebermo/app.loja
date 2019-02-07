@@ -382,8 +382,7 @@ function image_upload() {
     var file =  this.files[i];
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-Type", "application/octet-stream");
-    //xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var id = xhr.responseText;
@@ -413,7 +412,6 @@ function file_upload() {
     var file = this.files[i];
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
-    //xhr.setRequestHeader("Content-Type", "application/octet-stream");
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
@@ -429,10 +427,7 @@ function file_upload() {
     reader.onloadend = function() {
       var bytes = reader.result;
       var ext = file.name.split(".").pop();
-      var formData = new FormData();
-      formData.append('bytes', window.btoa(bytes));
-      formData.append('type', ext);
-      xhr.send(formData);
+      xhr.send('bytes=' + window.btoa(bytes) + '&type=' + ext);
     }
     reader.readAsDataURL(file);
   }
