@@ -28,7 +28,8 @@ public class ImagemService extends org.loja.model.Service<Imagem> {
 			if(arquivo.mkdirs())
 				arquivo.createNewFile();
 
-    BufferedImage src = ImageIO.read(new ByteArrayInputStream(Base64.getDecoder().decode(bytes)));
+    byte[] bytes_final = bytes.split(",")[1].getBytes();
+    BufferedImage src = ImageIO.read(new ByteArrayInputStream(Base64.getDecoder().decode(bytes_final)));
     ImageIO.write(src, type, arquivo);
 
     Imagem imagem = new Imagem();
