@@ -382,11 +382,10 @@ function image_upload() {
     var file =  this.files[i];
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var id = xhr.responseText;
-            var input = createElement("input");
+            var input = document.createElement("input");
             input.setAttribute("type", "hidden");
             input.setAttribute("name", name);
             input.setAttribute("value", id);
@@ -397,9 +396,12 @@ function image_upload() {
     reader.onloadend = function() {
       var bytes = reader.result;
       var ext = file.name.split(".").pop();
-      xhr.send('bytes=' + window.btoa(bytes) + '&type=' + ext);
+      var formData = new FormData();
+      formData.append('bytes', bytes);
+      formData.append('type', ext);
+      xhr.send(formData);
     }
-    reader.readAsBinaryString(file);
+    reader.readAsDataURL(file);
   }
 }
 
@@ -412,11 +414,10 @@ function file_upload() {
     var file = this.files[i];
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var id = xhr.responseText;
-            var input = createElement("input");
+            var input = document.createElement("input");
             input.setAttribute("type", "hidden");
             input.setAttribute("name", name);
             input.setAttribute("value", id);
@@ -427,7 +428,10 @@ function file_upload() {
     reader.onloadend = function() {
       var bytes = reader.result;
       var ext = file.name.split(".").pop();
-      xhr.send('bytes=' + window.btoa(bytes) + '&type=' + ext);
+      var formData = new FormData();
+      formData.append('bytes', bytes);
+      formData.append('type', ext);
+      xhr.send(formData);
     }
     reader.readAsDataURL(file);
   }
