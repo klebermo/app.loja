@@ -383,6 +383,38 @@ function image_upload() {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-Type", "application/octet-stream");
+    //xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var id = xhr.responseText;
+            var input = createElement("input");
+            input.setAttribute("type", "hidden");
+            input.setAttribute("name", name);
+            input.setAttribute("value", id);
+            file_input.after(input);
+        }
+    };
+    var reader  = new FileReader();
+    reader.onloadend = function() {
+      var bytes = reader.result;
+      var ext = file.name.split(".").pop();
+      xhr.send('bytes=' + window.btoa(bytes) + '&type=' + ext);
+    }
+    reader.readAsBinaryString(file);
+  }
+}
+
+function file_upload() {
+  var file_input = this;
+  var name = file_input.getAttribute("id");
+  var url = file_input.dataset.url;
+
+  for(var i = 0; i<this.files.length; i++) {
+    var file = this.files[i];
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    //xhr.setRequestHeader("Content-Type", "application/octet-stream");
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var id = xhr.responseText;
@@ -401,36 +433,6 @@ function image_upload() {
       formData.append('bytes', window.btoa(bytes));
       formData.append('type', ext);
       xhr.send(formData);
-    }
-    reader.readAsBinaryString(file);
-  }
-}
-
-function file_upload() {
-  var file_input = this;
-  var name = file_input.getAttribute("id");
-  var url = file_input.dataset.url;
-
-  for(var i = 0; i<this.files.length; i++) {
-    var file = this.files[i];
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-Type", "application/octet-stream");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var id = xhr.responseText;
-            var input = createElement("input");
-            input.setAttribute("type", "hidden");
-            input.setAttribute("name", name);
-            input.setAttribute("value", id);
-            file_input.after(input);
-        }
-    };
-    var reader  = new FileReader();
-    reader.onloadend = function() {
-      var bytes = reader.result;
-      var ext = file.name.split(".").pop();
-      xhr.send("bytes="+bytes+"&type="+ext);
     }
     reader.readAsDataURL(file);
   }
