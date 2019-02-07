@@ -29,7 +29,8 @@ public class ArquivoService extends org.loja.model.Service<Arquivo> {
 				file.createNewFile();
 
     FileOutputStream out = new FileOutputStream(file);
-    out.write(Base64.getDecoder().decode(bytes));
+    byte[] bytes_final = bytes.split(",")[1].getBytes();
+    out.write(Base64.getDecoder().decode(bytes_final));
 
     Arquivo arquivo = new Arquivo();
     arquivo.setFileName(file_name);
