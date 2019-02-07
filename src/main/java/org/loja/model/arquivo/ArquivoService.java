@@ -21,19 +21,15 @@ public class ArquivoService extends org.loja.model.Service<Arquivo> {
   }
 
   public Integer upload(String bytes, String type) throws IOException {
-    byte[] bytes_final = Base64.getDecoder().decode(bytes.split(",")[0]);
     String file_name = file_path + File.separator + fileName();
-
-    File path = new File(file_path);
-    if(!path.exists())
-      path.mkdirs();
 
     File file = new File(file_name);
 		if(!file.exists())
-			file.createNewFile();
+			if(file.mkdirs())
+				file.createNewFile();
 
     FileOutputStream out = new FileOutputStream(file);
-    out.write(bytes_final);
+    out.write(Base64.getDecoder().decode(bytes));
 
     Arquivo arquivo = new Arquivo();
     arquivo.setFileName(file_name);

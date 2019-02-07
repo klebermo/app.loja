@@ -21,18 +21,19 @@ public class ImagemService extends org.loja.model.Service<Imagem> {
   }
 
   public Integer upload(String bytes, String type) throws IOException {
-    BufferedImage src = ImageIO.read(new ByteArrayInputStream(Base64.getDecoder().decode(bytes)));
-
     String file_name = file_path + File.separator + fileName();
+
     File arquivo = new File(file_name);
 		if(!arquivo.exists())
 			if(arquivo.mkdirs())
 				arquivo.createNewFile();
 
+    BufferedImage src = ImageIO.read(new ByteArrayInputStream(Base64.getDecoder().decode(bytes)));
     ImageIO.write(src, type, arquivo);
 
     Imagem imagem = new Imagem();
     imagem.setFileName(file_name);
+    imagem.setType(type);
     this.dao.insert(imagem);
 
     return imagem.getId();
