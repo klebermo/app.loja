@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.ui.Model;
 import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
@@ -37,5 +38,22 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   public String formCredenciais(Model model, @RequestParam("id") Integer id) {
     model.addAttribute("command", serv.findBy("id", id));
     return "form_credenciais";
+  }
+
+  @RequestMapping(value = "/add_to_cart", method=RequestMethod.POST)
+  @ResponseBody
+  public void add_to_cart(@RequestParam("usuario") Integer usuario_id, @RequestParam("produto") Integer produto_id) {
+    this.serv.add_to_cart(usuario_id, produto_id);
+  }
+
+  @RequestMapping(value = "/remove_from_cart", method=RequestMethod.POST)
+  @ResponseBody
+  public void remove_from_cart(@RequestParam("usuario") Integer usuario_id, @RequestParam("produto") Integer produto_id) {
+    this.serv.remove_from_cart(usuario_id, produto_id);
+  }
+  @RequestMapping(value = "/checkout", method=RequestMethod.POST)
+  @ResponseBody
+  public void checkout(@RequestParam("usuario") Integer usuario_id) {
+    this.serv.checkout(usuario_id);
   }
 }
