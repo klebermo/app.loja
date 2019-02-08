@@ -54,11 +54,11 @@
             <version>2.4.1</version>
       </dependency>
 
-      <!--<dependency>
+      <!-- <dependency>
            <groupId>org.postgresql</groupId>
            <artifactId>postgresql</artifactId>
            <version>LATEST</version>
-       </dependency>-->
+       </dependency> -->
 
       <dependency>
           <groupId>javax.xml.bind</groupId>
