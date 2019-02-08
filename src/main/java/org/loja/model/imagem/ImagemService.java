@@ -25,7 +25,7 @@ public class ImagemService extends org.loja.model.Service<Imagem> {
 
     File arquivo = new File(file_name);
 		if(!arquivo.exists())
-			if(arquivo.mkdirs())
+			if(arquivo.getParentFile().mkdirs())
 				arquivo.createNewFile();
 
     byte[] bytes_final = bytes.split(",")[1].getBytes();

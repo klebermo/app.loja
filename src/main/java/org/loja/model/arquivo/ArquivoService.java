@@ -25,7 +25,7 @@ public class ArquivoService extends org.loja.model.Service<Arquivo> {
 
     File file = new File(file_name);
 		if(!file.exists())
-			if(file.mkdirs())
+			if(file.getParentFile().mkdirs())
 				file.createNewFile();
 
     FileOutputStream out = new FileOutputStream(file);
