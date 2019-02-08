@@ -21,7 +21,7 @@ public class ImagemService extends org.loja.model.Service<Imagem> {
   }
 
   public Integer upload(String bytes, String type) throws IOException {
-    String file_name = file_path + File.separator + fileName();
+    String file_name = file_path + File.separator + fileName(type);
 
     File arquivo = new File(file_name);
 		if(!arquivo.exists())
@@ -57,8 +57,8 @@ public class ImagemService extends org.loja.model.Service<Imagem> {
       this.dao.delete(imagem);
   }
 
-  private String fileName() {
-    return UUID.randomUUID().toString();
+  private String fileName(String type) {
+    return UUID.randomUUID().toString()+"."+type;
   }
 
 }
