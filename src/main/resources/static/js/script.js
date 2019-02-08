@@ -1,4 +1,4 @@
-var btn_comprar = document.getElementByIdName("comprar");
+var btn_comprar = document.getElementById("comprar");
 btn_comprar.addEventListener("click", add_to_cart, false);
 
 var btn_remover = document.getElementsByClassName("remover");
