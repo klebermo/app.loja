@@ -1,20 +1,29 @@
-var btn_comprar = document.getElementById("comprar");
-btn_comprar.addEventListener("click", add_to_cart, false);
-
-var btn_remover = document.getElementsByClassName("remover");
-for (i = 0; i < btn_remover.length; i++)
-  btn_remover[i].addEventListener("click", remove_from_cart, false);
-
-function add_to_cart() {
-  var btn = this;
+function add_to_cart(btn) {
   var usuario = btn.dataset.usuario;
   var produto = btn.dataset.produto;
-  console.log('adicionar produto: '+produto+' do usuario '+usuario);
+  var url = btn.dataset.url;
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url, true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      //
+    }
+  };
+  var formData = new FormData();
+  formData.append('usuario', usuario);
+  formData.append('produto', produto);
+  xhr.send(formData);
 }
 
-function remove_from_cart() {
-  var btn = this;
+function remove_from_cart(btn) {
   var usuario = btn.dataset.usuario;
   var produto = btn.dataset.produto;
+  var url = btn.dataset.url;
   console.log('remover produto: '+produto+' do usuario '+usuario);
+}
+
+function checkout(btn) {
+  var usuario = btn.dataset.usuario;
+  var url = btn.dataset.url;
+  console.log('finalizar compra do usuario '+usuario);
 }
