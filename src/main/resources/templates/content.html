@@ -51,7 +51,7 @@
             <button type="button" class="btn btn-primary" th:text="${#numbers.formatCurrency(produto.preco)}"></button>
           </div>
           <div class="col">
-            <button type="button" class="btn btn-secondary" id="comprar" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}">Comprar</button>
+            <button type="button" class="btn btn-secondary" onclick="add_to_cart(this)" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}, data-url=@{/usuario/add_to_cart}">Comprar</button>
           </div>
           <div class="col">
             <div class="dropdown">
@@ -98,24 +98,18 @@
   </section>
 
   <section th:if="${cart != null}">
-    <div class="card" style="width: 18rem;">
-      <div class="card-header">
-        Cesta de compras
+    <div th:if="${usuario.cesta}" th:each="produto : ${usuario.cesta.produtos}" class="row">
+      <div class="col">
+        <img th:if="${produto.icone}" th:src="@{/imagem/download/__${produto.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${produto.nome}"/>
+        <img th:unless="${produto.icone}" th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:alt="${produto.nome}"/>
       </div>
-      <ul th:if="${usuario.cesta}" class="list-group list-group-flush">
-        <li th:each="produto : ${usuario.cesta.produtos}" class="list-group-item">
-          <a th:href="@{/p/__${produto.nome}__}" class="card-link" th:text="${produto.nome}"></a>
-          <button class="btn btn-secondary remover" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}" type="button"><span data-feather="trash-2"></span></button>
-        </li>
-      </ul>
-      <ul th:unless="${usuario.cesta}" class="list-group list-group-flush">
-        <li class="list-group-item">
-          Nenhum produto na cesta de compras
-        </li>
-      </ul>
-      <div th:if="${usuario.cesta}" class="card-body">
-        <a href="#" class="card-link">Finalizar compra</a>
+      <div class="col-6">
+        <a th:href="@{/p/__${produto.nome}__}" class="card-link" th:text="${produto.nome}"></a>
+      </div>
+      <div class="col">
+        <button class="btn btn-secondary" onclick="remove_from_cart(this)" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}, data-url=@{/usuario/remove_from_cart}" type="button"><span data-feather="trash-2"></span></button>
       </div>
     </div>
+    <button class="btn btn-secondary" onclick="checkout(this)" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/checkout}">Finalizar compra</button>
   </section>
 </th:block>
