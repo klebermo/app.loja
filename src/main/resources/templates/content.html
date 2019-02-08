@@ -51,10 +51,17 @@
             <button type="button" class="btn btn-primary" th:text="${#numbers.formatCurrency(produto.preco)}"></button>
           </div>
           <div class="col">
-            <button type="button" class="btn btn-secondary" id="comprar">Comprar</button>
+            <button type="button" class="btn btn-secondary" id="comprar" th:attr="data-usuario=${usuario.id} data-produto=${produto.id}">Comprar</button>
           </div>
           <div class="col">
-            <button type="button" class="btn btn-secondary" id="baixar">Baixar</button>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Baixar
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a th:each="arquivo : ${produto.versaoGratuita}" class="dropdown-item" th:href="@{/arquivo/download/__${arquivo.id}__}" th:text="${arquivo.type}">Action</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -76,7 +83,14 @@
           <div class="card-body">
             <h5 class="card-title" th:utext="${produto.nome}">Card title</h5>
             <p class="card-text" th:utext="${produto.resumo}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a th:each="arquivo : ${produto.versaoPaga}" th:href="@{/arquivo/download/__${arquivo.id}__}" class="btn btn-primary">Baixar <span th:text="${arquivo.type}"></span></a>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Baixar
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a th:each="arquivo : ${produto.versaoPaga}" class="dropdown-item" th:href="@{/arquivo/download/__${arquivo.id}__}" th:text="${arquivo.type}">Action</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -91,6 +105,7 @@
       <ul th:if="${usuario.cesta}" class="list-group list-group-flush">
         <li th:each="produto : ${usuario.cesta.produtos}" class="list-group-item">
           <a th:href="@{/p/__${produto.nome}__}" class="card-link" th:text="${produto.nome}"></a>
+          <button class="btn btn-secondary remover" th:attr="data-usuario=${usuario.id} data-produto=${produto.id}" type="button"><span data-feather="trash-2"></span></button>
         </li>
       </ul>
       <ul th:unless="${usuario.cesta}" class="list-group list-group-flush">
