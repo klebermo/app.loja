@@ -360,15 +360,41 @@ function cancel_credencial(element) {
 
 var tab_panel = document.getElementsByClassName("tab-content");
 
-for (i = 0; i < tab_panel.length; i++)
-  tab_panel[i].addEventListener("DOMSubtreeModified", detect_uploader, false);
+for (i = 0; i < tab_panel.length; i++) {
+  // Select the node that will be observed for mutations
+  var targetNode = tab_panel[i];
+
+  // Options for the observer (which mutations to observe)
+  var config = { attributes: true, childList: true, subtree: true };
+
+  // Callback function to execute when mutations are observed
+  var callback = function(mutationsList, observer) {
+      for(var mutation of mutationsList) {
+        if (mutation.type == 'childList')
+            detect_uploader();
+        else if (mutation.type == 'attributes')
+            detect_uploader();
+        else
+          detect_uploader();
+      }
+  };
+
+  // Create an observer instance linked to the callback function
+  var observer = new MutationObserver(callback);
+
+  // Start observing the target node for configured mutations
+  observer.observe(targetNode, config);
+}
+
+/*for (i = 0; i < tab_panel.length; i++)
+  tab_panel[i].addEventListener("DOMSubtreeModified", detect_uploader, false);*/
 
 function detect_uploader() {
-  var image_uploader = this.getElementsByClassName("image-uploader");
+  var image_uploader = document.getElementsByClassName("image-uploader");
   for (i = 0; i < image_uploader.length; i++)
     image_uploader[i].addEventListener("change", image_upload, false);
 
-  var file_uploader = this.getElementsByClassName("file-uploader");
+  var file_uploader = document.getElementsByClassName("file-uploader");
   for (i = 0; i < file_uploader.length; i++)
     file_uploader[i].addEventListener("change", file_upload, false);
 }
