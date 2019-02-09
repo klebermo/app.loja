@@ -168,7 +168,7 @@ public class Usuario extends Model implements UserDetails {
     return pedidos;
   }
 
-  public void getPedidos(Set<org.loja.model.pedido.Pedido> pedidos) {
+  public void setPedidos(Set<org.loja.model.pedido.Pedido> pedidos) {
     this.pedidos = pedidos;
   }
 

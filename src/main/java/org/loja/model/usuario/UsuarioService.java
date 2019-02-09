@@ -10,6 +10,7 @@ import org.loja.model.pedido.Pedido;
 import org.loja.model.produto.ProdutoDao;
 import org.loja.model.produto.Produto;
 import java.util.HashSet;
+import java.util.Iterator;
 
 @Service
 public class UsuarioService extends org.loja.model.Service<Usuario> {
@@ -37,6 +38,27 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     this.dao.insert(novo);
   }
 
+  public Integer cart_size(Integer usuario_id) {
+    Usuario usuario = this.dao.findBy("id", usuario_id);
+    if(usuario.getCesta() == null || usuario.getCesta().getProdutos() == null)
+      return 0;
+    return usuario.getCesta().getProdutos().size();
+  }
+
+  public Float cart_total(Integer usuario_id) {
+    Usuario usuario = this.dao.findBy("id", usuario_id);
+    if(usuario.getCesta() == null || usuario.getCesta().getProdutos() == null)
+      return 0.f;
+    Float total = 0.f;
+    Iterator<Produto> it = usuario.getCesta().getProdutos().iterator();
+    while(it.hasNext()) {
+      Produto produto = it.next();
+      total += produto.getPreco();
+    }
+    return total;
+
+  }
+
   public void add_to_cart(Integer usuario_id, Integer produto_id) {
     Usuario usuario = this.dao.findBy("id", usuario_id);
     if(usuario.getCesta() == null) {
@@ -56,10 +78,40 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
   }
 
   public void remove_from_cart(Integer usuario_id, Integer produto_id) {
-    //
+    Usuario usuario = this.dao.findBy("id", usuario_id);
+    Cesta cesta = usuario.getCesta();
+    Iterator<Produto> it = cesta.getProdutos().iterator();
+    while(it.hasNext()) {
+      Produto produto = it.next();
+      if(produto.getId() == produto_id) {
+        cesta.getProdutos().remove(produto);
+        cestaDao.update(cesta);
+        break;
+      }
+    }
   }
 
-  public void checkout(Integer usuario_id) {
-    //
+  public Integer checkout(Integer usuario_id) {
+    Usuario usuario = this.dao.findBy("id", usuario_id);
+    Pedido pedido = new Pedido();
+    pedido.setProdutos(new HashSet<Produto>());
+    Cesta cesta = usuario.getCesta();
+    if(cesta.getProdutos() != null) {
+      for(Produto produto : cesta.getProdutos())
+        pedido.getProdutos().add(produto);
+      cesta.getProdutos().clear();
+      cestaDao.update(cesta);
+    }
+    pedido.setDataCompra(new java.util.Date());
+    pedidoDao.insert(pedido);
+    if(usuario.getPedidos() == null) {
+      usuario.setPedidos(new HashSet<Pedido>());
+      usuario.getPedidos().add(pedido);
+      this.dao.update(usuario);
+      return pedido.getId();
+    }
+    usuario.getPedidos().add(pedido);
+    this.dao.update(usuario);
+    return pedido.getId();
   }
 }

@@ -40,6 +40,18 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
     return "form_credenciais";
   }
 
+  @RequestMapping(value = "/cart_size", method=RequestMethod.POST)
+  @ResponseBody
+  public Integer cart_size(@RequestParam("usuario") Integer usuario_id) {
+    return this.serv.cart_size(usuario_id);
+  }
+
+  @RequestMapping(value = "/cart_total", method=RequestMethod.POST)
+  @ResponseBody
+  public Float cart_total(@RequestParam("usuario") Integer usuario_id) {
+    return this.serv.cart_total(usuario_id);
+  }
+
   @RequestMapping(value = "/add_to_cart", method=RequestMethod.POST)
   @ResponseBody
   public void add_to_cart(@RequestParam("usuario") Integer usuario_id, @RequestParam("produto") Integer produto_id) {
@@ -51,9 +63,9 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   public void remove_from_cart(@RequestParam("usuario") Integer usuario_id, @RequestParam("produto") Integer produto_id) {
     this.serv.remove_from_cart(usuario_id, produto_id);
   }
-  @RequestMapping(value = "/checkout", method=RequestMethod.POST)
-  @ResponseBody
-  public void checkout(@RequestParam("usuario") Integer usuario_id) {
-    this.serv.checkout(usuario_id);
+
+  @RequestMapping(value = "/checkout", method=RequestMethod.GET)
+  public String checkout(@RequestParam("usuario") Integer usuario_id) {
+    return "redirect:/order/"+this.serv.checkout(usuario_id);
   }
 }
