@@ -1,5 +1,5 @@
 <th:block th:fragment="copy">
-  <section th:if="${categoria == null and produto == null and orders == null and cart == null}">
+  <section th:if="${categoria == null and produto == null and orders == null and order == null and cart == null}">
     <div th:each="c : ${categorias}" class="card">
       <div class="card-header" th:utext="${c.nome}">
       </div>
@@ -77,7 +77,33 @@
         <span th:text="${#dates.format(pedido.dataCompra)}"></span>
       </div>
       <div class="card-body">
-        <div class="card" style="width: 18rem;" th:each="produto : ${pedido.produtos}">
+        <div class="card" th:each="produto : ${pedido.produtos}">
+          <img th:if="${produto.icone}" th:src="@{/imagem/download/__${produto.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${produto.nome}"/>
+          <img th:unless="${produto.icone}" th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:alt="${produto.nome}"/>
+          <div class="card-body">
+            <h5 class="card-title" th:utext="${produto.nome}">Card title</h5>
+            <p class="card-text" th:utext="${produto.resumo}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Baixar
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a th:each="arquivo : ${produto.versaoPaga}" class="dropdown-item" th:href="@{/arquivo/download/__${arquivo.id}__}" th:text="${arquivo.type}">Action</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section th:if="${order != null}">
+    <div class="card">
+      <div class="card-header" th:text="${#dates.format(order.dataCompra)}">
+        Featured
+      </div>
+      <div class="card-body">
+        <div class="card" th:each="produto : ${order.produtos}">
           <img th:if="${produto.icone}" th:src="@{/imagem/download/__${produto.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${produto.nome}"/>
           <img th:unless="${produto.icone}" th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:alt="${produto.nome}"/>
           <div class="card-body">
@@ -98,18 +124,47 @@
   </section>
 
   <section th:if="${cart != null}">
-    <div th:if="${usuario.cesta}" th:each="produto : ${usuario.cesta.produtos}" class="row">
-      <div class="col">
-        <img th:if="${produto.icone}" th:src="@{/imagem/download/__${produto.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${produto.nome}"/>
-        <img th:unless="${produto.icone}" th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:alt="${produto.nome}"/>
-      </div>
-      <div class="col-6">
-        <a th:href="@{/p/__${produto.nome}__}" class="card-link" th:text="${produto.nome}"></a>
-      </div>
-      <div class="col">
-        <button class="btn btn-secondary" onclick="remove_from_cart(this)" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}, data-url=@{/usuario/remove_from_cart}" type="button"><span data-feather="trash-2"></span></button>
+    <div class="media">
+      <img th:src="@{/images/icon_cart.png}" width=64 height=64 class="mr-3" alt="cesta de compras">
+      <div class="media-body">
+        <h5 class="mt-0">Cesta de compras</h5>
       </div>
     </div>
-    <button class="btn btn-secondary" onclick="checkout(this)" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/checkout}">Finalizar compra</button>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Produto</th>
+          <th scope="col">Pre&ccedil;o</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody th:if="${usuario.cesta}">
+        <tr th:each="produto : ${usuario.cesta.produtos}" th:id="${'produto_' + produto.id}">
+          <th scope="row" id="cart_list" th:style="${#lists.isEmpty(usuario.cesta.produtos)}? 'display: none;': ''">
+            <img th:if="${produto.icone}" th:src="@{/imagem/download/__${produto.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${produto.nome}"/>
+            <img th:unless="${produto.icone}" th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:alt="${produto.nome}"/>
+          </th>
+          <td th:text="${produto.nome}">Mark</td>
+          <td th:text="${#numbers.formatCurrency(produto.preco)}">Otto</td>
+          <td>
+            <button class="btn btn-secondary" onclick="remove_from_cart(this)" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}, data-url=@{/usuario/remove_from_cart}" type="button"><span data-feather="trash-2"></span></button>
+          </td>
+        </tr>
+        <tr scope="row" id="empty_cart" th:style="${#lists.isEmpty(usuario.cesta.produtos)}? '': 'display: none;'">
+          <th colspan="4">Cesta de compras vazia</th>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td></td>
+          <td><h3>Total:<span class="badge badge-secondary" id="cart_total" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/cart_total}"></span></h3></td>
+          <td>
+            <a th:href="@{/usuario/checkout?usuario=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra</a>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
   </section>
 </th:block>
