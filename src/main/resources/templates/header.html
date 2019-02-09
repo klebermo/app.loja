@@ -7,7 +7,7 @@
   		<title></title>
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"/>
   	</head>
-  	<body>
+  	<body onload="show_cart_size(); show_cart_total();">
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" th:href="@{/}">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,7 +24,7 @@
               <a class="nav-link" th:href="@{/usuario/register}">Cadastro</a>
             </li>
             <li class="nav-item" sec:authorize="isAuthenticated()">
-              <a class="nav-link" th:href="@{/cart}"><span data-feather="shopping-cart"></span></a>
+              <a class="nav-link" id="cart" th:href="@{/cart}"><span data-feather="shopping-cart"></span><span class="badge badge-secondary" id="cart_size" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/cart_size}" style="display: none;"></span></a>
             </li>
             <li class="nav-item" sec:authorize="isAuthenticated()">
               <a class="nav-link" th:href="@{/orders}"><span data-feather="list"></span></a>
