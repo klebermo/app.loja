@@ -29,7 +29,6 @@ public abstract class Controller<E> {
   @RequestMapping("/")
   @PreAuthorize("hasPermission(#user, 'consulta_'+#this.this.name)")
   public String index(Model model) {
-    model.addAttribute("toList", "");
     return "admin";
   }
 
