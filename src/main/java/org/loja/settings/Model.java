@@ -1,3 +1,7 @@
 package org.loja.settings;
 
-public abstract class Model {}
+import java.io.Serializable;
+
+public abstract class Model extends Object implements Serializable {
+  public abstract String toString();
+}
