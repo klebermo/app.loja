@@ -3,6 +3,7 @@ package org.loja.settings;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class Service<E> {
+  @Autowired
   private Dao<E> dao;
 
   private Class<E> clazz;
