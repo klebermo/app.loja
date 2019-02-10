@@ -1,50 +1,52 @@
 function load_content() {
   var json = document.getElementById("table").dataset.json;
 
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var myObj = JSON.parse(this.responseText);
+  if(json != null) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var myObj = JSON.parse(this.responseText);
 
-      var columns = [];
-      var foo = document.getElementById('table-header');
-      for (var i = 0; i < foo.children.length; i++)
-        if(foo.children[i].hasAttribute('class'))
-          columns.push(foo.children[i].textContent);
+        var columns = [];
+        var foo = document.getElementById('table-header');
+        for (var i = 0; i < foo.children.length; i++)
+          if(foo.children[i].hasAttribute('class'))
+            columns.push(foo.children[i].textContent);
 
-      for(var x in myObj) {
-        var tr = document.createElement("tr");
+        for(var x in myObj) {
+          var tr = document.createElement("tr");
 
-        var td1 = document.createElement("td");
-        var data = myObj[x];
-        var id = data['id'];
-        td1.textContent = id;
-        tr.appendChild(td1);
-
-        for(var y in columns) {
-          var td = document.createElement("td");
+          var td1 = document.createElement("td");
           var data = myObj[x];
-          var str = data[columns[y]];
-          td.textContent = str;
-          tr.appendChild(td);
+          var id = data['id'];
+          td1.textContent = id;
+          tr.appendChild(td1);
+
+          for(var y in columns) {
+            var td = document.createElement("td");
+            var data = myObj[x];
+            var str = data[columns[y]];
+            td.textContent = str;
+            tr.appendChild(td);
+          }
+
+          var td2 = document.createElement("td");
+          var btn = document.getElementById('buttons').cloneNode(true);
+          for (var i = 0; i < btn.children.length; i++)
+            if(btn.children[i].hasAttribute('data-url'))
+              btn.children[i].setAttribute('data-id', id);
+          btn.removeAttribute('style');
+          td2.appendChild(btn);
+          tr.appendChild(td2);
+
+          document.getElementById("table-body").appendChild(tr);
         }
-
-        var td2 = document.createElement("td");
-        var btn = document.getElementById('buttons').cloneNode(true);
-        for (var i = 0; i < btn.children.length; i++)
-          if(btn.children[i].hasAttribute('data-url'))
-            btn.children[i].setAttribute('data-id', id);
-        btn.removeAttribute('style');
-        td2.appendChild(btn);
-        tr.appendChild(td2);
-
-        document.getElementById("table-body").appendChild(tr);
       }
-    }
-  };
+    };
 
-  xmlhttp.open("GET", json, true);
-  xmlhttp.send();
+    xmlhttp.open("GET", json, true);
+    xmlhttp.send();
+  }
 }
 
 function insert_data() {
@@ -310,6 +312,23 @@ function submit_delete(element) {
 
 function toggle_credencial() {
   //
+}
+
+function submit_setting(element) {
+  var form = document.getElementById('form');
+  var url = form.action;
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url, true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      var result = this.responseText;
+      if(result === '')
+        document.getElementById('sucess').removeAttribute('style');
+      else
+        document.getElementById('error').removeAttribute('style');
+    }
+  };
+  xhr.send(new FormData(form));
 }
 
 function cancel_insert() {
