@@ -21,7 +21,7 @@ public abstract class Controller<E> {
 
   @RequestMapping(value = "/get")
   public String get(Model model) {
-    model.addAttribute("command", serv.get());
+    model.addAttribute("setting", serv.get());
     return "admin";
   }
 
