@@ -38,8 +38,6 @@ public class Home {
     @RequestMapping("/admin")
     @PreAuthorize("hasPermission(#user, 'admin')")
     public String admin(Model model) {
-        model.addAttribute("dashboard", "dashboard");
-        model.addAttribute("classe", null);
         return "admin";
     }
 
