@@ -9,8 +9,15 @@ import org.loja.model.pedido.PedidoDao;
 import org.loja.model.pedido.Pedido;
 import org.loja.model.produto.ProdutoDao;
 import org.loja.model.produto.Produto;
+import org.loja.settings.paypal.PaypalDao;
 import java.util.HashSet;
 import java.util.Iterator;
+import com.paypal.base.rest.APIContext;
+import com.paypal.api.payments.Amount;
+import com.paypal.api.payments.Payer;
+import com.paypal.api.payments.Payment;
+import com.paypal.api.payments.RedirectUrls;
+import com.paypal.api.payments.Transaction;
 
 @Service
 public class UsuarioService extends org.loja.model.Service<Usuario> {
@@ -25,6 +32,9 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
 
   @Autowired
   private ProdutoDao produtoDao;
+
+  @Autowired
+  private PaypalDao paypalDao;
 
   public UsuarioService() {
     super(Usuario.class);
@@ -56,7 +66,6 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
       total += produto.getPreco();
     }
     return total;
-
   }
 
   public void add_to_cart(Integer usuario_id, Integer produto_id) {
@@ -91,8 +100,15 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     }
   }
 
-  public Integer checkout(Integer usuario_id) {
+  public Integer checkout(Integer usuario_id) throws com.paypal.base.rest.PayPalRESTException {
     Usuario usuario = this.dao.findBy("id", usuario_id);
+
+    String clientId = paypalDao.get().getClientId();
+    String clientSecret = paypalDao.get().getClientSecret();
+    APIContext apiContext = new APIContext(clientId, clientSecret, "sandbox");
+    Payment createdPayment = createPayment(usuario, apiContext);
+    System.out.println(createdPayment.toString());
+
     Pedido pedido = new Pedido();
     pedido.setProdutos(new HashSet<Produto>());
     Cesta cesta = usuario.getCesta();
@@ -113,5 +129,32 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     usuario.getPedidos().add(pedido);
     this.dao.update(usuario);
     return pedido.getId();
+  }
+
+  public Payment createPayment(Usuario usuario, APIContext apiContext) throws com.paypal.base.rest.PayPalRESTException  {
+    Amount amount = new Amount();
+    amount.setCurrency("BRL");
+    amount.setTotal(this.cart_total(usuario.getId()).toString());
+
+    Transaction transaction = new Transaction();
+    transaction.setAmount(amount);
+
+    java.util.List<Transaction> transactions = new java.util.ArrayList<Transaction>();
+    transactions.add(transaction);
+
+    Payer payer = new Payer();
+    payer.setPaymentMethod("paypal");
+
+    Payment payment = new Payment();
+    payment.setIntent("sale");
+    payment.setPayer(payer);
+    payment.setTransactions(transactions);
+
+    RedirectUrls redirectUrls = new RedirectUrls();
+    redirectUrls.setCancelUrl("https://example.com/cancel");
+    redirectUrls.setReturnUrl("https://example.com/return");
+    payment.setRedirectUrls(redirectUrls);
+
+    return payment.create(apiContext);
   }
 }

@@ -65,7 +65,11 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   }
 
   @RequestMapping(value = "/checkout", method=RequestMethod.GET)
-  public String checkout(@RequestParam("usuario") Integer usuario_id) {
-    return "redirect:/order/"+this.serv.checkout(usuario_id);
+  public String checkout(@RequestParam("usuario") Integer usuario_id) throws com.paypal.base.rest.PayPalRESTException {
+    Integer result = this.serv.checkout(usuario_id);
+    if(result > 0)
+      return "redirect:/order/"+result;
+    else
+      return "redirect:/cart?error=true";
   }
 }
