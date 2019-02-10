@@ -13,14 +13,15 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public abstract class Dao<E> {
-  private Class<E> clazz;
 
-  private Path dir, file;
+	Class<E> clazz;
 
-  public Dao(Class<E> clazz) {
-    this.clazz = clazz;
+	Path dir, file;
 
-		String dir_name = System.getProperty("user.home")+File.separator+".app"+File.separator+"etc";
+	public Dao(Class<E> clazz) {
+		this.clazz = clazz;
+
+		String dir_name = System.getProperty("user.home")+File.separator+".app"+File.separator+"Config";
 		try {
 			dir = Paths.get(dir_name);
 			if(!Files.exists(dir))
@@ -55,10 +56,10 @@ public abstract class Dao<E> {
 				ex.printStackTrace();
 			}
 		}
-  }
+	}
 
-  public E get() {
-    E object = null;
+	public E get() {
+		E object = null;
 		try {
 			object = clazz.newInstance();
 			InputStream fileIn = Files.newInputStream(file);
@@ -70,10 +71,10 @@ public abstract class Dao<E> {
 			e.printStackTrace();
 		}
 		return object;
-  }
+	}
 
-  public void set(E object) {
-    try {
+	public void set(E object) {
+		try {
 			OutputStream fileOut = Files.newOutputStream(file);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(object);
@@ -82,5 +83,6 @@ public abstract class Dao<E> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-  }
+	}
+
 }
