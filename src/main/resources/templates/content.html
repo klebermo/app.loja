@@ -161,7 +161,7 @@
           <td></td>
           <td><h3>Total:<span class="badge badge-secondary" id="cart_total" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/cart_total}"></span></h3></td>
           <td>
-            <a th:href="@{/usuario/checkout?usuario=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra</a>
+            <a th:href="@{/usuario/checkout?usuario_id=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra</a>
           </td>
         </tr>
       </tfoot>

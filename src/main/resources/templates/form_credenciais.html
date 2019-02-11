@@ -14,7 +14,7 @@
         <tbody>
           <tr th:each="credencial : ${credenciais}">
             <td>
-              <input type="checkbox" class="form-check-input" th:id="${credencial.nome}" th:checked="${#lists.contains(command.credenciais, credencial)}? 'checked' : ''" onchange="toggle_credencial()"/>
+              <input type="checkbox" class="form-check-input" th:id="${credencial.id}" th:attr="data-usuario=${usuario.id}" th:checked="${#lists.contains(command.credenciais, credencial)}? 'checked' : ''" onchange="toggle_credencial(this)"/>
             </td>
 
             <td th:text="${credencial.nome}"></td>
