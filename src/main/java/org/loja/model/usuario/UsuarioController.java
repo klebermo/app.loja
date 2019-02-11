@@ -40,6 +40,11 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
     return "form_credenciais";
   }
 
+  @RequestMapping(value = "/toggle_credencial", method=RequestMethod.POST)
+  public void toggle_credencial(@RequestParam("usuario_id") Integer usuario_id, @RequestParam("credencial_id") Integer credencial_id) {
+    this.serv.toggle_credencial(usuario_id, credencial_id);
+  }
+
   @RequestMapping(value = "/cart_size", method=RequestMethod.POST)
   @ResponseBody
   public Integer cart_size(@RequestParam("usuario") Integer usuario_id) {
@@ -65,11 +70,7 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   }
 
   @RequestMapping(value = "/checkout", method=RequestMethod.GET)
-  public String checkout(@RequestParam("usuario") Integer usuario_id) throws com.paypal.base.rest.PayPalRESTException {
-    Integer result = this.serv.checkout(usuario_id);
-    if(result > 0)
-      return "redirect:/order/"+result;
-    else
-      return "redirect:/cart?error=true";
+  public String checkout(@RequestParam("usuario_id") Integer usuario_id, @RequestParam(value="payerId", required=false) String payerId, @RequestParam(value="guid", required=false) String guid) throws com.paypal.base.rest.PayPalRESTException {
+    return "redirect:"+this.serv.checkout(usuario_id, payerId, guid);
   }
 }

@@ -50,12 +50,24 @@ public class UsuarioCredencial {
     return usuario;
   }
 
+  public void setUsuario(Usuario usuario) {
+    this.usuario = usuario;
+  }
+
   public Credencial getCredencial() {
     return credencial;
   }
 
+  public void setCredencial(Credencial credencial) {
+    this.credencial = credencial;
+  }
+
   public Date getDataExpiracao() {
     return dataExpiracao;
+  }
+
+  public void setDataExpiracao(Date dataExpiracao) {
+    this.dataExpiracao = dataExpiracao;
   }
 
   @Embeddable
