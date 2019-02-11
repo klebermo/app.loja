@@ -310,8 +310,25 @@ function submit_delete(element) {
   xhr.send(formData);
 }
 
-function toggle_credencial() {
-  //
+function toggle_credencial(element) {
+  var usuario_id = element.dataset.usuario;
+  var credencial_id = element.getAttribute('id');
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url);
+  xhr.onload = function(event) {
+    if(element.checked == false) {
+        element.checked = true;
+    }
+    else {
+        if(element.checked == true) {
+            element.checked = false;
+         }
+    }
+  };
+  FormData formData = new FormData();
+  formData.append('usuario_id', usuario_id);
+  formData.append('credencial_id', credencial_id);
+  xhr.send(formData);
 }
 
 function submit_setting(element) {
