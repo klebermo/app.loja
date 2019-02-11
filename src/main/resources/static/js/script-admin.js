@@ -310,7 +310,7 @@ function submit_delete(element) {
   xhr.send(formData);
 }
 
-function toggle_credencial(element) {
+/*function toggle_credencial(element) {
   var usuario_id = element.dataset.usuario;
   var credencial_id = element.getAttribute('id');
   var xhr = new XMLHttpRequest();
@@ -329,7 +329,7 @@ function toggle_credencial(element) {
   formData.append('usuario_id', usuario_id);
   formData.append('credencial_id', credencial_id);
   xhr.send(formData);
-}
+}*/
 
 function submit_setting(element) {
   var form = document.getElementById('form');
