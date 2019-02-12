@@ -33,15 +33,12 @@ public class UsuarioCredencial {
   }
 
   public UsuarioCredencial(Usuario b, Credencial p, Date f) {
-		// create primary key
 		this.id = new UsuarioCredencialId(b.getId(), p.getId());
 
-		// initialize attributes
 		this.usuario = b;
 		this.credencial = p;
 		this.dataExpiracao = f;
 
-		// update relationships to assure referential integrity
 		p.getUsuario().add(this);
 		b.getCredenciais().add(this);
 	}
@@ -68,6 +65,10 @@ public class UsuarioCredencial {
 
   public void setDataExpiracao(Date dataExpiracao) {
     this.dataExpiracao = dataExpiracao;
+  }
+
+  public String toString() {
+    return credencial.toString();
   }
 
   @Embeddable

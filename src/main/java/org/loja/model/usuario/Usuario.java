@@ -45,7 +45,7 @@ public class Usuario extends Model implements UserDetails {
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "credencial")
   @Fetch(FetchMode.SELECT)
   @JsonIgnore
-  private Set<UsuarioCredencial> credenciais = new HashSet<UsuarioCredencial>();
+  private Set<UsuarioCredencial> credenciais;
 
   @Column
   private Date dataExpiracao;
