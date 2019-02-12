@@ -311,7 +311,30 @@ function submit_delete(element) {
 }
 
 function toggle_credencial(element) {
-  //
+  var usuario = element.dataset.usuario;
+  var credencial = element.getAttribute('id');
+  var url = element.dataset.url;
+  var dataExpiracao = document.getElementById('dataExpiracao_'+credencial).value;
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url, true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      if(element.checked == false) {
+          element.checked = true;
+      }
+      else {
+          if(element.checked == true) {
+              element.checked = false;
+           }
+      }
+    }
+  };
+  var formData = new FormData();
+  formData.append('usuario_id', usuario);
+  formData.append('credencial_id', credencial);
+  if(dataExpiracao != '')
+    formData.append('dataExpiracao', dataExpiracao);
+  xhr.send(formData);
 }
 
 function submit_setting(element) {
