@@ -41,6 +41,14 @@
           </tr>
         </tfoot>
       </table>
+
+      <strong>credenciais</strong>
+      <p th:text="${#sets.size(command.credenciais)}"></p>
+      <ul>
+        <li th:each="c : ${command.credenciais}" th:text="${c}"></li>
+      </ul>
+
+
       <button type="button" class="btn btn-link" id="cancel" th:attr="data-id=${command.id}" onclick="cancel_credencial(this);">Cancelar</button>
     </div>
   </body>
