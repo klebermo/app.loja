@@ -184,11 +184,12 @@ public class Usuario extends Model implements UserDetails {
 
   @Override
   public boolean isCredentialsNonExpired() {
+    int count = 0;
     Date hoje = new Date();
     for(UsuarioCredencial uc : this.credenciais)
       if(uc.getDataExpiracao() != null && hoje.after(uc.getDataExpiracao()))
-        return false;
-    return true;
+        count++;
+    return count < this.credenciais.size();
   }
 
   @Override
@@ -207,9 +208,11 @@ public class Usuario extends Model implements UserDetails {
 
   @Override
   public java.util.Collection<? extends GrantedAuthority>	getAuthorities() {
+    Date hoje = new Date();
     List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
     for(UsuarioCredencial uc : credenciais)
-      authorities.addAll(uc.getCredencial().getAutorizacoes());
+      if(uc.getDataExpiracao() != null && hoje.before(uc.getDataExpiracao()))
+        authorities.addAll(uc.getCredencial().getAutorizacoes());
     return authorities;
   }
 }

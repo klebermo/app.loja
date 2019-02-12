@@ -62,7 +62,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     this.dao.insert(novo);
   }
 
-  public void toggle_credencial(Integer usuario_id, Integer credencial_id) {
+  public void toggle_credencial(Integer usuario_id, Integer credencial_id, java.util.Date dataExpiracao) {
     Usuario usuario = this.dao.findBy("id", usuario_id);
     Credencial credencial = credencialDao.findBy("id", credencial_id);
     org.loja.model.usuario.UsuarioCredencial uc = null;
@@ -73,7 +73,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
         break;
     }
     if(uc == null)
-      usuario.getCredenciais().add(new org.loja.model.usuario.UsuarioCredencial(usuario, credencial, null));
+      usuario.getCredenciais().add(new org.loja.model.usuario.UsuarioCredencial(usuario, credencial, dataExpiracao));
     else
       usuario.getCredenciais().remove(uc);
     this.dao.update(usuario);
