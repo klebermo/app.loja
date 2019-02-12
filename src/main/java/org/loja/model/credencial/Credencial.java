@@ -33,7 +33,7 @@ public class Credencial extends Model {
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario")
   @Fetch(FetchMode.SELECT)
   @JsonIgnore
-  private Set<UsuarioCredencial> usuario = new HashSet<UsuarioCredencial>();
+  private Set<UsuarioCredencial> usuario;
 
   @Override
   public Integer getId() {
