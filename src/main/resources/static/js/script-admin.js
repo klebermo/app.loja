@@ -332,7 +332,7 @@ function toggle_credencial(element) {
   var formData = new FormData();
   formData.append('usuario_id', usuario);
   formData.append('credencial_id', credencial);
-  if(dataExpiracao != '')
+  if(dataExpiracao !== '')
     formData.append('dataExpiracao', dataExpiracao);
   xhr.send(formData);
 }
