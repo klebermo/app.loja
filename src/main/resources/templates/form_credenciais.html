@@ -7,6 +7,7 @@
           <tr>
             <th>#</th>
             <th>Credencial</th>
+            <th>Data de expira&ccedil;&atilde;o</th>
             <th></th>
           </tr>
         </thead>
@@ -14,10 +15,14 @@
         <tbody>
           <tr th:each="credencial : ${credenciais}">
             <td>
-              <input type="checkbox" class="form-check-input" th:id="${credencial.id}" th:attr="data-usuario=${command.id}" onchange="toggle_credencial(this)"/>
+              <input type="checkbox" class="form-check-input" th:id="${credencial.id}" th:attr="data-usuario=${command.id},data-url=@{/usuario/toggle_credencial}" onchange="toggle_credencial(this)"/>
             </td>
 
             <td th:text="${credencial.nome}"></td>
+
+            <td>
+              <input type="date" th:id="${'dataExpiracao_' + credencial.id}"/>
+            </td>
 
             <td>
               <ul>
@@ -32,10 +37,10 @@
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
           </tr>
         </tfoot>
       </table>
-
       <button type="button" class="btn btn-link" id="cancel" th:attr="data-id=${command.id}" onclick="cancel_credencial(this);">Cancelar</button>
     </div>
   </body>
