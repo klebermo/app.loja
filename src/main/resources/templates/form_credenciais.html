@@ -14,7 +14,7 @@
         <tbody>
           <tr th:each="credencial : ${credenciais}">
             <td>
-              <input type="checkbox" class="form-check-input" th:id="${credencial.id}" th:checked="${#sets.contains(command.credenciais, credencial)}? 'checked': ''" th:attr="data-usuario=${command.id},data-url=@{/usuario/toggle_credencial}" onchange="toggle_credencial(this)"/>
+              <input type="checkbox" class="form-check-input" th:id="${credencial.id}" th:checked="${#sets.contains(command.credenciais, credencial)}" th:attr="data-usuario=${command.id},data-url=@{/usuario/toggle_credencial}" onchange="toggle_credencial(this)"/>
             </td>
 
             <td>
