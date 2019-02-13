@@ -7,7 +7,6 @@
           <tr>
             <th>#</th>
             <th>Credencial</th>
-            <th>Data de expira&ccedil;&atilde;o</th>
             <th></th>
           </tr>
         </thead>
@@ -15,13 +14,11 @@
         <tbody>
           <tr th:each="credencial : ${credenciais}">
             <td>
-              <input type="checkbox" class="form-check-input" th:id="${credencial.id}" th:attr="data-usuario=${command.id},data-url=@{/usuario/toggle_credencial}" onchange="toggle_credencial(this)"/>
+              <input type="checkbox" class="form-check-input" th:id="${credencial.id}" th:checked="${#sets.contains(command.credenciais, credencial)}? 'checked': ''" th:attr="data-usuario=${command.id},data-url=@{/usuario/toggle_credencial}" onchange="toggle_credencial(this)"/>
             </td>
 
-            <td th:text="${credencial.nome}"></td>
-
             <td>
-              <input type="date" th:id="${'dataExpiracao_' + credencial.id}"/>
+              <span th:text="${credencial.nome}"></span>
             </td>
 
             <td>
@@ -37,17 +34,9 @@
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
           </tr>
         </tfoot>
       </table>
-
-      <strong>credenciais</strong>
-      <p th:text="${#sets.size(command.credenciais)}"></p>
-      <ul>
-        <li th:each="c : ${command.credenciais}" th:text="${c}"></li>
-      </ul>
-
 
       <button type="button" class="btn btn-link" id="cancel" th:attr="data-id=${command.id}" onclick="cancel_credencial(this);">Cancelar</button>
     </div>
