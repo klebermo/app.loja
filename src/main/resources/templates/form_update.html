@@ -102,12 +102,12 @@
           </div>
 
           <div class="form-group form-check">
-            <input type="checkbox" name="enabled" class="form-check-input" id="enabled" th:if="${command.enabled}? 'checked' : ''">
+            <input type="checkbox" name="enabled" class="form-check-input" id="enabled" th:checked="${command.enabled}? 'checked' : ''">
             <label class="form-check-label" for="enabled">ativo</label>
           </div>
 
           <div class="form-group form-check">
-            <input type="checkbox" name="locked" class="form-check-input" id="locked" th:if="${command.locked}? 'checked' : ''">
+            <input type="checkbox" name="locked" class="form-check-input" id="locked" th:checked="${command.locked}? 'checked' : ''">
             <label class="form-check-label" for="locked">bloqueado</label>
           </div>
 
@@ -119,7 +119,7 @@
           <div class="form-group">
             <label for="credenciais">Credenciais</label>
             <select class="form-control" id="credenciais" name="credenciais" multiple="multiple" size="10">
-              <option th:each="credencial : ${credenciais}" th:value="${credencial.id}" th:if="${#lists.contains(command.credenciais, credencial)}? 'selected' : ''" th:text="${credencial.nome}"/>
+              <option th:each="credencial : ${credenciais}" th:value="${credencial.id}" th:if="${#sets.contains(command.credenciais, credencial)}? 'selected' : ''" th:text="${credencial.nome}"/>
             </select>
           </div>
         </div>
