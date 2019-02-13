@@ -4,7 +4,8 @@ import org.loja.model.Model;
 import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
-import org.loja.model.usuario.UsuarioCredencial;
+import java.util.Date;
+//import org.loja.model.usuario.UsuarioCredencial;
 import org.loja.model.autorizacao.Autorizacao;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -30,10 +31,10 @@ public class Credencial extends Model {
   @Fetch(FetchMode.SELECT)
   private List<Autorizacao> autorizacoes;
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario")
+  /*@OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario")
   @Fetch(FetchMode.SELECT)
   @JsonIgnore
-  private Set<UsuarioCredencial> usuario;
+  private Set<UsuarioCredencial> usuario;*/
 
   @Override
   public Integer getId() {
@@ -60,13 +61,13 @@ public class Credencial extends Model {
     this.autorizacoes = autorizacoes;
   }
 
-  public Set<UsuarioCredencial> getUsuario() {
+  /*public Set<UsuarioCredencial> getUsuario() {
     return usuario;
   }
 
   public void setUsuario(Set<UsuarioCredencial> usuario) {
     this.usuario = usuario;
-  }
+  }*/
 
   @Override
   public String toString() {
