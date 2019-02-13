@@ -42,10 +42,15 @@ public class Usuario extends Model implements UserDetails {
   @Column
   private String email;
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "credencial")
+  /*@OneToMany(fetch = FetchType.EAGER, mappedBy = "credencial")
   @Fetch(FetchMode.JOIN)
   @JsonIgnore
-  private Set<UsuarioCredencial> credenciais;
+  private Set<UsuarioCredencial> credenciais;*/
+
+  @OneToMany(fetch = FetchType.EAGER)
+  @Fetch(FetchMode.SELECT)
+  @JsonIgnore
+  private Set<org.loja.model.credencial.Credencial> credenciais;
 
   @Column
   private Date dataExpiracao;
@@ -116,11 +121,19 @@ public class Usuario extends Model implements UserDetails {
     this.email = email;
   }
 
-  public Set<UsuarioCredencial> getCredenciais() {
+  /*public Set<UsuarioCredencial> getCredenciais() {
     return credenciais;
   }
 
   public void setCredenciais(Set<UsuarioCredencial> credenciais) {
+    this.credenciais = credenciais;
+  }*/
+
+  public Set<org.loja.model.credencial.Credencial> getCredenciais() {
+    return credenciais;
+  }
+
+  public void setCredenciais(Set<org.loja.model.credencial.Credencial> credenciais) {
     this.credenciais = credenciais;
   }
 
@@ -184,12 +197,7 @@ public class Usuario extends Model implements UserDetails {
 
   @Override
   public boolean isCredentialsNonExpired() {
-    int count = 0;
-    Date hoje = new Date();
-    for(UsuarioCredencial uc : this.credenciais)
-      if(uc.getDataExpiracao() != null && hoje.after(uc.getDataExpiracao()))
-        count++;
-    return count < this.credenciais.size();
+    return true;
   }
 
   @Override
@@ -208,11 +216,9 @@ public class Usuario extends Model implements UserDetails {
 
   @Override
   public java.util.Collection<? extends GrantedAuthority>	getAuthorities() {
-    Date hoje = new Date();
     List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-    for(UsuarioCredencial uc : credenciais)
-      if(uc.getDataExpiracao() != null && hoje.before(uc.getDataExpiracao()))
-        authorities.addAll(uc.getCredencial().getAutorizacoes());
+    for(org.loja.model.credencial.Credencial c : credenciais)
+      authorities.addAll(c.getAutorizacoes());
     return authorities;
   }
 }
