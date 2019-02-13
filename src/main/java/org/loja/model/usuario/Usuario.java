@@ -43,7 +43,7 @@ public class Usuario extends Model implements UserDetails {
   private String email;
 
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "credencial")
-  @Fetch(FetchMode.SELECT)
+  @Fetch(FetchMode.JOIN)
   @JsonIgnore
   private Set<UsuarioCredencial> credenciais;
 
