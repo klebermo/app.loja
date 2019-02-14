@@ -66,8 +66,10 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     Usuario usuario = this.dao.findBy("id", usuario_id);
     Credencial credencial = credencialDao.findBy("id", credencial_id);
     if(usuario.getCredenciais().contains(credencial)) {
+      System.out.println("remove credencial "+credencial);
       usuario.getCredenciais().remove(credencial);
     } else {
+      System.out.println("adiciona credencial "+credencial);
       usuario.getCredenciais().add(credencial);
     }
     this.dao.update(usuario);

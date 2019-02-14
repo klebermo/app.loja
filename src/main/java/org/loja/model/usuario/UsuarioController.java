@@ -41,6 +41,7 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   }
 
   @RequestMapping(value = "/toggle_credencial", method=RequestMethod.POST)
+  @ResponseBody
   public void toggle_credencial(@RequestParam("usuario_id") Integer usuario_id, @RequestParam("credencial_id") Integer credencial_id) {
     this.serv.toggle_credencial(usuario_id, credencial_id);
   }
