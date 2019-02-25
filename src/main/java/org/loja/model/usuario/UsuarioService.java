@@ -65,14 +65,18 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
   public void toggle_credencial(Integer usuario_id, Integer credencial_id) {
     Usuario usuario = this.dao.findBy("id", usuario_id);
     Credencial credencial = credencialDao.findBy("id", credencial_id);
-    if(usuario.getCredenciais().contains(credencial)) {
-      System.out.println("remove credencial "+credencial);
-      usuario.getCredenciais().remove(credencial);
-    } else {
-      System.out.println("adiciona credencial "+credencial);
+    if(usuario.getCredenciais() == null) {
+      usuario.setCredenciais(new HashSet<Credencial>());
       usuario.getCredenciais().add(credencial);
+    } else {
+      if(usuario.getCredenciais().contains(credencial)) {
+        usuario.getCredenciais().remove(credencial);
+        this.dao.update(usuario);
+      } else {
+        usuario.getCredenciais().add(credencial);
+        this.dao.update(usuario);
+      }
     }
-    this.dao.update(usuario);
   }
 
   public Integer cart_size(Integer usuario_id) {
