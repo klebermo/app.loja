@@ -3,9 +3,6 @@ package org.loja.model.usuario;
 import org.loja.model.Model;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Set;
-import java.util.HashSet;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Date;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -41,11 +38,6 @@ public class Usuario extends Model implements UserDetails {
 
   @Column
   private String email;
-
-  /*@OneToMany(fetch = FetchType.EAGER, mappedBy = "credencial")
-  @Fetch(FetchMode.JOIN)
-  @JsonIgnore
-  private Set<UsuarioCredencial> credenciais;*/
 
   @OneToMany(fetch = FetchType.EAGER)
   @Fetch(FetchMode.SELECT)
@@ -120,14 +112,6 @@ public class Usuario extends Model implements UserDetails {
   public void setEmail(String email) {
     this.email = email;
   }
-
-  /*public Set<UsuarioCredencial> getCredenciais() {
-    return credenciais;
-  }
-
-  public void setCredenciais(Set<UsuarioCredencial> credenciais) {
-    this.credenciais = credenciais;
-  }*/
 
   public Set<org.loja.model.credencial.Credencial> getCredenciais() {
     return credenciais;
@@ -216,7 +200,7 @@ public class Usuario extends Model implements UserDetails {
 
   @Override
   public java.util.Collection<? extends GrantedAuthority>	getAuthorities() {
-    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+    java.util.List<GrantedAuthority> authorities = new java.util.ArrayList<GrantedAuthority>();
     for(org.loja.model.credencial.Credencial c : credenciais)
       authorities.addAll(c.getAutorizacoes());
     return authorities;

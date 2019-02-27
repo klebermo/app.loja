@@ -13,8 +13,8 @@ import org.loja.model.produto.ProdutoDao;
 import org.loja.model.produto.Produto;
 import org.loja.settings.paypal.PaypalDao;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.UUID;
+import java.util.Iterator;
 import com.paypal.base.rest.APIContext;
 import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Payer;
@@ -91,11 +91,8 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     if(usuario.getCesta() == null || usuario.getCesta().getProdutos() == null)
       return 0.f;
     Float total = 0.f;
-    Iterator<Produto> it = usuario.getCesta().getProdutos().iterator();
-    while(it.hasNext()) {
-      Produto produto = it.next();
+    for(Produto produto : usuario.getCesta().getProdutos())
       total += produto.getPreco();
-    }
     return total;
   }
 
@@ -120,9 +117,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
   public void remove_from_cart(Integer usuario_id, Integer produto_id) {
     Usuario usuario = this.dao.findBy("id", usuario_id);
     Cesta cesta = usuario.getCesta();
-    Iterator<Produto> it = cesta.getProdutos().iterator();
-    while(it.hasNext()) {
-      Produto produto = it.next();
+    for(Produto produto : cesta.getProdutos()) {
       if(produto.getId() == produto_id) {
         cesta.getProdutos().remove(produto);
         cestaDao.update(cesta);
