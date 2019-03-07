@@ -68,6 +68,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     if(usuario.getCredenciais() == null) {
       usuario.setCredenciais(new HashSet<Credencial>());
       usuario.getCredenciais().add(credencial);
+      this.dao.update(usuario);
     } else {
       if(usuario.getCredenciais().contains(credencial)) {
         usuario.getCredenciais().remove(credencial);
