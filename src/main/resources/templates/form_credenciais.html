@@ -39,7 +39,11 @@
       </table>
 
       <ul>
-        <li th:each="c : ${credenciais}"> <span th:text="${c}"></span> <span th:text="${#sets.contains(command.credenciais, credencial)}"></span> </li>
+        <li th:each="c : ${command.credenciais}"> <span th:text="${c.hashCode()}"></span> </li>
+      </ul>
+
+      <ul>
+        <li th:each="c : ${credenciais}"> <span th:text="${c}"></span> <span th:text="${#sets.contains(command.credenciais, c)}"></span> </li>
       </ul>
 
       <button type="button" class="btn btn-link" id="cancel" th:attr="data-id=${command.id}" onclick="cancel_credencial(this);">Cancelar</button>
