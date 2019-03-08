@@ -7,6 +7,7 @@ import org.loja.model.categoria.Categoria;
 import org.loja.model.produto.Produto;
 //import org.loja.model.usuario.Usuario;
 import org.loja.model.credencial.Credencial;
+import org.loja.model.autorizacao.Autorizacao;
 import org.loja.settings.geral.Geral;
 import org.loja.settings.paypal.Paypal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.loja.model.categoria.CategoriaService;
 import org.loja.model.produto.ProdutoService;
 //import org.loja.model.usuario.UsuarioService;
 import org.loja.model.credencial.CredencialService;
+import org.loja.model.autorizacao.AutorizacaoService;
 import org.loja.settings.geral.GeralService;
 import org.loja.settings.paypal.PaypalService;
 //import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,6 +33,9 @@ public class Model {
 
   @Autowired
   private CredencialService credencial;
+
+  @Autowired
+  private AutorizacaoService autorizacao;
 
   @Autowired
   private GeralService geral;
@@ -56,6 +61,11 @@ public class Model {
   @ModelAttribute("credenciais")
   public List<Credencial> credenciais() {
     return credencial.select();
+  }
+
+  @ModelAttribute("autorizacoes")
+  public List<Autorizacao> autorizacoes() {
+    return autorizacao.select();
   }
 
   @ModelAttribute("geral")
