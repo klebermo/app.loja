@@ -123,6 +123,28 @@
             </select>
           </div>
         </div>
+
+        <div class="container" th:if="${#strings.equals(classe.simpleName, 'Credencial')}">
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" name="nome" th:value="${command.nome}" class="form-control" id="nome" placeholder="Nome">
+          </div>
+
+          <div class="form-group">
+            <table class="table table-striped">
+              <tr th:each="autorizacao : ${autorizacoes}">
+                <td>
+                  <th:block th:each="a : ${command.autorizacoes}">
+                    <th:block th:with="possui = ${#strings.equals(a, autorizacao)? 'yes': 'not'}">
+                      <input type="checkbox" name="autorizacoes" th:checked="${#strings.equals(possui, 'yes')}" class="form-check-input">
+                    </th:block>
+                  </th:block>
+                </td>
+                <td th:text="${autorizacao}"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </form>
 
       <div class="container">
