@@ -73,6 +73,15 @@
                 </a>
               </li>
             </ul>
+
+            <ul class="nav flex-column">
+              <li sec:authorize="hasPermission(#user, 'consulta_credencial')" class="nav-item">
+                <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Credencial')}? 'nav-link active' : 'nav-link'" th:href="@{/credencial/}">
+                  <span data-feather="list"></span>
+                  credenciais
+                </a>
+              </li>
+            </ul>
           </div>
         </nav>
       </div>
@@ -210,6 +219,9 @@
                     <th class="col">lastName</th>
                     <th class="col">email</th>
                   </th:block>
+                  <th:block th:if="${#strings.equals(classe.simpleName, 'Credencial')}">
+                    <th class="col">nome</th>
+                  </th:block>
                   <th>
                     <div th:if="${#strings.equals(classe.simpleName, 'Categoria')}" class="btn-group" id="buttons" role="group" aria-label="Categoria" style="display: none;">
                       <button sec:authorize="hasPermission(#user, 'atualiza_categoria')" type="button" class="btn btn-secondary" th:attr="data-url=@{/categoria/update}" onclick="update_data(this)">
@@ -236,6 +248,14 @@
                       </button>
                       <button sec:authorize="hasPermission(#user, 'consulta_credencial')" type="button" class="btn btn-secondary" th:attr="data-url=@{/usuario/credenciais}" onclick="credencial_data(this)">
                         <span data-feather="list"></span>
+                      </button>
+                    </div>
+                    <div th:if="${#strings.equals(classe.simpleName, 'Credencial')}" class="btn-group" id="buttons" role="group" aria-label="Credencial" style="display: none;">
+                      <button sec:authorize="hasPermission(#user, 'atualiza_credencial')" type="button" class="btn btn-secondary" th:attr="data-url=@{/credencial/update}" onclick="update_data(this)">
+                        <span data-feather="edit"></span>
+                      </button>
+                      <button sec:authorize="hasPermission(#user, 'remove_credencial')" type="button" class="btn btn-secondary" th:attr="data-url=@{/credencial/delete}" onclick="delete_data(this)">
+                        <span data-feather="trash-2"></span>
                       </button>
                     </div>
                   </th>
