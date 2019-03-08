@@ -13,19 +13,23 @@
 
         <tbody>
           <tr th:each="credencial : ${credenciais}">
-            <td>
-              <input type="checkbox" class="form-check-input" th:id="${credencial.id}" th:checked="${#sets.contains(command.credenciais, credencial)}" th:attr="data-usuario=${command.id},data-url=@{/usuario/toggle_credencial}" onchange="toggle_credencial(this)"/>
-            </td>
+            <th:block th:with="possui = 'not'">
+              <th:block th:each="c : ${command.credenciais}" th:if="${#strings.equals(c, credencial)}" th:with="possui = 'yes'">
+                <td>
+                  <input type="checkbox" class="form-check-input" th:id="${credencial.id}" th:checked="${#strings.equals(possui, 'yes')}" th:attr="data-usuario=${command.id},data-url=@{/usuario/toggle_credencial}" onchange="toggle_credencial(this)"/>
+                </td>
 
-            <td>
-              <span th:text="${credencial.nome}"></span>
-            </td>
+                <td>
+                  <span th:text="${credencial.nome}"></span>
+                </td>
 
-            <td>
-              <ul>
-                <li th:each="autorizacao : ${credencial.autorizacoes}" th:text="${autorizacao.nome}"></li>
-              </ul>
-            </td>
+                <td>
+                  <ul>
+                    <li th:each="autorizacao : ${credencial.autorizacoes}" th:text="${autorizacao.nome}"></li>
+                  </ul>
+                </td>
+              </th:block>
+            </th:block>
           </tr>
         </tbody>
 
@@ -37,14 +41,6 @@
           </tr>
         </tfoot>
       </table>
-
-      <ul>
-        <li th:each="c : ${command.credenciais}"> <span th:text="${c.hashCode()}"></span> </li>
-      </ul>
-
-      <ul>
-        <li th:each="c : ${credenciais}"> <span th:text="${c}"></span> <span th:text="${#sets.contains(command.credenciais, c)}"></span> </li>
-      </ul>
 
       <button type="button" class="btn btn-link" id="cancel" th:attr="data-id=${command.id}" onclick="cancel_credencial(this);">Cancelar</button>
     </div>
