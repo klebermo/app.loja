@@ -5,9 +5,12 @@ public abstract class Model extends Object {
 
   @Override
   public boolean equals(Object object) {
-    System.out.println("self: "+this.toString());
-    System.out.println("other: "+object.toString());
     return toString().equals(object.toString());
+  }
+
+  @Override
+  public int hashCode() {
+    return toString().hashCode();
   }
 
   public abstract String toString();
