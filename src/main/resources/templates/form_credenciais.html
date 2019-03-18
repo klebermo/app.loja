@@ -13,23 +13,19 @@
 
         <tbody>
           <tr th:each="credencial : ${credenciais}">
-            <th:block th:with="possui = 'not'">
-              <th:block th:each="c : ${command.credenciais}" th:if="${#strings.equals(c, credencial)}" th:with="possui = 'yes'">
-                <td>
-                  <input type="checkbox" class="form-check-input" th:id="${credencial.id}" th:checked="${#strings.equals(possui, 'yes')}" th:attr="data-usuario=${command.id},data-url=@{/usuario/toggle_credencial}" onchange="toggle_credencial(this)"/>
-                </td>
+            <td>
+              <input type="checkbox" class="form-check-input" th:id="${credencial.id}" th:checked="${#sets.contains(command.credenciais, credencial)}" th:attr="data-usuario=${command.id},data-url=@{/usuario/toggle_credencial}" onchange="toggle_credencial(this)"/>
+            </td>
 
-                <td>
-                  <span th:text="${credencial.nome}"></span>
-                </td>
+            <td>
+              <span th:text="${credencial.nome}"></span>
+            </td>
 
-                <td>
-                  <ul>
-                    <li th:each="autorizacao : ${credencial.autorizacoes}" th:text="${autorizacao.nome}"></li>
-                  </ul>
-                </td>
-              </th:block>
-            </th:block>
+            <td>
+              <ul>
+                <li th:each="autorizacao : ${credencial.autorizacoes}" th:text="${autorizacao.nome}"></li>
+              </ul>
+            </td>
           </tr>
         </tbody>
 
