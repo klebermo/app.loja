@@ -8,10 +8,5 @@ public abstract class Model extends Object {
     return toString().equals(object.toString());
   }
 
-  @Override
-  public int hashCode() {
-    return toString().hashCode();
-  }
-
   public abstract String toString();
 }
