@@ -134,11 +134,7 @@
             <table class="table table-striped">
               <tr th:each="autorizacao : ${autorizacoes}">
                 <td>
-                  <th:block th:each="a : ${command.autorizacoes}">
-                    <th:block th:with="possui = ${#strings.equals(a, autorizacao)? 'yes': 'not'}">
-                      <input type="checkbox" name="autorizacoes" th:checked="${#strings.equals(possui, 'yes')}" class="form-check-input">
-                    </th:block>
-                  </th:block>
+                    <input type="checkbox" name="autorizacoes" th:value="${autorizacao.id}" th:checked="${#sets.contains(command.autorizacoes, autorizacao)}" class="form-check-input">
                 </td>
                 <td th:text="${autorizacao}"></td>
               </tr>
