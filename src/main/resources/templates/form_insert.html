@@ -129,7 +129,7 @@
             <table class="table table-striped">
               <tr th:each="autorizacao : ${autorizacoes}">
                 <td>
-                  <input type="checkbox" name="autorizacoes" class="form-check-input">
+                  <input type="checkbox" name="autorizacoes" th:value="${autorizacao.id}" class="form-check-input">
                 </td>
                 <td th:text="${autorizacao}"></td>
               </tr>
