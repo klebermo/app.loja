@@ -3,8 +3,6 @@
   <body>
     <div id="form-container">
       <form class="form" id="form" method="post" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/insert}">
-        <input type="hidden" name="id" value="" id="id"/>
-
         <div class="container" th:if="${#strings.equals(classe.simpleName, 'Categoria')}">
           <div class="form-group">
             <label for="nome">Nome</label>
@@ -113,7 +111,7 @@
 
           <div class="form-group">
             <label for="credenciais">Credenciais</label>
-            <select class="form-control" id="credenciais" name="credenciais" multiple="multiple" size="10">
+            <select class="form-control" id="credenciais" name="credenciais[]" multiple="multiple" size="10">
               <option th:each="credencial : ${credenciais}" th:value="${credencial.id}" th:text="${credencial.nome}"/>
             </select>
           </div>
@@ -129,7 +127,7 @@
             <table class="table table-striped">
               <tr th:each="autorizacao : ${autorizacoes}">
                 <td>
-                  <input type="checkbox" name="autorizacoes" th:value="${autorizacao.id}" class="form-check-input">
+                  <input type="checkbox" name="autorizacoes[]" th:value="${autorizacao.id}" class="form-check-input">
                 </td>
                 <td th:text="${autorizacao}"></td>
               </tr>

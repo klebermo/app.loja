@@ -118,7 +118,7 @@
 
           <div class="form-group">
             <label for="credenciais">Credenciais</label>
-            <select class="form-control" id="credenciais" name="credenciais" multiple="multiple" size="10">
+            <select class="form-control" id="credenciais" name="credenciais[]" multiple="multiple" size="10">
               <option th:each="credencial : ${credenciais}" th:value="${credencial.id}" th:selected="${#sets.contains(command.credenciais, credencial)}" th:text="${credencial.nome}"/>
             </select>
           </div>
@@ -134,7 +134,7 @@
             <table class="table table-striped">
               <tr th:each="autorizacao : ${autorizacoes}">
                 <td>
-                    <input type="checkbox" name="autorizacoes" th:value="${autorizacao.id}" th:checked="${#sets.contains(command.autorizacoes, autorizacao)}" class="form-check-input">
+                    <input type="checkbox" name="autorizacoes[]" th:value="${autorizacao.id}" th:checked="${#sets.contains(command.autorizacoes, autorizacao)}" class="form-check-input">
                 </td>
                 <td th:text="${autorizacao}"></td>
               </tr>
