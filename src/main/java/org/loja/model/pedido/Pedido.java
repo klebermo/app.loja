@@ -1,7 +1,7 @@
 package org.loja.model.pedido;
 
 import org.loja.model.Model;
-import java.util.Set;
+import java.util.List;
 import org.loja.model.produto.Produto;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -22,7 +22,7 @@ public class Pedido extends Model {
 
   @OneToMany(fetch = FetchType.EAGER)
   @Fetch(FetchMode.SELECT)
-  private Set<Produto> produtos;
+  private List<Produto> produtos;
 
   @Column
   private Date dataCompra;
@@ -36,11 +36,11 @@ public class Pedido extends Model {
     this.id = id;
   }
 
-  public Set<Produto> getProdutos() {
+  public List<Produto> getProdutos() {
     return produtos;
   }
 
-  public void setProdutos(Set<Produto> produtos) {
+  public void setProdutos(List<Produto> produtos) {
     this.produtos = produtos;
   }
 

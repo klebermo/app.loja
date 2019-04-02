@@ -1,7 +1,7 @@
 package org.loja.model.cesta;
 
 import org.loja.model.Model;
-import java.util.Set;
+import java.util.List;
 import org.loja.model.produto.Produto;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,7 +20,7 @@ public class Cesta extends Model {
 
   @OneToMany(fetch = FetchType.EAGER)
   @Fetch(FetchMode.SELECT)
-  private Set<Produto> produtos;
+  private List<Produto> produtos;
 
   @Override
   public Integer getId() {
@@ -31,11 +31,11 @@ public class Cesta extends Model {
     this.id = id;
   }
 
-  public Set<Produto> getProdutos() {
+  public List<Produto> getProdutos() {
     return produtos;
   }
 
-  public void setProdutos(Set<Produto> produtos) {
+  public void setProdutos(List<Produto> produtos) {
     this.produtos = produtos;
   }
 

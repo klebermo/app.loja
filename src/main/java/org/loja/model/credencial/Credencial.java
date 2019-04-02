@@ -1,7 +1,7 @@
 package org.loja.model.credencial;
 
 import org.loja.model.Model;
-import java.util.Set;
+import java.util.List;
 import java.util.Date;
 import org.loja.model.autorizacao.Autorizacao;
 import javax.persistence.Entity;
@@ -26,7 +26,7 @@ public class Credencial extends Model {
 
   @OneToMany(fetch = FetchType.EAGER)
   @Fetch(FetchMode.SELECT)
-  private Set<Autorizacao> autorizacoes;
+  private List<Autorizacao> autorizacoes;
 
   @Override
   public Integer getId() {
@@ -45,11 +45,11 @@ public class Credencial extends Model {
     this.nome = nome;
   }
 
-  public Set<Autorizacao> getAutorizacoes() {
+  public List<Autorizacao> getAutorizacoes() {
     return autorizacoes;
   }
 
-  public void setAutorizacoes(Set<Autorizacao> autorizacoes) {
+  public void setAutorizacoes(List<Autorizacao> autorizacoes) {
     this.autorizacoes = autorizacoes;
   }
 

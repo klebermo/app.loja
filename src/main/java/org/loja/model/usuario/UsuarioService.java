@@ -12,7 +12,7 @@ import org.loja.model.pedido.Pedido;
 import org.loja.model.produto.ProdutoDao;
 import org.loja.model.produto.Produto;
 import org.loja.settings.paypal.PaypalDao;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.UUID;
 import java.util.Iterator;
 import com.paypal.base.rest.APIContext;
@@ -66,7 +66,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     Usuario usuario = this.dao.findBy("id", usuario_id);
     Credencial credencial = credencialDao.findBy("id", credencial_id);
     if(usuario.getCredenciais() == null) {
-      usuario.setCredenciais(new HashSet<Credencial>());
+      usuario.setCredenciais(new ArrayList<Credencial>());
       usuario.getCredenciais().add(credencial);
       this.dao.update(usuario);
     } else {
@@ -107,7 +107,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     }
     Cesta cesta = usuario.getCesta();
     if(cesta.getProdutos() == null) {
-      cesta.setProdutos(new HashSet<Produto>());
+      cesta.setProdutos(new ArrayList<Produto>());
       cestaDao.update(cesta);
     }
     Produto produto = produtoDao.findBy("id", produto_id);
@@ -144,7 +144,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
         payment.execute(apiContext, paymentExecution);
 
         Pedido pedido = new Pedido();
-        pedido.setProdutos(new HashSet<Produto>());
+        pedido.setProdutos(new ArrayList<Produto>());
         Cesta cesta = usuario.getCesta();
         if(cesta.getProdutos() != null) {
           for(Produto produto : cesta.getProdutos())
@@ -155,7 +155,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
         pedido.setDataCompra(new java.util.Date());
         pedidoDao.insert(pedido);
         if(usuario.getPedidos() == null) {
-          usuario.setPedidos(new HashSet<Pedido>());
+          usuario.setPedidos(new ArrayList<Pedido>());
           usuario.getPedidos().add(pedido);
           this.dao.update(usuario);
         } else {
