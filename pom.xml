@@ -104,6 +104,7 @@
   </dependencies>
 
   <build>
+    <finalName>app</finalName>
     <pluginManagement>
       <plugins>
         <plugin>
