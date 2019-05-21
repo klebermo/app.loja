@@ -76,12 +76,12 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   }
 
   @RequestMapping(value = "/checkout_mercadopago", method=RequestMethod.GET)
-  public String checkout_mercadopago() {
-    return "redirect:"+this.serv.checkout_mercadopago();
+  public String checkout_mercadopago(@RequestParam("usuario_id") Integer usuario_id, @RequestParam(value="status", required=false) String status_id) throws com.mercadopago.exceptions.MPConfException, com.mercadopago.exceptions.MPException {
+    return "redirect:"+this.serv.checkout_mercadopago(usuario_id, status_id);
   }
 
   @RequestMapping(value = "/checkout_pagseguro", method=RequestMethod.GET)
-  public String checkout_pagseguro() {
-    return "redirect:"+this.serv.checkout_pagseguro();
+  public String checkout_pagseguro(@RequestParam("usuario_id") Integer usuario_id) {
+    return "redirect:"+this.serv.checkout_pagseguro(usuario_id);
   }
 }
