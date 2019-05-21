@@ -160,11 +160,11 @@
           <td></td>
           <td></td>
           <td><h3>Total:<span class="badge badge-secondary" id="cart_total" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/cart_total}"></span></h3></td>
-          <td>
-            <a th:href="@{/usuario/checkout?usuario_id=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra</a>
-          </td>
         </tr>
       </tfoot>
+      <a th:href="@{/usuario/checkout_paypal?usuario_id=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra com paypal</a>
+      <a th:href="@{/usuario/checkout_mercadopago?usuario_id=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra com mercadoPago</a>
+      <a th:href="@{/usuario/checkout_pagseguro?usuario_id=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra com pagSeguro</a>
     </table>
     <div class="alert alert-danger" role="alert" th:if="${error}">
       N&atilde;o foi possivel efetivar o pagamento!
