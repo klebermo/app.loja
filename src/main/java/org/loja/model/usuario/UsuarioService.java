@@ -127,7 +127,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     }
   }
 
-  public String checkout(Integer usuario_id, String payerId, String guid) throws com.paypal.base.rest.PayPalRESTException {
+  public String checkout_paypal(Integer usuario_id, String payerId, String guid) throws com.paypal.base.rest.PayPalRESTException {
     Usuario usuario = this.dao.findBy("id", usuario_id);
 
     String clientId = paypalDao.get().getClientId();
@@ -207,5 +207,13 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     payment.setRedirectUrls(redirectUrls);
 
     return payment.create(apiContext);
+  }
+
+  public String checkout_mercadopago() {
+    return "/";
+  }
+
+  public String checkout_pagseguro() {
+    return "/";
   }
 }
