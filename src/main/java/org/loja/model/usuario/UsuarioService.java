@@ -236,6 +236,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
       payment.setPayer(payer);
 
       payment.save();
+      System.out.println(payment.getStatus());
 
       return "/checkout_mercadopago?usuario_id="+usuario.getId()+"?status=status";
     }
