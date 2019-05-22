@@ -232,13 +232,15 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
 
       com.mercadopago.resources.Payment payment = new com.mercadopago.resources.Payment();
       payment.setTransactionAmount(this.cart_total(usuario.getId()));
+      payment.setToken("your_cardtoken");
+      payment.setDescription("description");
       payment.setInstallments(1);
+      payment.setPaymentMethodId("visa");
       payment.setPayer(payer);
-
       payment.save();
-      System.out.println(payment.getStatus());
 
-      return "/checkout_mercadopago?usuario_id="+usuario.getId()+"?status=status";
+      System.out.println("status: "+payment.getStatus());
+      return "/checkout_mercadopago?usuario_id="+usuario.getId();
     }
 
     Pedido pedido = new Pedido();
