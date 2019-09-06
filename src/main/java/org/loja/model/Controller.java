@@ -98,6 +98,7 @@ public abstract class Controller<E> {
     binder.registerCustomEditor(org.loja.model.cesta.Cesta.class, new org.loja.model.cesta.CestaEditor());
     binder.registerCustomEditor(org.loja.model.credencial.Credencial.class, new org.loja.model.credencial.CredencialEditor());
     binder.registerCustomEditor(org.loja.model.imagem.Imagem.class, new org.loja.model.imagem.ImagemEditor());
+    binder.registerCustomEditor(org.loja.model.pagina.Pagina.class, new org.loja.model.pagina.PaginaEditor());
     binder.registerCustomEditor(org.loja.model.pedido.Pedido.class, new org.loja.model.pedido.PedidoEditor());
     binder.registerCustomEditor(org.loja.model.produto.Produto.class, new org.loja.model.produto.ProdutoEditor());
     binder.registerCustomEditor(org.loja.model.usuario.Usuario.class, new org.loja.model.usuario.UsuarioEditor());
