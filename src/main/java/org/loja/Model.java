@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import java.util.List;
 import org.loja.model.categoria.Categoria;
 import org.loja.model.produto.Produto;
-//import org.loja.model.usuario.Usuario;
+import org.loja.model.usuario.Usuario;
 import org.loja.model.credencial.Credencial;
 import org.loja.model.autorizacao.Autorizacao;
 import org.loja.settings.geral.Geral;
@@ -13,12 +13,12 @@ import org.loja.settings.paypal.Paypal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.loja.model.categoria.CategoriaService;
 import org.loja.model.produto.ProdutoService;
-//import org.loja.model.usuario.UsuarioService;
+import org.loja.model.usuario.UsuarioService;
 import org.loja.model.credencial.CredencialService;
 import org.loja.model.autorizacao.AutorizacaoService;
 import org.loja.settings.geral.GeralService;
 import org.loja.settings.paypal.PaypalService;
-//import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @ControllerAdvice
 public class Model {
@@ -28,8 +28,8 @@ public class Model {
   @Autowired
   private ProdutoService produto;
 
-  /*@Autowired
-  private UsuarioService usuario;*/
+  @Autowired
+  private UsuarioService usuario;
 
   @Autowired
   private CredencialService credencial;
@@ -53,10 +53,10 @@ public class Model {
     return produto.select();
   }
 
-  /*@ModelAttribute("usuario")
+  @ModelAttribute("usuario")
   public Usuario usuario() {
     return usuario.findBy("username", SecurityContextHolder.getContext().getAuthentication().getName());
-  }*/
+  }
 
   @ModelAttribute("credenciais")
   public List<Credencial> credenciais() {
