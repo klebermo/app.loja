@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title>Signin</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <link th:href="@{/css/signin.css}" rel="stylesheet">
+  </head>
+  <body class="text-center">
+    <form class="form-signup" th:action="@{/register}">
+      <img class="mb-4" th:src="@{/img/bootstrap-solid.svg}" alt="signin" width="72" height="72">
+
+      <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
+
+      <label for="inputUsername" class="sr-only">Username</label>
+      <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+
+      <label for="inputFirstname" class="sr-only">First name</label>
+      <input type="text" id="inputFirstname" class="form-control" placeholder="First name" required>
+
+      <label for="inputLastname" class="sr-only">Last name</label>
+      <input type="text" id="inputLastname" class="form-control" placeholder="Last name" required>
+
+      <label for="inputEmail" class="sr-only">E-mail</label>
+      <input type="email" id="inputEmail" class="form-control" placeholder="E-mail" required>
+
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+    </form>
+</body>
+</html>
