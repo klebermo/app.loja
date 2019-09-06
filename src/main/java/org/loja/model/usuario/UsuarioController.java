@@ -21,18 +21,6 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
     super(Usuario.class);
   }
 
-  @RequestMapping(value = "/register", method=RequestMethod.GET)
-  public String formRegister(Model model) {
-    model.addAttribute("comand", new Usuario());
-    return "register";
-  }
-
-  @RequestMapping(value = "/register", method=RequestMethod.POST)
-  public String doRegister(@Valid Usuario object, BindingResult result) {
-      this.serv.register(object);
-      return "redirect:/";
-  }
-
   @RequestMapping(value = "/credenciais", method=RequestMethod.GET)
   @PreAuthorize("hasPermission(#user, 'consulta_'+#this.this.name)")
   public String formCredenciais(Model model, @RequestParam("id") Integer id) {
