@@ -100,9 +100,4 @@ public class Home {
       model.addAttribute("order", pedido.findBy("id", order_id));
       return "index";
     }
-
-    @org.springframework.web.bind.annotation.ModelAttribute("usuario")
-    public org.loja.model.usuario.Usuario usuario() {
-      return usuario.findBy("username", org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication().getName());
-    }
 }
