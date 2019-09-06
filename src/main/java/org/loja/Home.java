@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
+import javax.validation.Valid;
+import org.springframework.validation.BindingResult;
 
 @Controller
 public class Home {
@@ -30,9 +32,37 @@ public class Home {
       return "index";
     }
 
-    @RequestMapping("/login")
-    public String login() {
-        return "login";
+    @RequestMapping("/signin")
+    public String signin() {
+        return "signin";
+    }
+
+    @RequestMapping("/signup")
+    public String signup() {
+        return "signup";
+    }
+
+    @RequestMapping(value="/signup", method=RequestMethod.POST)
+    public String signup(@Valid org.loja.model.usuario.Usuario novo_usuario, BindingResult result) {
+      Boolean cadastrado = usuario.register(novo_usuario);
+      if(cadastrado)
+        return "redirect:/signin";
+      else
+        return "redirect:/signup";
+    }
+
+    @RequestMapping("/recover")
+    public String recover() {
+        return "recover";
+    }
+
+    @RequestMapping(value="/recover", method=RequestMethod.POST)
+    public String recover(String email) {
+      Boolean cadastrado = usuario.recover(email);
+      if(cadastrado)
+        return "redirect:/signin";
+      else
+        return "redirect:/recover";
     }
 
     @RequestMapping("/admin")
