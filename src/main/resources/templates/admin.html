@@ -113,7 +113,39 @@
         </div>
       </nav>
 
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${admin}">
+      </main>
+
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${usuario}">
+        <div th:replace="fragments/001-usuario :: body"></div>
+      </main>
+
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${categoria}">
+        <div th:replace="fragments/002-categoria :: body"></div>
+      </main>
+
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${produto}">
+        <div th:replace="fragments/003-produto :: body"></div>
+      </main>
+
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${pagina}">
+        <div th:replace="fragments/004-pagina :: body"></div>
+      </main>
+
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${geral}">
+        <div th:replace="fragments/005-geral :: body"></div>
+      </main>
+
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${paypal}">
+        <div th:replace="fragments/006-paypal :: body"></div>
+      </main>
+
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${pagseguro}">
+        <div th:replace="fragments/007-pagseguro :: body"></div>
+      </main>
+
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${mercadopago}">
+        <div th:replace="fragments/008-mercadopago :: body"></div>
       </main>
     </div>
   </div>
