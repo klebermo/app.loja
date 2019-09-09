@@ -114,11 +114,56 @@
         </div>
       </nav>
 
+      <div id="new" title="Novo usu&aacute;rio"></div>
+      <div id="edit" title="Editar usu&aacute;rio"></div>
+      <div id="remove" title="Remover usu&aacute;rio"></div>
+
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${admin}">
       </main>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'usuario')}">
-        <div th:replace="template/001-usuario :: body"></div>
+        <div class="btn-group" role="group" aria-label="toolbar">
+          <button type="button" class="btn btn-secondary" id="new_button">
+            <i class="fas fa-file"></i>
+          </button>
+        </div>
+
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">username</th>
+              <th scope="col">first name</th>
+              <th scope="col">last name</th>
+              <th scope="col">e-mail</th>
+              <th scope="col">enabled</th>
+              <th scope="col">locked</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr th:each="item : ${list}">
+              <td th:text="${item.id}"></td>
+              <td th:text="${item.username}"></td>
+              <td th:text="${item.firstName}"></td>
+              <td th:text="${item.lastName}"></td>
+              <td th:text="${item.email}"></td>
+              <td th:text="${item.enabled}"></td>
+              <td th:text="${item.locked}"></td>
+              <td>
+                <div class="btn-group" role="group" aria-label="actionbar">
+                  <button type="button" class="btn btn-secondary" id="edit_button">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button type="button" class="btn btn-secondary" id="remove_button">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </main>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'categoria')}">
@@ -134,19 +179,19 @@
       </main>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'geral')}">
-        <div th:replace="form/frm_005_geral :: body"></div>
+        <div th:replace="form_setting :: body"></div>
       </main>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'paypal')}">
-        <div th:replace="form/frm_006_paypal :: body"></div>
+        <div th:replace="form_setting :: body"></div>
       </main>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'pagseguro')}">
-        <div th:replace="form/frm_007_pagseguro :: body"></div>
+        <div th:replace="form_setting :: body"></div>
       </main>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'mercadopago')}">
-        <div th:replace="form/frm_008_mercadopago :: body"></div>
+        <div th:replace="form_setting :: body"></div>
       </main>
     </div>
   </div>
@@ -155,4 +200,46 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="https://kit.fontawesome.com/a8a341d3ab.js"></script>
+
+  <script th:inline="javascript">
+  /*<![CDATA[*/
+  window.onload = function(){
+    $( "#new" ).dialog({ autoOpen: false, minHeight: 640, minWidth: 480, resizable: false });
+
+    $( "#new_button" ).click(function() {
+      $( "#new" ).dialog( "open" );
+
+      $.ajax({
+        url: /*[[@{/usuario/insert}]]*/,
+      }).done(function(data) {
+        $( "#new" ).append( data );
+      });
+    });
+
+    $( "#edit" ).dialog({ autoOpen: false, minHeight: 640, minWidth: 480, resizable: false });
+
+    $( "#edit_button" ).click(function() {
+      $( "#edit" ).dialog( "open" );
+
+      $.ajax({
+        url: /*[[@{/usuario/insert}]]*/,
+      }).done(function(data) {
+        $( "#edit" ).append( data );
+      });
+    });
+
+    $( "#remove" ).dialog({ autoOpen: false, minHeight: 140, minWidth: 600, resizable: false });
+
+    $( "#remove_button" ).click(function() {
+      $( "#remove" ).dialog( "open" );
+
+      $.ajax({
+        url: /*[[@{/usuario/insert}]]*/,
+      }).done(function(data) {
+        $( "#remove" ).append( data );
+      });
+    });
+  }
+  /*]]>*/
+  </script>
 </body>
