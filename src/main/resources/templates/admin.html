@@ -1,6 +1,7 @@
 <html>
 <head>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/black-tie/jquery-ui.css" type="text/css">
   <link th:href="@{/css/dashboard.css}" rel="stylesheet">
   <title>Admin</title>
 </head>
@@ -116,40 +117,42 @@
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${admin}">
       </main>
 
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${usuario}">
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'usuario')}">
         <div th:replace="template/001-usuario :: body"></div>
       </main>
 
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${categoria}">
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'categoria')}">
         <div th:replace="template/002-categoria :: body"></div>
       </main>
 
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${produto}">
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'produto')}">
         <div th:replace="template/003-produto :: body"></div>
       </main>
 
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${pagina}">
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'pagina')}">
         <div th:replace="template/004-pagina :: body"></div>
       </main>
 
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${geral}">
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'geral')}">
         <div th:replace="form/frm_005_geral :: body"></div>
       </main>
 
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${paypal}">
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'paypal')}">
         <div th:replace="form/frm_006_paypal :: body"></div>
       </main>
 
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${pagseguro}">
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'pagseguro')}">
         <div th:replace="form/frm_007_pagseguro :: body"></div>
       </main>
 
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${mercadopago}">
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'mercadopago')}">
         <div th:replace="form/frm_008_mercadopago :: body"></div>
       </main>
     </div>
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://kit.fontawesome.com/a8a341d3ab.js"></script>
 </body>
