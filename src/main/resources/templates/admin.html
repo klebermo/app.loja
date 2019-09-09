@@ -6,9 +6,9 @@
 </head>
 <body>
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" th:href="@{/}">
       <img th:src="@{/img/bootstrap-solid.svg}" width="30" height="30" class="d-inline-block align-top" alt="">
-      Kleber's Store
+      <span th:text="${geral.titulo}"></span>
     </a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,7 +21,7 @@
 
       <ul class="nav navbar-nav justify-content-end">
         <li class="nav-item">
-          <a class="nav-link" href="#" th:text="${usuario}">Username</a>
+          <a class="nav-link" href="#" th:text="${usuario}"></a>
         </li>
 
         <li class="nav-item">
@@ -37,36 +37,36 @@
         <div class="sidebar-sticky">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link active" th:href="@{/admin}">
+              <a th:class="${#strings.isEmpty(target)}? 'nav-link active': 'nav-link'" th:href="@{/admin}">
                 <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                Dashboard <span class="sr-only">(current)</span>
+                Dashboard <span th:unless="${target}" class="sr-only">(current)</span>
               </a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a th:class="${#strings.equals(target, 'categoria')}? 'nav-link active': 'nav-link'" th:href="@{/categoria/}">
                 <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
-                Link
+                Categoria <span th:if="${#strings.equals(target, 'categoria')}" class="sr-only">(current)</span>
               </a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a th:class="${#strings.equals(target, 'produto')}? 'nav-link active': 'nav-link'" th:href="@{/produto/}">
                 <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
-                Link
+                Produto <span th:if="${#strings.equals(target, 'produto')}" class="sr-only">(current)</span>
               </a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a th:class="${#strings.equals(target, 'pagina')}? 'nav-link active': 'nav-link'" th:href="@{/pagina/}">
                 <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
-                Link
+                P&aacute;gina <span th:if="${#strings.equals(target, 'pagina')}" class="sr-only">(current)</span>
               </a>
             </li>
           </ul>
 
           <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-            <span>Settings</span>
+            <span>Configura&ccedil;&otilde;es</span>
             <a class="d-flex align-items-center text-muted" href="#">
               <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
             </a>
@@ -74,46 +74,39 @@
 
           <ul class="nav flex-column mb-2">
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a th:class="${#strings.equals(target, 'geral')}? 'nav-link active': 'nav-link'" th:href="@{/geral/}">
                 <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
-                Link
+                Geral <span th:if="${#strings.equals(target, 'pagina')}" class="sr-only">(current)</span>
               </a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a th:class="${#strings.equals(target, 'paypal')}? 'nav-link active': 'nav-link'" th:href="@{/paypal/}">
                 <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
-                Link
+                Paypal <span th:if="${#strings.equals(target, 'paypal')}" class="sr-only">(current)</span>
               </a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a th:class="${#strings.equals(target, 'mercadopago')}? 'nav-link active': 'nav-link'" th:href="@{/mercadopago/}">
                 <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
-                Link
+                Mercado Pago <span th:if="${#strings.equals(target, 'mercadopago')}" class="sr-only">(current)</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a th:class="${#strings.equals(target, 'pagseguro')}? 'nav-link active': 'nav-link'" th:href="@{/pagseguro/}">
+                <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                PagSeguro <span th:if="${#strings.equals(target, 'pagseguro')}" class="sr-only">(current)</span>
               </a>
             </li>
           </ul>
 
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a th:class="${#strings.equals(target, 'usuario')}? 'nav-link active': 'nav-link'" th:href="@{/usuario/}">
                 <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
-                Link
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
-                Link
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
-                Link
+                Usu&aacute;rios <span th:if="${#strings.equals(target, 'usuario')}" class="sr-only">(current)</span>
               </a>
             </li>
           </ul>

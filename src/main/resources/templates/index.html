@@ -23,14 +23,11 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
+        <li th:each="p : ${paginas}" th:unless="${pagina.parent}" th:class="${#strings.equals(pagina.titulo, p.titulo)}? 'nav-item active' : 'nav-item'">
+          <a class="nav-link" th:href="@{/page/__${p.slug}__}">
+            <strong th:text="${p.titulo}"></strong>
+            <span class="sr-only" th:if="${#strings.equals(pagina.titulo, p.titulo)}">(current)</span>
+          </a>
         </li>
       </ul>
 
@@ -48,8 +45,8 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" th:href="@{/admin}" sec:authorize="hasPermission(#user, 'admin')">Admin</a>
             <div class="dropdown-divider" sec:authorize="hasPermission(#user, 'admin')"></div>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" th:href="@{/profile}">Cadastro</a>
+            <a class="dropdown-item" th:href="@{/orders}">Pedidos</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" th:href="@{/logout}">Sign out</a>
           </div>
@@ -63,146 +60,51 @@
       <div class="row">
         <div class="col-sm-2">
           <ul class="nav flex-column">
-            <li class="nav-item">
-              <a class="nav-link active" href="#">Active</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            <li class="nav-item" th:each="c : ${categorias}">
+              <a th:class="${#strings.equals(categoria.nome, c.nome)}? 'nav-link active' : 'nav-link'" th:href="@{/c/__${c.nome}__}" th.text="${c.nome}"></a>
             </li>
           </ul>
         </div>
 
-        <div class="col-lg-10">
+        <div class="col-lg-10" th:if="${index}">
           <div class="container">
-            <div class="row no-gutters">
+            <div class="row no-gutters" th:each="c : ${categorias}">
               <div class="jumbotron">
-                <h1 class="display-4">Hello, world!</h1>
-                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                <h1 class="display-4" th:text="${c.nome}"></h1>
+                <p class="lead" th:text="${c.resumo}"></p>
+                <a class="btn btn-primary btn-lg" th:href="@{/c/__${c.nome}}" role="button">Mais</a>
               </div>
 
-              <div class="col">
+              <div class="col" th:each="i : ${#numbers.sequence( 1, 3)}">
                 <div class="card" style="width: 18rem;">
-                  <img th:src="@{/img/placeholder.svg}" class="card-img-top" alt="...">
+                  <img th:src="@{/imagem/download/__${p.icone}__}" class="card-img-top" th:alt="${p.nome}">
                   <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col">
-                <div class="card" style="width: 18rem;">
-                  <img th:src="@{/img/placeholder.svg}" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col">
-                <div class="card" style="width: 18rem;">
-                  <img th:src="@{/img/placeholder.svg}" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                  </div>
-                </div>
-              </div>
-            </div> <!--row-->
-
-            <div class="row no-gutters">
-              <div class="jumbotron">
-                <h1 class="display-4">Hello, world!</h1>
-                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-              </div>
-
-              <div class="col">
-                <div class="card" style="width: 18rem;">
-                  <img th:src="@{/img/placeholder.svg}" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col">
-                <div class="card" style="width: 18rem;">
-                  <img th:src="@{/img/placeholder.svg}" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col">
-                <div class="card" style="width: 18rem;">
-                  <img th:src="@{/img/placeholder.svg}" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                  </div>
-                </div>
-              </div>
-            </div> <!--row-->
-
-            <div class="row no-gutters">
-              <div class="jumbotron">
-                <h1 class="display-4">Hello, world!</h1>
-                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-              </div>
-
-              <div class="col">
-                <div class="card" style="width: 18rem;">
-                  <img th:src="@{/img/placeholder.svg}" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col">
-                <div class="card" style="width: 18rem;">
-                  <img th:src="@{/img/placeholder.svg}" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col">
-                <div class="card" style="width: 18rem;">
-                  <img th:src="@{/img/placeholder.svg}" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <h5 class="card-title" th:text="${p.nome}"></h5>
+                    <p class="card-text" th:text="${p.resumo}"></p>
+                    <a th:href="@{/p/__${p.nome}__}" class="btn btn-primary">Ver detalhes</a>
                   </div>
                 </div>
               </div>
             </div> <!--row-->
           </div>
+        </div>
+
+        <div class="col-lg-10" th:if="${categoria}">
+        </div>
+
+        <div class="col-lg-10" th:if="${produto}">
+        </div>
+
+        <div class="col-lg-10" th:if="${pagina}">
+        </div>
+
+        <div class="col-lg-10" th:if="${cart}">
+        </div>
+
+        <div class="col-lg-10" th:if="${orders}">
+        </div>
+
+        <div class="col-lg-10" th:if="${order}">
         </div>
       </div>
     </div>
