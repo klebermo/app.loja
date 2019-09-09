@@ -5,6 +5,16 @@
     <title></title>
   </head>
   <body th:fragment="body">
+    <div id="new" title="Novo usu&aacute;rio"></div>
+    <div id="edit" title="Editar usu&aacute;rio"></div>
+    <div id="remove" title="Remover usu&aacute;rio"></div>
+
+    <div class="btn-group" role="group" aria-label="toolbar">
+      <button type="button" class="btn btn-secondary" id="new_button">
+        <i class="fas fa-file"></i>
+      </button>
+    </div>
+
     <table class="table table-striped">
       <thead class="thead-dark">
         <tr>
@@ -19,7 +29,69 @@
         </tr>
       </thead>
 
-      <tbody id="usuario"></tbody>
+      <tbody>
+        <tr th:each="item : ${list}">
+          <td th:text="${item.id}"></td>
+          <td th:text="${item.username}"></td>
+          <td th:text="${item.firstName}"></td>
+          <td th:text="${item.lastName}"></td>
+          <td th:text="${item.email}"></td>
+          <td th:text="${item.enabled}"></td>
+          <td th:text="${item.locked}"></td>
+          <td>
+            <div class="btn-group" role="group" aria-label="actionbar">
+              <button type="button" class="btn btn-secondary" id="edit_button">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button type="button" class="btn btn-secondary" id="remove_button">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
     </table>
+
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+    window.onload = function(){
+      $( "#new" ).dialog({ autoOpen: false, minHeight: 640, minWidth: 480, resizable: false });
+
+      $( "#new_button" ).click(function() {
+        $( "#new" ).dialog( "open" );
+
+        $.ajax({
+          url: /*[[@{/usuario/insert}]]*/,
+        }).done(function(data) {
+          $( "#new" ).append( data );
+        });
+      });
+
+      $( "#edit" ).dialog({ autoOpen: false, minHeight: 640, minWidth: 480, resizable: false });
+
+      $( "#edit_button" ).click(function() {
+        $( "#edit" ).dialog( "open" );
+
+        $.ajax({
+          url: /*[[@{/usuario/insert}]]*/,
+        }).done(function(data) {
+          $( "#edit" ).append( data );
+        });
+      });
+
+      $( "#remove" ).dialog({ autoOpen: false, minHeight: 140, minWidth: 600, resizable: false });
+
+      $( "#remove_button" ).click(function() {
+        $( "#remove" ).dialog( "open" );
+
+        $.ajax({
+          url: /*[[@{/usuario/insert}]]*/,
+        }).done(function(data) {
+          $( "#remove" ).append( data );
+        });
+      });
+    }
+    /*]]>*/
+    </script>
   </body>
 </html>
