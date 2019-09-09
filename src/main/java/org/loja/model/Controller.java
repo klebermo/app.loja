@@ -81,6 +81,11 @@ public abstract class Controller<E> {
     return mapper.writeValueAsString(serv.select());
   }
 
+  @ModelAttribute("list")
+  public java.util.List list2() {
+    return serv.select();
+  }
+
   @ModelAttribute("classe")
   public Class<E> getClazz() {
     return clazz;
