@@ -35,4 +35,9 @@ public abstract class Controller<E> {
   public Class<E> getClazz() {
     return clazz;
   }
+
+  @ModelAttribute("target")
+  public String getName() {
+    return clazz.getSimpleName().toLowerCase();
+  }
 }
