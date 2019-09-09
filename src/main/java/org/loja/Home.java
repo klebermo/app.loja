@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.loja.model.categoria.CategoriaService;
 import org.loja.model.produto.ProdutoService;
+import org.loja.model.pagina.PaginaService;
 import org.loja.model.pedido.PedidoService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,13 +23,17 @@ public class Home {
     private ProdutoService produto;
 
     @Autowired
+    private PaginaService pagina;
+
+    @Autowired
     private PedidoService pedido;
 
     @Autowired
     private org.loja.model.usuario.UsuarioService usuario;
 
     @RequestMapping("/")
-    public String index() {
+    public String index(Model model) {
+      model.addAttribute("index", "index");
       return "index";
     }
 
@@ -80,6 +85,12 @@ public class Home {
     @RequestMapping("/p/{nome}")
     public String produto(Model model, @PathVariable("nome") String nome) {
       model.addAttribute("produto", produto.findBy("nome", nome));
+      return "index";
+    }
+
+    @RequestMapping("/page/{slug}")
+    public String pagina(Model model, @PathVariable("slug") String slug) {
+      model.addAttribute("pagina", pagina.findBy("slug", slug));
       return "index";
     }
 
