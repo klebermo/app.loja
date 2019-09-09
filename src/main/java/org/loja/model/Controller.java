@@ -86,6 +86,7 @@ public abstract class Controller<E> {
     return clazz;
   }
 
+  @ModelAttribute("target")
   public String getName() {
     return clazz.getSimpleName().toLowerCase();
   }
