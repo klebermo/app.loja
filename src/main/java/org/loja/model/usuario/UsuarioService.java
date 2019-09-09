@@ -129,22 +129,22 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     if(paypalDao.processPayment(payerId, guid))
       return "/orders";
     else
-      return "redirect:/cart"
+      return "redirect:/cart";
   }
 
   public String checkout_mercadopago(Integer usuario_id, String status_id) throws com.mercadopago.exceptions.MPConfException, com.mercadopago.exceptions.MPException {
     Usuario usuario = this.dao.findBy("id", usuario_id);
-    if(mercadoPagoDao.processPayment(payerId, guid))
+    if(mercadoPagoDao.processPayment(status_id))
       return "/orders";
     else
-      return "redirect:/cart"
+      return "redirect:/cart";
   }
 
   public String checkout_pagseguro(Integer usuario_id) {
     Usuario usuario = this.dao.findBy("id", usuario_id);
-    if(pagSeguroDao.processPayment(payerId, guid))
+    if(pagSeguroDao.processPayment())
       return "/orders";
     else
-      return "redirect:/cart"
+      return "redirect:/cart";
   }
 }
