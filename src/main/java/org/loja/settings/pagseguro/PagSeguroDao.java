@@ -8,7 +8,7 @@ public class PagSeguroDao extends org.loja.settings.Dao<PagSeguro> {
     super(PagSeguro.class);
   }
 
-  public Boolean processPayment(String payerId, String guid) {
+  public Boolean processPayment() {
     String clientId = this.get().getClientId();
     String clientSecret = this.get().getClientSecret();
     return true;

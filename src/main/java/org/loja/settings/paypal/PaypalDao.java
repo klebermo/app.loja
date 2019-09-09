@@ -1,6 +1,7 @@
 package org.loja.settings.paypal;
 
 import org.springframework.stereotype.Repository;
+import com.paypal.base.rest.APIContext;
 
 @Repository
 public class PaypalDao extends org.loja.settings.Dao<Paypal> {
@@ -12,6 +13,6 @@ public class PaypalDao extends org.loja.settings.Dao<Paypal> {
     String clientId = this.get().getClientId();
     String clientSecret = this.get().getClientSecret();
     APIContext apiContext = new APIContext(clientId, clientSecret, "sandbox");
-    return "";
+    return true;
   }
 }
