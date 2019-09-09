@@ -90,21 +90,27 @@
         </div>
 
         <div class="col-lg-10" th:if="${categoria}">
+          <div th:replace="fragments/categoria :: body"></div>
         </div>
 
         <div class="col-lg-10" th:if="${produto}">
+          <div th:replace="fragments/produto :: body"></div>
         </div>
 
         <div class="col-lg-10" th:if="${pagina}">
+          <div th:replace="fragments/pagina :: body"></div>
         </div>
 
         <div class="col-lg-10" th:if="${cart}">
+          <div th:replace="fragments/cart :: body"></div>
         </div>
 
         <div class="col-lg-10" th:if="${orders}">
+          <div th:replace="fragments/orders :: body"></div>
         </div>
 
         <div class="col-lg-10" th:if="${order}">
+          <div th:replace="fragments/order :: body"></div>
         </div>
       </div>
     </div>
