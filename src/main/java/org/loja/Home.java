@@ -73,6 +73,7 @@ public class Home {
     @RequestMapping("/admin")
     @PreAuthorize("hasPermission(#user, 'admin')")
     public String admin(Model model) {
+        model.addAttribute("admin", "admin");
         return "admin";
     }
 
