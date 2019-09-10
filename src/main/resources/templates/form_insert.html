@@ -5,7 +5,7 @@
     <title></title>
   </head>
   <body>
-    <form th:if="${#strings.equals(target, 'usuario')}" method="post" th:action="@{/usuario/insert}">
+    <form role="form" class="form" id="form" th:if="${#strings.equals(target, 'usuario')}" method="post" th:action="@{/usuario/insert}">
       <div class="form-group">
         <label for="exampleInputUsername1">Username</label>
         <input type="text" class="form-control" id="exampleInputUsername1" name="username" placeholder="Username">
@@ -54,6 +54,14 @@
       </div>
 
       <button type="submit" class="btn btn-primary">Submit</button>
+
+      <div class="alert alert-success" role="alert" style="display: none;">
+        Usu&aacute;rio cadastrado com sucesso!
+      </div>
+
+      <div class="alert alert-danger" role="alert" style="display: none;">
+        N&atilde;o foi poss&iacute;vel cadastrar o usu&aacute;rio.
+      </div>
     </form>
 
     <form th:if="${#strings.equals(target, 'categoria')}" method="post" th:action="@{/categoria/insert}">
@@ -73,6 +81,14 @@
       </div>
 
       <button type="submit" class="btn btn-primary">Submit</button>
+
+      <div class="alert alert-success" role="alert" style="display: none;">
+        Categoria cadastrada com sucesso!
+      </div>
+
+      <div class="alert alert-danger" role="alert" style="display: none;">
+        N&atilde;o foi poss&iacute;vel cadastrar a categoria.
+      </div>
     </form>
 
     <form th:if="${#strings.equals(target, 'produto')}" method="post" th:action="@{/produto/insert}">
@@ -108,6 +124,14 @@
       </div>
 
       <button type="submit" class="btn btn-primary">Submit</button>
+
+      <div class="alert alert-success" role="alert" style="display: none;">
+        Produto cadastrado com sucesso!
+      </div>
+
+      <div class="alert alert-danger" role="alert" style="display: none;">
+        N&atilde;o foi poss&iacute;vel cadastrar o produto.
+      </div>
     </form>
 
     <form th:if="${#strings.equals(target, 'pagina')}" method="post" th:action="@{/pagina/insert}">
@@ -127,6 +151,14 @@
       </div>
 
       <button type="submit" class="btn btn-primary">Submit</button>
+
+      <div class="alert alert-success" role="alert" style="display: none;">
+        P&aacute;gina cadastrada com sucesso!
+      </div>
+
+      <div class="alert alert-danger" role="alert" style="display: none;">
+        N&atilde;o foi poss&iacute;vel cadastrar a p&aacute;gina.
+      </div>
     </form>
   </body>
 </html>

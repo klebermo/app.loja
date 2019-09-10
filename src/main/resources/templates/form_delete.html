@@ -7,29 +7,65 @@
   <body>
     <form th:if="${#strings.equals(target, 'usuario')}" method="post" th:action="@{/usuario/delete}">
       <input type="hidden" name="id" th:value="command.id"/>
+
       <div class="alert alert-primary" role="alert">
         Confirma remo&ccedil;&atilde;o do usu&aacute;rio <strong th:text="${command.firstName}"/> <strong th:text="${command.lastName}"/>?
+      </div>
+
+      <div class="alert alert-success" role="alert" style="display: none;">
+        Usu&aacute;rio removido com sucesso!
+      </div>
+
+      <div class="alert alert-danger" role="alert" style="display: none;">
+        N&atilde;o foi poss&iacute;vel remover o usu&aacute;rio.
       </div>
     </form>
 
     <form th:if="${#strings.equals(target, 'categoria')}" method="post" th:action="@{/categoria/delete}">
       <input type="hidden" name="id" th:value="command.id"/>
+
       <div class="alert alert-primary" role="alert">
         Confirma remo&ccedil;&atilde;o da categoria <strong th:text="${command.nome}"></strong>?
+      </div>
+
+      <div class="alert alert-success" role="alert" style="display: none;">
+        Categoria removida com sucesso!
+      </div>
+
+      <div class="alert alert-danger" role="alert" style="display: none;">
+        N&atilde;o foi poss&iacute;vel remover a categoria.
       </div>
     </form>
 
     <form th:if="${#strings.equals(target, 'produto')}" method="post" th:action="@{/produto/delete}">
       <input type="hidden" name="id" th:value="command.id"/>
+
       <div class="alert alert-primary" role="alert">
         Confirma remo&ccedil;&atilde;o do produto <strong th:text="${command.nome}"></strong>?
+      </div>
+
+      <div class="alert alert-success" role="alert" style="display: none;">
+        Produto removido com sucesso!
+      </div>
+
+      <div class="alert alert-danger" role="alert" style="display: none;">
+        N&atilde;o foi poss&iacute;vel remover o produto.
       </div>
     </form>
 
     <form th:if="${#strings.equals(target, 'pagina')}" method="post" th:action="@{/pagina/delete}">
       <input type="hidden" name="id" th:value="command.id"/>
+
       <div class="alert alert-primary" role="alert">
         Confirma remo&ccedil;&atilde;o da p&aacute;gina <strong th:text="${command.titulo}"></strong>?
+      </div>
+
+      <div class="alert alert-success" role="alert" style="display: none;">
+        P&aacute;gina removida com sucesso!
+      </div>
+
+      <div class="alert alert-danger" role="alert" style="display: none;">
+        N&atilde;o foi poss&iacute;vel remover a p&aacute;gina.
       </div>
     </form>
   </body>

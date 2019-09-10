@@ -56,6 +56,14 @@
       </div>
 
       <button type="submit" class="btn btn-primary">Submit</button>
+
+      <div class="alert alert-success" role="alert" style="display: none;">
+        Usu&aacute;rio atualizado com sucesso!
+      </div>
+
+      <div class="alert alert-danger" role="alert" style="display: none;">
+        N&atilde;o foi poss&iacute;vel atualizar os dados do usu&aacute;rio.
+      </div>
     </form>
 
     <form th:if="${#strings.equals(target, 'categoria')}" method="post" th:action="@{/categoria/update}">
@@ -77,6 +85,14 @@
       </div>
 
       <button type="submit" class="btn btn-primary">Submit</button>
+
+      <div class="alert alert-success" role="alert" style="display: none;">
+        Categoria atualizada com sucesso!
+      </div>
+
+      <div class="alert alert-danger" role="alert" style="display: none;">
+        N&atilde;o foi poss&iacute;vel atualizar os dados da categoria.
+      </div>
     </form>
 
     <form th:if="${#strings.equals(target, 'produto')}" method="post" th:action="@{/produto/update}">
@@ -114,6 +130,14 @@
       </div>
 
       <button type="submit" class="btn btn-primary">Submit</button>
+
+      <div class="alert alert-success" role="alert" style="display: none;">
+        Produto atualizado com sucesso!
+      </div>
+
+      <div class="alert alert-danger" role="alert" style="display: none;">
+        N&atilde;o foi poss&iacute;vel atualizar os dados do produto.
+      </div>
     </form>
 
     <form th:if="${#strings.equals(target, 'pagina')}" method="post" th:action="@{/pagina/update}">
@@ -135,6 +159,14 @@
       </div>
 
       <button type="submit" class="btn btn-primary">Submit</button>
+
+      <div class="alert alert-success" role="alert" style="display: none;">
+        P&aacute;gina atualizada com sucesso!
+      </div>
+
+      <div class="alert alert-danger" role="alert" style="display: none;">
+        N&atilde;o foi poss&iacute;vel atualizar os dados da p&aacute;gina.
+      </div>
     </form>
   </body>
 </html>
