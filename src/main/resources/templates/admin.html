@@ -1,8 +1,16 @@
 <html>
 <head>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/black-tie/jquery-ui.css" type="text/css">
   <link th:href="@{/css/dashboard.css}" rel="stylesheet">
+  <style media="screen">
+    /* Show it is fixed to the top */
+    body {
+      min-height: 75rem;
+      padding-top: 4.5rem;
+    }
+  </style>
   <title>Admin</title>
 </head>
 <body>
@@ -114,14 +122,17 @@
         </div>
       </nav>
 
-      <div id="new" title="Novo usu&aacute;rio"></div>
-      <div id="edit" title="Editar usu&aacute;rio"></div>
-      <div id="remove" title="Remover usu&aacute;rio"></div>
-
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${admin}">
       </main>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'usuario')}">
+        <h1>Usu&aacute;rio</h1>
+        <hr/>
+
+        <div id="new" title="Novo usu&aacute;rio"></div>
+        <div id="edit" title="Editar usu&aacute;rio"></div>
+        <div id="remove" title="Remover usu&aacute;rio"></div>
+
         <div class="btn-group" role="group" aria-label="toolbar">
           <button type="button" class="btn btn-secondary" id="new_button">
             <i class="fas fa-file"></i>
@@ -153,10 +164,10 @@
               <td th:text="${item.locked}"></td>
               <td>
                 <div class="btn-group" role="group" aria-label="actionbar">
-                  <button type="button" class="btn btn-secondary" id="edit_button">
+                  <button type="button" class="btn btn-secondary" id="edit_button" th:attr="data-id=${item.id}">
                     <i class="fas fa-edit"></i>
                   </button>
-                  <button type="button" class="btn btn-secondary" id="remove_button">
+                  <button type="button" class="btn btn-secondary" id="remove_button" th:attr="data-id=${item.id}">
                     <i class="fas fa-trash"></i>
                   </button>
                 </div>
@@ -167,74 +178,272 @@
       </main>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'categoria')}">
-        <div th:replace="template/002-categoria :: body"></div>
+        <h1>Categoria</h1>
+        <hr/>
+
+        <div id="new" title="Nova categoria"></div>
+        <div id="edit" title="Editar categoria"></div>
+        <div id="remove" title="Remover categoria"></div>
+
+        <div class="btn-group" role="group" aria-label="toolbar">
+          <button type="button" class="btn btn-secondary" id="new_button">
+            <i class="fas fa-file"></i>
+          </button>
+        </div>
+
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">nome</th>
+              <th scope="col">resumo</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr th:each="item : ${list}">
+              <td th:text="${item.id}"></td>
+              <td th:text="${item.nome}"></td>
+              <td th:text="${item.resumo}"></td>
+              <td>
+                <div class="btn-group" role="group" aria-label="actionbar">
+                  <button type="button" class="btn btn-secondary" id="edit_button" th:attr="data-id=${item.id}">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button type="button" class="btn btn-secondary" id="remove_button" th:attr="data-id=${item.id}">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </main>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'produto')}">
-        <div th:replace="template/003-produto :: body"></div>
+        <h1>Produto</h1>
+        <hr/>
+
+        <div id="new" title="Novo produto"></div>
+        <div id="edit" title="Editar produto"></div>
+        <div id="remove" title="Remover produto"></div>
+
+        <div class="btn-group" role="group" aria-label="toolbar">
+          <button type="button" class="btn btn-secondary" id="new_button">
+            <i class="fas fa-file"></i>
+          </button>
+        </div>
+
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">nome</th>
+              <th scope="col">resumo</th>
+              <th scope="col">pre&ccedil;o</th>
+              <th scope="col">categoria</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr th:each="item : ${list}">
+              <td th:text="${item.id}"></td>
+              <td th:text="${item.nome}"></td>
+              <td th:text="${item.resumo}"></td>
+              <td th:text="${item.preco}"></td>
+              <td th:text="${item.categoria}"></td>
+              <td>
+                <div class="btn-group" role="group" aria-label="actionbar">
+                  <button type="button" class="btn btn-secondary" id="edit_button" th:attr="data-id=${item.id}">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button type="button" class="btn btn-secondary" id="remove_button" th:attr="data-id=${item.id}">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </main>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'pagina')}">
-        <div th:replace="template/004-pagina :: body"></div>
+        <h1>P&aacute;gina</h1>
+        <br/>
+
+        <div id="new" title="Nova p&aacute;gina"></div>
+        <div id="edit" title="Editar p&aacute;gina"></div>
+        <div id="remove" title="Remover p&aacute;gina"></div>
+
+        <div class="btn-group" role="group" aria-label="toolbar">
+          <button type="button" class="btn btn-secondary" id="new_button">
+            <i class="fas fa-file"></i>
+          </button>
+        </div>
+
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">titulo</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr th:each="item : ${list}">
+              <td th:text="${item.id}"></td>
+              <td th:text="${item.titulo}"></td>
+              <td>
+                <div class="btn-group" role="group" aria-label="actionbar">
+                  <button type="button" class="btn btn-secondary" id="edit_button" th:attr="data-id=${item.id}">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button type="button" class="btn btn-secondary" id="remove_button" th:attr="data-id=${item.id}">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </main>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'geral')}">
-        <div th:replace="form_setting :: body"></div>
+        <h1>Geral</h1>
+        <hr/>
+
+        <form method="post" th:action="@{/geral/set}">
+          <div class="form-group">
+            <label for="titulo">Titulo</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Titulo">
+          </div>
+
+          <div class="form-group">
+            <label for="desenvolvedor">Desenvolvedor</label>
+            <input type="text" class="form-control" id="desenvolvedor" name="desenvolvedor" placeholder="Desenvolvedor">
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="E-mail">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
       </main>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'paypal')}">
-        <div th:replace="form_setting :: body"></div>
+        <h1>Paypal</h1>
+        <hr/>
+
+        <form method="post" th:action="@{/paypal/set}">
+          <div class="form-group">
+            <label for="clientId">ClientID</label>
+            <input type="text" class="form-control" id="clientId" name="clientId" placeholder="ClientID">
+          </div>
+
+          <div class="form-group">
+            <label for="clientSecret">ClientSecret</label>
+            <input type="text" class="form-control" id="clientSecret" name="clientSecret" placeholder="ClientSecret">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
       </main>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'pagseguro')}">
-        <div th:replace="form_setting :: body"></div>
+        <h1>PagSeguro</h1>
+        <hr/>
+
+        <form method="post" th:action="@{/pagseguro/set}">
+          <div class="form-group">
+            <label for="clientId">ClientID</label>
+            <input type="text" class="form-control" id="clientId" name="clientId" placeholder="ClientID">
+          </div>
+
+          <div class="form-group">
+            <label for="clientSecret">ClientSecret</label>
+            <input type="text" class="form-control" id="clientSecret" name="clientSecret" placeholder="ClientSecret">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
       </main>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'mercadopago')}">
-        <div th:replace="form_setting :: body"></div>
+        <h1>MercadoPago</h1>
+        <hr/>
+
+        <form method="post" th:action="@{/mercadopago/set}">
+          <div class="form-group">
+            <label for="clientId">ClientID</label>
+            <input type="text" class="form-control" id="clientId" name="clientId" placeholder="ClientID">
+          </div>
+
+          <div class="form-group">
+            <label for="clientSecret">ClientSecret</label>
+            <input type="text" class="form-control" id="clientSecret" name="clientSecret" placeholder="ClientSecret">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
       </main>
     </div>
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="https://kit.fontawesome.com/a8a341d3ab.js"></script>
 
   <script th:inline="javascript">
   /*<![CDATA[*/
   window.onload = function(){
-    $( "#new" ).dialog({ autoOpen: false, minHeight: 640, minWidth: 480, resizable: false });
+    $('.summernote').summernote({height: 320});
+
+    $( "#new" ).dialog({ autoOpen: false, minHeight: 640, maxHeight: 640, minWidth: 480, maxWidth: 480, resizable: false });
 
     $( "#new_button" ).click(function() {
       $( "#new" ).dialog( "open" );
 
       $.ajax({
-        url: /*[[@{/usuario/insert}]]*/,
+        url: /*[[@{/__${target}__/insert}]]*/,
       }).done(function(data) {
         $( "#new" ).append( data );
       });
     });
 
-    $( "#edit" ).dialog({ autoOpen: false, minHeight: 640, minWidth: 480, resizable: false });
+    $( "#edit" ).dialog({ autoOpen: false, minHeight: 640, maxHeight: 640, minWidth: 480, maxWidth: 480, resizable: false });
 
     $( "#edit_button" ).click(function() {
+      var id = $(this).data("id");
+      var path = /*[[@{/__${target}__/update}]]*/;
+      path = path + "?id=" + id;
+
       $( "#edit" ).dialog( "open" );
 
       $.ajax({
-        url: /*[[@{/usuario/insert}]]*/,
+        url: path,
       }).done(function(data) {
         $( "#edit" ).append( data );
       });
     });
 
-    $( "#remove" ).dialog({ autoOpen: false, minHeight: 140, minWidth: 600, resizable: false });
+    $( "#remove" ).dialog({ autoOpen: false, minHeight: 140, maxHeight: 140, minWidth: 600, maxWidth: 600, resizable: false });
 
     $( "#remove_button" ).click(function() {
+      var id = $(this).data("id");
+      var path = /*[[@{/__${target}__/delete}]]*/;
+      path = path + "?id=" + id;
+
       $( "#remove" ).dialog( "open" );
 
       $.ajax({
-        url: /*[[@{/usuario/insert}]]*/,
+        url: path,
       }).done(function(data) {
         $( "#remove" ).append( data );
       });
