@@ -19,6 +19,11 @@ public abstract class Controller<E> {
     this.clazz = clazz;
   }
 
+  @RequestMapping(value = "/")
+  public String index(Model model) {
+    return "admin";
+  }
+
   @RequestMapping(value = "/get")
   public String get(Model model) {
     model.addAttribute("setting", serv.get());
