@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <form th:if="${#strings.equals(target, 'usuario')}" method="post" th:action="@{/usuario/delete}">
+      <input type="hidden" name="id" th:value="command.id"/>
+      <div class="alert alert-primary" role="alert">
+        Confirma remo&ccedil;&atilde;o do usu&aacute;rio <strong th:text="${command.firstName}"/> <strong th:text="${command.lastName}"/>?
+      </div>
+    </form>
+
+    <form th:if="${#strings.equals(target, 'categoria')}" method="post" th:action="@{/categoria/delete}">
+      <input type="hidden" name="id" th:value="command.id"/>
+      <div class="alert alert-primary" role="alert">
+        Confirma remo&ccedil;&atilde;o da categoria <strong th:text="${command.nome}"></strong>?
+      </div>
+    </form>
+
+    <form th:if="${#strings.equals(target, 'produto')}" method="post" th:action="@{/produto/delete}">
+      <input type="hidden" name="id" th:value="command.id"/>
+      <div class="alert alert-primary" role="alert">
+        Confirma remo&ccedil;&atilde;o do produto <strong th:text="${command.nome}"></strong>?
+      </div>
+    </form>
+
+    <form th:if="${#strings.equals(target, 'pagina')}" method="post" th:action="@{/pagina/delete}">
+      <input type="hidden" name="id" th:value="command.id"/>
+      <div class="alert alert-primary" role="alert">
+        Confirma remo&ccedil;&atilde;o da p&aacute;gina <strong th:text="${command.titulo}"></strong>?
+      </div>
+    </form>
+  </body>
+</html>

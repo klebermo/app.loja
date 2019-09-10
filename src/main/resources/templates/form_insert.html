@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <form th:if="${#strings.equals(target, 'usuario')}" method="post" th:action="@{/usuario/insert}">
+      <div class="form-group">
+        <label for="exampleInputUsername1">Username</label>
+        <input type="text" class="form-control" id="exampleInputUsername1" name="username" placeholder="Username">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputFirstName1">First name</label>
+        <input type="text" class="form-control" id="exampleInputFirstName1" name="firstName" placeholder="First name">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputLastName1">Last name</label>
+        <input type="text" class="form-control" id="exampleInputLastName1" name="lastName" placeholder="Last name">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="E-mail">
+      </div>
+
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1" name="enabled">
+        <label class="form-check-label" for="exampleCheck1">Ativo</label>
+      </div>
+
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck2" name="locked">
+        <label class="form-check-label" for="exampleCheck2">Bloqueado</label>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputExpirationDate1">Expiration date</label>
+        <input type="date" class="form-control" id="exampleInputExpirationDate1" name="dataExpiracao" placeholder="Expiration date">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleCredenciais2">Credenciais</label>
+        <select multiple class="form-control" id="exampleCredenciais2" name="credenciais">
+          <option th:each="c : ${credenciais}" th:value="${c.id}" th:text="${c.nome}"></option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <form th:if="${#strings.equals(target, 'categoria')}" method="post" th:action="@{/categoria/insert}">
+      <div class="form-group">
+        <label for="exampleNome1">Nome</label>
+        <input type="text" class="form-control" id="exampleNome1" name="nome" placeholder="Nome">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleResumo1">Resumo</label>
+        <input type="text" class="form-control" id="exampleResumo1" name="resumo" placeholder="Resumo">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleIcone1">Icone</label>
+        <input type="file" class="form-control" id="exampleIcone1" name="icone">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <form th:if="${#strings.equals(target, 'produto')}" method="post" th:action="@{/produto/insert}">
+      <div class="form-group">
+        <label for="exampleNome1">Nome</label>
+        <input type="text" class="form-control" id="exampleNome1" name="nome" placeholder="Nome">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleResumo1">Resumo</label>
+        <input type="text" class="form-control" id="exampleResumo1" name="resumo" placeholder="Resumo">
+      </div>
+
+      <div class="form-group">
+        <label for="examplePreco1">Pre&ccedil;o</label>
+        <input type="text" class="form-control" id="examplePreco1" name="preco" placeholder="Pre&ccedil;o">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleCategoria1">Categoria</label>
+        <select class="form-control" id="exampleCategoria2" name="categoria">
+          <option th:each="c : ${categoria}" th:value="${c.id}" th:text="${c.nome}"></option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleIcone1">Icone</label>
+        <input type="file" class="form-control" id="exampleIcone1" name="icone">
+      </div>
+
+      <div class="form-group">
+        <textarea class="summernote" id="exampleDescricao1" name="descricao"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <form th:if="${#strings.equals(target, 'pagina')}" method="post" th:action="@{/pagina/insert}">
+      <div class="form-group">
+        <input type="text" class="form-control" id="exampleTitulo1" name="titulo" placeholder="Titulo">
+      </div>
+
+      <div class="form-group">
+        <textarea class="summernote" id="exampleDescricao1" name="descricao"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleCategoria1">P&aacute;gina-m&atilde;e</label>
+        <select class="form-control" id="exampleParent2" name="parent">
+          <option th:each="c : ${paginas}" th:value="${c.id}" th:text="${c.titulo}"></option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </body>
+</html>
