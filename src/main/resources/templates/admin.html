@@ -481,8 +481,9 @@
       });
     });
 
-    $('#submit').click(function(){
-      var url = $("#form").attr( "action" );
+    $('form.form').on("submit", function(e){
+      e.preventDefault;
+      var url = $(this).attr( "action" );
       $.post( url, function( data ) {
         if(data == "")
           $( ".alert-success" ).show();
@@ -492,7 +493,7 @@
     });
 
     $('#yes').click(function(){
-      var url = $("#form").attr( "action" );
+      var url = $("form.form").attr( "action" );
       $.post( url, function( data ){
         if(data == "")
           $( ".alert-success" ).show();
