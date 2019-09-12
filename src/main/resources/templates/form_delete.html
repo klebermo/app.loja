@@ -76,5 +76,33 @@
         N&atilde;o foi poss&iacute;vel remover a p&aacute;gina.
       </div>
     </form>
+
+    <script th:inline="javascript">
+    $(document).ready(function(){
+      $('#yes').click(function(e){
+        e.preventDefault;
+        consoloe.log("yes remove");
+        var url = $("form.form").attr( "action" );
+        consoloe.log("url: "+url);
+        $.post( url, function( data ){
+          consoloe.log("data: '"+data+"'");
+          if(data == "")
+            $( ".alert-success" ).show();
+          else
+            $( ".alert-danger" ).show();
+          consoloe.log("close dialog");
+          $('#remove').dialog('close');
+          consoloe.log("end");
+        });
+      });
+
+      $('#not').click(function(e){
+        e.preventDefault;
+        consoloe.log("not remove");
+        $('#remove').dialog('close');
+        console.log("end");
+      });
+    });
+    </script>
   </body>
 </html>

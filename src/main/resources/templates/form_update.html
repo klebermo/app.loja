@@ -168,5 +168,20 @@
         N&atilde;o foi poss&iacute;vel atualizar os dados da p&aacute;gina.
       </div>
     </form>
+
+    <script th:inline="javascript">
+    $(document).ready(function(){
+      $('form.form').on("submit", function(e){
+        e.preventDefault;
+        var url = $(this).attr( "action" );
+        $.post( url, function( data ) {
+          if(data == "")
+            $( ".alert-success" ).show();
+          else
+            $( ".alert-danger" ).show();
+        })
+      });
+    })
+    </script>
   </body>
 </html>
