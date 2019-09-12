@@ -5,7 +5,7 @@
     <title></title>
   </head>
   <body>
-    <form th:if="${#strings.equals(target, 'usuario')}" method="post" th:action="@{/usuario/update}">
+    <form role="form" class="form" id="form" th:if="${#strings.equals(target, 'usuario')}" method="post" th:action="@{/usuario/update}">
       <input type="hidden" name="id" th:value="command.id"/>
 
       <div class="form-group">
@@ -66,7 +66,7 @@
       </div>
     </form>
 
-    <form th:if="${#strings.equals(target, 'categoria')}" method="post" th:action="@{/categoria/update}">
+    <form role="form" class="form" id="form" th:if="${#strings.equals(target, 'categoria')}" method="post" th:action="@{/categoria/update}">
       <input type="hidden" name="id" th:value="command.id"/>
 
       <div class="form-group">
@@ -95,7 +95,7 @@
       </div>
     </form>
 
-    <form th:if="${#strings.equals(target, 'produto')}" method="post" th:action="@{/produto/update}">
+    <form role="form" class="form" id="form" th:if="${#strings.equals(target, 'produto')}" method="post" th:action="@{/produto/update}">
       <input type="hidden" name="id" th:value="command.id"/>
 
       <div class="form-group">
@@ -140,7 +140,7 @@
       </div>
     </form>
 
-    <form th:if="${#strings.equals(target, 'pagina')}" method="post" th:action="@{/pagina/update}">
+    <form role="form" class="form" id="form" th:if="${#strings.equals(target, 'pagina')}" method="post" th:action="@{/pagina/update}">
       <input type="hidden" name="id" th:value="command.id"/>
 
       <div class="form-group">
@@ -173,15 +173,15 @@
     $(document).ready(function(){
       $('form.form').on("submit", function(e){
         e.preventDefault;
-        var url = $(this).attr( "action" );
-        $.post( url, function( data ) {
+        var path = $(this).attr( "action" );
+        $.ajax({type: 'post', url: path}).done(function(data){
           if(data == "")
             $( ".alert-success" ).show();
           else
             $( ".alert-danger" ).show();
-        })
+        });
       });
-    })
+    });
     </script>
   </body>
 </html>

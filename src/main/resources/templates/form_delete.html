@@ -5,7 +5,7 @@
     <title></title>
   </head>
   <body>
-    <form th:if="${#strings.equals(target, 'usuario')}" method="post" th:action="@{/usuario/delete}">
+    <form role="form" class="form" id="form" th:if="${#strings.equals(target, 'usuario')}" method="delete" th:action="@{/usuario/delete}">
       <input type="hidden" name="id" th:value="command.id"/>
 
       <div class="alert alert-primary" role="alert">
@@ -13,17 +13,9 @@
         <button type="button" class="btn btn-link" id="yes">Sim</button>
         <button type="button" class="btn btn-link" id="not">N&atilde;o</button>
       </div>
-
-      <div class="alert alert-success" role="alert" style="display: none;">
-        Usu&aacute;rio removido com sucesso!
-      </div>
-
-      <div class="alert alert-danger" role="alert" style="display: none;">
-        N&atilde;o foi poss&iacute;vel remover o usu&aacute;rio.
-      </div>
     </form>
 
-    <form th:if="${#strings.equals(target, 'categoria')}" method="post" th:action="@{/categoria/delete}">
+    <form role="form" class="form" id="form" th:if="${#strings.equals(target, 'categoria')}" method="delete" th:action="@{/categoria/delete}">
       <input type="hidden" name="id" th:value="command.id"/>
 
       <div class="alert alert-primary" role="alert">
@@ -31,17 +23,9 @@
         <button type="button" class="btn btn-link" id="yes">Sim</button>
         <button type="button" class="btn btn-link" id="not">N&atilde;o</button>
       </div>
-
-      <div class="alert alert-success" role="alert" style="display: none;">
-        Categoria removida com sucesso!
-      </div>
-
-      <div class="alert alert-danger" role="alert" style="display: none;">
-        N&atilde;o foi poss&iacute;vel remover a categoria.
-      </div>
     </form>
 
-    <form th:if="${#strings.equals(target, 'produto')}" method="post" th:action="@{/produto/delete}">
+    <form role="form" class="form" id="form" th:if="${#strings.equals(target, 'produto')}" method="delete" th:action="@{/produto/delete}">
       <input type="hidden" name="id" th:value="command.id"/>
 
       <div class="alert alert-primary" role="alert">
@@ -49,17 +33,9 @@
         <button type="button" class="btn btn-link" id="yes">Sim</button>
         <button type="button" class="btn btn-link" id="not">N&atilde;o</button>
       </div>
-
-      <div class="alert alert-success" role="alert" style="display: none;">
-        Produto removido com sucesso!
-      </div>
-
-      <div class="alert alert-danger" role="alert" style="display: none;">
-        N&atilde;o foi poss&iacute;vel remover o produto.
-      </div>
     </form>
 
-    <form th:if="${#strings.equals(target, 'pagina')}" method="post" th:action="@{/pagina/delete}">
+    <form role="form" class="form" id="form" th:if="${#strings.equals(target, 'pagina')}" method="delete" th:action="@{/pagina/delete}">
       <input type="hidden" name="id" th:value="command.id"/>
 
       <div class="alert alert-primary" role="alert">
@@ -67,40 +43,23 @@
         <button type="button" class="btn btn-link" id="yes">Sim</button>
         <button type="button" class="btn btn-link" id="not">N&atilde;o</button>
       </div>
-
-      <div class="alert alert-success" role="alert" style="display: none;">
-        P&aacute;gina removida com sucesso!
-      </div>
-
-      <div class="alert alert-danger" role="alert" style="display: none;">
-        N&atilde;o foi poss&iacute;vel remover a p&aacute;gina.
-      </div>
     </form>
 
     <script th:inline="javascript">
     $(document).ready(function(){
       $('#yes').click(function(e){
         e.preventDefault;
-        consoloe.log("yes remove");
-        var url = $("form.form").attr( "action" );
-        consoloe.log("url: "+url);
-        $.post( url, function( data ){
-          consoloe.log("data: '"+data+"'");
-          if(data == "")
-            $( ".alert-success" ).show();
-          else
-            $( ".alert-danger" ).show();
-          consoloe.log("close dialog");
+        var path = $("form.form").attr( "action" );
+        $.ajax({type: 'delete', url: path}).success(function(data){
           $('#remove').dialog('close');
-          consoloe.log("end");
+        }).fail(function(data){
+          //
         });
       });
 
       $('#not').click(function(e){
         e.preventDefault;
-        consoloe.log("not remove");
         $('#remove').dialog('close');
-        console.log("end");
       });
     });
     </script>
