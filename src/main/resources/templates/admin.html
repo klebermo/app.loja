@@ -480,32 +480,6 @@
         $( "#remove" ).append( data );
       });
     });
-
-    $('form.form').on("submit", function(e){
-      e.preventDefault;
-      var url = $(this).attr( "action" );
-      $.post( url, function( data ) {
-        if(data == "")
-          $( ".alert-success" ).show();
-        else
-          $( ".alert-danger" ).show();
-      })
-    });
-
-    $('#yes').click(function(){
-      var url = $("form.form").attr( "action" );
-      $.post( url, function( data ){
-        if(data == "")
-          $( ".alert-success" ).show();
-        else
-          $( ".alert-danger" ).show();
-        $('#remove').dialog('close');
-      });
-    });
-
-    $('#not').click(function(){
-      $('#remove').dialog('close');
-    });
   }
   /*]]>*/
   </script>
