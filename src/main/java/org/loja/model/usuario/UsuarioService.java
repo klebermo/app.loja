@@ -62,12 +62,17 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     super(Usuario.class);
   }
 
-  public void register(Usuario novo) {
+  public Boolean register(Usuario novo) {
     BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder(4);
     String senha = bcrypt.encode(novo.getPassword());
     novo.setPassword(senha);
     novo.setEnabled(true);
     this.dao.insert(novo);
+    return true;
+  }
+
+  public Boolean recoverPassword(String email) {
+    return true;
   }
 
   public void toggle_credencial(Integer usuario_id, Integer credencial_id) {
