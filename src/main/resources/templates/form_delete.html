@@ -50,10 +50,8 @@
       $('#yes').click(function(e){
         e.preventDefault;
         var path = $("form.form").attr( "action" );
-        $.ajax({type: 'delete', url: path}).success(function(data){
+        $.ajax({type: 'delete', url: path}).done(function(data){
           $('#remove').dialog('close');
-        }).fail(function(data){
-          //
         });
       });
 
