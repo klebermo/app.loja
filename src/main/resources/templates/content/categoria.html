@@ -1,0 +1,21 @@
+<th:block th:fragment="copy">
+<section>
+  <div class="media">
+    <img th:if="${categoria.icone}" th:src="@{/imagem/download/__${categoria.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${categoria.nome}"/>
+    <img th:unless="${categoria.icone}" th:src="@{/images/icon_category.png}" width=64 height=64 class="mr-3" th:alt="${categoria.nome}"/>
+    <div class="media-body">
+      <h5 class="mt-0" th:utext="${categoria.nome}">Media heading</h5>
+      <span th:utext="${categoria.resumo}">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</span>
+    </div>
+  </div>
+  <div th:each="p : ${produtos}" th:if="${#strings.equals(p.categoria.nome, categoria.nome)}" class="card" style="width: 18rem;">
+    <img th:if="${p.icone}" th:src="@{/imagem/download/__${p.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${p.nome}"/>
+    <img th:unless="${p.icone}" th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:alt="${p.nome}"/>
+    <div class="card-body">
+      <h5 class="card-title" th:utext="${p.nome}">Card title</h5>
+      <p class="card-text" th:utext="${p.resumo}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <a th:href="@{/p/__${p.nome}__}" class="btn btn-primary">Detalhes</a>
+    </div>
+  </div>
+</section>
+</th:block>
