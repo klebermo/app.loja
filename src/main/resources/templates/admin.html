@@ -1,8 +1,6 @@
 <!doctype html>
-<html lang="pt-br">
+<html>
   <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"/>
     <link th:href="@{/css/style-admin.css}" rel="stylesheet">
@@ -29,16 +27,25 @@
                   in&iacute;cio
                 </a>
               </li>
+
               <li sec:authorize="hasPermission(#user, 'consulta_categoria')" class="nav-item">
                 <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Categoria')}? 'nav-link active' : 'nav-link'" th:href="@{/categoria/}">
                   <span data-feather="paperclip"></span>
                   categorias
                 </a>
               </li>
+
               <li sec:authorize="hasPermission(#user, 'consulta_produto')" class="nav-item">
                 <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Produto')}? 'nav-link active' : 'nav-link'" th:href="@{/produto/}">
                   <span data-feather="shopping-bag"></span>
                   produtos
+                </a>
+              </li>
+
+              <li sec:authorize="hasPermission(#user, 'consulta_pagina')" class="nav-item">
+                <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Pagina')}? 'nav-link active' : 'nav-link'" th:href="@{/pagina/}">
+                  <span data-feather="shopping-bag"></span>
+                  p&aacute;ginas
                 </a>
               </li>
             </ul>
@@ -57,18 +64,21 @@
                   Geral
                 </a>
               </li>
+
               <li>
                 <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Paypal')}? 'nav-link active' : 'nav-link'" th:href="@{/paypal/get}" tabindex="-1" aria-disabled="true">
                   <span data-feather="file"></span>
                   Paypal
                 </a>
               </li>
+
               <li>
                 <a th:class="${classe != null and #strings.equals(classe.simpleName, 'MercadoPago')}? 'nav-link active' : 'nav-link'" th:href="@{/mercadopago/get}" tabindex="-1" aria-disabled="true">
                   <span data-feather="file"></span>
                   MercadoPago
                 </a>
               </li>
+              
               <li>
                 <a th:class="${classe != null and #strings.equals(classe.simpleName, 'PagSeguro')}? 'nav-link active' : 'nav-link'" th:href="@{/pagseguro/get}" tabindex="-1" aria-disabled="true">
                   <span data-feather="file"></span>
@@ -232,6 +242,11 @@
             novo item
           </a>
 
+          <a th:if="${#strings.equals(classe.simpleName, 'Pagina')}" sec:authorize="hasPermission(#user, 'cadastra_pagina')" class="btn btn-primary" onclick="insert_data();">
+            <span data-feather="file-plus"></span>
+            novo item
+          </a>
+
           <a th:if="${#strings.equals(classe.simpleName, 'Usuario')}" sec:authorize="hasPermission(#user, 'cadastra_usuario')" class="btn btn-primary" onclick="insert_data();">
             <span data-feather="file-plus"></span>
             novo item
@@ -247,15 +262,19 @@
           <li class="nav-item" id="tab-listagem">
             <a class="nav-link active" id="listagem-tab" data-toggle="tab" href="#listagem" role="tab" aria-controls="listagem" aria-selected="true">Listagem</a>
           </li>
+
           <li class="nav-item" id="tab-insert" style="display: none;">
             <a class="nav-link" id="insert-tab" data-toggle="tab" href="#insert" role="tab" aria-controls="insert" aria-selected="false">Insert</a>
           </li>
+
           <li class="nav-item" id="tab-update" style="display: none;">
             <a class="nav-link" id="update-tab" data-toggle="tab" href="#update" role="tab" aria-controls="update" aria-selected="false">Update</a>
           </li>
+
           <li class="nav-item" id="tab-delete" style="display: none;">
             <a class="nav-link" id="delete-tab" data-toggle="tab" href="#delete" role="tab" aria-controls="delete" aria-selected="false">Delete</a>
           </li>
+
           <li class="nav-item" id="tab-credencial" style="display: none;">
             <a class="nav-link" id="credencial-tab" data-toggle="tab" href="#credencial" role="tab" aria-controls="credencial" aria-selected="false">Credenciais</a>
           </li>
@@ -267,25 +286,34 @@
               <thead class="thead-dark">
                 <tr id="table-header">
                   <th>#</th>
+
                   <th:block th:if="${#strings.equals(classe.simpleName, 'Categoria')}">
                     <th class="col">nome</th>
                     <th class="col">resumo</th>
                   </th:block>
+
                   <th:block th:if="${#strings.equals(classe.simpleName, 'Produto')}">
                     <th class="col">nome</th>
                     <th class="col">resumo</th>
                     <th class="col">preco</th>
                     <th class="col">categoria</th>
                   </th:block>
+
+                  <th:block th:if="${#strings.equals(classe.simpleName, 'Pagina')}">
+                    <th class="col">titulo</th>
+                  </th:block>
+
                   <th:block th:if="${#strings.equals(classe.simpleName, 'Usuario')}">
                     <th class="col">username</th>
                     <th class="col">firstName</th>
                     <th class="col">lastName</th>
                     <th class="col">email</th>
                   </th:block>
+
                   <th:block th:if="${#strings.equals(classe.simpleName, 'Credencial')}">
                     <th class="col">nome</th>
                   </th:block>
+
                   <th>
                     <div th:if="${#strings.equals(classe.simpleName, 'Categoria')}" class="btn-group" id="buttons" role="group" aria-label="Categoria" style="display: none;">
                       <button sec:authorize="hasPermission(#user, 'atualiza_categoria')" type="button" class="btn btn-secondary" th:attr="data-url=@{/categoria/update}" onclick="update_data(this)">
@@ -295,6 +323,7 @@
                         <span data-feather="trash-2"></span>
                       </button>
                     </div>
+
                     <div th:if="${#strings.equals(classe.simpleName, 'Produto')}" class="btn-group" id="buttons" role="group" aria-label="Produto" style="display: none;">
                       <button sec:authorize="hasPermission(#user, 'atualiza_produto')" type="button" class="btn btn-secondary" th:attr="data-url=@{/produto/update}" onclick="update_data(this)">
                         <span data-feather="edit"></span>
@@ -303,6 +332,16 @@
                         <span data-feather="trash-2"></span>
                       </button>
                     </div>
+
+                    <div th:if="${#strings.equals(classe.simpleName, 'Pagina')}" class="btn-group" id="buttons" role="group" aria-label="Pagina" style="display: none;">
+                      <button sec:authorize="hasPermission(#user, 'atualiza_pagina')" type="button" class="btn btn-secondary" th:attr="data-url=@{/pagina/update}" onclick="update_data(this)">
+                        <span data-feather="edit"></span>
+                      </button>
+                      <button sec:authorize="hasPermission(#user, 'remove_pagina')" type="button" class="btn btn-secondary" th:attr="data-url=@{/pagina/delete}" onclick="delete_data(this)">
+                        <span data-feather="trash-2"></span>
+                      </button>
+                    </div>
+
                     <div th:if="${#strings.equals(classe.simpleName, 'Usuario')}" class="btn-group" id="buttons" role="group" aria-label="Usuario" style="display: none;">
                       <button sec:authorize="hasPermission(#user, 'atualiza_usuario')" type="button" class="btn btn-secondary" th:attr="data-url=@{/usuario/update}" onclick="update_data(this)">
                         <span data-feather="edit"></span>
@@ -314,6 +353,7 @@
                         <span data-feather="list"></span>
                       </button>
                     </div>
+
                     <div th:if="${#strings.equals(classe.simpleName, 'Credencial')}" class="btn-group" id="buttons" role="group" aria-label="Credencial" style="display: none;">
                       <button sec:authorize="hasPermission(#user, 'atualiza_credencial')" type="button" class="btn btn-secondary" th:attr="data-url=@{/credencial/update}" onclick="update_data(this)">
                         <span data-feather="edit"></span>
@@ -343,11 +383,11 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/feather-icons"></script>
     <script th:src="@{/js/script-admin.js}"></script>
+
     <script>
       feather.replace();
     </script>

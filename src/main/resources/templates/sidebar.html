@@ -1,13 +1,15 @@
 <th:block th:fragment="copy">
-  <div class="list-group">
-    <a th:if="${categoria == null and produto == null}" th:each="c : ${categorias}" th:href="@{/c/__${c.nome}__}" class="list-group-item list-group-item-action" th:text="${c.nome}">
-      Cras justo odio
-    </a>
-    <a th:if="${produto}" th:with="categoria = ${produto.categoria}" th:each="c : ${categorias}" th:href="@{/c/__${c.nome}__}" th:class="${#strings.equals(categoria.nome, c.nome)}? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'" th:text="${c.nome}">
-      Cras justo odio
-    </a>
-    <a th:if="${categoria}" th:each="c : ${categorias}" th:href="@{/c/__${c.nome}__}" th:class="${#strings.equals(categoria.nome, c.nome)}? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'" th:text="${c.nome}">
-      Cras justo odio
-    </a>
-  </div>
+  <ul class="nav flex-column">
+    <li class="nav-item" th:if="${categoria == null and produto == null}" th:each="c : ${categorias}">
+      <a class="nav-link" th:href="@{/c/__${c.nome}__}" th:text="${c.nome}"></a>
+    </li>
+
+    <li class="nav-item" th:if="${produto}" th:each="c : ${categorias}">
+      <a th:with="categoria = ${produto.categoria}" th:href="@{/c/__${c.nome}__}" th:class="${#strings.equals(categoria.nome, c.nome)}? 'nav-link active' : 'nav-link'" th:text="${c.nome}"></a>
+    </li>
+
+    <li class="nav-item" th:if="${categoria}" th:each="c : ${categorias}">
+      <a th:href="@{/c/__${c.nome}__}" th:class="${#strings.equals(categoria.nome, c.nome)}? 'nav-link active' : 'nav-link'" th:text="${c.nome}"></a>
+    </li>
+  </ul>
 </th:block>

@@ -1,12 +1,37 @@
 <div th:replace="header :: copy"></div>
-  <div class="container">
+  <main role="main" class="container-fluid">
     <div class="row">
-      <div class="col-4">
+      <div class="col-sm-2">
         <div th:replace="sidebar :: copy"></div>
       </div>
-      <div class="col-8">
-        <div th:replace="content :: copy"></div>
+
+      <div class="col-lg-10" th:if="${index}">
+        <div th:replace="content/home :: copy"></div>
+      </div>
+
+      <div class="col-lg-10" th:if="${categoria}">
+        <div th:replace="content/categoria :: copy"></div>
+      </div>
+
+      <div class="col-lg-10" th:if="${produto}">
+        <div th:replace="content/produto :: copy"></div>
+      </div>
+
+      <div class="col-lg-10" th:if="${pagina}">
+        <div th:replace="content/pagina :: copy"></div>
+      </div>
+
+      <div class="col-lg-10" th:if="${cart}">
+        <div th:replace="content/cart :: copy"></div>
+      </div>
+
+      <div class="col-lg-10" th:if="${orders}">
+        <div th:replace="content/orders :: copy"></div>
+      </div>
+
+      <div class="col-lg-10" th:if="${order}">
+        <div th:replace="content/order :: copy"></div>
       </div>
     </div>
-  </div>
+  </main>
 <div th:replace="footer :: copy"></div>
