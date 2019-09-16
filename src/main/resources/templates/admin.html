@@ -149,31 +149,20 @@
               <th scope="col">e-mail</th>
               <th scope="col">enabled</th>
               <th scope="col">locked</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr th:each="item : ${list}">
-              <td th:text="${item.id}"></td>
-              <td th:text="${item.username}"></td>
-              <td th:text="${item.firstName}"></td>
-              <td th:text="${item.lastName}"></td>
-              <td th:text="${item.email}"></td>
-              <td th:text="${item.enabled}"></td>
-              <td th:text="${item.locked}"></td>
-              <td>
-                <div class="btn-group" role="group" aria-label="actionbar">
-                  <button type="button" class="btn btn-secondary" id="edit_button" th:attr="data-id=${item.id}">
+              <th scope="col">
+                <div class="btn-group" role="group" aria-label="actionbar" style="display: none;">
+                  <button type="button" class="btn btn-secondary" id="edit_button">
                     <i class="fas fa-edit"></i>
                   </button>
-                  <button type="button" class="btn btn-secondary" id="remove_button" th:attr="data-id=${item.id}">
+                  <button type="button" class="btn btn-secondary" id="remove_button">
                     <i class="fas fa-trash"></i>
                   </button>
                 </div>
-              </td>
+              </th>
             </tr>
-          </tbody>
+          </thead>
+
+          <tbody></tbody>
         </table>
       </main>
 
@@ -197,27 +186,20 @@
               <th scope="col">#</th>
               <th scope="col">nome</th>
               <th scope="col">resumo</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr th:each="item : ${list}">
-              <td th:text="${item.id}"></td>
-              <td th:text="${item.nome}"></td>
-              <td th:text="${item.resumo}"></td>
-              <td>
-                <div class="btn-group" role="group" aria-label="actionbar">
-                  <button type="button" class="btn btn-secondary" id="edit_button" th:attr="data-id=${item.id}">
+              <th scope="col">
+                <div class="btn-group" role="group" aria-label="actionbar" style="display: none;">
+                  <button type="button" class="btn btn-secondary" id="edit_button">
                     <i class="fas fa-edit"></i>
                   </button>
-                  <button type="button" class="btn btn-secondary" id="remove_button" th:attr="data-id=${item.id}">
+                  <button type="button" class="btn btn-secondary" id="remove_button">
                     <i class="fas fa-trash"></i>
                   </button>
                 </div>
-              </td>
+              </th>
             </tr>
-          </tbody>
+          </thead>
+
+          <tbody></tbody>
         </table>
       </main>
 
@@ -243,29 +225,20 @@
               <th scope="col">resumo</th>
               <th scope="col">pre&ccedil;o</th>
               <th scope="col">categoria</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr th:each="item : ${list}">
-              <td th:text="${item.id}"></td>
-              <td th:text="${item.nome}"></td>
-              <td th:text="${item.resumo}"></td>
-              <td th:text="${item.preco}"></td>
-              <td th:text="${item.categoria}"></td>
-              <td>
-                <div class="btn-group" role="group" aria-label="actionbar">
-                  <button type="button" class="btn btn-secondary" id="edit_button" th:attr="data-id=${item.id}">
+              <th scope="col">
+                <div class="btn-group" role="group" aria-label="actionbar" style="display: none;">
+                  <button type="button" class="btn btn-secondary" id="edit_button">
                     <i class="fas fa-edit"></i>
                   </button>
-                  <button type="button" class="btn btn-secondary" id="remove_button" th:attr="data-id=${item.id}">
+                  <button type="button" class="btn btn-secondary" id="remove_button">
                     <i class="fas fa-trash"></i>
                   </button>
                 </div>
-              </td>
+              </th>
             </tr>
-          </tbody>
+          </thead>
+
+          <tbody></tbody>
         </table>
       </main>
 
@@ -288,26 +261,20 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">titulo</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr th:each="item : ${list}">
-              <td th:text="${item.id}"></td>
-              <td th:text="${item.titulo}"></td>
-              <td>
-                <div class="btn-group" role="group" aria-label="actionbar">
-                  <button type="button" class="btn btn-secondary" id="edit_button" th:attr="data-id=${item.id}">
+              <th scope="col">
+                <div class="btn-group" role="group" aria-label="actionbar" style="display: none;">
+                  <button type="button" class="btn btn-secondary" id="edit_button">
                     <i class="fas fa-edit"></i>
                   </button>
-                  <button type="button" class="btn btn-secondary" id="remove_button" th:attr="data-id=${item.id}">
+                  <button type="button" class="btn btn-secondary" id="remove_button">
                     <i class="fas fa-trash"></i>
                   </button>
                 </div>
-              </td>
+              </th>
             </tr>
-          </tbody>
+          </thead>
+
+          <tbody></tbody>
         </table>
       </main>
 
@@ -315,7 +282,7 @@
         <h1>Geral</h1>
         <hr/>
 
-        <form method="post" th:action="@{/geral/set}">
+        <form role="form" class="form" id="form" method="post" th:action="@{/geral/set}">
           <div class="form-group">
             <label for="titulo">Titulo</label>
             <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Titulo">
@@ -347,7 +314,7 @@
         <h1>Paypal</h1>
         <hr/>
 
-        <form method="post" th:action="@{/paypal/set}">
+        <form role="form" class="form" id="form" method="post" th:action="@{/paypal/set}">
           <div class="form-group">
             <label for="clientId">ClientID</label>
             <input type="text" class="form-control" id="clientId" name="clientId" placeholder="ClientID">
@@ -374,7 +341,7 @@
         <h1>PagSeguro</h1>
         <hr/>
 
-        <form method="post" th:action="@{/pagseguro/set}">
+        <form role="form" class="form" id="form" method="post" th:action="@{/pagseguro/set}">
           <div class="form-group">
             <label for="clientId">ClientID</label>
             <input type="text" class="form-control" id="clientId" name="clientId" placeholder="ClientID">
@@ -401,7 +368,7 @@
         <h1>MercadoPago</h1>
         <hr/>
 
-        <form method="post" th:action="@{/mercadopago/set}">
+        <form role="form" class="form" id="form" method="post" th:action="@{/mercadopago/set}">
           <div class="form-group">
             <label for="clientId">ClientID</label>
             <input type="text" class="form-control" id="clientId" name="clientId" placeholder="ClientID">
@@ -435,6 +402,17 @@
   <script th:inline="javascript">
   /*<![CDATA[*/
   $(document).ready(function(){
+    $('form.form').on("submit", function(e){
+      e.preventDefault;
+      var path = $(this).attr( "action" );
+      $.ajax({type: 'post', url: path}).done(function(data){
+        if(data == "")
+          $( ".alert-success" ).show();
+        else
+          $( ".alert-danger" ).show();
+      });
+    });
+    
     $( "#new" ).dialog({ autoOpen: false, minHeight: 640, maxHeight: 640, minWidth: 480, maxWidth: 480, resizable: false });
 
     $( "#new_button" ).click(function() {
