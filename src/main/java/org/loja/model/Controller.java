@@ -36,7 +36,7 @@ public abstract class Controller<E> {
   @PreAuthorize("hasPermission(#user, 'cadastra_'+#this.this.name)")
   public String insert(Model model) throws InstantiationException, IllegalAccessException {
     model.addAttribute("command", serv.newObject());
-    return "form_insert";
+    return "form/form_insert";
   }
 
   @RequestMapping(value = "/insert", method=RequestMethod.POST)
@@ -50,7 +50,7 @@ public abstract class Controller<E> {
   @PreAuthorize("hasPermission(#user, 'atualiza_'+#this.this.name)")
   public String update(Model model, @RequestParam(value="id") String id) {
     model.addAttribute("command", serv.findBy("id", new Integer(id)));
-    return "form_update";
+    return "form/form_update";
   }
 
   @RequestMapping(value = "/update", method=RequestMethod.POST)
@@ -64,7 +64,7 @@ public abstract class Controller<E> {
   @PreAuthorize("hasPermission(#user, 'remove_'+#this.this.name)")
   public String delete(Model model, @RequestParam(value="id") String id) {
     model.addAttribute("command", serv.findBy("id", new Integer(id)));
-    return "form_delete";
+    return "form/form_delete";
   }
 
   @RequestMapping(value = "/delete", method=RequestMethod.DELETE)
