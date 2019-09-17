@@ -171,6 +171,8 @@
 
     <script th:inline="javascript">
     $(document).ready(function(){
+      $('.summernote').summernote({height: 300});
+      
       $('form.form').on("submit", function(e){
         e.preventDefault;
         var path = $(this).attr( "action" );
