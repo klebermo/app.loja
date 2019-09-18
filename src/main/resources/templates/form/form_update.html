@@ -47,7 +47,7 @@
           </div>
 
           <div class="form-group">
-            <textarea rows="25" cols="80" class="summernote" id="descricao" name="descricao" th:value="${command.descricao}"></textarea>
+            <textarea  class="summernote" id="descricao" name="descricao" th:value="${command.descricao}"></textarea>
           </div>
 
           <div class="form-group">
@@ -82,7 +82,7 @@
           </div>
 
           <div class="form-group">
-            <textarea rows="25" cols="80" class="summernote" id="descricao" name="descricao" th:text="${pagina.descricao}"></textarea>
+            <textarea class="summernote" id="descricao" name="descricao" th:value="${pagina.descricao}"></textarea>
           </div>
 
           <div class="form-group">
@@ -175,11 +175,5 @@
         </div>
       </div>
     </div>
-
-    <script>
-    $(document).ready(function(){
-      $('.summernote').summernote({height: 300});
-    });
-    </script>
   </body>
 </html>
