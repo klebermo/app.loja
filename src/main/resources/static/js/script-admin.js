@@ -397,11 +397,11 @@ function cancel_credencial(element) {
   document.getElementById("listagem").classList.add('active');
 }
 
-var tab_panel = document.getElementsByClassName("tab-content");
+var tab_content = document.getElementsByClassName("tab-content");
 
-for (i = 0; i < tab_panel.length; i++) {
+for (i = 0; i < tab_content.length; i++) {
   // Select the node that will be observed for mutations
-  var targetNode = tab_panel[i];
+  var targetNode = tab_content[i];
 
   // Options for the observer (which mutations to observe)
   var config = { attributes: true, childList: true, subtree: true };
@@ -424,9 +424,6 @@ for (i = 0; i < tab_panel.length; i++) {
   // Start observing the target node for configured mutations
   observer.observe(targetNode, config);
 }
-
-/*for (i = 0; i < tab_panel.length; i++)
-  tab_panel[i].addEventListener("DOMSubtreeModified", detect_uploader, false);*/
 
 function detect_uploader() {
   var image_uploader = document.getElementsByClassName("image-uploader");
@@ -499,5 +496,41 @@ function file_upload() {
       xhr.send(formData);
     }
     reader.readAsDataURL(file);
+  }
+}
+
+var tab_pane = document.getElementsByClassName("tab-pane");
+console.log("tab_pane.lenght: "+tab_pane.lenght);
+
+for (i = 0; i < tab_pane.length; i++) {
+  // Select the node that will be observed for mutations
+  var targetNode = tab_pane[i];
+
+  // Options for the observer (which mutations to observe)
+  var config = { attributes: true, characterData: true, childList: true, subtree: true, attributeOldValue: true, characterDataOldValue: true };
+
+  // Callback function to execute when mutations are observed
+  var callback = function(mutationsList, observer) {
+      for(var mutation of mutationsList) {
+        if (mutation.type == 'childList')
+            detect_editor();
+        if (mutation.type == 'subtree')
+            detect_editor();
+      }
+  };
+
+  // Create an observer instance linked to the callback function
+  var observer = new MutationObserver(callback);
+
+  // Start observing the target node for configured mutations
+  observer.observe(targetNode, config);
+}
+
+function detect_editor() {
+  console.log("detect_editor");
+  var editor = document.getElementsByClassName("summernote");
+  console.log("editor.lenght: "+editor.lenght);
+  for (i = 0; i < editor.length; i++) {
+    $(editor).summernote({height: 300});
   }
 }
