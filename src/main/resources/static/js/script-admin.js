@@ -500,7 +500,6 @@ function file_upload() {
 }
 
 var tab_pane = document.getElementsByClassName("tab-pane");
-console.log("tab_pane.lenght: "+tab_pane.lenght);
 
 for (i = 0; i < tab_pane.length; i++) {
   // Select the node that will be observed for mutations
@@ -527,9 +526,7 @@ for (i = 0; i < tab_pane.length; i++) {
 }
 
 function detect_editor() {
-  console.log("detect_editor");
   var editor = document.getElementsByClassName("summernote");
-  console.log("editor.lenght: "+editor.lenght);
   for (i = 0; i < editor.length; i++) {
     $(editor).summernote({height: 300});
   }
