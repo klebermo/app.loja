@@ -34,8 +34,9 @@ function show_cart_total() {
     xhr.onreadystatechange = function() {
       if (xhr.readyState == 4 && xhr.status == 200) {
         var total = xhr.responseText;
-        cart_total.innerHTML = total;
-        return total;
+        var currency = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(total)
+        cart_total.innerHTML = currency;
+        return currency;
       }
     };
     var formData = new FormData();
