@@ -14,7 +14,11 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav mr-auto"></ul>
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item" th:each="pagina : ${paginas}">
+              <a class="nav-link" th:href="@{/page/__${pagina_titulo}__}"></a>
+            </li>
+          </ul>
 
           <ul class="navbar-nav">
             <li class="nav-item" sec:authorize="isAnonymous()">
