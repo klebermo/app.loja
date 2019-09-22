@@ -1,0 +1,12 @@
+<th:block th:fragment="copy">
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a th:href="@{/}"></a></li>
+    <li th:each="p : ${breadcrumb}" class="breadcrumb-item" aria-current="page" th:text="${p.titulo}"></li>
+  </ol>
+</nav>
+
+<h2 th:text="${pagina.titulo}"></h2>
+
+<span th:text="${pagina.descricao}"></span>
+</th:block>

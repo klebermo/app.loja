@@ -4,14 +4,16 @@
     <img th:if="${produto.icone}" th:src="@{/imagem/download/__${produto.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${produto.nome}"/>
     <img th:unless="${produto.icone}" th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:alt="${produto.nome}"/>
     <div class="media-body">
-      <h5 class="mt-0" th:utext="${produto.nome}">Media heading</h5>
-      <span th:utext="${produto.resumo}">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</span>
+      <h5 class="mt-0" th:utext="${produto.nome}"></h5>
+      <span th:utext="${produto.resumo}"></span>
       <div class="row">
         <div class="col">
           <button type="button" class="btn btn-primary" th:text="${#numbers.formatCurrency(produto.preco)}"></button>
         </div>
         <div class="col">
-          <button type="button" class="btn btn-secondary" onclick="add_to_cart(this)" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}, data-url=@{/usuario/add_to_cart}">Comprar</button>
+          <button type="button" class="btn btn-secondary" onclick="add_to_cart(this)" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}, data-url=@{/usuario/add_to_cart}">
+            Comprar
+          </button>
         </div>
         <div class="col">
           <div class="dropdown">
@@ -19,15 +21,20 @@
               Baixar
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a th:each="arquivo : ${produto.versaoGratuita}" class="dropdown-item" th:href="@{/arquivo/download/__${arquivo.id}__}" th:text="${arquivo.type}">Action</a>
+              <a th:each="arquivo : ${produto.versaoGratuita}" class="dropdown-item" th:href="@{/arquivo/download/__${arquivo.id}__}" th:text="${arquivo.type}"></a>
             </div>
           </div>
+        </div>
+        <div class="col">
+          <a class="btn btn-secondary" th:href="@{/forum/__${produto.id}__}">
+            F&oacute;rum
+          </a>
         </div>
       </div>
     </div>
   </div>
   <div class="jumbotron">
-    <p class="lead" th:utext="${produto.descricao}">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+    <p class="lead" th:utext="${produto.descricao}"></p>
   </div>
 </section>
 </th:block>

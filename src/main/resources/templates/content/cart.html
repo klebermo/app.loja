@@ -15,35 +15,58 @@
         <th scope="col"></th>
       </tr>
     </thead>
+
     <tbody th:if="${usuario.cesta}">
       <tr th:each="produto : ${usuario.cesta.produtos}" th:id="${'produto_' + produto.id}">
         <th scope="row" id="cart_list" th:style="${#lists.isEmpty(usuario.cesta.produtos)}? 'display: none;': ''">
           <img th:if="${produto.icone}" th:src="@{/imagem/download/__${produto.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${produto.nome}"/>
           <img th:unless="${produto.icone}" th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:alt="${produto.nome}"/>
         </th>
-        <td th:text="${produto.nome}">Mark</td>
-        <td th:text="${#numbers.formatCurrency(produto.preco)}">Otto</td>
+        <td th:text="${produto.nome}"></td>
+        <td th:text="${#numbers.formatCurrency(produto.preco)}"></td>
         <td>
-          <button class="btn btn-secondary" onclick="remove_from_cart(this)" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}, data-url=@{/usuario/remove_from_cart}" type="button"><span data-feather="trash-2"></span></button>
+          <button class="btn btn-secondary" onclick="remove_from_cart(this)" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}, data-url=@{/usuario/remove_from_cart}" type="button">
+            <i class="fas fa-trash"></i>
+          </button>
         </td>
       </tr>
       <tr scope="row" id="empty_cart" th:style="${#lists.isEmpty(usuario.cesta.produtos)}? '': 'display: none;'">
         <th colspan="4">Cesta de compras vazia</th>
       </tr>
     </tbody>
+
     <tfoot>
       <tr>
         <td></td>
         <td></td>
         <td><h3>Total:<span class="badge badge-secondary" id="cart_total" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/cart_total}"></span></h3></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>
+          <a th:href="@{/usuario/checkout_paypal?usuario_id=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra com paypal</a>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>
+          <a th:href="@{/usuario/checkout_mercadopago?usuario_id=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra com mercadoPago</a>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>
+          <a th:href="@{/usuario/checkout_pagseguro?usuario_id=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra com pagSeguro</a>
+        </td>
+        <td></td>
       </tr>
     </tfoot>
-    <a th:href="@{/usuario/checkout_paypal?usuario_id=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra com paypal</a>
-    <a th:href="@{/usuario/checkout_mercadopago?usuario_id=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra com mercadoPago</a>
-    <a th:href="@{/usuario/checkout_pagseguro?usuario_id=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra com pagSeguro</a>
   </table>
-  <div class="alert alert-danger" role="alert" th:if="${error}">
-    N&atilde;o foi possivel efetivar o pagamento!
-  </div>
 </section>
 </th:block>

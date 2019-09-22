@@ -1,21 +1,22 @@
 <th:block th:fragment="copy">
-  <section>
-    <div th:each="c : ${categorias}" class="card">
-      <div class="card-header" th:utext="${c.nome}">
-      </div>
-      <div class="card-body">
-        <div th:each="p : ${produtos}" th:if="${#strings.equals(p.categoria.nome, c.nome)}" class="col">
-          <div class="card" style="width: 18rem;">
-            <img th:if="${p.icone}" th:src="@{/imagem/download/__${p.icone.id}__}" class="mr-3" th:alt="${p.nome}"/>
-            <img th:unless="${p.icone}" th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:alt="${p.nome}"/>
-            <div class="card-body">
-              <h5 class="card-title" th:utext="${p.nome}">Card title</h5>
-              <p class="card-text" th:utext="${p.resumo}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a th:href="@{/p/__${p.nome}__}" class="btn btn-primary">Detalhes</a>
-            </div>
-          </div>
+<div class="row no-gutters" th:each="c : ${categorias}">
+  <div class="jumbotron">
+    <h1 class="display-4" th:text="${c.nome}"></h1>
+    <p class="lead" th:text="${c.resumo}"></p>
+    <a class="btn btn-primary btn-lg" th:href="@{/c/__${c.nome}__}" role="button">Mais</a>
+  </div>
+
+  <div class="col" th:each="i : ${#numbers.sequence( 1, 3)}">
+    <th:block th:each="p : ${produtos}" th:if="${#strings.equals(p.categoria, c)}">
+      <div class="card" style="width: 18rem;">
+        <img th:src="@{/imagem/download/__${p.icone}__}" class="card-img-top" th:alt="${p.nome}">
+        <div class="card-body">
+          <h5 class="card-title" th:text="${p.nome}"></h5>
+          <p class="card-text" th:text="${p.resumo}"></p>
+          <a th:href="@{/p/__${p.nome}__}" class="btn btn-primary">Ver detalhes</a>
         </div>
       </div>
-    </div>
-  </section>
+    </th:block>
+  </div>
+</div> <!--row-->
 </th:block>
