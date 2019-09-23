@@ -10,7 +10,7 @@
     </li>
 
     <th:block th:if="${pagina}" th:each="p : ${paginas}">
-      <li class="nav-item" th:if="${#string.equals(p.parent, pagina)}">
+      <li class="nav-item" th:if="${p.parent != null and #string.equals(p.parent, pagina)}">
         <a th:href="@{/page/__${p.titulo}__}" class="nav-link" th:text="${p.titulo}"></a>
       </li>
     </th:block>
