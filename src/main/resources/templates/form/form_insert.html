@@ -80,7 +80,7 @@
 
           <div class="form-group">
             <label for="parent">Pagina m&atilde;e</label>
-            <select class="form-control" id="parent" name="parent.id">
+            <select class="form-control" id="parent" name="parent">
               <option value=""></option>
               <option th:each="pagina : ${paginas}" th:value="${pagina.id}" th:text="${pagina.titulo}"/>
             </select>
