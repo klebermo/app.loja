@@ -283,7 +283,7 @@
 
         <div class="tab-content" id="tab_content">
           <div class="tab-pane active" id="listagem" role="tabpanel" aria-labelledby="listagem-tab">
-            <table class="table table-striped" id="table" th:attr="data-json=@{/__${#strings.toLowerCase(classe.simpleName)}__/list.json}">
+            <table class="table" id="table" th:attr="data-json=@{/__${#strings.toLowerCase(classe.simpleName)}__/list.json}">
               <thead class="thead-dark">
                 <tr id="table-header">
                   <th>#</th>
