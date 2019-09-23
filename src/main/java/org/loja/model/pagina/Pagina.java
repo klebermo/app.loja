@@ -37,7 +37,7 @@ public class Pagina extends Model {
     return titulo;
   }
 
-  public void setTitulo(String nome) {
+  public void setTitulo(String titulo) {
     this.titulo = titulo;
   }
 
