@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import java.util.List;
 import org.loja.model.categoria.Categoria;
 import org.loja.model.produto.Produto;
+import org.loja.model.pagina.Pagina;
 //import org.loja.model.usuario.Usuario;
 import org.loja.model.credencial.Credencial;
 import org.loja.model.autorizacao.Autorizacao;
@@ -13,6 +14,7 @@ import org.loja.settings.paypal.Paypal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.loja.model.categoria.CategoriaService;
 import org.loja.model.produto.ProdutoService;
+import org.loja.model.pagina.PaginaService;
 //import org.loja.model.usuario.UsuarioService;
 import org.loja.model.credencial.CredencialService;
 import org.loja.model.autorizacao.AutorizacaoService;
@@ -27,6 +29,9 @@ public class Model {
 
   @Autowired
   private ProdutoService produto;
+
+  @Autowired
+  private PaginaService pagina;
 
   /*@Autowired
   private UsuarioService usuario;*/
@@ -51,6 +56,11 @@ public class Model {
   @ModelAttribute("produtos")
   public List<Produto> produtos() {
     return produto.select();
+  }
+
+  @ModelAttribute("paginas")
+  public List<Pagina> paginas() {
+    return pagina.select();
   }
 
   /*@ModelAttribute("usuario")
