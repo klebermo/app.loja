@@ -2,6 +2,10 @@
   <!DOCTYPE html>
   <html>
   	<head>
+      <title th:if="${categoria == null and produto == null and pagina == null}" th:text="${geral.titulo}"></title>
+      <title th:if="${categoria}" th:text="${geral.titulo + ' | ' + categoria.nome}"></title>
+      <title th:if="${produto}" th:text="${geral.titulo + ' | ' + produto.nome}"></title>
+      <title th:if="${pagina}" th:text="${geral.titulo + ' | ' + pagina.titulo}"></title>
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   	</head>
   	<body onload="show_cart_size(); show_cart_total();">
@@ -18,7 +22,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav mr-auto">
             <li th:if="${pagina}" class="nav-item" th:each="p : ${paginas}">
-              <a th:unless="${p.parent}" class="nav-link" th:href="@{/page/__${p.slug}__}" th:text="${p.titulo}"></a>
+              <a th:unless="${p.parent}" th:class="${#strings.equals(p, pagina)}? 'nav-link active' : 'nav-link'" th:href="@{/page/__${p.slug}__}" th:text="${p.titulo}"></a>
             </li>
             <li th:unless="${pagina}" class="nav-item" th:each="p : ${paginas}">
               <a th:unless="${p.parent}" class="nav-link" th:href="@{/page/__${p.slug}__}" th:text="${p.titulo}"></a>
