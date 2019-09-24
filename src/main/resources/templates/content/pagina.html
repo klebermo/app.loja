@@ -7,10 +7,12 @@
         </a>
       </li>
 
-      <li class="breadcrumb-item active" th:text="${pagina.titulo}"></li>
-
       <li class="breadcrumb-item" th:each="item : ${breadcrumb}">
         <a th:href="@{/page/__${item.content.slug}__}" th:text="${item.content.titulo}"></a>
+      </li>
+
+      <li class="breadcrumb-item active">
+        <a th:href="@{/page/__${pagina.slug}__}" th:text="${pagina.titulo}"></a>
       </li>
     </ol>
   </nav>
