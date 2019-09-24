@@ -64,9 +64,9 @@ public class Home {
       return "index";
     }
 
-    @RequestMapping("/page/{pagina}")
-    public String pagina(Model model, @PathVariable("pagina") String pagina_titulo) {
-      org.loja.model.pagina.Pagina p = pagina.findBy("titulo", pagina_titulo);
+    @RequestMapping("/page/{slug}")
+    public String pagina(Model model, @PathVariable("slug") String pagina_slug) {
+      org.loja.model.pagina.Pagina p = pagina.findBy("slug", pagina_slug);
       model.addAttribute("pagina", p);
       model.addAttribute("breadcrumb", pagina.breadcrumb(p));
       return "index";
