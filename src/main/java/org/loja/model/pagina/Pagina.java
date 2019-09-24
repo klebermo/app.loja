@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.OneToOne;
 import javax.persistence.FetchType;
+import java.text.Normalizer;
 
 @Entity
 public class Pagina extends Model {
@@ -15,7 +16,7 @@ public class Pagina extends Model {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
 
-  @Column
+  @Column(length=64)
   private String titulo;
 
   @Column(length=2097152)
@@ -23,6 +24,9 @@ public class Pagina extends Model {
 
   @OneToOne(fetch = FetchType.EAGER)
   private Pagina parent;
+
+  @Column(length=64)
+  private String slug;
 
   @Override
   public Integer getId() {
@@ -55,6 +59,14 @@ public class Pagina extends Model {
 
   public void setParent(Pagina parent) {
     this.parent = parent;
+  }
+
+  public String getSlug() {
+    return slug;
+  }
+
+  public void setSlug(String slug) {
+    this.slug = slug;
   }
 
   public String toString() {
