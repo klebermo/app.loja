@@ -6,17 +6,15 @@
     <a class="btn btn-primary btn-lg" th:href="@{/c/__${c.nome}__}" role="button">Mais</a>
   </div>
 
-  <div class="col" th:each="i : ${#numbers.sequence( 1, 3)}">
-    <th:block th:each="p : ${produtos}" th:if="${#strings.equals(p.categoria, c)}">
-      <div class="card" style="width: 18rem;">
-        <img th:src="@{/imagem/download/__${p.icone}__}" class="card-img-top" th:alt="${p.nome}">
-        <div class="card-body">
-          <h5 class="card-title" th:text="${p.nome}"></h5>
-          <p class="card-text" th:text="${p.resumo}"></p>
-          <a th:href="@{/p/__${p.nome}__}" class="btn btn-primary">Ver detalhes</a>
-        </div>
+  <div class="col" th:each="p,stat : ${produtos}" th:if="${#strings.equals(p.categoria, c) and stat.index < 3}">
+    <div class="card" style="width: 18rem;">
+      <img th:src="@{/imagem/download/__${p.icone}__}" class="card-img-top" th:alt="${p.nome}">
+      <div class="card-body">
+        <h5 class="card-title" th:text="${p.nome}"></h5>
+        <p class="card-text" th:text="${p.resumo}"></p>
+        <a th:href="@{/p/__${p.nome}__}" class="btn btn-primary">Ver detalhes</a>
       </div>
-    </th:block>
+    </div>
   </div>
-</div> <!--row-->
+</div>
 </th:block>
