@@ -17,8 +17,11 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item" th:each="p : ${paginas}">
-              <a class="nav-link" th:unless="${p.parent}" th:href="@{/page/__${p.slug}__}" th:text="${p.titulo}"></a>
+            <li th:if="${pagina}" class="nav-item" th:each="p : ${paginas}">
+              <a th:unless="${p.parent}" class="nav-link" th:href="@{/page/__${p.slug}__}" th:text="${p.titulo}"></a>
+            </li>
+            <li th:unless="${pagina}" class="nav-item" th:each="p : ${paginas}">
+              <a th:unless="${p.parent}" class="nav-link" th:href="@{/page/__${p.slug}__}" th:text="${p.titulo}"></a>
             </li>
           </ul>
 
