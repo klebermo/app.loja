@@ -531,3 +531,7 @@ function detect_editor() {
     $(editor).summernote({height: 300});
   }
 }
+
+function create_slug(element) {
+  document.getElementById("slug").value = element.value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
