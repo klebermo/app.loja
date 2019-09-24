@@ -1,17 +1,21 @@
 <th:block th:fragment="copy">
-<nav aria-label="breadcrumb">
-  <ul class="breadcrumb">
-    <li class="breadcrumb-item">
-      <a th:href="@{/}">
-        <i class="fas fa-home"></i>
-      </a>
-    </li>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a th:href="@{/}">
+          <i class="fas fa-home"></i>
+        </a>
+      </li>
 
-    <li th:each="p : ${breadcrumb}" th:class="${#strings.equals(p, pagina)}? 'breadcrumb-item active' : 'breadcrumb-item'" aria-current="page" th:text="${p.titulo}"></li>
-  </ul>
-</nav>
+      <li class="breadcrumb-item active" th:text="${pagina.titulo}"></li>
 
-<h2 th:text="${pagina.titulo}"></h2>
+      <li class="breadcrumb-item" th:each="item : ${breadcrumb}">
+        <a th:href="@{/page/__${item.content.slug}__}" th:text="${item.content.titulo}"></a>
+      </li>
+    </ol>
+  </nav>
 
-<span th:utext="${pagina.descricao}"></span>
+  <h2 th:text="${pagina.titulo}"></h2>
+
+  <span th:utext="${pagina.descricao}"></span>
 </th:block>
