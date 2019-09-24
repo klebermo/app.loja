@@ -103,3 +103,9 @@ insert into usuario_credenciais values (1,7);
 insert into usuario_credenciais values (1,8);
 insert into usuario_credenciais values (1,9);
 insert into usuario_credenciais values (1,10);
+
+insert into categoria (nome, resumo) values ('one', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec quam lectus. Mauris fermentum, ipsum accumsan efficitur interdum, lorem sed.');
+insert into categoria (nome, resumo) values ('two', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec quam lectus. Mauris fermentum, ipsum accumsan efficitur interdum, lorem sed.');
+insert into categoria (nome, resumo) values ('three', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec quam lectus. Mauris fermentum, ipsum accumsan efficitur interdum, lorem sed.');
+insert into categoria (nome, resumo) values ('four', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec quam lectus. Mauris fermentum, ipsum accumsan efficitur interdum, lorem sed.');
+insert into categoria (nome, resumo) values ('five', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec quam lectus. Mauris fermentum, ipsum accumsan efficitur interdum, lorem sed.');
