@@ -47,7 +47,7 @@
           </div>
 
           <div class="form-group">
-            <textarea  class="summernote" id="descricao" name="descricao" th:value="${command.descricao}"></textarea>
+            <textarea class="summernote" id="descricao" name="descricao" th:value="${command.descricao}"></textarea>
           </div>
 
           <div class="form-group">
@@ -78,11 +78,11 @@
         <div class="container" th:if="${#strings.equals(classe.simpleName, 'Pagina')}">
           <div class="form-group">
             <label for="nome">Titulo</label>
-            <input type="text" name="titulo" th:value="${pagina.titulo}" class="form-control" id="titulo" placeholder="Titulo">
+            <input type="text" name="titulo" th:value="${command.titulo}" class="form-control" id="titulo" placeholder="Titulo">
           </div>
 
           <div class="form-group">
-            <textarea class="summernote" id="descricao" name="descricao" th:value="${pagina.descricao}"></textarea>
+            <textarea class="summernote" id="descricao" name="descricao" th:value="${command.descricao}"></textarea>
           </div>
 
           <div class="form-group">
@@ -92,6 +92,8 @@
               <option th:each="pagina : ${paginas}" th:value="${pagina.id}" th:selected="${#strings.equals(pagina, command.parent)}" th:text="${pagina.titulo}"/>
             </select>
           </div>
+
+          <input type="hidden" name="slug" th:value="${command.slug}" id="slug"/>
         </div>
 
         <div class="container" th:if="${#strings.equals(classe.simpleName, 'Usuario')}">
