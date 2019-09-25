@@ -1,0 +1,27 @@
+<th:block th:fragment="copy">
+<section>
+  <div class="card">
+    <div class="card-header">
+      Pedido #<span th:text="${order.id}"></span> de <span th:text="${#dates.format(order.dataCompra)}"></span>
+    </div>
+    <div class="card-body">
+      <div class="card" th:each="produto : ${order.produtos}">
+        <img th:if="${produto.icone}" th:src="@{/imagem/download/__${produto.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${produto.nome}"/>
+        <img th:unless="${produto.icone}" th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:alt="${produto.nome}"/>
+        <div class="card-body">
+          <h5 class="card-title" th:utext="${produto.nome}"></h5>
+          <p class="card-text" th:utext="${produto.resumo}"></p>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Baixar
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a th:each="arquivo : ${produto.versaoPaga}" class="dropdown-item" th:href="@{/arquivo/download/__${arquivo.id}__}" th:text="${arquivo.type}">Action</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</th:block>

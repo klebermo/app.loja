@@ -1,3 +1,23 @@
+<<<<<<< HEAD
+<div th:replace="header :: copy"></div>
+
+<div class="card" style="width: 18rem;">
+  <img th:src="@{/images/icon-signin.png}" class="card-img-top" alt="Login">
+  <form method="post" th:action="@{/usuario/recoverPassword}">
+    <div class="card-body">
+      <h5 class="card-title">Recover Password</h5>
+
+      <p class="card-text">
+        <input class="form-control" type="text" name="email" placeholder="E-mail"/> <br/>
+      </p>
+
+      <button type="submit" class="btn btn-primary">Recover</button>
+    </div>
+  </form>
+</div>
+
+<div th:replace="footer :: copy"></div>
+=======
 <html>
   <head>
     <title>Signin</title>
@@ -33,3 +53,4 @@
     </form>
 </body>
 </html>
+>>>>>>> master

@@ -55,7 +55,11 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     return true;
   }
 
+<<<<<<< HEAD
+  public Boolean recoverPassword(String email) {
+=======
   public Boolean recover(String email) {
+>>>>>>> master
     return true;
   }
 

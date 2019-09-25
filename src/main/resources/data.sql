@@ -82,6 +82,16 @@ insert into credencial_autorizacoes values (9,31);
 insert into credencial_autorizacoes values (9,32);
 insert into credencial_autorizacoes values (9,33);
 
+insert into credencial (nome) values ('pagina');
+insert into autorizacao (nome) values ('cadastra_pagina');
+insert into autorizacao (nome) values ('atualiza_pagina');
+insert into autorizacao (nome) values ('remove_pagina');
+insert into autorizacao (nome) values ('consulta_pagina');
+insert into credencial_autorizacoes values (10,34);
+insert into credencial_autorizacoes values (10,35);
+insert into credencial_autorizacoes values (10,36);
+insert into credencial_autorizacoes values (10,37);
+
 insert into usuario (username, password, first_name, last_name, email, enabled, locked) values ('kleber', '$2a$04$q8j56WcbSTMViRYqBOfGPOVbUKqSR0tdUoa9awU/cA/TRdPA/krRW', 'Kleber', 'Mota', 'kleber@mail.com', true, false);
 insert into usuario_credenciais values (1,1);
 insert into usuario_credenciais values (1,2);
@@ -92,3 +102,17 @@ insert into usuario_credenciais values (1,6);
 insert into usuario_credenciais values (1,7);
 insert into usuario_credenciais values (1,8);
 insert into usuario_credenciais values (1,9);
+insert into usuario_credenciais values (1,10);
+
+insert into categoria (nome, resumo) values ('one', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec quam lectus. Mauris fermentum, ipsum accumsan efficitur interdum, lorem sed.');
+insert into categoria (nome, resumo) values ('two', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec quam lectus. Mauris fermentum, ipsum accumsan efficitur interdum, lorem sed.');
+insert into categoria (nome, resumo) values ('three', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec quam lectus. Mauris fermentum, ipsum accumsan efficitur interdum, lorem sed.');
+insert into categoria (nome, resumo) values ('four', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec quam lectus. Mauris fermentum, ipsum accumsan efficitur interdum, lorem sed.');
+insert into categoria (nome, resumo) values ('five', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec quam lectus. Mauris fermentum, ipsum accumsan efficitur interdum, lorem sed.');
+
+insert into pagina (titulo, descricao, slug) values ('one', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque in congue ligula, at interdum felis. Vestibulum ornare, purus quis posuere.', 'one');
+insert into pagina (titulo, descricao, slug) values ('two', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque in congue ligula, at interdum felis. Vestibulum ornare, purus quis posuere.', 'two');
+insert into pagina (titulo, descricao, parent_id, slug) values ('one-one', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque in congue ligula, at interdum felis. Vestibulum ornare, purus quis posuere.', 1, 'oneone');
+insert into pagina (titulo, descricao, parent_id, slug) values ('one-two', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque in congue ligula, at interdum felis. Vestibulum ornare, purus quis posuere.', 1, 'onetwo');
+insert into pagina (titulo, descricao, parent_id, slug) values ('two-one', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque in congue ligula, at interdum felis. Vestibulum ornare, purus quis posuere.', 2, 'twoone');
+insert into pagina (titulo, descricao, parent_id, slug) values ('two-two', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque in congue ligula, at interdum felis. Vestibulum ornare, purus quis posuere.', 2, 'twotwo');

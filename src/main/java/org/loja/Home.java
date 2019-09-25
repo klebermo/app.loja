@@ -89,9 +89,23 @@ public class Home {
       return "index";
     }
 
+<<<<<<< HEAD
+    @RequestMapping("/forum/{produto}")
+    public String produto(Model model, @PathVariable("produto") Integer produto_id) {
+      model.addAttribute("forum", produto.findBy("id", produto_id));
+      return "index";
+    }
+
+    @RequestMapping("/page/{slug}")
+    public String pagina(Model model, @PathVariable("slug") String pagina_slug) {
+      org.loja.model.pagina.Pagina p = pagina.findBy("slug", pagina_slug);
+      model.addAttribute("pagina", p);
+      model.addAttribute("breadcrumb", pagina.breadcrumb(p));
+=======
     @RequestMapping("/page/{slug}")
     public String pagina(Model model, @PathVariable("slug") String slug) {
       model.addAttribute("pagina", pagina.findBy("slug", slug));
+>>>>>>> master
       return "index";
     }
 
