@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.OneToOne;
 import javax.persistence.FetchType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import java.text.Normalizer;
 
 @Entity
@@ -23,6 +25,7 @@ public class Pagina extends Model {
   private String descricao;
 
   @OneToOne(fetch = FetchType.EAGER)
+  @Fetch(FetchMode.SELECT)
   private Pagina parent;
 
   @Column(length=64)
