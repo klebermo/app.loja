@@ -14,7 +14,9 @@ import org.loja.model.produto.Produto;
 import org.loja.settings.paypal.PaypalDao;
 import org.loja.settings.mercadopago.MercadoPagoDao;
 import org.loja.settings.pagseguro.PagSeguroDao;
+import java.util.List;
 import java.util.ArrayList;
+
 import java.util.UUID;
 import java.util.Iterator;
 import com.paypal.base.rest.APIContext;
@@ -26,6 +28,23 @@ import com.paypal.api.payments.Transaction;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.PaymentExecution;
 import javax.servlet.http.HttpServletRequest;
+
+import com.mercadopago.exceptions.MPConfException;
+import com.mercadopago.exceptions.MPException;
+
+import br.com.uol.pagseguro.api.PagSeguro;
+import br.com.uol.pagseguro.api.credential.Credential;
+import br.com.uol.pagseguro.api.PagSeguroEnv;
+import br.com.uol.pagseguro.api.checkout.RegisteredCheckout;
+import br.com.uol.pagseguro.api.checkout.CheckoutRegistrationBuilder;
+import br.com.uol.pagseguro.api.common.domain.builder.SenderBuilder;
+import br.com.uol.pagseguro.api.common.domain.builder.PaymentItemBuilder;
+import br.com.uol.pagseguro.api.common.domain.builder.AcceptedPaymentMethodsBuilder;
+import br.com.uol.pagseguro.api.common.domain.builder.PaymentMethodBuilder;
+import br.com.uol.pagseguro.api.common.domain.enums.PaymentMethodGroup;
+import br.com.uol.pagseguro.api.common.domain.enums.Currency;
+
+import java.math.BigDecimal;
 
 @Service
 public class UsuarioService extends org.loja.model.Service<Usuario> {
@@ -222,14 +241,14 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     return payment.create(apiContext);
   }
 
-  public String checkout_mercadopago(Integer usuario_id, String status_id) throws com.mercadopago.exceptions.MPConfException, com.mercadopago.exceptions.MPException {
+  public String checkout_mercadopago(Integer usuario_id, String status_id) throws MPConfException, MPException {
     Usuario usuario = this.dao.findBy("id", usuario_id);
 
     if(status_id == null) {
       String clientId = mercadoPagoDao.get().getClientId();
-      String clientSecret = mercadoPagoDao.get().getClientSecret();
-
       com.mercadopago.MercadoPago.SDK.setClientId(clientId);
+
+      String clientSecret = mercadoPagoDao.get().getClientSecret();
       com.mercadopago.MercadoPago.SDK.setClientSecret(clientSecret);
 
       com.mercadopago.resources.datastructures.payment.Payer payer = new com.mercadopago.resources.datastructures.payment.Payer();
@@ -237,15 +256,12 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
 
       com.mercadopago.resources.Payment payment = new com.mercadopago.resources.Payment();
       payment.setTransactionAmount(this.cart_total(usuario.getId()));
-      payment.setToken("your_cardtoken");
-      payment.setDescription("description");
+      payment.setDescription(usuario.getCesta().toString());
       payment.setInstallments(1);
-      payment.setPaymentMethodId("visa");
       payment.setPayer(payer);
       payment.save();
 
-      System.out.println("status: "+payment.getStatus());
-      return "/checkout_mercadopago?usuario_id="+usuario.getId();
+      return "/checkout_mercadopago?usuario_id="+usuario.getId()+"?status_id="+payment.getStatus();
     }
 
     Pedido pedido = new Pedido();
@@ -271,12 +287,57 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     return  "/order/"+pedido.getId().toString();
   }
 
-  public String checkout_pagseguro(Integer usuario_id) {
+  public String checkout_pagseguro(Integer usuario_id, Integer status_id) {
     Usuario usuario = this.dao.findBy("id", usuario_id);
 
-    String clientId = pagSeguroDao.get().getClientId();
-    String clientSecret = pagSeguroDao.get().getClientSecret();
+    if(status_id == null) {
+      String appId = pagSeguroDao.get().getClientId();
+      String appKey = pagSeguroDao.get().getClientSecret();
+      PagSeguro pagSeguro = PagSeguro.instance(Credential.applicationCredential(appId, appKey), PagSeguroEnv.SANDBOX);
 
-    return "/";
+      CheckoutRegistrationBuilder builder = new CheckoutRegistrationBuilder()
+        .withCurrency(Currency.BRL)
+        .withExtraAmount(new BigDecimal(this.cart_total(usuario.getId())))
+        .withSender(new SenderBuilder().withEmail(usuario.getEmail()).withName(usuario.getFirstName()+" "+usuario.getLastName()));
+
+      List<Produto> lista = usuario.getCesta().getProdutos();
+      for(int i=0; i<lista.size(); i++) {
+        Produto p = lista.get(i);
+        String id = String.valueOf(i);
+        builder.addItem(new PaymentItemBuilder().withId(id).withDescription(p.getNome()).withAmount(new BigDecimal(p.getPreco())).withQuantity(1));
+      }
+
+      builder.withAcceptedPaymentMethods(new AcceptedPaymentMethodsBuilder()
+        .addInclude(new PaymentMethodBuilder().withGroup(PaymentMethodGroup.BALANCE))
+        .addInclude(new PaymentMethodBuilder().withGroup(PaymentMethodGroup.BANK_SLIP))
+        .addInclude(new PaymentMethodBuilder().withGroup(PaymentMethodGroup.CREDIT_CARD))
+      );
+
+      RegisteredCheckout registeredCheckout = pagSeguro.checkouts().register(builder);
+
+      return registeredCheckout.getRedirectURL();
+    }
+
+    Pedido pedido = new Pedido();
+    pedido.setProdutos(new ArrayList<Produto>());
+    Cesta cesta = usuario.getCesta();
+    if(cesta.getProdutos() != null) {
+      for(Produto produto : cesta.getProdutos())
+        pedido.getProdutos().add(produto);
+      cesta.getProdutos().clear();
+      cestaDao.update(cesta);
+    }
+    pedido.setDataCompra(new java.util.Date());
+    pedidoDao.insert(pedido);
+    if(usuario.getPedidos() == null) {
+      usuario.setPedidos(new ArrayList<Pedido>());
+      usuario.getPedidos().add(pedido);
+      this.dao.update(usuario);
+    } else {
+      usuario.getPedidos().add(pedido);
+      this.dao.update(usuario);
+    }
+
+    return  "/order/"+pedido.getId().toString();
   }
 }

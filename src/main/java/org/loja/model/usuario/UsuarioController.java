@@ -96,7 +96,7 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   }
 
   @RequestMapping(value = "/checkout_pagseguro", method=RequestMethod.GET)
-  public String checkout_pagseguro(@RequestParam("usuario_id") Integer usuario_id) {
-    return "redirect:"+this.serv.checkout_pagseguro(usuario_id);
+  public String checkout_pagseguro(@RequestParam("usuario_id") Integer usuario_id, @RequestParam(value="status", required=false) Integer status_id) {
+    return "redirect:"+this.serv.checkout_pagseguro(usuario_id, status_id);
   }
 }
