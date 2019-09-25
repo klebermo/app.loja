@@ -21,41 +21,11 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
     super(Usuario.class);
   }
 
-<<<<<<< HEAD
-  @RequestMapping(value = "/register", method=RequestMethod.GET)
-  public String formRegister(Model model) {
-    model.addAttribute("comand", new Usuario());
-    return "register";
-  }
-
-  @RequestMapping(value = "/register", method=RequestMethod.POST)
-  public String doRegister(@Valid Usuario object, BindingResult result) {
-      if(this.serv.register(object))
-        return "redirect:/";
-      else
-        return "redirect:/usuario/register";
-  }
-
-  @RequestMapping(value = "/recoverPassword", method=RequestMethod.GET)
-  public String formRecover() {
-    return "recover";
-  }
-
-  @RequestMapping(value = "/recoverPassword", method=RequestMethod.POST)
-  public String doRecoverPassword(@RequestParam("email") String email) {
-    if(this.serv.recoverPassword(email))
-      return "redirect:/login";
-    else
-      return "redirect:/recoverPassword";
-  }
-
-=======
->>>>>>> master
   @RequestMapping(value = "/credenciais", method=RequestMethod.GET)
   @PreAuthorize("hasPermission(#user, 'consulta_'+#this.this.name)")
   public String formCredenciais(Model model, @RequestParam("id") Integer id) {
     model.addAttribute("command", serv.findBy("id", id));
-    return "form/form_credenciais";
+    return "form_credenciais";
   }
 
   @RequestMapping(value = "/toggle_credencial", method=RequestMethod.POST)

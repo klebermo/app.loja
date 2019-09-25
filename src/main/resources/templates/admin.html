@@ -1,112 +1,3 @@
-<<<<<<< HEAD
-<!doctype html>
-<html>
-  <head>
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
-    <link th:href="@{/css/style-admin.css}" rel="stylesheet">
-  </head>
-
-  <body onload="load_content()">
-    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" th:href="@{/}" th:text="${geral.titulo}">Title</a>
-      <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-          <a class="nav-link" th:href="@{/logout}">Sign out</a>
-        </li>
-      </ul>
-    </nav>
-
-    <div class="container-fluid">
-      <div class="row">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-          <div class="sidebar-sticky">
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <a th:class="${classe == null} ? 'nav-link active' : 'nav-link'" th:href="@{/admin}">
-                  <i class="fas fa-home"></i>
-                  in&iacute;cio
-                </a>
-              </li>
-
-              <li sec:authorize="hasPermission(#user, 'consulta_categoria')" class="nav-item">
-                <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Categoria')}? 'nav-link active' : 'nav-link'" th:href="@{/categoria/}">
-                  <i class="fas fa-paperclip"></i>
-                  categorias
-                </a>
-              </li>
-
-              <li sec:authorize="hasPermission(#user, 'consulta_produto')" class="nav-item">
-                <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Produto')}? 'nav-link active' : 'nav-link'" th:href="@{/produto/}">
-                  <i class="fas fa-shopping-bag"></i>
-                  produtos
-                </a>
-              </li>
-
-              <li sec:authorize="hasPermission(#user, 'consulta_pagina')" class="nav-item">
-                <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Pagina')}? 'nav-link active' : 'nav-link'" th:href="@{/pagina/}">
-                  <i class="fas fa-file-alt"></i>
-                  p&aacute;ginas
-                </a>
-              </li>
-            </ul>
-
-            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-              <span>configura&ccedil;&otilde;es</span>
-              <a class="d-flex align-items-center text-muted" href="#">
-                <i class="fas fa-plus-circle"></i>
-              </a>
-            </h6>
-
-            <ul class="nav flex-column mb-2">
-              <li>
-                <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Geral')}? 'nav-link active' : 'nav-link'" th:href="@{/geral/get}" tabindex="-1" aria-disabled="true">
-                  <i class="fas fa-file"></i>
-                  Geral
-                </a>
-              </li>
-
-              <li>
-                <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Paypal')}? 'nav-link active' : 'nav-link'" th:href="@{/paypal/get}" tabindex="-1" aria-disabled="true">
-                  <i class="fas fa-file"></i>
-                  Paypal
-                </a>
-              </li>
-
-              <li>
-                <a th:class="${classe != null and #strings.equals(classe.simpleName, 'MercadoPago')}? 'nav-link active' : 'nav-link'" th:href="@{/mercadopago/get}" tabindex="-1" aria-disabled="true">
-                  <i class="fas fa-file"></i>
-                  MercadoPago
-                </a>
-              </li>
-
-              <li>
-                <a th:class="${classe != null and #strings.equals(classe.simpleName, 'PagSeguro')}? 'nav-link active' : 'nav-link'" th:href="@{/pagseguro/get}" tabindex="-1" aria-disabled="true">
-                  <i class="fas fa-file"></i>
-                  PagSeguro
-                </a>
-              </li>
-            </ul>
-
-            <ul class="nav flex-column">
-              <li sec:authorize="hasPermission(#user, 'consulta_usuario')" class="nav-item">
-                <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Usuario')}? 'nav-link active' : 'nav-link'" th:href="@{/usuario/}">
-                  <i class="fas fa-users"></i>
-                  usu&aacute;rios
-                </a>
-              </li>
-            </ul>
-
-            <ul class="nav flex-column">
-              <li sec:authorize="hasPermission(#user, 'consulta_credencial')" class="nav-item">
-                <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Credencial')}? 'nav-link active' : 'nav-link'" th:href="@{/credencial/}">
-                  <i class="fas fa-user-tag"></i>
-                  credenciais
-                </a>
-              </li>
-            </ul>
-=======
 <html>
 <head>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -393,7 +284,6 @@
           <div class="form-group">
             <label for="desenvolvedor">Desenvolvedor</label>
             <input type="text" class="form-control" id="desenvolvedor" name="desenvolvedor" placeholder="Desenvolvedor">
->>>>>>> master
           </div>
 
           <div class="form-group">
@@ -467,148 +357,6 @@
         </form>
       </main>
 
-<<<<<<< HEAD
-      <main th:if="${classe != null and command == null and setting == null}" role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-        <p>
-          <a th:if="${#strings.equals(classe.simpleName, 'Categoria')}" sec:authorize="hasPermission(#user, 'cadastra_categoria')" class="btn btn-primary" onclick="insert_data();">
-            <i class="fas fa-plus"></i>
-            novo item
-          </a>
-
-          <a th:if="${#strings.equals(classe.simpleName, 'Produto')}" sec:authorize="hasPermission(#user, 'cadastra_produto')" class="btn btn-primary" onclick="insert_data();">
-            <i class="fas fa-plus"></i>
-            novo item
-          </a>
-
-          <a th:if="${#strings.equals(classe.simpleName, 'Pagina')}" sec:authorize="hasPermission(#user, 'cadastra_pagina')" class="btn btn-primary" onclick="insert_data();">
-            <i class="fas fa-plus"></i>
-            novo item
-          </a>
-
-          <a th:if="${#strings.equals(classe.simpleName, 'Usuario')}" sec:authorize="hasPermission(#user, 'cadastra_usuario')" class="btn btn-primary" onclick="insert_data();">
-            <i class="fas fa-plus"></i>
-            novo item
-          </a>
-
-          <a th:if="${#strings.equals(classe.simpleName, 'Credencial')}" sec:authorize="hasPermission(#user, 'cadastra_credencial')" class="btn btn-primary" onclick="insert_data();">
-            <i class="fas fa-plus"></i>
-            novo item
-          </a>
-        </p>
-
-        <ul class="nav nav-tabs" id="tabset">
-          <li class="nav-item" id="tab-listagem">
-            <a class="nav-link active" id="listagem-tab" data-toggle="tab" href="#listagem" role="tab" aria-controls="listagem" aria-selected="true">Listagem</a>
-          </li>
-
-          <li class="nav-item" id="tab-insert" style="display: none;">
-            <a class="nav-link" id="insert-tab" data-toggle="tab" href="#insert" role="tab" aria-controls="insert" aria-selected="false">Insert</a>
-          </li>
-
-          <li class="nav-item" id="tab-update" style="display: none;">
-            <a class="nav-link" id="update-tab" data-toggle="tab" href="#update" role="tab" aria-controls="update" aria-selected="false">Update</a>
-          </li>
-
-          <li class="nav-item" id="tab-delete" style="display: none;">
-            <a class="nav-link" id="delete-tab" data-toggle="tab" href="#delete" role="tab" aria-controls="delete" aria-selected="false">Delete</a>
-          </li>
-
-          <li class="nav-item" id="tab-credencial" style="display: none;">
-            <a class="nav-link" id="credencial-tab" data-toggle="tab" href="#credencial" role="tab" aria-controls="credencial" aria-selected="false">Credenciais</a>
-          </li>
-        </ul>
-
-        <div class="tab-content" id="tab_content">
-          <div class="tab-pane active" id="listagem" role="tabpanel" aria-labelledby="listagem-tab">
-            <table class="table" id="table" th:attr="data-json=@{/__${#strings.toLowerCase(classe.simpleName)}__/list.json}">
-              <thead class="thead-dark">
-                <tr id="table-header">
-                  <th>#</th>
-
-                  <th:block th:if="${#strings.equals(classe.simpleName, 'Categoria')}">
-                    <th class="col">nome</th>
-                    <th class="col">resumo</th>
-                  </th:block>
-
-                  <th:block th:if="${#strings.equals(classe.simpleName, 'Produto')}">
-                    <th class="col">nome</th>
-                    <th class="col">resumo</th>
-                    <th class="col">preco</th>
-                    <th class="col">categoria</th>
-                  </th:block>
-
-                  <th:block th:if="${#strings.equals(classe.simpleName, 'Pagina')}">
-                    <th class="col">titulo</th>
-                    <th class="col">parent</th>
-                  </th:block>
-
-                  <th:block th:if="${#strings.equals(classe.simpleName, 'Usuario')}">
-                    <th class="col">username</th>
-                    <th class="col">firstName</th>
-                    <th class="col">lastName</th>
-                    <th class="col">email</th>
-                  </th:block>
-
-                  <th:block th:if="${#strings.equals(classe.simpleName, 'Credencial')}">
-                    <th class="col">nome</th>
-                  </th:block>
-
-                  <th>
-                    <div th:if="${#strings.equals(classe.simpleName, 'Categoria')}" class="btn-group" id="buttons" role="group" aria-label="Categoria" style="display: none;">
-                      <button sec:authorize="hasPermission(#user, 'atualiza_categoria')" type="button" class="btn btn-secondary" th:attr="data-url=@{/categoria/update}" onclick="update_data(this)">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button sec:authorize="hasPermission(#user, 'remove_categoria')" type="button" class="btn btn-secondary" th:attr="data-url=@{/categoria/delete}" onclick="delete_data(this)">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </div>
-
-                    <div th:if="${#strings.equals(classe.simpleName, 'Produto')}" class="btn-group" id="buttons" role="group" aria-label="Produto" style="display: none;">
-                      <button sec:authorize="hasPermission(#user, 'atualiza_produto')" type="button" class="btn btn-secondary" th:attr="data-url=@{/produto/update}" onclick="update_data(this)">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button sec:authorize="hasPermission(#user, 'remove_produto')" type="button" class="btn btn-secondary" th:attr="data-url=@{/produto/delete}" onclick="delete_data(this)">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </div>
-
-                    <div th:if="${#strings.equals(classe.simpleName, 'Pagina')}" class="btn-group" id="buttons" role="group" aria-label="Pagina" style="display: none;">
-                      <button sec:authorize="hasPermission(#user, 'atualiza_pagina')" type="button" class="btn btn-secondary" th:attr="data-url=@{/pagina/update}" onclick="update_data(this)">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button sec:authorize="hasPermission(#user, 'remove_pagina')" type="button" class="btn btn-secondary" th:attr="data-url=@{/pagina/delete}" onclick="delete_data(this)">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </div>
-
-                    <div th:if="${#strings.equals(classe.simpleName, 'Usuario')}" class="btn-group" id="buttons" role="group" aria-label="Usuario" style="display: none;">
-                      <button sec:authorize="hasPermission(#user, 'atualiza_usuario')" type="button" class="btn btn-secondary" th:attr="data-url=@{/usuario/update}" onclick="update_data(this)">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button sec:authorize="hasPermission(#user, 'remove_usuario')" type="button" class="btn btn-secondary" th:attr="data-url=@{/usuario/delete}" onclick="delete_data(this)">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                      <button sec:authorize="hasPermission(#user, 'consulta_credencial')" type="button" class="btn btn-secondary" th:attr="data-url=@{/usuario/credenciais}" onclick="credencial_data(this)">
-                        <i class="fas fa-list"></i>
-                      </button>
-                    </div>
-
-                    <div th:if="${#strings.equals(classe.simpleName, 'Credencial')}" class="btn-group" id="buttons" role="group" aria-label="Credencial" style="display: none;">
-                      <button sec:authorize="hasPermission(#user, 'atualiza_credencial')" type="button" class="btn btn-secondary" th:attr="data-url=@{/credencial/update}" onclick="update_data(this)">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button sec:authorize="hasPermission(#user, 'remove_credencial')" type="button" class="btn btn-secondary" th:attr="data-url=@{/credencial/delete}" onclick="delete_data(this)">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </div>
-                  </th>
-                </tr>
-              </thead>
-
-              <tbody id="table-body">
-              </tbody>
-            </table>
-=======
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" th:if="${#strings.equals(target, 'mercadopago')}">
         <h1>MercadoPago</h1>
         <hr/>
@@ -617,7 +365,6 @@
           <div class="form-group">
             <label for="clientId">ClientID</label>
             <input type="text" class="form-control" id="clientId" name="clientId" placeholder="ClientID">
->>>>>>> master
           </div>
 
           <div class="form-group">
@@ -637,17 +384,6 @@
         </form>
       </main>
     </div>
-<<<<<<< HEAD
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/a8a341d3ab.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
-    <script th:src="@{/js/script-admin.js}"></script>
-  </body>
-</html>
-=======
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -717,4 +453,3 @@
   /*]]>*/
   </script>
 </body>
->>>>>>> master
