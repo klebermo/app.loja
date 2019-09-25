@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
+import javax.validation.Valid;
+import org.springframework.validation.BindingResult;
 
 @Controller
 public class Home {
@@ -35,14 +37,43 @@ public class Home {
       return "index";
     }
 
-    @RequestMapping("/login")
-    public String login() {
-        return "login";
+    @RequestMapping("/signin")
+    public String signin() {
+        return "signin";
+    }
+
+    @RequestMapping("/signup")
+    public String signup() {
+        return "signup";
+    }
+
+    @RequestMapping(value="/signup", method=RequestMethod.POST)
+    public String signup(@Valid org.loja.model.usuario.Usuario novo_usuario, BindingResult result) {
+      Boolean cadastrado = usuario.register(novo_usuario);
+      if(cadastrado)
+        return "redirect:/signin";
+      else
+        return "redirect:/signup";
+    }
+
+    @RequestMapping("/recover")
+    public String recover() {
+        return "recover";
+    }
+
+    @RequestMapping(value="/recover", method=RequestMethod.POST)
+    public String recover(String email) {
+      Boolean cadastrado = usuario.recover(email);
+      if(cadastrado)
+        return "redirect:/signin";
+      else
+        return "redirect:/recover";
     }
 
     @RequestMapping("/admin")
     @PreAuthorize("hasPermission(#user, 'admin')")
     public String admin(Model model) {
+        model.addAttribute("admin", "admin");
         return "admin";
     }
 
@@ -58,6 +89,7 @@ public class Home {
       return "index";
     }
 
+<<<<<<< HEAD
     @RequestMapping("/forum/{produto}")
     public String produto(Model model, @PathVariable("produto") Integer produto_id) {
       model.addAttribute("forum", produto.findBy("id", produto_id));
@@ -69,6 +101,11 @@ public class Home {
       org.loja.model.pagina.Pagina p = pagina.findBy("slug", pagina_slug);
       model.addAttribute("pagina", p);
       model.addAttribute("breadcrumb", pagina.breadcrumb(p));
+=======
+    @RequestMapping("/page/{slug}")
+    public String pagina(Model model, @PathVariable("slug") String slug) {
+      model.addAttribute("pagina", pagina.findBy("slug", slug));
+>>>>>>> master
       return "index";
     }
 
@@ -88,10 +125,5 @@ public class Home {
     public String pedidos(Model model, @PathVariable("order") Integer order_id) {
       model.addAttribute("order", pedido.findBy("id", order_id));
       return "index";
-    }
-
-    @org.springframework.web.bind.annotation.ModelAttribute("usuario")
-    public org.loja.model.usuario.Usuario usuario() {
-      return usuario.findBy("username", org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }

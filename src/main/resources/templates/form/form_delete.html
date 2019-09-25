@@ -1,6 +1,11 @@
-<!doctype html>
-<html lang="pt-br">
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
   <body>
+<<<<<<< HEAD:src/main/resources/templates/form/form_delete.html
     <div id="form-container">
       <form class="form" id="form" method="delete" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/delete}">
         <input type="hidden" name="id" th:value="${command.id}" id="id"/>
@@ -19,7 +24,63 @@
             <button type="submit" class="btn btn-primary" id="submit" onclick="submit_delete(this);">Remover</button>
           </div>
         </div>
+=======
+    <form role="form" class="form" id="form" th:if="${#strings.equals(target, 'usuario')}" method="delete" th:action="@{/usuario/delete}">
+      <input type="hidden" name="id" th:value="command.id"/>
+
+      <div class="alert alert-primary" role="alert">
+        Confirma remo&ccedil;&atilde;o do usu&aacute;rio <strong th:text="${command.firstName}"/> <strong th:text="${command.lastName}"/>?
+        <button type="button" class="btn btn-link" id="yes">Sim</button>
+        <button type="button" class="btn btn-link" id="not">N&atilde;o</button>
       </div>
-    </div>
+    </form>
+
+    <form role="form" class="form" id="form" th:if="${#strings.equals(target, 'categoria')}" method="delete" th:action="@{/categoria/delete}">
+      <input type="hidden" name="id" th:value="command.id"/>
+
+      <div class="alert alert-primary" role="alert">
+        Confirma remo&ccedil;&atilde;o da categoria <strong th:text="${command.nome}"></strong>?
+        <button type="button" class="btn btn-link" id="yes">Sim</button>
+        <button type="button" class="btn btn-link" id="not">N&atilde;o</button>
+      </div>
+    </form>
+
+    <form role="form" class="form" id="form" th:if="${#strings.equals(target, 'produto')}" method="delete" th:action="@{/produto/delete}">
+      <input type="hidden" name="id" th:value="command.id"/>
+
+      <div class="alert alert-primary" role="alert">
+        Confirma remo&ccedil;&atilde;o do produto <strong th:text="${command.nome}"></strong>?
+        <button type="button" class="btn btn-link" id="yes">Sim</button>
+        <button type="button" class="btn btn-link" id="not">N&atilde;o</button>
+      </div>
+    </form>
+
+    <form role="form" class="form" id="form" th:if="${#strings.equals(target, 'pagina')}" method="delete" th:action="@{/pagina/delete}">
+      <input type="hidden" name="id" th:value="command.id"/>
+
+      <div class="alert alert-primary" role="alert">
+        Confirma remo&ccedil;&atilde;o da p&aacute;gina <strong th:text="${command.titulo}"></strong>?
+        <button type="button" class="btn btn-link" id="yes">Sim</button>
+        <button type="button" class="btn btn-link" id="not">N&atilde;o</button>
+>>>>>>> master:src/main/resources/templates/form_delete.html
+      </div>
+    </form>
+
+    <script th:inline="javascript">
+    $(document).ready(function(){
+      $('#yes').click(function(e){
+        e.preventDefault;
+        var path = $("form.form").attr( "action" );
+        $.ajax({type: 'delete', url: path}).done(function(data){
+          $('#remove').dialog('close');
+        });
+      });
+
+      $('#not').click(function(e){
+        e.preventDefault;
+        $('#remove').dialog('close');
+      });
+    });
+    </script>
   </body>
 </html>

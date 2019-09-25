@@ -21,6 +21,7 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
     super(Usuario.class);
   }
 
+<<<<<<< HEAD
   @RequestMapping(value = "/register", method=RequestMethod.GET)
   public String formRegister(Model model) {
     model.addAttribute("comand", new Usuario());
@@ -48,6 +49,8 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
       return "redirect:/recoverPassword";
   }
 
+=======
+>>>>>>> master
   @RequestMapping(value = "/credenciais", method=RequestMethod.GET)
   @PreAuthorize("hasPermission(#user, 'consulta_'+#this.this.name)")
   public String formCredenciais(Model model, @RequestParam("id") Integer id) {
