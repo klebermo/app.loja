@@ -1,8 +1,14 @@
 <th:block th:fragment="copy">
 <div class="row no-gutters">
   <div class="jumbotron">
-    <h1 class="display-4" th:text="${categoria.nome}"></h1>
-    <p class="lead" th:text="${categoria.resumo}"></p>
+    <div class="media">
+      <img th:if="${categoria.icone}" th:src="@{/download/imagem/__${categoria.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${categoria.nome}">
+      <img th:unless="${categoria.icone}" th:src="@{/images/icon_category.png}" width=64 height=64 class="mr-3" th:alt="${categoria.nome}">
+      <div class="media-body">
+        <h5 class="mt-0" th:text="${categoria.nome}"></h5>
+        <span th:text="${categoria.resumo}"></span>
+      </div>
+    </div>
   </div>
 
   <div class="col" th:each="p : ${produtos}" th:if="${#strings.equals(p.categoria, categoria)}">
