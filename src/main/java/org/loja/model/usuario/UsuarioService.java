@@ -127,20 +127,29 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
 
   public String checkout_paypal(Integer usuario_id, String payerId, String guid) {
     Usuario usuario = this.dao.findBy("id", usuario_id);
-
-    return  "/order/"+create_order(usuario, "paypal").toString();
+    org.loja.payment.paypal.Checkout checkout = new org.loja.payment.paypal.Checkout();
+    if(checkout.register(payerId, guid))
+      return  "/order/"+create_order(usuario, "paypal").toString();
+    else
+      return "/cart";
   }
 
   public String checkout_mercadopago(Integer usuario_id, String status_id) {
     Usuario usuario = this.dao.findBy("id", usuario_id);
-
-    return  "/order/"+create_order(usuario, "mercadoPago").toString();
+    org.loja.payment.mercadopago.Checkout checkout = new org.loja.payment.mercadopago.Checkout();
+    if(checkout.register())
+      return  "/order/"+create_order(usuario, "mercadoPago").toString();
+    else
+      return "/order";
   }
 
   public String checkout_pagseguro(Integer usuario_id, Integer status_id) {
     Usuario usuario = this.dao.findBy("id", usuario_id);
-
-    return  "/order/"+create_order(usuario, "pagSeguro").toString();
+    org.loja.payment.pagseguro.Checkout checkout = new org.loja.payment.pagseguro.Checkout();
+    if(checkout.register())
+      return  "/order/"+create_order(usuario, "paypal").toString();
+    else
+      return "/cart";
   }
 
   public Integer create_order(Usuario usuario, String metogoPagamento) {
