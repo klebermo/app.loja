@@ -11,10 +11,10 @@
         <div class="media-body">
           <h5 class="mt-0 mb-1" th:text="${produto.nome}"></h5>
           <span th:text="${produto.resumo}"></span>
-          <a class="btn btn-secondary" th:href="@{/p/__${produto.id}__}"><i class="fa fas-angle-right"></i></a>
+          <a class="btn btn-secondary" th:href="@{/p/__${produto.id}__}"><i class="fas fa-angle-right"></i></a>
           <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fas-download"></i>
+              <i class="fas fa-download"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a th:each="arquivo : ${produto.versaoPaga}" class="dropdown-item" th:href="@{/arquivo/download/__${arquivo.id}__}" th:text="${arquivo.type}">Action</a>
