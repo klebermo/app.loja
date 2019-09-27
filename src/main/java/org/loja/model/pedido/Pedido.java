@@ -27,6 +27,9 @@ public class Pedido extends Model {
   @Column
   private Date dataCompra;
 
+  @Column
+  private String metogoPagamento;
+
   @Override
   public Integer getId() {
     return id;
@@ -50,6 +53,14 @@ public class Pedido extends Model {
 
   public void setDataCompra(Date dataCompra) {
     this.dataCompra = dataCompra;
+  }
+
+  public String getMetogoPagamento() {
+    return metogoPagamento;
+  }
+
+  public void setMetogoPagamento(String metogoPagamento) {
+    this.metogoPagamento = metogoPagamento;
   }
 
   public String toString() {
