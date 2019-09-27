@@ -67,6 +67,20 @@
               </li>
 
               <li>
+                <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Email')}? 'nav-link active' : 'nav-link'" th:href="@{/email/get}" tabindex="-1" aria-disabled="true">
+                  <i class="fas fa-file"></i>
+                  Email
+                </a>
+              </li>
+
+              <li>
+                <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Idiomas')}? 'nav-link active' : 'nav-link'" th:href="@{/idiomas/get}" tabindex="-1" aria-disabled="true">
+                  <i class="fas fa-file"></i>
+                  Idiomas
+                </a>
+              </li>
+
+              <li>
                 <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Paypal')}? 'nav-link active' : 'nav-link'" th:href="@{/paypal/get}" tabindex="-1" aria-disabled="true">
                   <i class="fas fa-file"></i>
                   Paypal
@@ -221,6 +235,49 @@
             </div>
           </div>
         </div>
+
+        <div id="form-container" th:if="${#strings.equals(classe.simpleName, 'Email')}">
+          <form class="form" id="form" method="post" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/set}">
+            <div class="form-group">
+              <label for="protocol">protocol</label>
+              <input type="text" name="protocol" th:value="${setting.protocol}" class="form-control" id="protocol" placeholder="Protocol">
+            </div>
+
+            <div class="form-group">
+              <label for="host">Host</label>
+              <input type="text" name="host" th:value="${setting.host}" class="form-control" id="host" placeholder="Host">
+            </div>
+
+            <div class="form-group">
+              <label for="port">Port</label>
+              <input type="text" name="port" th:value="${setting.port}" class="form-control" id="port" placeholder="Port">
+            </div>
+
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" name="username" th:value="${setting.username}" class="form-control" id="username" placeholder="Username">
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="text" name="password" th:value="${setting.password}" class="form-control" id="password" placeholder="password">
+            </div>
+          </form>
+
+          <div class="container">
+            <div class="row">
+              <div class="col-sm">
+              </div>
+              <div class="col-sm">
+              </div>
+              <div class="col-sm">
+                <button type="submit" class="btn btn-primary" id="email" onclick="submit_setting(this);">Salvar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="form-container" th:if="${#strings.equals(classe.simpleName, 'Idiomas')}"></div>
 
         <div class="alert alert-success" id="sucess" role="alert" style="display: none;">
           Configura&ccedil;&otilde;es salvas com sucesso!
