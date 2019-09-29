@@ -39,6 +39,9 @@ public class Usuario extends Model implements UserDetails {
   @Column
   private String email;
 
+  @Column
+  private String cpf;
+
   @OneToMany(fetch = FetchType.EAGER)
   @Fetch(FetchMode.SELECT)
   @JsonIgnore
@@ -111,6 +114,14 @@ public class Usuario extends Model implements UserDetails {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public String getCpf() {
+    return cpf;
+  }
+
+  public void setCpf(String cpf) {
+    this.cpf = cpf;
   }
 
   public List<org.loja.model.credencial.Credencial> getCredenciais() {

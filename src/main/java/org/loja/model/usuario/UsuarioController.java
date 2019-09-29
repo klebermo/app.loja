@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
 import org.springframework.security.access.prepost.PreAuthorize;
+import com.mercadopago.exceptions.MPException;
+import com.paypal.base.rest.PayPalRESTException;
 
 @Controller
 @RequestMapping("usuario")
@@ -86,17 +88,17 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   }
 
   @RequestMapping(value = "/checkout_paypal", method=RequestMethod.GET)
-  public String checkout_paypal(@RequestParam("usuario_id") Integer usuario_id, @RequestParam(value="payerId", required=false) String payerId, @RequestParam(value="guid", required=false) String guid) {
+  public String checkout_paypal(@RequestParam("usuario_id") Integer usuario_id, @RequestParam(value="payerId", required=false) String payerId, @RequestParam(value="guid", required=false) String guid) throws PayPalRESTException {
     return "redirect:"+this.serv.checkout_paypal(usuario_id, payerId, guid);
   }
 
   @RequestMapping(value = "/checkout_mercadopago", method=RequestMethod.GET)
-  public String checkout_mercadopago(@RequestParam("usuario_id") Integer usuario_id, @RequestParam(value="status", required=false) String status_id) {
-    return "redirect:"+this.serv.checkout_mercadopago(usuario_id, status_id);
+  public String checkout_mercadopago(@RequestParam("usuario_id") Integer usuario_id) throws MPException {
+    return "redirect:"+this.serv.checkout_mercadopago(usuario_id);
   }
 
   @RequestMapping(value = "/checkout_pagseguro", method=RequestMethod.GET)
-  public String checkout_pagseguro(@RequestParam("usuario_id") Integer usuario_id, @RequestParam(value="status", required=false) Integer status_id) {
-    return "redirect:"+this.serv.checkout_pagseguro(usuario_id, status_id);
+  public String checkout_pagseguro(@RequestParam("usuario_id") Integer usuario_id) {
+    return "redirect:"+this.serv.checkout_pagseguro(usuario_id);
   }
 }
