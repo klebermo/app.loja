@@ -221,6 +221,16 @@
               <label for="clientSecret">client-secret</label>
               <input type="text" name="clientSecret" th:value="${setting.clientSecret}" class="form-control" id="clientSecret" placeholder="clientSecret">
             </div>
+
+            <div class="form-group">
+              <label for="email">e-mail</label>
+              <input type="email" name="email" th:value="${setting.email}" class="form-control" id="email" placeholder="e-mail">
+            </div>
+
+            <div class="form-group">
+              <label for="token">token</label>
+              <input type="text" name="token" th:value="${setting.token}" class="form-control" id="token" placeholder="token">
+            </div>
           </form>
 
           <div class="container">
