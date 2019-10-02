@@ -14,7 +14,8 @@
 
   <div class="col" th:each="p,stat : ${produtos}" th:if="${#strings.equals(p.categoria, c) and stat.index < 3}">
     <div class="card" style="width: 18rem;">
-      <img th:src="@{/imagem/download/__${p.icone}__}" class="card-img-top" th:alt="${p.nome}">
+      <img th:if="${p.icone}" th:src="@{/imagem/download/__${p.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${p.nome}"/>
+      <img th:unless="${p.icone}" th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:alt="${p.nome}"/>
       <div class="card-body">
         <h5 class="card-title" th:text="${p.nome}"></h5>
         <p class="card-text" th:text="${p.resumo}"></p>
