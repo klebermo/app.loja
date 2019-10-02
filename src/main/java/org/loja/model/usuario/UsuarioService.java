@@ -267,7 +267,11 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     org.loja.settings.pagseguro.PagSeguro pagSeg = (org.loja.settings.pagseguro.PagSeguro) pagSeguroDao.get();
     String appId = pagSeg.getClientId();
     String appKey = pagSeg.getClientSecret();
-    PagSeguro pagSeguro = PagSeguro.instance(Credential.applicationCredential(appId, appKey), PagSeguroEnv.SANDBOX);
+    String email = pagSeg.getEmail();
+    String token = pagSeg.getToken();
+    Credential credential = Credential.sellerCredential(email, token).applicationCredential(appId, appKey);
+    PagSeguroEnv environment = PagSeguroEnv.SANDBOX;
+    PagSeguro pagSeguro = PagSeguro.instance(credential, environment);
 
     RegisteredCheckout registeredCheckout = pagSeguro.checkouts().register(
         new CheckoutRegistrationBuilder()
