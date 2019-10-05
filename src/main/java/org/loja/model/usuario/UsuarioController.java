@@ -10,8 +10,6 @@ import org.springframework.ui.Model;
 import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
 import org.springframework.security.access.prepost.PreAuthorize;
-import com.mercadopago.exceptions.MPException;
-import com.paypal.base.rest.PayPalRESTException;
 
 @Controller
 @RequestMapping("usuario")
@@ -88,12 +86,12 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   }
 
   @RequestMapping(value = "/checkout_paypal", method=RequestMethod.GET)
-  public String checkout_paypal(@RequestParam("usuario_id") Integer usuario_id, @RequestParam(value="payerId", required=false) String payerId, @RequestParam(value="guid", required=false) String guid) throws PayPalRESTException {
+  public String checkout_paypal(@RequestParam("usuario_id") Integer usuario_id, @RequestParam(value="payerId", required=false) String payerId, @RequestParam(value="guid", required=false) String guid) throws com.paypal.base.rest.PayPalRESTException {
     return "redirect:"+this.serv.checkout_paypal(usuario_id, payerId, guid);
   }
 
   @RequestMapping(value = "/checkout_mercadopago", method=RequestMethod.GET)
-  public String checkout_mercadopago(@RequestParam("usuario_id") Integer usuario_id) throws MPException {
+  public String checkout_mercadopago(@RequestParam("usuario_id") Integer usuario_id) throws com.mercadopago.exceptions.MPException {
     return "redirect:"+this.serv.checkout_mercadopago(usuario_id);
   }
 
