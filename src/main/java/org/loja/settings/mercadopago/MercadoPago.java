@@ -7,6 +7,8 @@ public class MercadoPago extends org.loja.settings.Model {
 
   private String clientSecret;
 
+  private String accessToken;
+
   public String getClientId() {
     return clientId;
   }
@@ -23,7 +25,15 @@ public class MercadoPago extends org.loja.settings.Model {
     this.clientSecret = clientSecret;
   }
 
+  public String getAccessToken() {
+    return accessToken;
+  }
+
+  public void setAccessToken(String accessToken) {
+    this.accessToken = accessToken;
+  }
+
   public String toString() {
-    return "{clientId: "+clientId+", clientSecret: "+clientSecret+"}";
+    return "{clientId: "+clientId+", clientSecret: "+clientSecret+", accessToken: "+accessToken+"}";
   }
 }
