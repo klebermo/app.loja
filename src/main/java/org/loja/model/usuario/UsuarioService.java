@@ -154,10 +154,8 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     APIContext apiContext = new APIContext(appId, appKey, "sandbox");
 
     if (payerId != null) {
-      System.out.println("payerId: "+payerId);
       Payment payment = new Payment();
 			if (guid != null) {
-        System.out.println("guid: "+guid);
         payment.setId(map.get(guid));
         PaymentExecution paymentExecution = new PaymentExecution();
 			  paymentExecution.setPayerId(payerId);
@@ -217,8 +215,6 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
         }
       }
       map.put(guid, createdPayment.getId());
-      System.out.println("map.get("+guid+")= "+map.get(guid));
-      System.out.println("url: "+url);
       return url;
     }
   }
