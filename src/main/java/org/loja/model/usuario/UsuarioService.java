@@ -227,6 +227,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     Usuario usuario = this.dao.findBy("id", usuario_id);
 
     String accessToken = ((org.loja.settings.mercadopago.MercadoPago) mercadoPagoDao.get()).getAccessToken();
+    System.out.println("accessToken= "+accessToken);
     com.mercadopago.MercadoPago.SDK.setAccessToken(accessToken);
 
     com.mercadopago.resources.Payment payment = new com.mercadopago.resources.Payment()
