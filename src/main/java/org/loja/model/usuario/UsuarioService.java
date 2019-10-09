@@ -160,11 +160,8 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
         PaymentExecution paymentExecution = new PaymentExecution();
 			  paymentExecution.setPayerId(payerId);
         createdPayment = payment.execute(apiContext, paymentExecution);
-        return  "/order/"+create_order(usuario, "paypal").toString();
-      } else {
-        System.out.println("guid: "+guid);
-        return "/usuario/checkout_paypal?usuario_id="+usuario.getId().toString()+"?payerId="+payerId;
       }
+      return  "/order/"+create_order(usuario, "paypal").toString();
     } else {
       System.out.println("usuario: "+usuario);
       Details details = new Details();
@@ -201,8 +198,8 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
 
       RedirectUrls redirectUrls = new RedirectUrls();
       guid = UUID.randomUUID().toString().replaceAll("-", "");
-      redirectUrls.setCancelUrl("/cart");
-      redirectUrls.setReturnUrl("/usuario/checkout_paypal?usuario_id="+usuario.getId().toString()+"?payerId="+payerId+"?guid="+guid);
+      redirectUrls.setCancelUrl("http://localhost:8080//cart");
+      redirectUrls.setReturnUrl("http://localhost:8080/usuario/checkout_paypal?usuario_id="+usuario.getId().toString()+"&guid="+guid);
       payment.setRedirectUrls(redirectUrls);
 
       createdPayment = payment.create(apiContext);
@@ -221,11 +218,25 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
 
   public String checkout_mercadopago(Integer usuario_id) throws com.mercadopago.exceptions.MPException {
     Usuario usuario = this.dao.findBy("id", usuario_id);
+    System.out.println("---");
+
+    /*String publicKey = ((org.loja.settings.mercadopago.MercadoPago) mercadoPagoDao.get()).getPublicKey();
+    System.out.println("publicKey= "+publicKey);
+    com.mercadopago.MercadoPago.SDK.setPublicKey(publicKey);*/
 
     String accessToken = ((org.loja.settings.mercadopago.MercadoPago) mercadoPagoDao.get()).getAccessToken();
     System.out.println("accessToken= "+accessToken);
     com.mercadopago.MercadoPago.SDK.setAccessToken(accessToken);
 
+    /*String clientId = ((org.loja.settings.mercadopago.MercadoPago) mercadoPagoDao.get()).getClientId();
+    System.out.println("clientId= "+clientId);
+    com.mercadopago.MercadoPago.SDK.setClientId(clientId);
+
+    String clientSecret = ((org.loja.settings.mercadopago.MercadoPago) mercadoPagoDao.get()).getClientSecret();
+    System.out.println("clientSecret= "+clientSecret);
+    com.mercadopago.MercadoPago.SDK.setClientSecret(clientSecret);*/
+
+    System.out.println("---");
     com.mercadopago.resources.Payment payment = new com.mercadopago.resources.Payment()
             .setTransactionAmount(cart_total(usuario.getId()))
             .setDescription("loja-de-software.net.br")
@@ -234,8 +245,10 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
 
     payment.save();
 
+    System.out.println("payment.status= "+payment.getStatus());
+
     if(payment.getStatus() == null)
-      return "/cart";
+      return "/";
 
     return "/order/"+create_order(usuario, "mercadopago").toString();
   }
