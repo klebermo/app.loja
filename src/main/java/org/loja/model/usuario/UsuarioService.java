@@ -20,7 +20,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.math.BigDecimal;
 
 import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Details;
@@ -33,6 +32,17 @@ import com.paypal.api.payments.PaymentExecution;
 import com.paypal.api.payments.RedirectUrls;
 import com.paypal.api.payments.Transaction;
 import com.paypal.base.rest.APIContext;
+
+import java.math.BigDecimal;
+import br.com.uol.pagseguro.api.PagSeguro;
+import br.com.uol.pagseguro.api.PagSeguroEnv;
+import br.com.uol.pagseguro.api.checkout.CheckoutRegistrationBuilder;
+import br.com.uol.pagseguro.api.checkout.RegisteredCheckout;
+import br.com.uol.pagseguro.api.common.domain.builder.PaymentItemBuilder;
+import br.com.uol.pagseguro.api.credential.Credential;
+import br.com.uol.pagseguro.api.common.domain.enums.Currency;
+import br.com.uol.pagseguro.api.http.JSEHttpClient;
+import br.com.uol.pagseguro.api.utils.logging.SimpleLoggerFactory;
 
 @Service
 public class UsuarioService extends org.loja.model.Service<Usuario> {
@@ -163,7 +173,6 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
       }
       return  "/order/"+create_order(usuario, "paypal").toString();
     } else {
-      System.out.println("usuario: "+usuario);
       Details details = new Details();
       details.setSubtotal(String.valueOf(cart_total(usuario.getId())));
 
@@ -218,25 +227,19 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
 
   public String checkout_mercadopago(Integer usuario_id) throws com.mercadopago.exceptions.MPException {
     Usuario usuario = this.dao.findBy("id", usuario_id);
-    System.out.println("---");
 
     /*String publicKey = ((org.loja.settings.mercadopago.MercadoPago) mercadoPagoDao.get()).getPublicKey();
-    System.out.println("publicKey= "+publicKey);
     com.mercadopago.MercadoPago.SDK.setPublicKey(publicKey);*/
 
     String accessToken = ((org.loja.settings.mercadopago.MercadoPago) mercadoPagoDao.get()).getAccessToken();
-    System.out.println("accessToken= "+accessToken);
     com.mercadopago.MercadoPago.SDK.setAccessToken(accessToken);
 
     /*String clientId = ((org.loja.settings.mercadopago.MercadoPago) mercadoPagoDao.get()).getClientId();
-    System.out.println("clientId= "+clientId);
     com.mercadopago.MercadoPago.SDK.setClientId(clientId);
 
     String clientSecret = ((org.loja.settings.mercadopago.MercadoPago) mercadoPagoDao.get()).getClientSecret();
-    System.out.println("clientSecret= "+clientSecret);
     com.mercadopago.MercadoPago.SDK.setClientSecret(clientSecret);*/
 
-    System.out.println("---");
     com.mercadopago.resources.Payment payment = new com.mercadopago.resources.Payment()
             .setTransactionAmount(cart_total(usuario.getId()))
             .setDescription("loja-de-software.net.br")
@@ -255,7 +258,32 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
 
   public String checkout_pagseguro(Integer usuario_id) {
     Usuario usuario = this.dao.findBy("id", usuario_id);
-    return  "/order/"+create_order(usuario, "pagseguro").toString();
+
+    String clientId = ((org.loja.settings.pagseguro.PagSeguro) pagSeguroDao.get()).getClientId();
+    String clientSecret = ((org.loja.settings.pagseguro.PagSeguro) pagSeguroDao.get()).getClientSecret();
+
+    String email = ((org.loja.settings.pagseguro.PagSeguro) pagSeguroDao.get()).getEmail();
+    String token = ((org.loja.settings.pagseguro.PagSeguro) pagSeguroDao.get()).getToken();
+
+    final PagSeguro pagSeguro = PagSeguro.instance(new SimpleLoggerFactory(), new JSEHttpClient(),Credential.sellerCredential(email, token), PagSeguroEnv.SANDBOX);
+
+    CheckoutRegistrationBuilder registrationBuilder = new CheckoutRegistrationBuilder();
+    registrationBuilder.withCurrency(Currency.BRL);
+    for(Produto p : usuario.getCesta().getProdutos()) {
+      PaymentItemBuilder item = new PaymentItemBuilder();
+      item.withId(p.getId().toString());
+      item.withDescription(p.getNome());
+      item.withAmount(new BigDecimal(p.getPreco()));
+      item.withQuantity(1);
+      registrationBuilder.addItem(item);
+    }
+
+    RegisteredCheckout registeredCheckout = pagSeguro.checkouts().register(registrationBuilder);
+
+    String url = registeredCheckout.getRedirectURL();
+    System.out.println(url);
+    return url;
+    //return  "/order/"+create_order(usuario, "pagseguro").toString();
   }
 
   public Integer create_order(Usuario usuario, String metogoPagamento) {
