@@ -228,39 +228,29 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
   public String checkout_mercadopago(Integer usuario_id) throws com.mercadopago.exceptions.MPException {
     Usuario usuario = this.dao.findBy("id", usuario_id);
 
-    /*String publicKey = ((org.loja.settings.mercadopago.MercadoPago) mercadoPagoDao.get()).getPublicKey();
-    com.mercadopago.MercadoPago.SDK.setPublicKey(publicKey);*/
-
     String accessToken = ((org.loja.settings.mercadopago.MercadoPago) mercadoPagoDao.get()).getAccessToken();
     com.mercadopago.MercadoPago.SDK.setAccessToken(accessToken);
 
-    /*String clientId = ((org.loja.settings.mercadopago.MercadoPago) mercadoPagoDao.get()).getClientId();
-    com.mercadopago.MercadoPago.SDK.setClientId(clientId);
-
-    String clientSecret = ((org.loja.settings.mercadopago.MercadoPago) mercadoPagoDao.get()).getClientSecret();
-    com.mercadopago.MercadoPago.SDK.setClientSecret(clientSecret);*/
+    String description = "<li>";
+    for(Produto p : usuario.getCesta().getProdutos()) {
+      description = description + "<ol> <h2>" + p.getNome() + "<small>" + p.getResumo() + "</small></h2> </ol>";
+    }
 
     com.mercadopago.resources.Payment payment = new com.mercadopago.resources.Payment()
             .setTransactionAmount(cart_total(usuario.getId()))
-            .setDescription("loja-de-software.net.br")
-            .setInstallments(1)
-            .setPayer(new com.mercadopago.resources.datastructures.payment.Payer().setEmail(usuario.getEmail()));
+            .setDescription(description)
+            .setInstallments(1);
 
     payment.save();
 
-    System.out.println("payment.status= "+payment.getStatus());
-
     if(payment.getStatus() == null)
-      return "/";
+      return "/cart";
 
     return "/order/"+create_order(usuario, "mercadopago").toString();
   }
 
   public String checkout_pagseguro(Integer usuario_id) {
     Usuario usuario = this.dao.findBy("id", usuario_id);
-
-    String clientId = ((org.loja.settings.pagseguro.PagSeguro) pagSeguroDao.get()).getClientId();
-    String clientSecret = ((org.loja.settings.pagseguro.PagSeguro) pagSeguroDao.get()).getClientSecret();
 
     String email = ((org.loja.settings.pagseguro.PagSeguro) pagSeguroDao.get()).getEmail();
     String token = ((org.loja.settings.pagseguro.PagSeguro) pagSeguroDao.get()).getToken();
@@ -279,10 +269,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     }
 
     RegisteredCheckout registeredCheckout = pagSeguro.checkouts().register(registrationBuilder);
-
-    String url = registeredCheckout.getRedirectURL();
-    System.out.println(url);
-    return url;
+    return registeredCheckout.getRedirectURL();
     //return  "/order/"+create_order(usuario, "pagseguro").toString();
   }
 
