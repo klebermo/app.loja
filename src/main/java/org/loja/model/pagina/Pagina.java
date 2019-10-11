@@ -12,6 +12,8 @@ import java.util.List;
 import javax.persistence.FetchType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import java.text.Normalizer;
 import org.loja.model.titulo.Titulo;
 import org.loja.model.texto.Texto;
@@ -24,10 +26,12 @@ public class Pagina extends Model {
 
   @OneToMany(fetch = FetchType.EAGER)
   @Fetch(FetchMode.SELECT)
+  @Cascade(CascadeType.ALL)
   private List<Titulo> titulo;
 
   @OneToMany(fetch = FetchType.EAGER)
   @Fetch(FetchMode.SELECT)
+  @Cascade(CascadeType.ALL)
   private List<Texto> descricao;
 
   @OneToOne(fetch = FetchType.EAGER)

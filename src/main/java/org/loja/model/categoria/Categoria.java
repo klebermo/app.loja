@@ -7,6 +7,11 @@ import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.OneToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.FetchType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import java.util.List;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,13 +24,17 @@ public class Categoria extends Model {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
 
-  @OneToMany
+  @OneToMany(fetch = FetchType.EAGER)
+  @Fetch(FetchMode.SELECT)
+  @Cascade(CascadeType.ALL)
   private List<Titulo> nome;
 
-  @OneToMany
+  @OneToMany(fetch = FetchType.EAGER)
+  @Fetch(FetchMode.SELECT)
+  @Cascade(CascadeType.ALL)
   private List<Resumo> resumo;
 
-  @OneToOne
+  @OneToOne(fetch = FetchType.EAGER)
   private Imagem icone;
 
   @Override
