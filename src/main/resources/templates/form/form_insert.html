@@ -5,18 +5,28 @@
       <form class="form" id="form" method="post" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/insert}">
         <div class="container" th:if="${#strings.equals(classe.simpleName, 'Categoria')}">
           <div class="form-group">
-            <label for="nome">Nome</label>
-            <input type="text" name="nome" class="form-control" id="nome" placeholder="Nome">
-          </div>
-
-          <div class="form-group">
-            <label for="resumo">Resumo</label>
-            <input type="text" name="resumo" class="form-control" id="resumo" placeholder="Resumo">
-          </div>
-
-          <div class="form-group">
             <label for="icone">Icone</label>
             <input type="file" accept=".png" class="form-control image-uploader" id="icone" th:attr="data-url=@{/imagem/upload}">
+          </div>
+
+          <ul class="nav nav-tabs">
+            <li class="nav-item" th:each="idioma,stat : ${idiomas.listaDeIdiomas}">
+              <a th:class="${stat.index == 0}? 'nav-link active' : 'nav-link'" th:href="${'#' + #strings.substringBefore(idioma,',')}" th:text="${idioma}"></a>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <div th:each="idioma,stat : ${idiomas.listaDeIdiomas}" th:class="${stat.index == 0}? 'tab-pane fade show active' : 'tab-pane fade'" th:id="${#strings.substringBefore(idioma,',')}" role="tabpanel" th:attr="aria-labelledby=${#strings.substringBefore(idioma,',') + '_tab'}">
+              <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" th:name="${'nome[' + stat.index + ']'}" class="form-control" id="nome" placeholder="Nome">
+              </div>
+
+              <div class="form-group">
+                <label for="resumo">Resumo</label>
+                <input type="text" th:name="${'resumo[' + stat.index + ']'}" class="form-control" id="resumo" placeholder="Resumo">
+              </div>
+            </div>
           </div>
         </div>
 
