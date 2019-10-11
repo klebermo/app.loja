@@ -6,8 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
+import java.util.List;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import org.loja.model.titulo.Titulo;
+import org.loja.model.resumo.Resumo;
 
 @Entity
 public class Categoria extends Model {
@@ -15,11 +19,11 @@ public class Categoria extends Model {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
 
-  @Column
-  private String nome;
+  @OneToMany
+  private List<Titulo> nome;
 
-  @Column
-  private String resumo;
+  @OneToMany
+  private List<Resumo> resumo;
 
   @OneToOne
   private Imagem icone;
@@ -33,19 +37,19 @@ public class Categoria extends Model {
     this.id = id;
   }
 
-  public String getNome() {
+  public List<Titulo> getNome() {
     return nome;
   }
 
-  public void setNome(String nome) {
+  public void setNome(List<Titulo> nome) {
     this.nome = nome;
   }
 
-  public String getResumo() {
+  public List<Resumo> getResumo() {
     return resumo;
   }
 
-  public void setResumo(String resumo) {
+  public void setResumo(List<Resumo> resumo) {
     this.resumo = resumo;
   }
 
@@ -58,6 +62,6 @@ public class Categoria extends Model {
   }
 
   public String toString() {
-    return nome;
+    return nome.toString();
   }
 }
