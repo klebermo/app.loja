@@ -188,7 +188,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
       List<Item> items = new ArrayList<Item>();
       for(Produto p : usuario.getCesta().getProdutos()) {
         Item item = new Item();
-        item.setName(p.getNome()).setQuantity("1").setCurrency("BRL").setPrice(String.valueOf(p.getPreco()));
+        item.setName(p.getNome().toString()).setQuantity("1").setCurrency("BRL").setPrice(String.valueOf(p.getPreco()));
         items.add(item);
       }
       itemList.setItems(items);
@@ -228,9 +228,6 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
   public String checkout_mercadopago(Integer usuario_id) throws com.mercadopago.exceptions.MPException {
     Usuario usuario = this.dao.findBy("id", usuario_id);
 
-    /*String publicKey = ((org.loja.settings.mercadopago.MercadoPago) mercadoPagoDao.get()).getPublicKey();
-    com.mercadopago.MercadoPago.SDK.setPublicKey(publicKey);*/
-
     String accessToken = ((org.loja.settings.mercadopago.MercadoPago) mercadoPagoDao.get()).getAccessToken();
     com.mercadopago.MercadoPago.SDK.setAccessToken(accessToken);
 
@@ -242,9 +239,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
 
     com.mercadopago.resources.Payment payment = new com.mercadopago.resources.Payment()
             .setTransactionAmount(cart_total(usuario.getId()))
-            .setDescription("loja-de-software.net.br")
-            .setInstallments(1)
-            .setPayer(new com.mercadopago.resources.datastructures.payment.Payer().setEmail(usuario.getEmail()));
+            .setInstallments(1);
 
     payment.save();
 
@@ -272,7 +267,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     for(Produto p : usuario.getCesta().getProdutos()) {
       PaymentItemBuilder item = new PaymentItemBuilder();
       item.withId(p.getId().toString());
-      item.withDescription(p.getNome());
+      item.withDescription(p.getNome().toString());
       item.withAmount(new BigDecimal(p.getPreco()));
       item.withQuantity(1);
       registrationBuilder.addItem(item);
