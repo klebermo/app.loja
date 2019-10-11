@@ -3,6 +3,14 @@ package org.loja;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import java.util.List;
+import java.util.ArrayList;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ClassPathResource;
+import java.io.InputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import org.loja.model.categoria.Categoria;
 import org.loja.model.produto.Produto;
 import org.loja.model.pagina.Pagina;
@@ -10,7 +18,10 @@ import org.loja.model.pagina.Pagina;
 import org.loja.model.credencial.Credencial;
 import org.loja.model.autorizacao.Autorizacao;
 import org.loja.settings.geral.Geral;
+import org.loja.settings.idiomas.Idiomas;
 import org.loja.settings.paypal.Paypal;
+import org.loja.settings.mercadopago.MercadoPago;
+import org.loja.settings.pagseguro.PagSeguro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.loja.model.categoria.CategoriaService;
 import org.loja.model.produto.ProdutoService;
@@ -19,7 +30,10 @@ import org.loja.model.pagina.PaginaService;
 import org.loja.model.credencial.CredencialService;
 import org.loja.model.autorizacao.AutorizacaoService;
 import org.loja.settings.geral.GeralService;
+import org.loja.settings.idiomas.IdiomasService;
 import org.loja.settings.paypal.PaypalService;
+import org.loja.settings.mercadopago.MercadoPagoService;
+import org.loja.settings.pagseguro.PagSeguroService;
 //import org.springframework.security.core.context.SecurityContextHolder;
 
 @ControllerAdvice
@@ -46,7 +60,16 @@ public class Model {
   private GeralService geral;
 
   @Autowired
+  private IdiomasService idiomas;
+
+  @Autowired
   private PaypalService paypal;
+
+  @Autowired
+  private MercadoPagoService mercadoPago;
+
+  @Autowired
+  private PagSeguroService pagSeguro;
 
   @ModelAttribute("categorias")
   public List<Categoria> categorias() {
@@ -83,8 +106,35 @@ public class Model {
     return geral.get();
   }
 
+  @ModelAttribute("idiomas")
+  public Idiomas idiomas() {
+    return idiomas.get();
+  }
+
   @ModelAttribute("paypal")
   public Paypal paypal() {
     return paypal.get();
+  }
+
+  @ModelAttribute("mercadoPago")
+  public MercadoPago mercadoPago() {
+    return mercadoPago.get();
+  }
+
+  @ModelAttribute("pagSeguro")
+  public PagSeguro pagSeguro() {
+    return pagSeguro.get();
+  }
+
+  @ModelAttribute("lista_de_idiomas")
+  public List<String> lista_de_idiomas() throws IOException, UnsupportedEncodingException {
+    List<String> lista = new ArrayList<String>();
+    Resource resource = new ClassPathResource("idiomas.list");
+    InputStream input = resource.getInputStream();
+    BufferedReader br = new BufferedReader(new InputStreamReader(input, "UTF-8"));
+    String line;
+    while ((line = br.readLine()) != null)
+      lista.add(line);
+    return lista;
   }
 }
