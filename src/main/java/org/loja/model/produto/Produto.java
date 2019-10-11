@@ -15,6 +15,9 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import org.loja.model.titulo.Titulo;
+import org.loja.model.resumo.Resumo;
+import org.loja.model.texto.Texto;
 
 @Entity
 public class Produto extends Model {
@@ -22,14 +25,17 @@ public class Produto extends Model {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
 
-  @Column
-  private String nome;
+  @OneToMany(fetch = FetchType.EAGER)
+  @Fetch(FetchMode.SELECT)
+  private List<Titulo> nome;
 
-  @Column
-  private String resumo;
+  @OneToMany(fetch = FetchType.EAGER)
+  @Fetch(FetchMode.SELECT)
+  private List<Resumo> resumo;
 
-  @Column(length=2097152)
-  private String descricao;
+  @OneToMany(fetch = FetchType.EAGER)
+  @Fetch(FetchMode.SELECT)
+  private List<Texto> descricao;
 
   @OneToOne(fetch = FetchType.EAGER)
   private Categoria categoria;
@@ -61,27 +67,27 @@ public class Produto extends Model {
     this.id = id;
   }
 
-  public String getNome() {
+  public List<Titulo> getNome() {
     return nome;
   }
 
-  public void setNome(String nome) {
+  public void setNome(List<Titulo> nome) {
     this.nome = nome;
   }
 
-  public String getResumo() {
+  public List<Resumo> getResumo() {
     return resumo;
   }
 
-  public void setResumo(String resumo) {
+  public void setResumo(List<Resumo> resumo) {
     this.resumo = resumo;
   }
 
-  public String getDescricao() {
+  public List<Texto> getDescricao() {
     return descricao;
   }
 
-  public void setDescricao(String descricao) {
+  public void setDescricao(List<Texto> descricao) {
     this.descricao = descricao;
   }
 
@@ -134,6 +140,6 @@ public class Produto extends Model {
   }
 
   public String toString() {
-    return nome;
+    return nome.toString();
   }
 }
