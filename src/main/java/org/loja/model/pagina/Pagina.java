@@ -7,10 +7,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
+import java.util.List;
 import javax.persistence.FetchType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import java.text.Normalizer;
+import org.loja.model.titulo.Titulo;
+import org.loja.model.texto.Texto;
 
 @Entity
 public class Pagina extends Model {
@@ -18,17 +22,19 @@ public class Pagina extends Model {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
 
-  @Column(length=64)
-  private String titulo;
+  @OneToMany(fetch = FetchType.EAGER)
+  @Fetch(FetchMode.SELECT)
+  private List<Titulo> titulo;
 
-  @Column(length=2097152)
-  private String descricao;
+  @OneToMany(fetch = FetchType.EAGER)
+  @Fetch(FetchMode.SELECT)
+  private List<Texto> descricao;
 
   @OneToOne(fetch = FetchType.EAGER)
   @Fetch(FetchMode.SELECT)
   private Pagina parent;
 
-  @Column(length=64)
+  @Column(length=32)
   private String slug;
 
   @Override
@@ -40,19 +46,19 @@ public class Pagina extends Model {
     this.id = id;
   }
 
-  public String getTitulo() {
+  public List<Titulo> getTitulo() {
     return titulo;
   }
 
-  public void setTitulo(String titulo) {
+  public void setTitulo(List<Titulo> titulo) {
     this.titulo = titulo;
   }
 
-  public String getDescricao() {
+  public List<Texto> getDescricao() {
     return descricao;
   }
 
-  public void setDescricao(String descricao) {
+  public void setDescricao(List<Texto> descricao) {
     this.descricao = descricao;
   }
 
@@ -73,6 +79,6 @@ public class Pagina extends Model {
   }
 
   public String toString() {
-    return titulo;
+    return titulo.toString();
   }
 }
