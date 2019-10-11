@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import org.loja.model.titulo.Titulo;
@@ -27,14 +29,17 @@ public class Produto extends Model {
 
   @OneToMany(fetch = FetchType.EAGER)
   @Fetch(FetchMode.SELECT)
+  @Cascade(CascadeType.ALL)
   private List<Titulo> nome;
 
   @OneToMany(fetch = FetchType.EAGER)
   @Fetch(FetchMode.SELECT)
+  @Cascade(CascadeType.ALL)
   private List<Resumo> resumo;
 
   @OneToMany(fetch = FetchType.EAGER)
   @Fetch(FetchMode.SELECT)
+  @Cascade(CascadeType.ALL)
   private List<Texto> descricao;
 
   @OneToOne(fetch = FetchType.EAGER)
