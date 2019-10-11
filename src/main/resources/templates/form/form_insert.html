@@ -11,7 +11,7 @@
 
           <ul class="nav nav-tabs">
             <li class="nav-item" th:each="idioma,stat : ${idiomas.listaDeIdiomas}">
-              <a th:class="${stat.index == 0}? 'nav-link active' : 'nav-link'" th:href="${'#' + #strings.substringBefore(idioma,',')}" th:text="${idioma}"></a>
+              <a th:class="${stat.index == 0}? 'nav-link show active' : 'nav-link'" th:id="${idioma}" data-toggle="tab" th:href="${'#' + #strings.substringBefore(idioma,',')}" role="tab" th:attr="aria-controls=${#strings.substringBefore(idioma,',')},aria-selected=${stat.index == 0? 'true' : 'false'}" th:text="${idioma}"></a>
             </li>
           </ul>
 
