@@ -5,9 +5,9 @@
       <img th:if="${c.icone}" th:src="@{/download/imagem/__${c.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${c.nome}">
       <img th:unless="${c.icone}" th:src="@{/images/icon_category.png}" width=64 height=64 class="mr-3" th:alt="${c.nome}">
       <div class="media-body">
-        <h5 class="mt-0" th:text="${c.nome}"></h5>
-        <span th:text="${c.resumo}"></span>
-        <a class="btn btn-link" th:href="@{/c/__${c.nome}__}" role="button">Mais</a>
+        <h5 th:each="t : ${c.nome}" th:if="${#strings.equals(t.idioma, #locale)}" class="mt-0" th:text="${t.conteudo}"></h5>
+        <span th:each="r : ${c.resumo}" th:if="${#strings.equals(r.idioma, #locale)}" th:text="${r.conteudo}"></span>
+        <a th:each="t : ${c.nome}" th:if="${#strings.equals(t.idioma, #locale)}" class="btn btn-link" th:href="@{/c/__${t.conteudo}__}" role="button">Mais</a>
       </div>
     </div>
   </div>
