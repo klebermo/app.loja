@@ -1,5 +1,7 @@
 package org.loja.settings.geral;
 
+import org.loja.model.imagem.Imagem;
+
 public class Geral extends org.loja.settings.Model {
   private static final long serialVersionUID = 1L;
 
@@ -8,6 +10,8 @@ public class Geral extends org.loja.settings.Model {
   private String desenvolvedor;
 
   private String email;
+
+  private Imagem logo;
 
   public String getTitulo() {
     return titulo;
@@ -31,6 +35,14 @@ public class Geral extends org.loja.settings.Model {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public Imagem getLogo() {
+    return logo;
+  }
+
+  public void setLogo(Imagem logo) {
+    this.logo = logo;
   }
 
   public String toString() {
