@@ -304,6 +304,7 @@
 
         <div id="form-container" th:if="${#strings.equals(classe.simpleName, 'Idiomas')}">
           <form class="form" id="form" method="post" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/set}">
+            <hr/>
             <div class="row">
               <div class="col-sm-5">
                 <select multiple="multiple" size="15" class="form-control" id="selectRight">
@@ -319,6 +320,7 @@
                 </select>
               </div>
             </div>
+            <hr/>
           </form>
 
           <div class="container">
