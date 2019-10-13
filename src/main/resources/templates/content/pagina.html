@@ -8,16 +8,16 @@
       </li>
 
       <li class="breadcrumb-item" th:each="item : ${breadcrumb}">
-        <a th:href="@{/page/__${item.content.slug}__}" th:text="${item.content.titulo}"></a>
+        <a th:each="t : ${item.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/page/__${t.slug()}__}" th:text="${t.conteudo}"></a>
       </li>
 
       <li class="breadcrumb-item active">
-        <a th:href="@{/page/__${pagina.slug}__}" th:text="${pagina.titulo}"></a>
+        <a href="#" th:each="t : ${pagina.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></a>
       </li>
     </ol>
   </nav>
 
-  <h2 th:text="${pagina.titulo}"></h2>
+  <h2 th:each="t : ${pagina.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></h2>
 
-  <span th:utext="${pagina.descricao}"></span>
+  <span th:each="d : ${pagina.descricao}" th:if="${#strings.equals(#strings.substringBefore(d.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${d.conteudo}"></span>
 </th:block>

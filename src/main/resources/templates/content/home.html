@@ -12,14 +12,20 @@
     </div>
   </div>
 
+  <br/>
+
   <div class="col" th:each="p,stat : ${produtos}" th:if="${#strings.equals(p.categoria, c) and stat.index < 3}">
     <div class="card" style="width: 18rem;">
-      <img th:if="${p.icone}" th:src="@{/imagem/download/__${p.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${p.nome}"/>
-      <img th:unless="${p.icone}" th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:alt="${p.nome}"/>
+      <th:block th:if="${p.icone}">
+        <img th:src="@{/imagem/download/__${p.icone.id}__}" width=64 height=64 class="mr-3" th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
+      </th:block>
+      <th:block th:unless="${p.icone}">
+        <img th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
+      </th:block>
       <div class="card-body">
-        <h5 class="card-title" th:text="${p.nome}"></h5>
-        <p class="card-text" th:text="${p.resumo}"></p>
-        <a th:href="@{/p/__${p.nome}__}" class="btn btn-primary">Ver detalhes</a>
+        <h5 class="card-title" th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></h5>
+        <p class="card-text" th:each="r : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(r.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${r.conteudo}"></p>
+        <a th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/p/__${t.conteudo}__}" class="btn btn-primary">Ver detalhes</a>
       </div>
     </div>
   </div>
