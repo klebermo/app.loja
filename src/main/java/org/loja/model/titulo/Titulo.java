@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
+import java.text.Normalizer;
 
 @Entity
 public class Titulo extends Model {
@@ -40,8 +41,12 @@ public class Titulo extends Model {
     return conteudo;
   }
 
-  public void setCOnteudo(String conteudo) {
+  public void setConteudo(String conteudo) {
     this.conteudo = conteudo;
+  }
+
+  public String slug() {
+    return Normalizer.normalize(conteudo, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "").replace(" ", "_");
   }
 
   public String toString() {
