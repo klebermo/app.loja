@@ -40,7 +40,7 @@ public class Resumo extends Model {
     return conteudo;
   }
 
-  public void setCOnteudo(String conteudo) {
+  public void setConteudo(String conteudo) {
     this.conteudo = conteudo;
   }
 
