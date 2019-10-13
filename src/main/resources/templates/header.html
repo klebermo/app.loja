@@ -25,10 +25,14 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav mr-auto">
             <li th:if="${pagina}" class="nav-item" th:each="p : ${paginas}">
-              <a th:unless="${p.parent}" th:class="${#strings.equals(p, pagina)}? 'nav-link active' : 'nav-link'" th:href="@{/page/__${p.slug}__}" th:text="${p.titulo}"></a>
+              <th:block th:each="t : ${p.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}">
+                <a th:unless="${p.parent}" th:class="${#strings.equals(p.id, pagina.id)}? 'nav-link active' : 'nav-link'" th:href="@{/page/__${t.slug()}__}" th:text="${t.conteudo}"></a>
+              <th:block>
             </li>
             <li th:unless="${pagina}" class="nav-item" th:each="p : ${paginas}">
-              <a th:unless="${p.parent}" class="nav-link" th:href="@{/page/__${p.slug}__}" th:text="${p.titulo}"></a>
+              <th:block th:each="t : ${p.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}">
+                <a th:unless="${p.parent}" class="nav-link" th:href="@{/page/__${t.slug()}__}" th:text="${t.conteudo}"></a>
+              </th:block>
             </li>
           </ul>
 
