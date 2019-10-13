@@ -532,10 +532,6 @@ function detect_editor() {
   }
 }
 
-function create_slug(element) {
-  document.getElementById("slug").value = element.value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-}
-
 $('#left').click(function() {
   return !$('#selectLeft option:selected').remove().appendTo('#selectRight');
 });
