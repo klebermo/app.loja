@@ -1,7 +1,7 @@
 <th:block th:fragment="copy">
   <ul class="list-unstyled" th:if="${produto}">
     <li class="media" th:each="img : ${produto.thumbnails}">
-      <img th:src="@{/imagem/download/__${img.id}))}" class="mr-3" th:alt="${produto.nome}">
+      <img th:src="@{/imagem/download/__${img.id}))}" class="mr-3" th:each="t : ${c.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}">
     </li>
   </ul>
 
@@ -13,7 +13,7 @@
     <th:block th:if="${pagina}" th:each="p : ${paginas}">
       <th:block th:if="${p.parent != null and #strings.equals(p.parent, pagina)}">
         <li class="nav-item">
-            <a th:href="@{/page/__${p.slug}__}" class="nav-link" th:text="${p.titulo}"></a>
+            <a th:href="@{/page/__${p.slug}__}" class="nav-link" th:text="${p.titulo.slug()}"></a>
         </li>
       </th:block>
     </th:block>
