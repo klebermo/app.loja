@@ -3,14 +3,20 @@ package org.loja;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.loja.model.categoria.CategoriaService;
+import org.loja.model.categoria.Categoria;
 import org.loja.model.produto.ProdutoService;
+import org.loja.model.produto.Produto;
 import org.loja.model.pagina.PaginaService;
+import org.loja.model.pagina.Pagina;
+import org.loja.model.titulo.Titulo;
 import org.loja.model.pedido.PedidoService;
+import org.loja.model.pedido.Pedido;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
+import java.util.List;
 
 @Controller
 public class Home {
@@ -48,13 +54,21 @@ public class Home {
 
     @RequestMapping("/c/{nome}")
     public String categoria(Model model, @PathVariable("nome") String nome) {
-      model.addAttribute("categoria", categoria.findBy("nome", nome));
+      List<Categoria> lista = categoria.select();
+      for(Categoria c : lista)
+        for(Titulo titulo : c.getNome())
+          if(titulo.getConteudo().equals(nome))
+            model.addAttribute("categoria", c);
       return "index";
     }
 
     @RequestMapping("/p/{nome}")
     public String produto(Model model, @PathVariable("nome") String nome) {
-      model.addAttribute("produto", produto.findBy("nome", nome));
+      List<Produto> lista = produto.select();
+      for(Produto p : lista)
+        for(Titulo titulo : p.getNome())
+          if(titulo.getConteudo().equals(nome))
+            model.addAttribute("produto", p);
       return "index";
     }
 
@@ -66,9 +80,13 @@ public class Home {
 
     @RequestMapping("/page/{slug}")
     public String pagina(Model model, @PathVariable("slug") String pagina_slug) {
-      org.loja.model.pagina.Pagina p = pagina.findBy("slug", pagina_slug);
-      model.addAttribute("pagina", p);
-      model.addAttribute("breadcrumb", pagina.breadcrumb(p));
+      List<Pagina> lista = pagina.select();
+      for(Pagina p : lista)
+        for(Titulo titulo : p.getTitulo())
+          if(titulo.slug().equals(pagina_slug)) {
+            model.addAttribute("pagina", p);
+            model.addAttribute("breadcrumb", pagina.breadcrumb(p));
+          }
       return "index";
     }
 
