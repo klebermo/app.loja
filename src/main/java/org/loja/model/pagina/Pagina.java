@@ -38,9 +38,6 @@ public class Pagina extends Model {
   @Fetch(FetchMode.SELECT)
   private Pagina parent;
 
-  @Column(length=32)
-  private String slug;
-
   @Override
   public Integer getId() {
     return id;
@@ -72,14 +69,6 @@ public class Pagina extends Model {
 
   public void setParent(Pagina parent) {
     this.parent = parent;
-  }
-
-  public String getSlug() {
-    return slug;
-  }
-
-  public void setSlug(String slug) {
-    this.slug = slug;
   }
 
   public String toString() {
