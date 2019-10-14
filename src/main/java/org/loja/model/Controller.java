@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.security.core.context.SecurityContextHolder;
+import java.util.List;
 
 public abstract class Controller<E> {
   private Class<E> clazz;
@@ -79,6 +80,11 @@ public abstract class Controller<E> {
   public String list() throws JsonProcessingException {
     ObjectMapper mapper = new ObjectMapper();
     return mapper.writeValueAsString(serv.select());
+  }
+
+  @ModelAttribute("lista")
+  public List lista() {
+    return serv.select();
   }
 
   @ModelAttribute("classe")
