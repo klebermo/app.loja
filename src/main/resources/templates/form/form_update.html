@@ -7,84 +7,110 @@
 
         <div class="container" th:if="${#strings.equals(classe.simpleName, 'Categoria')}">
           <div class="form-group">
-            <label for="nome">Nome</label>
-            <input type="text" name="nome" th:value="${command.nome}" class="form-control" id="nome" placeholder="Nome">
-          </div>
-
-          <div class="form-group">
-            <label for="resumo">Resumo</label>
-            <input type="text" name="resumo" th:value="${command.resumo}" class="form-control" id="resumo" placeholder="Resumo">
-          </div>
-
-          <div class="form-group">
             <label for="icone">Icone</label>
             <input th:if="${command.icone}" type="hidden" name="icone" th:value="${command.icone.id}"/>
             <input type="file" accept=".png" class="form-control image-uploader" id="icone" th:attr="data-url=@{/imagem/upload}">
+          </div>
+
+          <ul class="nav nav-tabs">
+            <li class="nav-item" th:each="idioma,stat : ${idiomas.listaDeIdiomas}">
+              <a th:class="${stat.index == 0}? 'nav-link show active' : 'nav-link'" th:id="${idioma}" data-toggle="tab" th:href="${'#' + #strings.substringBefore(idioma,',')}" role="tab" th:attr="aria-controls=${#strings.substringBefore(idioma,',')},aria-selected=${stat.index == 0? 'true' : 'false'}" th:text="${idioma}"></a>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <div th:each="idioma,stat : ${idiomas.listaDeIdiomas}" th:class="${stat.index == 0}? 'tab-pane show active' : 'tab-pane fade'" th:id="${#strings.substringBefore(idioma,',')}" role="tabpanel" th:attr="aria-labelledby=${#strings.substringBefore(idioma,',') + '_tab'}">
+              <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="hidden" th:name="${'nome[' + stat.index + '].idioma'}" th:value="${idioma}"/>
+                <input type="text" th:name="${'nome[' + stat.index + '].conteudo'}" class="form-control" id="nome" placeholder="Nome">
+              </div>
+
+              <div class="form-group">
+                <label for="resumo">Resumo</label>
+                <input type="hidden" th:name="${'resumo[' + stat.index + '].idioma'}" th:value="${idioma}"/>
+                <input type="text" th:name="${'resumo[' + stat.index + '].conteudo'}" class="form-control" id="resumo" placeholder="Resumo">
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="container" th:if="${#strings.equals(classe.simpleName, 'Produto')}">
-          <div class="form-group">
-            <label for="nome">Nome</label>
-            <input type="text" name="nome" th:value="${command.nome}" class="form-control" id="nome" placeholder="Nome">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm">
+                <div class="form-group">
+                  <label for="icone">Icone</label>
+                  <input th:if="${command.icone}" type="hidden" name="icone" th:value="${command.icone.id}"/>
+                  <input type="file" accept=".png" class="form-control image-uploader" id="icone" th:attr="data-url=@{/imagem/upload}">
+                </div>
+              </div>
+              <div class="col-sm">
+                <div class="form-group">
+                  <label for="categoria">Categoria</label>
+                  <select class="form-control" id="categoria" name="categoria.id">
+                    <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:selected="${#strings.equals(categoria, command.categoria)}" th:text="${categoria.nome}"/>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm">
+                <div class="form-group">
+                  <label for="preco">Pre&ccedil;o</label>
+                  <input type="text" name="preco" th:value="${command.preco}" class="form-control" id="preco" placeholder="Pre&ccedil;o">
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="categoria">Categoria</label>
-            <select class="form-control" id="categoria" name="categoria.id">
-              <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:if="${#strings.equals(categoria, command.categoria)}? 'selected' : ''" th:text="${categoria.nome}"/>
-            </select>
+          <ul class="nav nav-tabs">
+            <li class="nav-item" th:each="idioma,stat : ${idiomas.listaDeIdiomas}">
+              <a th:class="${stat.index == 0}? 'nav-link show active' : 'nav-link'" th:id="${idioma}" data-toggle="tab" th:href="${'#' + #strings.substringBefore(idioma,',')}" role="tab" th:attr="aria-controls=${#strings.substringBefore(idioma,',')},aria-selected=${stat.index == 0? 'true' : 'false'}" th:text="${idioma}"></a>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <div th:each="idioma,stat : ${idiomas.listaDeIdiomas}" th:class="${stat.index == 0}? 'tab-pane show active' : 'tab-pane fade'" th:id="${#strings.substringBefore(idioma,',')}" role="tabpanel" th:attr="aria-labelledby=${#strings.substringBefore(idioma,',') + '_tab'}">
+              <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="hidden" th:name="${'nome[' + stat.index + '].idioma'}" th:value="${idioma}"/>
+                <input type="text" th:name="${'nome[' + stat.index + '].conteudo'}" class="form-control" id="nome" placeholder="Nome">
+              </div>
+
+              <div class="form-group">
+                <label for="resumo">Resumo</label>
+                <input type="hidden" th:name="${'resumo[' + stat.index + '].idioma'}" th:value="${idioma}"/>
+                <input type="text" th:name="${'resumo[' + stat.index + '].conteudo'}" class="form-control" id="resumo" placeholder="Resumo">
+              </div>
+
+              <div class="form-group">
+                <input type="hidden" th:name="${'descricao[' + stat.index + '].idioma'}" th:value="${idioma}"/>
+                <textarea class="summernote" id="descricao" th:name="${'descricao[' + stat.index + '].conteudo'}"></textarea>
+              </div>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="preco">Pre&ccedil;o</label>
-            <input type="text" name="preco" th:value="${command.preco}" class="form-control" id="preco" placeholder="Pre&ccedil;o">
-          </div>
+          <div class="jumbotron">
+            <div class="form-group">
+              <label for="thumbnails">Thumbnails</label>
+              <input th:each="${thumb : command.thumbnails}" type="hidden" name="thumbnails" th:value="${thumb.id}"/>
+              <input type="file" accept=".jpg .jpeg" class="form-control image-uploader" id="thumbnails" multiple="multiple" th:attr="data-url=@{/imagem/upload}">
+            </div>
 
-          <div class="form-group">
-            <label for="nome">Resumo</label>
-            <input type="text" name="resumo" th:value="${command.resumo}" class="form-control" id="resumo" placeholder="Resumo">
-          </div>
+            <div class="form-group">
+              <label for="versaoGratuita">Vers&atilde;o Gratuita</label>
+              <input th:each="${thumb : command.versaoGratuita}" type="hidden" name="versaoGratuita" th:value="${thumb.id}"/>
+              <input type="file" accept=".exe .dmg .rpm .deb" class="form-control file-uploader" id="versaoGratuita" multiple="multiple" th:attr="data-url=@{/arquivo/upload}">
+            </div>
 
-          <div class="form-group">
-            <textarea class="summernote" id="descricao" name="descricao" th:value="${command.descricao}"></textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="icone">Icone</label>
-            <input th:if="${command.icone}" type="hidden" name="icone" th:value="${command.icone.id}"/>
-            <input type="file" accept=".png" class="form-control image-uploader" id="icone" th:attr="data-url=@{/imagem/upload}">
-          </div>
-
-          <div class="form-group">
-            <label for="thumbnails">Thumbnails</label>
-            <input th:if="${command.thumbnails}" th:each="thumb : ${command.thumbnails}" type="hidden" name="thumbnails" th:value="${thumb.id}"/>
-            <input type="file" accept=".jpg .jpeg" class="form-control image-uploader" id="thumbnails" multiple="multiple" th:attr="data-url=@{/imagem/upload}">
-          </div>
-
-          <div class="form-group">
-            <label for="versaoGratuita">Vers&atilde;o Gratuita</label>
-            <input th:if="${command.versaoGratuita}" th:each="arquivo : ${command.versaoGratuita}" type="hidden" name="versaoGratuita" th:value="${arquivo.id}"/>
-            <input type="file" accept=".exe .dmg .rpm .deb" class="form-control file-uploader" id="versaoGratuita" multiple="multiple" th:attr="data-url=@{/arquivo/upload}">
-          </div>
-
-          <div class="form-group">
-            <label for="versaoPaga">Vers&atilde;o Paga</label>
-            <input th:if="${command.versaoPaga}" th:each="arquivo : ${command.versaoPaga}" type="hidden" name="versaoPaga" th:value="${arquivo.id}"/>
-            <input type="file" accept=".exe .dmg .rpm .deb" class="form-control file-uploader" id="versaoPaga" multiple="multiple" th:attr="data-url=@{/arquivo/upload}">
+            <div class="form-group">
+              <label for="versaoGratuita">Vers&atilde;o Paga</label>
+              <input th:each="${thumb : command.versaoPaga}" type="hidden" name="versaoPaga" th:value="${thumb.id}"/>
+              <input type="file" accept=".exe .dmg .rpm .deb" class="form-control file-uploader" id="versaoPaga" multiple="multiple" th:attr="data-url=@{/arquivo/upload}">
+            </div>
           </div>
         </div>
 
         <div class="container" th:if="${#strings.equals(classe.simpleName, 'Pagina')}">
-          <div class="form-group">
-            <label for="nome">Titulo</label>
-            <input type="text" name="titulo" th:value="${command.titulo}" class="form-control" id="titulo" placeholder="Titulo">
-          </div>
-
-          <div class="form-group">
-            <textarea class="summernote" id="descricao" name="descricao" th:value="${command.descricao}"></textarea>
-          </div>
-
           <div class="form-group">
             <label for="parent">Pagina m&atilde;e</label>
             <select class="form-control" id="parent" name="parent">
@@ -93,7 +119,26 @@
             </select>
           </div>
 
-          <input type="hidden" name="slug" th:value="${command.slug}" id="slug"/>
+          <ul class="nav nav-tabs">
+            <li class="nav-item" th:each="idioma,stat : ${idiomas.listaDeIdiomas}">
+              <a th:class="${stat.index == 0}? 'nav-link show active' : 'nav-link'" th:id="${idioma}" data-toggle="tab" th:href="${'#' + #strings.substringBefore(idioma,',')}" role="tab" th:attr="aria-controls=${#strings.substringBefore(idioma,',')},aria-selected=${stat.index == 0? 'true' : 'false'}" th:text="${idioma}"></a>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <div th:each="idioma,stat : ${idiomas.listaDeIdiomas}" th:class="${stat.index == 0}? 'tab-pane show active' : 'tab-pane fade'" th:id="${#strings.substringBefore(idioma,',')}" role="tabpanel" th:attr="aria-labelledby=${#strings.substringBefore(idioma,',') + '_tab'}">
+              <div class="form-group">
+                <label for="nome">Titulo</label>
+                <input type="hidden" th:name="${'titulo[' + stat.index + '].idioma'}" th:value="${idioma}"/>
+                <input type="text" th:name="${'titulo[' + stat.index + '].conteudo'}" class="form-control" placeholder="Titulo">
+              </div>
+
+              <div class="form-group">
+                <input type="hidden" th:name="${'descricao[' + stat.index + '].idioma'}" th:value="${idioma}"/>
+                <textarea class="summernote" th:name="${'descricao[' + stat.index + '].conteudo'}"></textarea>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="container" th:if="${#strings.equals(classe.simpleName, 'Usuario')}">
