@@ -231,18 +231,21 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     String accessToken = ((org.loja.settings.mercadopago.MercadoPago) mercadoPagoDao.get()).getAccessToken();
     com.mercadopago.MercadoPago.SDK.setAccessToken(accessToken);
 
-    /*Preference preference = new Preference();
-    for(Produto p : usuario.getCesta().getProdutos()) {
-      Item item = new Item();
-      item.setTitle(p.getNome()).setQuantity(1).setUnitPrice(p.getPreco());
-      preference.appendItem(item);
-    }
-    preference.save();
+    String description = "";
+    for(Produto p : usuario.getCesta().getProdutos())
+      description = description + p.getNome() + "\n";
 
-    if(payment.getStatus() == null)
+    com.mercadopago.resources.Payment payment = new com.mercadopago.resources.Payment()
+      .setTransactionAmount(this.cart_total(usuario.getId()))
+      .setDescription(description);
+    payment.save();
+
+    System.out.println(payment.getStatus());
+
+    if(payment.getStatus() == com.mercadopago.resources.Payment.Status.approved)
       return "/cart";
-
-    return "/order/"+create_order(usuario, "mercadopago").toString();*/
+    else
+      return "/order/" + create_order(usuario, "mercadopago");
   }
 
   public String checkout_pagseguro(Integer usuario_id) {
@@ -272,7 +275,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
 
   public String create_order_pagseguro() {
     Usuario usuario = this.dao.findBy("id", Integer.valueOf(map.get("usuario_id")));
-    return "/order/" + create_order(usuario, "pagseguro") + "/";
+    return "/order/" + create_order(usuario, "pagseguro");
   }
 
   public Integer create_order(Usuario usuario, String metogoPagamento) {
