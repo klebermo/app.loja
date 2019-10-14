@@ -231,32 +231,28 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     String accessToken = ((org.loja.settings.mercadopago.MercadoPago) mercadoPagoDao.get()).getAccessToken();
     com.mercadopago.MercadoPago.SDK.setAccessToken(accessToken);
 
-    String description = "<ol>";
+    /*Preference preference = new Preference();
     for(Produto p : usuario.getCesta().getProdutos()) {
-      description = description + "<li> <h2>" + p.getNome() + "<small>" + p.getResumo() + "</small></h2> </li>";
+      Item item = new Item();
+      item.setTitle(p.getNome()).setQuantity(1).setUnitPrice(p.getPreco());
+      preference.appendItem(item);
     }
-    description = description + "</ol>";
-
-    com.mercadopago.resources.Payment payment = new com.mercadopago.resources.Payment()
-            .setTransactionAmount(cart_total(usuario.getId()))
-            .setDescription(description)
-            .setInstallments(1);
-
-    payment.save();
+    preference.save();
 
     if(payment.getStatus() == null)
       return "/cart";
 
-    return "/order/"+create_order(usuario, "mercadopago").toString();
+    return "/order/"+create_order(usuario, "mercadopago").toString();*/
   }
 
   public String checkout_pagseguro(Integer usuario_id) {
     Usuario usuario = this.dao.findBy("id", usuario_id);
+    map.put("usuario_id", usuario_id.toString());
 
     String email = ((org.loja.settings.pagseguro.PagSeguro) pagSeguroDao.get()).getEmail();
     String token = ((org.loja.settings.pagseguro.PagSeguro) pagSeguroDao.get()).getToken();
 
-    final PagSeguro pagSeguro = PagSeguro.instance(new SimpleLoggerFactory(), new JSEHttpClient(),Credential.sellerCredential(email, token), PagSeguroEnv.SANDBOX);
+    final PagSeguro pagSeguro = PagSeguro.instance(new SimpleLoggerFactory(), new JSEHttpClient(), Credential.sellerCredential(email, token), PagSeguroEnv.SANDBOX);
 
     CheckoutRegistrationBuilder registrationBuilder = new CheckoutRegistrationBuilder();
     registrationBuilder.withCurrency(Currency.BRL);
@@ -270,8 +266,13 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     }
 
     RegisteredCheckout registeredCheckout = pagSeguro.checkouts().register(registrationBuilder);
+
     return registeredCheckout.getRedirectURL();
-    //return  "/order/"+create_order(usuario, "pagseguro").toString();
+  }
+
+  public String create_order_pagseguro() {
+    Usuario usuario = this.dao.findBy("id", Integer.valueOf(map.get("usuario_id")));
+    return "/order/" + create_order(usuario, "pagseguro") + "/";
   }
 
   public Integer create_order(Usuario usuario, String metogoPagamento) {
