@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import javax.servlet.http.HttpServletRequest;
 
 import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Details;
@@ -69,6 +70,9 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
 
   @Autowired
   private PagSeguroDao pagSeguroDao;
+
+  @Autowired
+  private HttpServletRequest httpServletRequest;
 
   Map<String, String> map = new HashMap<String, String>();
 
@@ -225,28 +229,44 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     }
   }
 
-  public String checkout_mercadopago(Integer usuario_id) throws com.mercadopago.exceptions.MPException {
+  public com.mercadopago.resources.Preference getMercadoPagoPreference(Integer usuario_id) throws  com.mercadopago.exceptions.MPException, com.mercadopago.exceptions.MPConfException {
     Usuario usuario = this.dao.findBy("id", usuario_id);
 
     String accessToken = ((org.loja.settings.mercadopago.MercadoPago) mercadoPagoDao.get()).getAccessToken();
-    System.out.println("accessToken: "+accessToken);
     com.mercadopago.MercadoPago.SDK.setAccessToken(accessToken);
 
-    String description = "";
-    for(Produto p : usuario.getCesta().getProdutos())
-      description = description + p.getNome() + "\n";
+    com.mercadopago.resources.Preference preference = new com.mercadopago.resources.Preference();
 
-    com.mercadopago.resources.Payment payment = new com.mercadopago.resources.Payment()
-      .setTransactionAmount(this.cart_total(usuario.getId()))
-      .setDescription(description);
-    payment.save();
+    com.mercadopago.resources.datastructures.preference.Payer payer = new com.mercadopago.resources.datastructures.preference.Payer();
+    payer.setName(usuario.getFirstName());
+    payer.setSurname(usuario.getLastName());
+    payer.setEmail(usuario.getEmail());
+    preference.setPayer(payer);
 
-    System.out.println(payment.getStatus());
+    com.mercadopago.resources.datastructures.preference.BackUrls backUrls = new com.mercadopago.resources.datastructures.preference.BackUrls();
+    backUrls.setSuccess("http://localhost:8080/order/"+create_order(usuario, "mercadoPago"));
+    backUrls.setFailure("http://localhost:8080/cart");
 
-    if(payment.getStatus() == com.mercadopago.resources.Payment.Status.approved)
-      return "/cart";
-    else
-      return "/order/" + create_order(usuario, "mercadopago");
+    for(Produto p : usuario.getCesta().getProdutos()) {
+      com.mercadopago.resources.datastructures.preference.Item item = new com.mercadopago.resources.datastructures.preference.Item();
+      String nome = "";
+      for(org.loja.model.titulo.Titulo t : p.getNome())
+        if(t.getIdioma().equals(httpServletRequest.getLocale().toString()))
+          nome = t.getConteudo();
+      item.setTitle(nome)
+          .setQuantity(1)
+          .setUnitPrice(p.getPreco());
+      preference.appendItem(item);
+    }
+
+    preference.save();
+
+    return preference;
+  }
+
+  public String checkout_mercadopago(Integer usuario_id) {
+    Usuario usuario = this.dao.findBy("id", Integer.valueOf(map.get("usuario_id")));
+    return "/order/" + create_order(usuario, "mercadopago");
   }
 
   public String checkout_pagseguro(Integer usuario_id) {

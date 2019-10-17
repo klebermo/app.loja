@@ -90,7 +90,7 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
     return "redirect:"+this.serv.checkout_paypal(usuario_id, payerId, guid);
   }
 
-  @RequestMapping(value = "/checkout_mercadopago", method=RequestMethod.GET)
+  @RequestMapping(value = "/checkout_mercadopago", method=RequestMethod.POST)
   public String checkout_mercadopago(@RequestParam("usuario_id") Integer usuario_id) throws com.mercadopago.exceptions.MPException {
     return "redirect:"+this.serv.checkout_mercadopago(usuario_id);
   }
