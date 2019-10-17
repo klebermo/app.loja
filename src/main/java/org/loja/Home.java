@@ -91,8 +91,9 @@ public class Home {
     }
 
     @RequestMapping("/cart")
-    public String cesta(Model model) {
+    public String cesta(Model model) throws  com.mercadopago.exceptions.MPException, com.mercadopago.exceptions.MPConfException {
       model.addAttribute("cart", "cart");
+      model.addAttribute("preference", usuario.getMercadoPagoPreference(usuario().getId()));
       return "index";
     }
 
