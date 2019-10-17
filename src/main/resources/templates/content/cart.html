@@ -46,7 +46,7 @@
         <td></td>
         <td></td>
         <td>
-          <a th:href="@{/usuario/checkout_paypal?usuario_id=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra com paypal</a>
+          <a th:href="@{/usuario/checkout_paypal?usuario_id=__${usuario.id}__}" class="btn btn-secondary">Pagar</a> <small> com PayPal </small>
         </td>
         <td></td>
       </tr>
@@ -54,7 +54,10 @@
         <td></td>
         <td></td>
         <td>
-          <a th:href="@{/usuario/checkout_mercadopago?usuario_id=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra com mercadoPago</a>
+          <form th:action="@{/usuario/checkout_mercadopago}" method="POST">
+            <input type="hidden" name="usuario_id" th:value="${usuario.id}"/>
+            <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js" th:attr="data-preference-id=${preference.id}"></script>
+          </form>
         </td>
         <td></td>
       </tr>
@@ -62,7 +65,19 @@
         <td></td>
         <td></td>
         <td>
-          <a th:href="@{/usuario/checkout_pagseguro?usuario_id=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra com pagSeguro</a>
+          <!-- <a th:href="@{/usuario/checkout_pagseguro?usuario_id=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra com pagSeguro</a> -->
+          <form th:action="@{'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout/email=' + pagSeguro.email + '&token=' + pagSeguro.token}" method="POST">
+            <input type="hidden" name="currency" value="BRL"/>
+            <input type="hidden" name="senderName" th:value="${usuario.firstName + ' ' + usuario.lastName}"/>
+            <input type="hidden" name="senderEmail" th:value="${usuario.email}"/>
+            <th:block th:if="${usuario.cesta}" th:each="p : ${usuario.cesta.produtos}">
+              <input type="hidden" name="itemId" th:value="${p.id}"/>
+              <input type="hidden" name="itemDescription" th:value="${p.nome}"/>
+              <input type="hidden" name="itemAmount" th:value="${p.preco}"/>
+              <input type="hidden" name="itemQuantity" value="1"/>
+            </th:block>
+            <button type="submit" class="btn btn-secondary">Pagar</button> <small> com PagSeguro </small>
+          </form>
         </td>
         <td></td>
       </tr>
