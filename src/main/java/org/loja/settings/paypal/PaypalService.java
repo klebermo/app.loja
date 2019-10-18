@@ -38,6 +38,10 @@ public class PaypalService extends org.loja.settings.Service<Paypal> {
     super(Paypal.class);
   }
 
+  public String checkout(Integer usuario_id) {
+    return "/orders";
+  }
+
   public String checkout(Integer usuario_id, String payerId, String guid) throws PayPalRESTException {
     Usuario usuario = usuarioDao.findBy("id", usuario_id);
     Payment createdPayment = null;
