@@ -34,6 +34,7 @@ import org.loja.settings.idiomas.IdiomasService;
 import org.loja.settings.paypal.PaypalService;
 import org.loja.settings.mercadopago.MercadoPagoService;
 import org.loja.settings.pagseguro.PagSeguroService;
+import com.mercadopago.resources.Preference;
 //import org.springframework.security.core.context.SecurityContextHolder;
 
 @ControllerAdvice
