@@ -33,7 +33,9 @@ public abstract class Service<E> {
     this.clazz = clazz;
   }
 
-  public abstract String checkout(Integer usuario_id);
+  public String checkout(Integer usuario_id) {
+    return "/orders";
+  }
 
   public String create_order(Integer usuario_id, String transaction_id) {
     Usuario usuario = usuarioDao.findBy("id", usuario_id);
