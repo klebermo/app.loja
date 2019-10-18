@@ -238,14 +238,8 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     com.mercadopago.resources.Preference preference = new com.mercadopago.resources.Preference();
 
     com.mercadopago.resources.datastructures.preference.Payer payer = new com.mercadopago.resources.datastructures.preference.Payer();
-    payer.setName(usuario.getFirstName());
-    payer.setSurname(usuario.getLastName());
     payer.setEmail(usuario.getEmail());
     preference.setPayer(payer);
-
-    com.mercadopago.resources.datastructures.preference.BackUrls backUrls = new com.mercadopago.resources.datastructures.preference.BackUrls();
-    backUrls.setSuccess("http://localhost:8080/order/"+create_order(usuario, "mercadoPago"));
-    backUrls.setFailure("http://localhost:8080/cart");
 
     for(Produto p : usuario.getCesta().getProdutos()) {
       com.mercadopago.resources.datastructures.preference.Item item = new com.mercadopago.resources.datastructures.preference.Item();
