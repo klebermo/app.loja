@@ -17,15 +17,20 @@ import org.loja.model.usuario.Usuario;
 import org.loja.model.produto.Produto;
 
 import java.math.BigDecimal;
+import java.util.Map;
+import java.util.HashMap;
 
 @Service
 public class PagSeguroService extends org.loja.settings.Service<PagSeguro> {
+  private Map<String, String> map = new HashMap<String, String>();
+
   public PagSeguroService() {
     super(PagSeguro.class);
   }
 
   public String checkout(Integer usuario_id) {
     Usuario usuario = usuarioDao.findBy("id", usuario_id);
+    map.put("usuario_id", usuario.getId().toString());
 
     String email = ((PagSeguro) this.dao.get()).getEmail();
     String token = ((PagSeguro) this.dao.get()).getToken();
@@ -46,5 +51,11 @@ public class PagSeguroService extends org.loja.settings.Service<PagSeguro> {
     RegisteredCheckout registeredCheckout = pagSeguro.checkouts().register(registrationBuilder);
 
     return registeredCheckout.getRedirectURL();
+  }
+
+  public String create_order(String transaction_id) {
+    Integer usuario_id = Integer.valueOf(map.get("usuario_id"));
+    Usuario usuario = usuarioDao.findBy("id", usuario_id);
+    return "/order/" + this.create_order(usuario, this.clazz.getSimpleName(), transaction_id);
   }
 }
