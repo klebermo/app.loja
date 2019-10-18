@@ -33,10 +33,7 @@ public abstract class Service<E> {
     this.clazz = clazz;
   }
 
-  public String checkout(Integer usuario_id) {
-    Usuario usuario = usuarioDao.findBy("id", usuario_id);
-    return create_order(usuario_id, null);
-  }
+  public abstract String checkout(Integer usuario_id);
 
   public String create_order(Integer usuario_id, String transaction_id) {
     Usuario usuario = usuarioDao.findBy("id", usuario_id);
