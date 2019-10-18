@@ -9,17 +9,10 @@
         <img th:if="${produto.icone}" th:src="@{/imagem/download/__${produto.icone.id}__}" class="mr-3" width=64 height=64 th:alt="${produto.nome}"/>
         <img th:unless="${produto.icone}" th:src="@{/images/icon_product.png}" class="mr-3" width=64 height=64 th:alt="${produto.nome}"/>
         <div class="media-body">
-          <h5 class="mt-0 mb-1" th:text="${produto.nome}"></h5>
-          <span th:text="${produto.resumo}"></span>
-          <a class="btn btn-secondary" th:href="@{/p/__${produto.id}__}"><i class="fas fa-angle-right"></i></a>
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-download"></i>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a th:each="arquivo : ${produto.versaoPaga}" class="dropdown-item" th:href="@{/arquivo/download/__${arquivo.id}__}" th:text="${arquivo.type}">Action</a>
-            </div>
-          </div> --
+          <h5 class="mt-0 mb-1">
+            <span th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></span>
+            <small th:each="r : ${produto.resumo}" th:if="${#strings.equals(#strings.substringBefore(r.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${r.conteudo}"><small>
+          </h5>
         </div>
       </li>
     </ul>
