@@ -35,6 +35,9 @@ public class Home {
     @Autowired
     private org.loja.model.usuario.UsuarioService usuario;
 
+    @Autowired
+    private org.loja.settings.mercadopago.MercadoPagoService mercadoPago;
+
     @RequestMapping("/")
     public String index(Model model) {
       model.addAttribute("index", "index");
@@ -91,9 +94,9 @@ public class Home {
     }
 
     @RequestMapping("/cart")
-    public String cesta(Model model) throws  com.mercadopago.exceptions.MPException, com.mercadopago.exceptions.MPConfException {
+    public String cesta(Model model) throws com.mercadopago.exceptions.MPException {
       model.addAttribute("cart", "cart");
-      model.addAttribute("preference", usuario.getMercadoPagoPreference(usuario().getId()));
+      model.addAttribute("mercadoPagoPreference", mercadoPago.preference(usuario()));
       return "index";
     }
 
