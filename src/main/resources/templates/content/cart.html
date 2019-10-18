@@ -46,17 +46,9 @@
         <td></td>
         <td></td>
         <td>
-          <a th:href="@{/usuario/checkout_paypal?usuario_id=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra com PayPal</a>
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td>
-          <form th:action="@{/usuario/checkout_mercadopago}" method="POST">
+          <form th:action="@{/paypal/checkout}" method="POST">
             <input type="hidden" name="usuario_id" th:value="${usuario.id}"/>
-            <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js" th:attr="data-preference-id=${preference.id}" data-button-label="Finalizar compra com MercadoPago"></script>
+            <button type="subvmit" class="btn btn-secondary">Finalizar compra com PayPal</button>
           </form>
         </td>
         <td></td>
@@ -65,7 +57,21 @@
         <td></td>
         <td></td>
         <td>
-          <a th:href="@{/usuario/checkout_pagseguro?usuario_id=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra com PagSeguro</a>
+          <form th:action="@{/mercadopago/checkout}" method="POST">
+            <input type="hidden" name="usuario_id" th:value="${usuario.id}"/>
+            <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js" th:attr="data-preference-id=${mercadoPagoPreference.id}" data-button-label="Finalizar compra com MercadoPago"></script>
+          </form>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>
+          <form th:action="@{/pagseguro/checkout}" method="POST">
+            <input type="hidden" name="usuario_id" th:value="${usuario.id}"/>
+            <button type="submit" class="btn btn-secondary">Finalizar compra com PagSeguro</button>
+          </form>
         </td>
         <td></td>
       </tr>
