@@ -253,10 +253,10 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
       preference.appendItem(item);
     }
 
-    //String successUrl = "http://localhost:8080/usuario/"+usuario.getId().toString()+"/MPSuccess";
-    //String pendingUrl = "http://localhost:8080/usuario/"+usuario.getId().toString()+"/MPPending";
-    //String failureUrl = "http://localhost:8080/usuario/"+usuario.getId().toString()+"/MPFailure";
-    //preference.setBackUrls(new com.mercadopago.resources.datastructures.preference.BackUrls(successUrl, pendingUrl, failureUrl));
+    String successUrl = "http://localhost:8080/usuario/"+usuario.getId().toString()+"/MPSuccess";
+    String pendingUrl = "http://localhost:8080/usuario/"+usuario.getId().toString()+"/MPPending";
+    String failureUrl = "http://localhost:8080/usuario/"+usuario.getId().toString()+"/MPFailure";
+    preference.setBackUrls(new com.mercadopago.resources.datastructures.preference.BackUrls(successUrl, pendingUrl, failureUrl));
 
     preference.save();
 
