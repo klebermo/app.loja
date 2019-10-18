@@ -28,7 +28,6 @@ public class PagSeguroService extends org.loja.settings.Service<PagSeguro> {
     super(PagSeguro.class);
   }
 
-  @Override
   public String checkout(Integer usuario_id) {
     Usuario usuario = usuarioDao.findBy("id", usuario_id);
     map.put("usuario_id", usuario.getId().toString());
