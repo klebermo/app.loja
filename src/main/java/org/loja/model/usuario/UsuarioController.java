@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
 import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
@@ -91,8 +92,24 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   }
 
   @RequestMapping(value = "/checkout_mercadopago", method=RequestMethod.POST)
-  public String checkout_mercadopago(@RequestParam("usuario_id") Integer usuario_id) throws com.mercadopago.exceptions.MPException {
-    return "redirect:"+this.serv.checkout_mercadopago(usuario_id);
+  @ResponseBody
+  public void checkout_mercadopago(@RequestParam("usuario_id") Integer usuario_id) {
+    //return "redirect:"+this.serv.checkout_mercadopago(usuario_id);
+  }
+
+  @RequestMapping(value = "/{usuario_id}/MPSuccess", method=RequestMethod.GET)
+  public String checkout_success_mercadopago(@PathVariable("usuario_id") Integer usuario_id, @RequestParam("transaction_id") String transaction_id) {
+    return "redirect:/order/"+this.serv.create_order_mercadopago(usuario_id, transaction_id);
+  }
+
+  @RequestMapping(value = "/{usuario_id}/MPPending", method=RequestMethod.GET)
+  public String checkout_pending_mercadopago(@PathVariable("usuario_id") Integer usuario_id, @RequestParam("transaction_id") String transaction_id) {
+    return "redirect:/order/"+this.serv.create_order_mercadopago(usuario_id, transaction_id);
+  }
+
+  @RequestMapping(value = "/{usuario_id}/MPFailure", method=RequestMethod.GET)
+  public String checkout_failure_mercadopago(@PathVariable("usuario_id") Integer usuario_id) {
+    return "redirect:/cart";
   }
 
   @RequestMapping(value = "/checkout_pagseguro", method=RequestMethod.GET)
@@ -101,7 +118,7 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   }
 
   @RequestMapping(value = "/create_order_pagseguro", method=RequestMethod.GET)
-  public String create_order_pagseguro() {
-    return "redirect:"+this.serv.create_order_pagseguro();
+  public String create_order_pagseguro(@RequestParam("transaction_id") String transaction_id) {
+    return "redirect:"+this.serv.create_order_pagseguro(transaction_id);
   }
 }

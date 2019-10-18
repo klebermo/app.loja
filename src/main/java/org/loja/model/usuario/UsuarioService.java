@@ -175,7 +175,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
 			  paymentExecution.setPayerId(payerId);
         createdPayment = payment.execute(apiContext, paymentExecution);
       }
-      return  "/order/"+create_order(usuario, "paypal").toString();
+      return create_order_paypal(usuario.getId(), createdPayment.getId());
     } else {
       Details details = new Details();
       details.setSubtotal(String.valueOf(cart_total(usuario.getId())));
@@ -253,14 +253,14 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
       preference.appendItem(item);
     }
 
+    //String successUrl = "http://localhost:8080/usuario/"+usuario.getId().toString()+"/MPSuccess";
+    //String pendingUrl = "http://localhost:8080/usuario/"+usuario.getId().toString()+"/MPPending";
+    //String failureUrl = "http://localhost:8080/usuario/"+usuario.getId().toString()+"/MPFailure";
+    //preference.setBackUrls(new com.mercadopago.resources.datastructures.preference.BackUrls(successUrl, pendingUrl, failureUrl));
+
     preference.save();
 
     return preference;
-  }
-
-  public String checkout_mercadopago(Integer usuario_id) {
-    Usuario usuario = this.dao.findBy("id", Integer.valueOf(map.get("usuario_id")));
-    return "/order/" + create_order(usuario, "mercadopago");
   }
 
   public String checkout_pagseguro(Integer usuario_id) {
@@ -288,12 +288,22 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     return registeredCheckout.getRedirectURL();
   }
 
-  public String create_order_pagseguro() {
-    Usuario usuario = this.dao.findBy("id", Integer.valueOf(map.get("usuario_id")));
-    return "/order/" + create_order(usuario, "pagseguro");
+  public String create_order_paypal(Integer usuario_id, String transaction_id) {
+    Usuario usuario = this.dao.findBy("id", usuario_id);
+    return "/order/" + create_order(usuario, "paypal", transaction_id);
   }
 
-  public Integer create_order(Usuario usuario, String metogoPagamento) {
+  public String create_order_mercadopago(Integer usuario_id, String transaction_id) {
+    Usuario usuario = this.dao.findBy("id", usuario_id);
+    return "/order/" + create_order(usuario, "mercadoPago", transaction_id);
+  }
+
+  public String create_order_pagseguro(String transaction_id) {
+    Usuario usuario = this.dao.findBy("id", Integer.valueOf(map.get("usuario_id")));
+    return "/order/" + create_order(usuario, "pagseguro", transaction_id);
+  }
+
+  public Integer create_order(Usuario usuario, String metogoPagamento, String transaction_id) {
     Pedido pedido = new Pedido();
     pedido.setProdutos(new ArrayList<Produto>());
     Cesta cesta = usuario.getCesta();
@@ -305,6 +315,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     }
     pedido.setDataCompra(new java.util.Date());
     pedido.setMetogoPagamento(metogoPagamento);
+    pedido.setTransactionId(transaction_id);
     pedidoDao.insert(pedido);
     if(usuario.getPedidos() == null) {
       usuario.setPedidos(new ArrayList<Pedido>());

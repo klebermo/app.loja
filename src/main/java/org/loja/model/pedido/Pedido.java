@@ -30,6 +30,9 @@ public class Pedido extends Model {
   @Column
   private String metogoPagamento;
 
+  @Column
+  private String transactionId;
+
   @Override
   public Integer getId() {
     return id;
@@ -61,6 +64,14 @@ public class Pedido extends Model {
 
   public void setMetogoPagamento(String metogoPagamento) {
     this.metogoPagamento = metogoPagamento;
+  }
+
+  public String getTransactionId() {
+    return transactionId;
+  }
+
+  public void setTransactionId(String transactionId) {
+    this.transactionId = transactionId;
   }
 
   public String toString() {
