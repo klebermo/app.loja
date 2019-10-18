@@ -6,8 +6,12 @@
   <div class="card-body">
     <ul class="list-unstyled">
       <li class="media" th:each="produto : ${order.produtos}">
-        <img th:if="${produto.icone}" th:src="@{/imagem/download/__${produto.icone.id}__}" class="mr-3" width=64 height=64 th:alt="${produto.nome}"/>
-        <img th:unless="${produto.icone}" th:src="@{/images/icon_product.png}" class="mr-3" width=64 height=64 th:alt="${produto.nome}"/>
+        <th:block th:if="${produto.icone}">
+          <img th:src="@{/imagem/download/__${produto.icone.id}__}" class="mr-3" width=64 height=64 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
+        <th:block>
+        <th:block th:unless="${produto.icone}">
+          <img th:src="@{/images/icon_product.png}" class="mr-3" width=64 height=64 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
+        <th:block>
         <div class="media-body">
           <h5 class="mt-0 mb-1">
             <span th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></span>
