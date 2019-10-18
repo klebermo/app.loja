@@ -27,7 +27,7 @@ public abstract class Service<E> {
   @Autowired
   protected PedidoDao pedidoDao;
 
-  private Class<E> clazz;
+  protected Class<E> clazz;
 
   public Service(Class<E> clazz) {
     this.clazz = clazz;
@@ -35,8 +35,7 @@ public abstract class Service<E> {
 
   public String checkout(Integer usuario_id) {
     Usuario usuario = usuarioDao.findBy("id", usuario_id);
-    String transaction_id = transaction_id();
-    return create_order(usuario_id, transaction_id);
+    return create_order(usuario_id, null);
   }
 
   public String create_order(Integer usuario_id, String transaction_id) {
@@ -71,10 +70,6 @@ public abstract class Service<E> {
     }
 
     return pedido.getId();
-  }
-
-  public String transaction_id() {
-    return "";
   }
 
   public E get() {
