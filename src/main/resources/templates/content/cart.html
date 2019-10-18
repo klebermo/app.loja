@@ -65,19 +65,7 @@
         <td></td>
         <td></td>
         <td>
-          <!-- <a th:href="@{/usuario/checkout_pagseguro?usuario_id=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra com pagSeguro</a> -->
-          <form th:action="@{'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout/email=' + pagSeguro.email + '&token=' + pagSeguro.token}" method="POST">
-            <input type="hidden" name="currency" value="BRL"/>
-            <input type="hidden" name="senderName" th:value="${usuario.firstName + ' ' + usuario.lastName}"/>
-            <input type="hidden" name="senderEmail" th:value="${usuario.email}"/>
-            <th:block th:if="${usuario.cesta}" th:each="p : ${usuario.cesta.produtos}">
-              <input type="hidden" name="itemId" th:value="${p.id}"/>
-              <input type="hidden" name="itemDescription" th:value="${p.nome}"/>
-              <input type="hidden" name="itemAmount" th:value="${p.preco}"/>
-              <input type="hidden" name="itemQuantity" value="1"/>
-            </th:block>
-            <button type="submit" class="btn btn-secondary">Pagar</button> <small> com PagSeguro </small>
-          </form>
+          <a th:href="@{/usuario/checkout_pagseguro?usuario_id=__${usuario.id}__}" class="btn btn-secondary">Finalizar compra com pagSeguro</a>
         </td>
         <td></td>
       </tr>
