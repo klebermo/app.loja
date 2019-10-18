@@ -85,40 +85,4 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   public void remove_from_cart(@RequestParam("usuario") Integer usuario_id, @RequestParam("produto") Integer produto_id) {
     this.serv.remove_from_cart(usuario_id, produto_id);
   }
-
-  @RequestMapping(value = "/checkout_paypal", method=RequestMethod.GET)
-  public String checkout_paypal(@RequestParam("usuario_id") Integer usuario_id, @RequestParam(value="PayerID", required=false) String payerId, @RequestParam(value="guid", required=false) String guid) throws com.paypal.base.rest.PayPalRESTException {
-    return "redirect:"+this.serv.checkout_paypal(usuario_id, payerId, guid);
-  }
-
-  @RequestMapping(value = "/checkout_mercadopago", method=RequestMethod.POST)
-  @ResponseBody
-  public void checkout_mercadopago(@RequestParam("usuario_id") Integer usuario_id) {
-    //return "redirect:"+this.serv.checkout_mercadopago(usuario_id);
-  }
-
-  @RequestMapping(value = "/{usuario_id}/MPSuccess", method=RequestMethod.GET)
-  public String checkout_success_mercadopago(@PathVariable("usuario_id") Integer usuario_id, @RequestParam("transaction_id") String transaction_id) {
-    return "redirect:/order/"+this.serv.create_order_mercadopago(usuario_id, transaction_id);
-  }
-
-  @RequestMapping(value = "/{usuario_id}/MPPending", method=RequestMethod.GET)
-  public String checkout_pending_mercadopago(@PathVariable("usuario_id") Integer usuario_id, @RequestParam("transaction_id") String transaction_id) {
-    return "redirect:/order/"+this.serv.create_order_mercadopago(usuario_id, transaction_id);
-  }
-
-  @RequestMapping(value = "/{usuario_id}/MPFailure", method=RequestMethod.GET)
-  public String checkout_failure_mercadopago(@PathVariable("usuario_id") Integer usuario_id) {
-    return "redirect:/cart";
-  }
-
-  @RequestMapping(value = "/checkout_pagseguro", method=RequestMethod.GET)
-  public String checkout_pagseguro(@RequestParam("usuario_id") Integer usuario_id) {
-    return "redirect:"+this.serv.checkout_pagseguro(usuario_id);
-  }
-
-  @RequestMapping(value = "/create_order_pagseguro", method=RequestMethod.GET)
-  public String create_order_pagseguro(@RequestParam("transaction_id") String transaction_id) {
-    return "redirect:"+this.serv.create_order_pagseguro(transaction_id);
-  }
 }
