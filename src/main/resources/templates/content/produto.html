@@ -11,7 +11,9 @@
 
     <div class="media-body">
       <h5 class="mt-0" th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${t.conteudo}"></h5>
+
       <span th:each="r : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(r.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${r.conteudo}"></span>
+
       <div class="row">
         <div class="col">
           <button type="button" class="btn btn-primary" th:text="${#numbers.formatCurrency(produto.preco)}"></button>
@@ -37,8 +39,19 @@
           </a>
         </div>
       </div>
+
+      <div class="row">
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div th:each="pic,stat : ${produto.thumbnails}" th:class="${stat.index == 0}? 'carousel-item active' : 'carousel-item'">
+              <img th:src="@{/imagem/download/__${pic.id}__}" class="d-block w-100" th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
   <div class="jumbotron">
     <p class="lead" th:each="d : ${produto.descricao}" th:if="${#strings.equals(#strings.substringBefore(d.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${d.conteudo}"></p>
   </div>

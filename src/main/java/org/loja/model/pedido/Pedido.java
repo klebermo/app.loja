@@ -28,7 +28,7 @@ public class Pedido extends Model {
   private Date dataCompra;
 
   @Column
-  private String metogoPagamento;
+  private String metodoPagamento;
 
   @Column
   private String transactionId;
@@ -58,12 +58,12 @@ public class Pedido extends Model {
     this.dataCompra = dataCompra;
   }
 
-  public String getMetogoPagamento() {
-    return metogoPagamento;
+  public String getMetodoPagamento() {
+    return metodoPagamento;
   }
 
-  public void setMetogoPagamento(String metogoPagamento) {
-    this.metogoPagamento = metogoPagamento;
+  public void setMetodoPagamento(String metodoPagamento) {
+    this.metodoPagamento = metodoPagamento;
   }
 
   public String getTransactionId() {

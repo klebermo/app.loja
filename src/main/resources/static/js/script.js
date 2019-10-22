@@ -74,8 +74,8 @@ function remove_from_cart(btn) {
       target.remove();
       var size = show_cart_size();
       var total = show_cart_total();
-      if(size == 0)
-        document.getElementById('empty_cart').setAttribute('style', 'display: none;');
+      var x = document.getElementsByTagName("tfoot");
+      x[0].setAttribute("style", "display: none.");
     }
   };
   var formData = new FormData();

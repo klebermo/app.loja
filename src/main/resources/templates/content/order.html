@@ -2,7 +2,7 @@
 <section>
   <div class="card">
     <div class="card-header">
-      Pedido #<span th:text="${order.id}"></span> de <span th:text="${#dates.format(order.dataCompra)}"></span>
+      <h4 class="my-0 font-weight-normal">Pedido <strong th:text="${order.transactionId}"></strong> realizado com <strong th:text="${order.metodoPagamento}"></strong> em <strong th:text="${#dates.format(order.dataCompra)}"></strong></h4>
     </div>
     <div class="card-body">
       <div class="card" th:each="produto : ${order.produtos}">
@@ -10,11 +10,11 @@
           <div class="media">
             <th:block th:if="${produto.icone}">
               <img th:src="@{/imagem/download/__${produto.icone.id}__}" class="mr-3" width=64 height=64 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
-            <th:block>
+            </th:block>
             <th:block th:unless="${produto.icone}">
               <img th:src="@{/images/icon_product.png}" class="mr-3" width=64 height=64 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
-            <th:block>
-            <div class="media-body" th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"">
+            </th:block>
+            <div class="media-body" th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}">
               <h5 class="mt-0" th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></h5>
               <th:block th:each="r : ${produto.resumo}" th:if="${#strings.equals(#strings.substringBefore(r.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${r.conteudo}"></th:block>
             </div>

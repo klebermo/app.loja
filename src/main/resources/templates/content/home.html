@@ -1,33 +1,32 @@
 <th:block th:fragment="copy">
-<div class="row no-gutters" th:each="c : ${categorias}">
-  <div class="jumbotron" th:each="t : ${c.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}">
-    <div class="media">
-      <img th:if="${c.icone}" th:src="@{/download/imagem/__${c.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${c.nome}">
-      <img th:unless="${c.icone}" th:src="@{/images/icon_category.png}" width=64 height=64 class="mr-3" th:alt="${c.nome}">
-      <div class="media-body">
-        <h5 class="mt-0" th:text="${t.conteudo}"></h5>
-        <span th:each="r : ${c.resumo}" th:if="${#strings.equals(#strings.substringBefore(r.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${r.conteudo}"></span>
-        <a class="btn btn-link" th:href="@{/c/__${t.conteudo}__}" role="button">Mais</a>
+  <th:block th:each="c : ${categorias}">
+    <div class="row">
+      <div class="col">
+        <h5>
+          <span th:each="t : ${c.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></span>
+          <small th:each="r : ${c.resumo}" th:if="${#strings.equals(#strings.substringBefore(r.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${r.conteudo}"></small>
+        </h5>
       </div>
     </div>
-  </div>
 
-  <br/>
+    <div class="row">
+      <div class="col" th:each="p,stat : ${produtos}" th:if="${#strings.equals(p.categoria, c) and stat.index < 3}">
+        <div class="card" style="width: 18rem;">
+          <th:block th:if="${p.icone}">
+            <img th:src="@{/imagem/download/__${p.icone.id}__}" width=64 height=64 class="mr-3" th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
+          </th:block>
 
-  <div class="col" th:each="p,stat : ${produtos}" th:if="${#strings.equals(p.categoria, c) and stat.index < 3}">
-    <div class="card" style="width: 18rem;">
-      <th:block th:if="${p.icone}">
-        <img th:src="@{/imagem/download/__${p.icone.id}__}" width=64 height=64 class="mr-3" th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
-      </th:block>
-      <th:block th:unless="${p.icone}">
-        <img th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
-      </th:block>
-      <div class="card-body">
-        <h5 class="card-title" th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></h5>
-        <p class="card-text" th:each="r : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(r.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${r.conteudo}"></p>
-        <a th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/p/__${t.conteudo}__}" class="btn btn-primary">Ver detalhes</a>
+          <th:block th:unless="${p.icone}">
+            <img th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
+          </th:block>
+
+          <div class="card-body">
+            <h5 class="card-title" th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></h5>
+            <p class="card-text" th:each="r : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(r.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${r.conteudo}"></p>
+            <a th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/p/__${t.conteudo}__}" class="btn btn-primary">Ver detalhes</a>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+  </th:block>
 </th:block>

@@ -16,7 +16,12 @@ public class PagSeguroController extends org.loja.settings.Controller<PagSeguro>
     super(PagSeguro.class);
   }
 
-  @RequestMapping(value = "/process_order", method=RequestMethod.POST)
+  @RequestMapping(value = "/checkout", method=RequestMethod.POST)
+  public String checkout(@RequestParam("usuario_id") Integer usuario_id) {
+    return "redirect:"+this.serv.checkout(usuario_id);
+  }
+
+  @RequestMapping(value = "/process_order", method=RequestMethod.GET)
   public String process_order(@RequestParam("transaction_id") String transaction_id) {
     return "redirect:"+this.serv.create_order(transaction_id);
   }

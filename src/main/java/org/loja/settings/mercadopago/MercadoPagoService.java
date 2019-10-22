@@ -25,6 +25,15 @@ public class MercadoPagoService extends org.loja.settings.Service<MercadoPago> {
     super(MercadoPago.class);
   }
 
+  public String checkout(Integer usuario_id) {
+    return "/process_order";
+  }
+
+  public String create_order(Integer usuario_id, String transaction_id) {
+    Usuario usuario = this.usuarioDao.findBy("id", usuario_id);
+    return "/order/" + create_order(usuario, clazz.getSimpleName(), transaction_id);
+  }
+
   public Preference preference(Usuario usuario) throws  MPException, MPConfException {
     String accessToken = ((MercadoPago) this.dao.get()).getAccessToken();
     com.mercadopago.MercadoPago.SDK.setAccessToken(accessToken);

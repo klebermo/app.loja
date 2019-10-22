@@ -96,7 +96,8 @@ public class Home {
     @RequestMapping("/cart")
     public String cesta(Model model) throws com.mercadopago.exceptions.MPException {
       model.addAttribute("cart", "cart");
-      model.addAttribute("mercadoPagoPreference", mercadoPago.preference(usuario()));
+      if(usuario().getCesta() != null && !usuario().getCesta().getProdutos().isEmpty())
+        model.addAttribute("mercadoPagoPreference", mercadoPago.preference(usuario()));
       return "index";
     }
 

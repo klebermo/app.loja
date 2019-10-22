@@ -6,7 +6,7 @@
       <h5 class="mt-0">Cesta de compras</h5>
     </div>
   </div>
-  <table class="table">
+  <table class="table" onload="display_cart();">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -16,43 +16,59 @@
       </tr>
     </thead>
 
-    <tbody th:if="${usuario.cesta}">
-      <tr th:each="produto : ${usuario.cesta.produtos}" th:id="${'produto_' + produto.id}">
-        <th scope="row" id="cart_list" th:style="${#lists.isEmpty(usuario.cesta.produtos)}? 'display: none;': ''">
-          <img th:if="${produto.icone}" th:src="@{/imagem/download/__${produto.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${produto.nome}"/>
-          <img th:unless="${produto.icone}" th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:alt="${produto.nome}"/>
-        </th>
-        <td th:text="${produto.nome}"></td>
-        <td th:text="${#numbers.formatCurrency(produto.preco)}"></td>
-        <td>
-          <button class="btn btn-secondary" onclick="remove_from_cart(this)" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}, data-url=@{/usuario/remove_from_cart}" type="button">
-            <i class="fas fa-trash"></i>
-          </button>
-        </td>
-      </tr>
-      <tr scope="row" id="empty_cart" th:style="${#lists.isEmpty(usuario.cesta.produtos)}? '': 'display: none;'">
-        <th colspan="4">Cesta de compras vazia</th>
-      </tr>
+    <tbody>
+      <th:block th:if="${usuario.cesta}">
+        <tr th:each="produto : ${usuario.cesta.produtos}" th:id="${'produto_' + produto.id}">
+          <td></td>
+
+          <td>
+            <div class="media">
+              <th:block th:if="${produto.icone}">
+                <img th:src="@{/imagem/download/__${produto.icone.id}__}" class="mr-3" width=64 height=64 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
+              </th:block>
+              <th:block th:unless="${produto.icone}">
+                <img th:src="@{/images/icon_product.png}" class="mr-3" width=64 height=64 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
+              </th:block>
+              <div class="media-body">
+                <h5 class="mt-0">
+                  <span th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></span>
+                  <small th:each="t : ${produto.resumo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></small>
+                </h5>
+              </div>
+            </div>
+          </td>
+
+          <td th:text="${#numbers.formatCurrency(produto.preco)}"></td>
+
+          <td>
+            <button class="btn btn-secondary" onclick="remove_from_cart(this)" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}, data-url=@{/usuario/remove_from_cart}" type="button">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </th:block>
     </tbody>
 
-    <tfoot>
+    <tfoot th:if="${mercadoPagoPreference}">
       <tr>
         <td></td>
         <td></td>
         <td><h3>Total:<span class="badge badge-secondary" id="cart_total" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/cart_total}"></span></h3></td>
         <td></td>
       </tr>
+
       <tr>
         <td></td>
         <td></td>
         <td>
           <form th:action="@{/paypal/checkout}" method="POST">
             <input type="hidden" name="usuario_id" th:value="${usuario.id}"/>
-            <button type="subvmit" class="btn btn-secondary">Finalizar compra com PayPal</button>
+            <button type="submit" class="btn btn-secondary">Finalizar compra com PayPal</button>
           </form>
         </td>
         <td></td>
       </tr>
+
       <tr>
         <td></td>
         <td></td>
@@ -64,6 +80,7 @@
         </td>
         <td></td>
       </tr>
+
       <tr>
         <td></td>
         <td></td>

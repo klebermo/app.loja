@@ -1,6 +1,7 @@
 package org.loja.settings;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.loja.model.usuario.UsuarioDao;
 import org.loja.model.usuario.Usuario;
 import org.loja.model.cesta.CestaDao;
@@ -9,6 +10,7 @@ import org.loja.model.pedido.PedidoDao;
 import org.loja.model.pedido.Pedido;
 import org.loja.model.produto.ProdutoDao;
 import org.loja.model.produto.Produto;
+
 import java.util.ArrayList;
 
 public abstract class Service<E> {
@@ -33,16 +35,12 @@ public abstract class Service<E> {
     this.clazz = clazz;
   }
 
-  public String checkout(Integer usuario_id) {
-    return "/orders";
-  }
-
   public String create_order(Integer usuario_id, String transaction_id) {
     Usuario usuario = usuarioDao.findBy("id", usuario_id);
     return "/order/" + create_order(usuario, clazz.getSimpleName(), transaction_id);
   }
 
-  public Integer create_order(Usuario usuario, String metogoPagamento, String transaction_id) {
+  public Integer create_order(Usuario usuario, String metodoPagamento, String transaction_id) {
     Pedido pedido = new Pedido();
     pedido.setProdutos(new ArrayList<Produto>());
 
@@ -55,7 +53,7 @@ public abstract class Service<E> {
     }
 
     pedido.setDataCompra(new java.util.Date());
-    pedido.setMetogoPagamento(metogoPagamento);
+    pedido.setMetodoPagamento(metodoPagamento);
     pedido.setTransactionId(transaction_id);
     pedidoDao.insert(pedido);
 
