@@ -15,6 +15,7 @@ import org.loja.model.usuario.Usuario;
 import org.loja.model.produto.Produto;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.UUID;
 
 @Service
 public class MercadoPagoService extends org.loja.settings.Service<MercadoPago> {
@@ -57,8 +58,8 @@ public class MercadoPagoService extends org.loja.settings.Service<MercadoPago> {
         preference.appendItem(item);
       }
 
-    String successUrl = "http://localhost:8080/mercadopago/process_order?usuario_id="+usuario.getId().toString();
-    String pendingUrl = "http://localhost:8080/mercadopago/process_order?usuario_id="+usuario.getId().toString();
+    String successUrl = "http://localhost:8080/mercadopago/process_order?usuario_id="+usuario.getId().toString()+"&transaction_id="+UUID.randomUUID().toString();
+    String pendingUrl = "http://localhost:8080/mercadopago/process_order?usuario_id="+usuario.getId().toString()+"&transaction_id="+UUID.randomUUID().toString();
     String failureUrl = "http://localhost:8080/cart";
     preference.setBackUrls(new BackUrls(successUrl, pendingUrl, failureUrl));
 
