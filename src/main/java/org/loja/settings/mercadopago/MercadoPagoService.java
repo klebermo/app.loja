@@ -27,7 +27,7 @@ public class MercadoPagoService extends org.loja.settings.Service<MercadoPago> {
   }
 
   public String checkout(Integer usuario_id) {
-    return "/process_order";
+    return create_order(usuario_id, UUID.randomUUID().toString());
   }
 
   public String create_order(Integer usuario_id, String transaction_id) {
