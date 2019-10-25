@@ -1,0 +1,30 @@
+<th:block th:fragment="copy">
+<input type="hidden" name="id" th:value="${command.id}"/>
+
+<div class="form-group">
+  <label for="icone">Icone</label>
+  <input type="file" accept=".png" class="form-control image-uploader" id="icone" th:attr="data-url=@{/imagem/upload}">
+</div>
+
+<ul class="nav nav-tabs">
+  <li class="nav-item" th:each="idioma,stat : ${idiomas.listaDeIdiomas}">
+    <a th:class="${stat.index == 0}? 'nav-link show active' : 'nav-link'" th:id="${idioma}" data-toggle="tab" th:href="${'#' + #strings.substringBefore(idioma,',')}" role="tab" th:attr="aria-controls=${#strings.substringBefore(idioma,',')},aria-selected=${stat.index == 0? 'true' : 'false'}" th:text="${idioma}"></a>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <div th:each="idioma,stat : ${idiomas.listaDeIdiomas}" th:class="${stat.index == 0}? 'tab-pane show active' : 'tab-pane fade'" th:id="${#strings.substringBefore(idioma,',')}" role="tabpanel" th:attr="aria-labelledby=${#strings.substringBefore(idioma,',') + '_tab'}">
+    <div class="form-group">
+      <label for="nome">Nome</label>
+      <input type="hidden" th:name="${'nome[' + stat.index + '].idioma'}" th:value="${idioma}"/>
+      <input type="text" th:name="${'nome[' + stat.index + '].conteudo'}" class="form-control" id="nome" placeholder="Nome">
+    </div>
+
+    <div class="form-group">
+      <label for="resumo">Resumo</label>
+      <input type="hidden" th:name="${'resumo[' + stat.index + '].idioma'}" th:value="${idioma}"/>
+      <input type="text" th:name="${'resumo[' + stat.index + '].conteudo'}" class="form-control" id="resumo" placeholder="Resumo">
+    </div>
+  </div>
+</div>
+</th:block>

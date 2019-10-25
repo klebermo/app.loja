@@ -1,0 +1,41 @@
+<th:block th:fragment="copy">
+  <form class="form" id="form" method="post" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/set}">
+    <hr/>
+    <div class="row">
+      <div class="col-sm-5">
+        <select multiple="multiple" size="15" class="form-control" id="selectRight">
+          <option th:each="option : ${lista_de_idiomas}" th:text="${option}"><option>
+        </select>
+      </div>
+      <div class="col-1">
+        <button type="button" class="btn btn-dark" id="right"> <i class="fas fa-chevron-right"></i> </button>
+        <button type="button" class="btn btn-dark" id="left"> <i class="fas fa-chevron-left"></i> </button>
+      </div>
+      <div class="col-sm-5">
+        <select multiple="multiple" size="15" class="form-control" id="selectLeft" name="listaDeIdiomas">
+        </select>
+      </div>
+    </div>
+    <hr/>
+  </form>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+      </div>
+      <div class="col-sm">
+        <button type="submit" class="btn btn-primary" id="idiomas" onclick="submit_setting(this);">Salvar</button>
+      </div>
+      <div class="col-sm">
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-success" id="sucess" role="alert" style="display: none;">
+    Configura&ccedil;&otilde;es salvas com sucesso!
+  </div>
+
+  <div class="alert alert-danger" id="error" role="alert" style="display: none;">
+    Ocorreu um erro ao salvar as configura&ccedil;&otilde;es!
+  </div>
+</th:block>

@@ -1,0 +1,20 @@
+<th:block th:fragment="copy">
+<!doctype html>
+<html>
+  <head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
+    <link th:href="@{/css/style-admin.css}" rel="stylesheet">
+  </head>
+
+  <body onload="load_content()">
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" th:href="@{/}" th:text="${geral.titulo}">Title</a>
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" th:href="@{/logout}">Sign out</a>
+        </li>
+      </ul>
+    </nav>
+<th:block>

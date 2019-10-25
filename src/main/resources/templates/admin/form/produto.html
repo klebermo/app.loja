@@ -1,0 +1,72 @@
+<th:block th:fragment="copy">
+<input type="hidden" name="id" th:value="${command.id}"/>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <div class="form-group">
+        <label for="icone">Icone</label>
+        <input type="file" accept=".png" class="form-control image-uploader" id="icone" th:attr="data-url=@{/imagem/upload}">
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="form-group">
+        <label for="categoria">Categoria</label>
+        <select class="form-control" id="categoria" name="categoria.id">
+          <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nome}"/>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="form-group">
+        <label for="preco">Pre&ccedil;o</label>
+        <input type="text" name="preco" class="form-control" id="preco" placeholder="Pre&ccedil;o">
+      </div>
+    </div>
+  </div>
+</div>
+
+<ul class="nav nav-tabs">
+  <li class="nav-item" th:each="idioma,stat : ${idiomas.listaDeIdiomas}">
+    <a th:class="${stat.index == 0}? 'nav-link show active' : 'nav-link'" th:id="${idioma}" data-toggle="tab" th:href="${'#' + #strings.substringBefore(idioma,',')}" role="tab" th:attr="aria-controls=${#strings.substringBefore(idioma,',')},aria-selected=${stat.index == 0? 'true' : 'false'}" th:text="${idioma}"></a>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <div th:each="idioma,stat : ${idiomas.listaDeIdiomas}" th:class="${stat.index == 0}? 'tab-pane show active' : 'tab-pane fade'" th:id="${#strings.substringBefore(idioma,',')}" role="tabpanel" th:attr="aria-labelledby=${#strings.substringBefore(idioma,',') + '_tab'}">
+    <div class="form-group">
+      <label for="nome">Nome</label>
+      <input type="hidden" th:name="${'nome[' + stat.index + '].idioma'}" th:value="${idioma}"/>
+      <input type="text" th:name="${'nome[' + stat.index + '].conteudo'}" class="form-control" id="nome" placeholder="Nome">
+    </div>
+
+    <div class="form-group">
+      <label for="resumo">Resumo</label>
+      <input type="hidden" th:name="${'resumo[' + stat.index + '].idioma'}" th:value="${idioma}"/>
+      <input type="text" th:name="${'resumo[' + stat.index + '].conteudo'}" class="form-control" id="resumo" placeholder="Resumo">
+    </div>
+
+    <div class="form-group">
+      <input type="hidden" th:name="${'descricao[' + stat.index + '].idioma'}" th:value="${idioma}"/>
+      <textarea class="summernote" id="descricao" th:name="${'descricao[' + stat.index + '].conteudo'}"></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="form-group">
+    <label for="thumbnails">Thumbnails</label>
+    <input type="file" accept=".jpg .jpeg" class="form-control image-uploader" id="thumbnails" multiple="multiple" th:attr="data-url=@{/imagem/upload}">
+  </div>
+
+  <div class="form-group">
+    <label for="versaoGratuita">Vers&atilde;o Gratuita</label>
+    <input type="file" accept=".exe .dmg .rpm .deb" class="form-control file-uploader" id="versaoGratuita" multiple="multiple" th:attr="data-url=@{/arquivo/upload}">
+  </div>
+
+  <div class="form-group">
+    <label for="versaoGratuita">Vers&atilde;o Paga</label>
+    <input type="file" accept=".exe .dmg .rpm .deb" class="form-control file-uploader" id="versaoPaga" multiple="multiple" th:attr="data-url=@{/arquivo/upload}">
+  </div>
+</div>
+</th:block>

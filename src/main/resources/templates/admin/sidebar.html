@@ -1,0 +1,95 @@
+<th:block th:fragment="copy">
+<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+  <div class="sidebar-sticky">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a th:class="${classe == null} ? 'nav-link active' : 'nav-link'" th:href="@{/admin}">
+          <i class="fas fa-home"></i>
+          in&iacute;cio
+        </a>
+      </li>
+
+      <li sec:authorize="hasPermission(#user, 'consulta_categoria')" class="nav-item">
+        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Categoria')}? 'nav-link active' : 'nav-link'" th:href="@{/categoria/}">
+          <i class="fas fa-paperclip"></i>
+          categorias
+        </a>
+      </li>
+
+      <li sec:authorize="hasPermission(#user, 'consulta_produto')" class="nav-item">
+        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Produto')}? 'nav-link active' : 'nav-link'" th:href="@{/produto/}">
+          <i class="fas fa-shopping-bag"></i>
+          produtos
+        </a>
+      </li>
+
+      <li sec:authorize="hasPermission(#user, 'consulta_pagina')" class="nav-item">
+        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Pagina')}? 'nav-link active' : 'nav-link'" th:href="@{/pagina/}">
+          <i class="fas fa-file-alt"></i>
+          p&aacute;ginas
+        </a>
+      </li>
+    </ul>
+
+    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+      <span>configura&ccedil;&otilde;es</span>
+      <a class="d-flex align-items-center text-muted" href="#">
+        <i class="fas fa-plus-circle"></i>
+      </a>
+    </h6>
+
+    <ul class="nav flex-column mb-2">
+      <li>
+        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Geral')}? 'nav-link active' : 'nav-link'" th:href="@{/geral/get}" tabindex="-1" aria-disabled="true">
+          <i class="fas fa-file"></i>
+          Geral
+        </a>
+      </li>
+
+      <li>
+        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Email')}? 'nav-link active' : 'nav-link'" th:href="@{/email/get}" tabindex="-1" aria-disabled="true">
+          <i class="fas fa-file"></i>
+          Email
+        </a>
+      </li>
+
+      <li>
+        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Idiomas')}? 'nav-link active' : 'nav-link'" th:href="@{/idiomas/get}" tabindex="-1" aria-disabled="true">
+          <i class="fas fa-file"></i>
+          Idiomas
+        </a>
+      </li>
+
+      <li>
+        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Paypal')}? 'nav-link active' : 'nav-link'" th:href="@{/paypal/get}" tabindex="-1" aria-disabled="true">
+          <i class="fas fa-file"></i>
+          Paypal
+        </a>
+      </li>
+
+      <li>
+        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'MercadoPago')}? 'nav-link active' : 'nav-link'" th:href="@{/mercadopago/get}" tabindex="-1" aria-disabled="true">
+          <i class="fas fa-file"></i>
+          MercadoPago
+        </a>
+      </li>
+
+      <li>
+        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'PagSeguro')}? 'nav-link active' : 'nav-link'" th:href="@{/pagseguro/get}" tabindex="-1" aria-disabled="true">
+          <i class="fas fa-file"></i>
+          PagSeguro
+        </a>
+      </li>
+    </ul>
+
+    <ul class="nav flex-column">
+      <li sec:authorize="hasPermission(#user, 'consulta_usuario')" class="nav-item">
+        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Usuario')}? 'nav-link active' : 'nav-link'" th:href="@{/usuario/}">
+          <i class="fas fa-users"></i>
+          usu&aacute;rios
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+</th:block>

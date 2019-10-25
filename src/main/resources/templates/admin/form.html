@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-br">
+  <body>
+    <div id="form-container">
+      <form th:if="${#strings.equals(classe.simpleName, 'Categoria')}" class="form" id="form" method="post" th:action="@{/categoria/__${action}__}">
+        <div th:replace="admin/form/categoria :: copy"></div>
+      </form>
+
+      <form th:if="${#strings.equals(classe.simpleName, 'Produto')}" class="form" id="form" method="post" th:action="@{/produto/__${action}__}">
+        <div th:replace="admin/form/produto :: copy"></div>
+      </form>
+
+      <form th:if="${#strings.equals(classe.simpleName, 'Pagina')}" class="form" id="form" method="post" th:action="@{/pagina/__${action}__}">
+        <div th:replace="admin/form/pagina :: copy"></div>
+      </form>
+
+      <form th:if="${#strings.equals(classe.simpleName, 'Usuario')}" class="form" id="form" method="post" th:action="@{/usuario/__${action}__}">
+        <div th:replace="admin/form/usuario :: copy"></div>
+      </form>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
+            <button class="btn btn-primary" id="cancel" onclick="cancel_insert(this);">Cancelar</button>
+          </div>
+          <div class="col-sm">
+          </div>
+          <div class="col-sm">
+            <button type="submit" class="btn btn-primary" id="submit" onclick="submit_insert(this);">Aplicar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

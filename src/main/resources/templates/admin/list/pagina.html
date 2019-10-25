@@ -1,0 +1,64 @@
+<th:block th:fragment="copy">
+  <p>
+    <a sec:authorize="hasPermission(#user, 'cadastra_pagina')" class="btn btn-primary" onclick="insert_data();">
+      <i class="fas fa-plus"></i>
+      novo item
+    </a>
+  </p>
+
+  <ul class="nav nav-tabs" id="tabset">
+    <li class="nav-item" id="tab-listagem">
+      <a class="nav-link active" id="listagem-tab" data-toggle="tab" href="#listagem" role="tab" aria-controls="listagem" aria-selected="true">Listagem</a>
+    </li>
+
+    <li class="nav-item" id="tab-insert" style="display: none;">
+      <a class="nav-link" id="insert-tab" data-toggle="tab" href="#insert" role="tab" aria-controls="insert" aria-selected="false">Insert</a>
+    </li>
+
+    <li class="nav-item" id="tab-update" style="display: none;">
+      <a class="nav-link" id="update-tab" data-toggle="tab" href="#update" role="tab" aria-controls="update" aria-selected="false">Update</a>
+    </li>
+
+    <li class="nav-item" id="tab-delete" style="display: none;">
+      <a class="nav-link" id="delete-tab" data-toggle="tab" href="#delete" role="tab" aria-controls="delete" aria-selected="false">Delete</a>
+    </li>
+
+    <li class="nav-item" id="tab-credencial" style="display: none;">
+      <a class="nav-link" id="credencial-tab" data-toggle="tab" href="#credencial" role="tab" aria-controls="credencial" aria-selected="false">Credenciais</a>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="tab_content">
+    <div class="tab-pane active" id="listagem" role="tabpanel" aria-labelledby="listagem-tab">
+      <table class="table" id="table" th:attr="data-json=@{/__${#strings.toLowerCase(classe.simpleName)}__/list.json}">
+        <thead class="thead-dark">
+          <tr id="table-header">
+            <th>#</th>
+            <th class="col">titulo</th>
+            <th class="col">parent</th>
+            <th>
+              <div class="btn-group" id="buttons" role="group" aria-label="Categoria" style="display: none;">
+                <button sec:authorize="hasPermission(#user, 'atualiza_pagina')" type="button" class="btn btn-secondary" th:attr="data-url=@{/pagina/update}" onclick="update_data(this)">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button sec:authorize="hasPermission(#user, 'remove_pagina')" type="button" class="btn btn-secondary" th:attr="data-url=@{/pagina/delete}" onclick="delete_data(this)">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </th>
+          </tr>
+        </thead>
+
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+
+    <div class="tab-pane" id="insert" role="tabpanel" aria-labelledby="insert-tab" th:attr="data-url=@{/__${#strings.toLowerCase(classe.simpleName)} __/insert}"></div>
+
+    <div class="tab-pane" id="update" role="tabpanel" aria-labelledby="update-tab" th:attr="data-url=@{/__${#strings.toLowerCase(classe.simpleName)} __/update}"></div>
+
+    <div class="tab-pane" id="delete" role="tabpanel" aria-labelledby="delete-tab" th:attr="data-url=@{/__${#strings.toLowerCase(classe.simpleName)} __/delete}"></div>
+
+    <div class="tab-pane" id="credencial" role="tabpanel" aria-labelledby="credencial-tab" th:attr="data-url=@{/__${#strings.toLowerCase(classe.simpleName)} __/credenciais}"></div>
+  </div>
+</th:block>
