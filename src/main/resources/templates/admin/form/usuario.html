@@ -3,7 +3,7 @@
 
 <div class="form-group">
   <label for="login">Login</label>
-  <input type="text" class="form-control" id="login" name="username" placeholder="Login">
+  <input type="text" class="form-control" id="login" name="username" th:value="${command.username}" placeholder="Login">
 </div>
 
 <div class="form-group">
@@ -13,38 +13,38 @@
 
 <div class="form-group">
   <label for="nome">Nome</label>
-  <input type="text" class="form-control" id="nome" name="firstName" placeholder="Nome">
+  <input type="text" class="form-control" id="nome" name="firstName" th:value="${command.firstName}" placeholder="Nome">
 </div>
 
 <div class="form-group">
   <label for="sobrenome">Sobrenome</label>
-  <input type="text" class="form-control" id="sobrenome" name="lastName" placeholder="Sobrenome">
+  <input type="text" class="form-control" id="sobrenome" name="lastName" th:value="${command.lastName}" placeholder="Sobrenome">
 </div>
 
 <div class="form-group">
   <label for="email">E-mail</label>
-  <input type="email" class="form-control" id="email" name="email" placeholder="E-mail">
+  <input type="email" class="form-control" id="email" name="email" th:value="${command.email}" placeholder="E-mail">
 </div>
 
 <div class="form-group form-check">
-  <input type="checkbox" name="enabled" class="form-check-input" id="enabled">
+  <input type="checkbox" name="enabled" class="form-check-input" id="enabled" th:selected="${command.enabled}">
   <label class="form-check-label" for="enabled">ativo</label>
 </div>
 
 <div class="form-group form-check">
-  <input type="checkbox" name="locked" class="form-check-input" id="locked">
+  <input type="checkbox" name="locked" class="form-check-input" id="locked" th:selected="command.locked">
   <label class="form-check-label" for="locked">bloqueado</label>
 </div>
 
 <div class="form-group">
   <label for="dataExpiracao">Data de expira&ccedil;&atilde;o</label>
-  <input type="date" class="form-control" id="dataExpiracao" name="dataExpiracao" placeholder="Data de expira&ccedil;&atilde;o">
+  <input type="date" class="form-control" id="dataExpiracao" name="dataExpiracao" th:value="${command.dataExpiracao}" placeholder="Data de expira&ccedil;&atilde;o">
 </div>
 
 <div class="form-group">
   <label for="credenciais">Credenciais</label>
   <select class="form-control" id="credenciais" name="credenciais[]" multiple="multiple" size="10">
-    <option th:each="credencial : ${credenciais}" th:value="${credencial.id}" th:text="${credencial.nome}"/>
+    <option th:each="credencial : ${credenciais}" th:value="${credencial.id}" th:selected="${#lists.contains(command.credenciais, credencial)}" th:text="${credencial.nome}"/>
   </select>
 </div>
 </th:block>
