@@ -52,7 +52,7 @@ public class Home {
     @RequestMapping("/admin")
     @PreAuthorize("hasPermission(#user, 'admin')")
     public String admin(Model model) {
-        return "admin";
+        return "admin/index";
     }
 
     @RequestMapping("/c/{nome}")
