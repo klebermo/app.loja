@@ -30,14 +30,15 @@ public abstract class Controller<E> {
   @RequestMapping("/")
   @PreAuthorize("hasPermission(#user, 'consulta_'+#this.this.name)")
   public String index(Model model) {
-    return "admin";
+    return "admin/index";
   }
 
   @RequestMapping(value = "/insert", method=RequestMethod.GET)
   @PreAuthorize("hasPermission(#user, 'cadastra_'+#this.this.name)")
   public String insert(Model model) throws InstantiationException, IllegalAccessException {
     model.addAttribute("command", serv.newObject());
-    return "form/form_insert";
+    model.addAttribute("action", "insert");
+    return "admin/form";
   }
 
   @RequestMapping(value = "/insert", method=RequestMethod.POST)
@@ -51,7 +52,8 @@ public abstract class Controller<E> {
   @PreAuthorize("hasPermission(#user, 'atualiza_'+#this.this.name)")
   public String update(Model model, @RequestParam(value="id") String id) {
     model.addAttribute("command", serv.findBy("id", new Integer(id)));
-    return "form/form_update";
+    model.addAttribute("action", "update");
+    return "admin/form";
   }
 
   @RequestMapping(value = "/update", method=RequestMethod.POST)
@@ -65,7 +67,7 @@ public abstract class Controller<E> {
   @PreAuthorize("hasPermission(#user, 'remove_'+#this.this.name)")
   public String delete(Model model, @RequestParam(value="id") String id) {
     model.addAttribute("command", serv.findBy("id", new Integer(id)));
-    return "form/form_delete";
+    return "admin/delete";
   }
 
   @RequestMapping(value = "/delete", method=RequestMethod.DELETE)
@@ -92,6 +94,7 @@ public abstract class Controller<E> {
     return clazz;
   }
 
+  @ModelAttribute("classe_name")
   public String getName() {
     return clazz.getSimpleName().toLowerCase();
   }
