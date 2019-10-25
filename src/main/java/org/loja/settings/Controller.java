@@ -18,11 +18,11 @@ public abstract class Controller<E> {
   public Controller(Class<E> clazz) {
     this.clazz = clazz;
   }
-  
+
   @RequestMapping(value = "/get")
   public String get(Model model) {
     model.addAttribute("setting", serv.get());
-    return "admin";
+    return "admin/index";
   }
 
   @RequestMapping(value = "/set", method=RequestMethod.POST)
