@@ -67,6 +67,7 @@ public abstract class Controller<E> {
   @PreAuthorize("hasPermission(#user, 'remove_'+#this.this.name)")
   public String delete(Model model, @RequestParam(value="id") String id) {
     model.addAttribute("command", serv.findBy("id", new Integer(id)));
+    model.addAttribute("action", "delete");
     return "admin/delete";
   }
 
