@@ -21,12 +21,16 @@
       <div class="container">
         <div class="row">
           <div class="col-sm">
-            <button class="btn btn-primary" id="cancel" onclick="cancel_insert(this);">Cancelar</button>
+            <button th:if="${#strings.equals(action, 'insert')}" class="btn btn-primary" id="cancel" onclick="cancel_insert(this);">Cancelar</button>
+            <button th:if="${#strings.equals(action, 'update')}" class="btn btn-primary" id="cancel" th:attr="data-id=${command.id}" onclick="cancel_update(this);">Cancelar</button>
+            <button th:if="${#strings.equals(action, 'delete')}" class="btn btn-primary" id="cancel" th:attr="data-id=${command.id}" onclick="cancel_delete(this);">Cancelar</button>
           </div>
           <div class="col-sm">
           </div>
           <div class="col-sm">
-            <button type="submit" class="btn btn-primary" id="submit" onclick="submit_insert(this);">Aplicar</button>
+            <button th:if="${#strings.equals(action, 'insert')}" type="submit" class="btn btn-primary" id="submit" onclick="submit_insert(this);">Aplicar</button>
+            <button th:if="${#strings.equals(action, 'update')}" type="submit" class="btn btn-primary" id="submit" th:attr="data-id=${command.id}" onclick="submit_update(this);">Aplicar</button>
+            <button th:if="${#strings.equals(action, 'delete')}" type="submit" class="btn btn-primary" id="submit" th:attr="data-id=${command.id}" onclick="submit_delete(this);">Aplicar</button>
           </div>
         </div>
       </div>
