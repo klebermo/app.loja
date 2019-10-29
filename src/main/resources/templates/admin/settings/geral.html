@@ -17,6 +17,7 @@
 
     <div class="form-group">
       <label for="logo">Logo</label>
+      <input th:if="${geral.logo}" type="hidden" name="logo" th:value="${geral.logo.id}"/>
       <input type="file" accept=".png" class="form-control image-uploader" id="logo" th:attr="data-url=@{/imagem/upload}">
     </div>
   </form>
