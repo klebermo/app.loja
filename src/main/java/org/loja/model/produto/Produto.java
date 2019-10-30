@@ -20,6 +20,7 @@ import javax.persistence.GenerationType;
 import org.loja.model.titulo.Titulo;
 import org.loja.model.resumo.Resumo;
 import org.loja.model.texto.Texto;
+import org.loja.forum.forum.Forum;
 
 @Entity
 public class Produto extends Model {
@@ -48,7 +49,7 @@ public class Produto extends Model {
   @Column
   private Float preco;
 
-  @OneToOne
+  @OneToOne(fetch = FetchType.EAGER)
   private Imagem icone;
 
   @OneToMany(fetch = FetchType.EAGER)
@@ -62,6 +63,9 @@ public class Produto extends Model {
   @OneToMany(fetch = FetchType.EAGER)
   @Fetch(FetchMode.SELECT)
   private List<Arquivo> versaoPaga;
+
+  @OneToOne(fetch = FetchType.EAGER)
+  private Forum forum;
 
   @Override
   public Integer getId() {
@@ -142,6 +146,14 @@ public class Produto extends Model {
 
   public void setVersaoPaga(List<Arquivo> versaoPaga) {
     this.versaoPaga = versaoPaga;
+  }
+
+  public Forum getForum() {
+    return forum;
+  }
+
+  public void setForum(Forum forum) {
+    this.forum = forum;
   }
 
   public String toString() {
