@@ -21,6 +21,10 @@
         <div th:replace="content/forum :: copy"></div>
       </div>
 
+      <div class="col-lg-10" th:if="${topic}">
+        <div th:replace="content/topic :: copy"></div>
+      </div>
+
       <div class="col-lg-10" th:if="${pagina}">
         <div th:replace="content/pagina :: copy"></div>
       </div>
