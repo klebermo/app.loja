@@ -34,7 +34,7 @@
           </div>
         </div>
         <div class="col">
-          <a class="btn btn-secondary" th:href="@{/forum/__${produto.id}__}">
+          <a th:if="${produto.forum}" class="btn btn-secondary" th:href="@{/view_forum/__${produto.forum.id}__}">
             F&oacute;rum
           </a>
         </div>

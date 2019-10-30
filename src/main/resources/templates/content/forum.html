@@ -1,3 +1,17 @@
 <th:block th:fragment="copy">
-
+  <div class="media">
+    <img th:src="@{/images/icon_forum.png}" class="mr-3" th:alt="forum">
+    <div class="media-body">
+      <h5 class="mt-0">F&oacute;rum <small th:text="${forum}"></small> </h5>
+    </div>
+  </div>
+  
+  <section th:each="topico : ${topicos}">
+    <div class="media">
+      <img th:src="@{/images/icon_topic.png}" class="mr-3" th:alt="${topico.titulo}">
+      <div class="media-body">
+        <a class="btn btn-link" th:href="@{/view_topic/__${topico.id}__}" th:text="${topico.titulo}"></a>
+      </div>
+    </div>
+  </section>
 </th:block>

@@ -1,0 +1,25 @@
+<th:block th:fragment="copy">
+  <div class="media">
+    <img th:src="@{/images/icon_forum.png}" class="mr-3" th:alt="forum">
+    <div class="media-body">
+      <h5 class="mt-0">&oacute;pico <small th:text="${topic}"></small> </h5>
+    </div>
+  </div>
+
+  <hr/>
+
+  <div class="jumbotron">
+    <p class="lead" th:text="${topic.descricao}"></p>
+    <hr class="my-4">
+    <p th:text="${#dates.format(topic.dataPublicacao)}"></p>
+  </div>
+
+  <hr/>
+
+  <div class="jumbotron" th:if="${topic.resposta}">
+    <h1 class="display-4">Resposta <small th:text="${topic.resposta.titulo}"></small> </h1>
+    <p class="lead" th:text="${topic.resposta.descricao}"></p>
+    <hr class="my-4">
+    <p th:text="${#dates.format(topic.dataPublicacao)}"></p>
+  </div>
+</th:block>
