@@ -28,6 +28,9 @@ public class Topic extends org.loja.model.Model {
   @OneToOne(fetch = FetchType.EAGER)
   private Usuario autor;
 
+  @OneToOne(fetch = FetchType.EAGER)
+  private Topic resposta;
+
   @Override
   public Integer getId() {
     return id;
@@ -67,6 +70,14 @@ public class Topic extends org.loja.model.Model {
 
   public void setAutor(Usuario autor) {
     this.autor = autor;
+  }
+
+  public Topic getResposta() {
+    return resposta;
+  }
+
+  public void setResposta(Topic resposta) {
+    this.resposta = resposta;
   }
 
   @Override
