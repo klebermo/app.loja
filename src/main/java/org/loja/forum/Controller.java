@@ -1,6 +1,7 @@
 package org.loja.forum;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 
 public abstract class Controller<E extends org.loja.model.Model> {
   private Class<E> clazz;
@@ -19,4 +20,6 @@ public abstract class Controller<E extends org.loja.model.Model> {
   public void setClazz(Class<E> clazz) {
     this.clazz = clazz;
   }
+
+  public abstract String view(Model model, Integer item_id);
 }
