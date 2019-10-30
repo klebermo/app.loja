@@ -75,12 +75,6 @@ public class Home {
       return "index";
     }
 
-    @RequestMapping("/forum/{produto}")
-    public String produto(Model model, @PathVariable("produto") Integer produto_id) {
-      model.addAttribute("forum", produto.findBy("id", produto_id));
-      return "index";
-    }
-
     @RequestMapping("/page/{slug}")
     public String pagina(Model model, @PathVariable("slug") String pagina_slug) {
       List<Pagina> lista = pagina.select();
