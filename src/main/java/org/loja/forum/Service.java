@@ -19,4 +19,8 @@ public abstract class Service<E extends org.loja.model.Model> {
   public void setClazz(Class<E> clazz) {
     this.clazz = clazz;
   }
+
+  public E getData(Integer forum_id) {
+    return this.dao.findBy("id", forum_id);
+  }
 }
