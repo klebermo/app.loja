@@ -5,12 +5,12 @@
       <h5 class="mt-0">F&oacute;rum <small th:text="${forum}"></small> </h5>
     </div>
   </div>
-  
-  <section th:each="topico : ${topicos}">
+
+  <section th:each="topico : ${forum.topicos}">
     <div class="media">
       <img th:src="@{/images/icon_topic.png}" class="mr-3" th:alt="${topico.titulo}">
       <div class="media-body">
-        <a class="btn btn-link" th:href="@{/view_topic/__${topico.id}__}" th:text="${topico.titulo}"></a>
+        <a class="btn btn-link" th:href="@{/topic/view/__${topico.id}__}" th:text="${topico.titulo}"></a>
       </div>
     </div>
   </section>
