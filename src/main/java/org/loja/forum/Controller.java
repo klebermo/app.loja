@@ -2,6 +2,9 @@ package org.loja.forum;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 
 public abstract class Controller<E extends org.loja.model.Model> {
   private Class<E> clazz;
@@ -21,5 +24,9 @@ public abstract class Controller<E extends org.loja.model.Model> {
     this.clazz = clazz;
   }
 
-  public abstract String view(Model model, Integer item_id);
+  @RequestMapping("/view/{item_id}")
+  public String view(Model model, @PathVariable("item_id") Integer item_id) {
+    model.addAttribute("forum", this.serv.getData(item_id));
+    return "index";
+  }
 }
