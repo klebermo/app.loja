@@ -114,5 +114,6 @@ public abstract class Controller<E> {
     binder.registerCustomEditor(org.loja.model.usuario.Usuario.class, new org.loja.model.usuario.UsuarioEditor());
     binder.registerCustomEditor(java.util.Date.class, new org.loja.model.usuario.DateEditor());
     binder.registerCustomEditor(java.lang.Float.class, new org.loja.model.produto.FloatEditor());
+    binder.registerCustomEditor(org.loja.forum.forum.Forum.class, new org.loja.forum.forum.ForumEditor());
   }
 }
