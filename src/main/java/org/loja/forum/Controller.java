@@ -24,9 +24,13 @@ public abstract class Controller<E extends org.loja.model.Model> {
     this.clazz = clazz;
   }
 
+  public String getName() {
+    return clazz.getSimpleName().toLowerCase();
+  }
+
   @RequestMapping("/view/{item_id}")
   public String view(Model model, @PathVariable("item_id") Integer item_id) {
-    model.addAttribute("forum", this.serv.getData(item_id));
+    model.addAttribute(this.getName(), this.serv.getData(item_id));
     return "index";
   }
 }
