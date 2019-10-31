@@ -2,7 +2,12 @@
   <div class="media">
     <img th:src="@{/images/icon_forum.png}" class="mr-3" th:alt="forum">
     <div class="media-body">
-      <h5 class="mt-0">F&oacute;rum <small th:text="${forum}"></small> </h5>
+      <h5 class="mt-0">
+        F&oacute;rum
+        <th:block th:each="p : ${produtos}" th:if="${p.forum.id == forum.id}">
+          <small th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></small>
+        </th:block>
+      </h5>
     </div>
   </div>
 
