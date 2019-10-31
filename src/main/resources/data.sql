@@ -103,3 +103,38 @@ insert into usuario_credenciais values (1,7);
 insert into usuario_credenciais values (1,8);
 insert into usuario_credenciais values (1,9);
 insert into usuario_credenciais values (1,10);
+
+insert into titulo (conteudo, idioma) values ('hum', 'pt-BR,Portuguese (Brazil)');
+insert into titulo (conteudo, idioma) values ('one', 'en-US');
+insert into titulo (conteudo, idioma) values ('uno', 'es-ES,Spanish (Spain)');
+
+insert into resumo (conteudo, idioma) values ('exemplo', 'pt-BR,Portuguese (Brazil)');
+insert into resumo (conteudo, idioma) values ('example', 'en-US,English (United States)');
+insert into resumo (conteudo, idioma) values ('ejemplo', 'es-ES,Spanish (Spain)');
+
+insert into texto (conteudo, idioma) values ('teste', 'pt-BR,Portuguese (Brazil)');
+insert into texto (conteudo, idioma) values ('test', 'en-US,English (United States)');
+insert into texto (conteudo, idioma) values ('teste', 'es-ES,Spanish (Spain)');
+
+insert into categoria (id) values (1);
+
+insert into categoria_nome values (1,1);
+insert into categoria_nome values (1,2);
+insert into categoria_nome values (1,3);
+insert into categoria_resumo values (1,1);
+insert into categoria_resumo values (1,2);
+insert into categoria_resumo values (1,3);
+
+insert into forum (id) values (1);
+
+insert into produto (preco, categoria_id, forum_id) values (12, 1, 1);
+
+insert into produto_nome values (1,1);
+insert into produto_nome values (1,2);
+insert into produto_nome values (1,3);
+insert into produto_resumo values (1,1);
+insert into produto_resumo values (1,2);
+insert into produto_resumo values (1,3);
+insert into produto_descricao values (1,1);
+insert into produto_descricao values (1,2);
+insert into produto_descricao values (1,3);
