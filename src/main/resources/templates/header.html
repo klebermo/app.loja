@@ -47,23 +47,23 @@
               <a class="nav-link" th:href="@{/usuario/register}">Cadastro</a>
             </li>
 
-            <li class="nav-item" sec:authorize="isAuthenticated()">
+            <li class="nav-item">
               <a class="nav-link" id="cart" th:href="@{/cart}"><i class="fas fa-shopping-cart"></i><span class="badge badge-secondary" id="cart_size" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/cart_size}" style="display: none;"></span></a>
             </li>
 
-            <li class="nav-item" sec:authorize="isAuthenticated()">
+            <li class="nav-item">
               <a class="nav-link" th:href="@{/orders}"><i class="fas fa-list"></i></a>
             </li>
 
-            <li class="nav-item" sec:authorize="isAuthenticated()">
+            <li class="nav-item">
               <a class="nav-link" href="#" th:text="${usuario}"></a>
             </li>
 
             <li class="nav-item" sec:authorize="hasPermission(#user, 'admin')">
               <a class="nav-link" th:href="@{/admin}"><i class="fas fa-cogs"></i></a>
             </li>
-            
-            <li class="nav-item" sec:authorize="isAuthenticated()">
+
+            <li class="nav-item">
               <a class="nav-link" th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i></a>
             </li>
           </ul>
