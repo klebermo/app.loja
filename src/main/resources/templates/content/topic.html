@@ -1,25 +1,50 @@
 <th:block th:fragment="copy">
-  <div class="media">
-    <img th:src="@{/images/icon_forum.png}" class="mr-3" th:alt="forum">
-    <div class="media-body">
-      <h5 class="mt-0">&oacute;pico <small th:text="${topic}"></small> </h5>
+  <th:block th:if="${#strings.equals(topic, 'new')}">
+    <div class="media">
+      <img th:src="@{/images/icon_topic.png}" class="mr-3" th:alt="forum">
+      <div class="media-body">
+        <h5 class="mt-0">Novo T&oacute;pico</h5>
+      </div>
     </div>
-  </div>
 
-  <hr/>
+    <hr/>
 
-  <div class="jumbotron">
-    <p class="lead" th:text="${topic.descricao}"></p>
-    <hr class="my-4">
-    <p th:text="${#dates.format(topic.dataPublicacao)}"></p>
-  </div>
+    <form class="form" id="form" method="post" th:action="@{/topic/save}">
+      <div class="form-group">
+        <input type="text" name="titulo" placeholder="Titulo" class="form-control" id="titulo"/>
+      </div>
 
-  <hr/>
+      <div class="form-group">
+        <textarea name="descricao" class="summernote" id="descricao"></textarea>
+      </div>
 
-  <div class="jumbotron" th:if="${topic.resposta}">
-    <h1 class="display-4">Resposta <small th:text="${topic.resposta.titulo}"></small> </h1>
-    <p class="lead" th:text="${topic.resposta.descricao}"></p>
-    <hr class="my-4">
-    <p th:text="${#dates.format(topic.dataPublicacao)}"></p>
-  </div>
+      <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+  </th:block>
+
+  <th:block th:unless="${#strings.equals(topic, 'new')}">
+    <div class="media">
+      <img th:src="@{/images/icon_topic.png}" class="mr-3" th:alt="forum">
+      <div class="media-body">
+        <h5 class="mt-0">T&oacute;pico <small th:text="${topic}"></small> </h5>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="jumbotron">
+      <p class="lead" th:text="${topic.descricao}"></p>
+      <hr class="my-4">
+      <p th:text="${#dates.format(topic.dataPublicacao)}"></p>
+    </div>
+
+    <hr/>
+
+    <div class="jumbotron" th:if="${topic.resposta}">
+      <h1 class="display-4">Resposta <small th:text="${topic.resposta.titulo}"></small> </h1>
+      <p class="lead" th:text="${topic.resposta.descricao}"></p>
+      <hr class="my-4">
+      <p th:text="${#dates.format(topic.dataPublicacao)}"></p>
+    </div>
+  </th:block>
 </th:block>

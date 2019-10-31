@@ -7,6 +7,7 @@
         <th:block th:each="p : ${produtos}" th:if="${p.forum.id == forum.id}">
           <small th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></small>
         </th:block>
+        <a th:href="@{/topic/new}" class="btn btn-primary">Novo t&oacute;pico</a>
       </h5>
     </div>
   </div>
