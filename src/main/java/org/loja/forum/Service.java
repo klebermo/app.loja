@@ -20,7 +20,7 @@ public abstract class Service<E extends org.loja.model.Model> {
     this.clazz = clazz;
   }
 
-  public E getData(Integer forum_id) {
-    return this.dao.findBy("id", forum_id);
+  public E getData(Integer item_id) {
+    return this.dao.findBy("id", item_id);
   }
 }
