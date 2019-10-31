@@ -7,4 +7,9 @@ public class TopicService extends org.loja.forum.Service<Topic> {
   public TopicService() {
     super(Topic.class);
   }
+
+  public Integer save(Topic object) {
+    this.dao.insert(object);
+    return object.getId();
+  }
 }
