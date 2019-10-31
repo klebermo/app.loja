@@ -83,3 +83,8 @@ function remove_from_cart(btn) {
   formData.append('produto', produto);
   xhr.send(formData);
 }
+
+var editor = document.getElementsByClassName("summernote");
+for (i = 0; i < editor.length; i++) {
+  $(editor).summernote({height: 300});
+}
