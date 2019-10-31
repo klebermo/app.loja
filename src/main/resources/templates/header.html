@@ -13,6 +13,7 @@
         <a class="navbar-brand" th:href="@{/}" th:if="${geral.logo}">
           <img th:src="@{/imagem/download/__${geral.logo.id}__}" width="120" height="240" class="align-top" th:alt="${geral.titulo}">
         </a>
+
         <a class="navbar-brand" th:href="@{/}" th:unless="${geral.logo}">
           <img th:src="@{/images/bootstrap-solid.svg}" width="30" height="30" class="d-inline-block align-top" th:alt="${geral.titulo}">
           <th:block th:text="${geral.titulo}"></th:block>
@@ -29,6 +30,7 @@
                 <a th:unless="${p.parent}" th:class="${#strings.equals(p.id, pagina.id)}? 'nav-link active' : 'nav-link'" th:href="@{/page/__${t.slug()}__}" th:text="${t.conteudo}"></a>
               <th:block>
             </li>
+
             <li th:unless="${pagina}" class="nav-item" th:each="p : ${paginas}">
               <th:block th:each="t : ${p.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}">
                 <a th:unless="${p.parent}" class="nav-link" th:href="@{/page/__${t.slug()}__}" th:text="${t.conteudo}"></a>
@@ -40,21 +42,27 @@
             <li class="nav-item" sec:authorize="isAnonymous()">
               <a class="nav-link" th:href="@{/login}">Login</a>
             </li>
+
             <li class="nav-item" sec:authorize="isAnonymous()">
               <a class="nav-link" th:href="@{/usuario/register}">Cadastro</a>
             </li>
+
             <li class="nav-item" sec:authorize="isAuthenticated()">
               <a class="nav-link" id="cart" th:href="@{/cart}"><i class="fas fa-shopping-cart"></i><span class="badge badge-secondary" id="cart_size" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/cart_size}" style="display: none;"></span></a>
             </li>
+
             <li class="nav-item" sec:authorize="isAuthenticated()">
               <a class="nav-link" th:href="@{/orders}"><i class="fas fa-list"></i></a>
             </li>
+
             <li class="nav-item" sec:authorize="isAuthenticated()">
               <a class="nav-link" href="#" th:text="${usuario}"></a>
             </li>
+
             <li class="nav-item" sec:authorize="hasPermission(#user, 'admin')">
               <a class="nav-link" th:href="@{/admin}"><i class="fas fa-cogs"></i></a>
             </li>
+            
             <li class="nav-item" sec:authorize="isAuthenticated()">
               <a class="nav-link" th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i></a>
             </li>
