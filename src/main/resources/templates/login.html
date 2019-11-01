@@ -1,27 +1,21 @@
-<div th:replace="header :: copy"></div>
+<div class="grid-container">
+  <div th:replace="header :: copy"></div>
 
-<div class="card" style="width: 18rem;">
-  <img th:src="@{/images/icon-signin.png}" class="card-img-top" alt="Login">
+  <h5>Login</h5>
+
   <form method="post" th:action="@{/doLogin}">
-    <div class="card-body">
-      <h5 class="card-title">Login</h5>
+    <p> <input class="form-control" type="text" name="login" placeholder="login"/> </p>
 
-      <p class="card-text">
-        <input class="form-control" type="text" name="login" placeholder="login"/> <br/>
-        <input class="form-control" type="password" name="senha" placeholder="senha"/> <br/>
-      </p>
+    <p> <input class="form-control" type="password" name="senha" placeholder="senha"/> </p>
 
-      <button type="submit" class="btn btn-primary">Login</button>
+    <p> <button type="submit" class="btn btn-primary">Login</button> </p>
 
-      <label>
-        <input class="checkbox" type="checkbox" value="remember-me"> Remember me </input>
-      </label>
+    <p> <input class="checkbox" type="checkbox" value="remember-me"> Remember me </input> </p>
 
-      <p><a th:href="@{/usuario/register}">Não tem cadastro? Clique aqui para se cadatrar</a></p>
+    <p><a th:href="@{/usuario/register}">Não tem cadastro? Clique aqui para se cadatrar</a></p>
 
-      <p><a th:href="@{/usuario/recoverPassword}">Esqueceu a senha? Clique aqui para recuperar</a></p>
-    </div>
+    <p><a th:href="@{/usuario/recoverPassword}">Esqueceu a senha? Clique aqui para recuperar</a></p>
   </form>
-</div>
 
-<div th:replace="footer :: copy"></div>
+  <div th:replace="footer :: copy"></div>
+</div>

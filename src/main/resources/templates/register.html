@@ -1,23 +1,23 @@
-<div th:replace="header :: copy"></div>
+<div class="grid-container">
+  <div th:replace="header :: copy"></div>
 
-<div class="card" style="width: 18rem;">
-  <img th:src="@{/images/icon-signup.png}" class="card-img-top" alt="Cadastrar">
+  <h5 class="card-title">Cadastrar</h5>
+
   <form method="post" th:action="@{/usuario/register}">
-    <div class="card-body">
-      <h5 class="card-title">Cadastrar</h5>
-      <p class="card-text">
-        <input class="form-control" type="text" name="username" placeholder="login"/> <br/>
-        <input class="form-control" type="password" name="password" placeholder="senha"/> <br/>
-        <input class="form-control" type="text" name="firstName" placeholder="nome"/> <br/>
-        <input class="form-control" type="text" name="lastName" placeholder="sobrenome"/> <br/>
-        <input class="form-control" type="email" name="email" placeholder="email"/> <br/>
-      </p>
+    <p> <input class="form-control" type="text" name="username" placeholder="login"/> </p>
 
-      <button type="submit" class="btn btn-primary">Cadastrar</button>
+    <p> <input class="form-control" type="password" name="password" placeholder="senha"/> </p>
 
-      <p><a th:href="@{/login}">Já tem cadastro? Clique aqui para efetuar login</a></p>
-    </div>
+    <p> <input class="form-control" type="text" name="firstName" placeholder="nome"/> </p>
+
+    <p> <input class="form-control" type="text" name="lastName" placeholder="sobrenome"/> </p>
+
+    <p> <input class="form-control" type="email" name="email" placeholder="email"/> </p>
+
+    <p> <button type="submit" class="btn btn-primary">Cadastrar</button> </p>
+
+    <p> <a th:href="@{/login}">Já tem cadastro? Clique aqui para efetuar login</a> </p>
   </form>
-</div>
 
-<div th:replace="footer :: copy"></div>
+  <div th:replace="footer :: copy"></div>
+</div>

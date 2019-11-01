@@ -1,18 +1,13 @@
-<div th:replace="header :: copy"></div>
+<div class="grid-container">
+  <div th:replace="header :: copy"></div>
 
-<div class="card" style="width: 18rem;">
-  <img th:src="@{/images/icon-signin.png}" class="card-img-top" alt="Login">
+  <h5>Recover Password</h5>
+
   <form method="post" th:action="@{/usuario/recoverPassword}">
-    <div class="card-body">
-      <h5 class="card-title">Recover Password</h5>
+    <p> <input class="form-control" type="text" name="email" placeholder="E-mail"/> </p>
 
-      <p class="card-text">
-        <input class="form-control" type="text" name="email" placeholder="E-mail"/> <br/>
-      </p>
-
-      <button type="submit" class="btn btn-primary">Recover</button>
-    </div>
+    <p> <button type="submit" class="btn btn-primary">Recover</button> </p>
   </form>
-</div>
 
-<div th:replace="footer :: copy"></div>
+  <div th:replace="footer :: copy"></div>
+</div>
