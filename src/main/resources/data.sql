@@ -193,48 +193,48 @@ insert into produto_descricao values (1,3);
 
 insert into produto (preco, categoria_id, forum_id) values (13, 1, 2);
 
-insert into produto_nome values (1,4);
-insert into produto_nome values (1,5);
-insert into produto_nome values (1,6);
-insert into produto_resumo values (1,4);
-insert into produto_resumo values (1,5);
-insert into produto_resumo values (1,6);
-insert into produto_descricao values (1,4);
-insert into produto_descricao values (1,5);
-insert into produto_descricao values (1,6);
+insert into produto_nome values (2,4);
+insert into produto_nome values (2,5);
+insert into produto_nome values (2,6);
+insert into produto_resumo values (2,4);
+insert into produto_resumo values (2,5);
+insert into produto_resumo values (2,6);
+insert into produto_descricao values (2,4);
+insert into produto_descricao values (2,5);
+insert into produto_descricao values (2,6);
 
 insert into produto (preco, categoria_id, forum_id) values (14, 1, 3);
 
-insert into produto_nome values (1,7);
-insert into produto_nome values (1,8);
-insert into produto_nome values (1,9);
-insert into produto_resumo values (1,7);
-insert into produto_resumo values (1,8);
-insert into produto_resumo values (1,9);
-insert into produto_descricao values (1,7);
-insert into produto_descricao values (1,8);
-insert into produto_descricao values (1,9);
+insert into produto_nome values (3,7);
+insert into produto_nome values (3,8);
+insert into produto_nome values (3,9);
+insert into produto_resumo values (3,7);
+insert into produto_resumo values (3,8);
+insert into produto_resumo values (3,9);
+insert into produto_descricao values (3,7);
+insert into produto_descricao values (3,8);
+insert into produto_descricao values (3,9);
 
 insert into produto (preco, categoria_id, forum_id) values (15, 1, 4);
 
-insert into produto_nome values (1,10);
-insert into produto_nome values (1,11);
-insert into produto_nome values (1,12);
-insert into produto_resumo values (1,10);
-insert into produto_resumo values (1,11);
-insert into produto_resumo values (1,12);
-insert into produto_descricao values (1,10);
-insert into produto_descricao values (1,11);
-insert into produto_descricao values (1,12);
+insert into produto_nome values (4,10);
+insert into produto_nome values (4,11);
+insert into produto_nome values (4,12);
+insert into produto_resumo values (4,10);
+insert into produto_resumo values (4,11);
+insert into produto_resumo values (4,12);
+insert into produto_descricao values (4,10);
+insert into produto_descricao values (4,11);
+insert into produto_descricao values (4,12);
 
 insert into produto (preco, categoria_id, forum_id) values (16, 1, 5);
 
-insert into produto_nome values (1,13);
-insert into produto_nome values (1,14);
-insert into produto_nome values (1,15);
-insert into produto_resumo values (1,13);
-insert into produto_resumo values (1,14);
-insert into produto_resumo values (1,15);
-insert into produto_descricao values (1,13);
-insert into produto_descricao values (1,14);
-insert into produto_descricao values (1,15);
+insert into produto_nome values (5,13);
+insert into produto_nome values (5,14);
+insert into produto_nome values (5,15);
+insert into produto_resumo values (5,13);
+insert into produto_resumo values (5,14);
+insert into produto_resumo values (5,15);
+insert into produto_descricao values (5,13);
+insert into produto_descricao values (5,14);
+insert into produto_descricao values (5,15);
