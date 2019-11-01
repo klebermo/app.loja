@@ -30,11 +30,11 @@
     </li>
 
     <li class="right" sec:authorize="isAuthenticated()">
-      <a id="cart" th:href="@{/cart}">Cesta <span id="cart_size" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/cart_size}" style="display: none;"></span></a>
+      <a id="cart" th:href="@{/cart}"><img src="@{/images/icon_shopping_cart.png}" width="16" height="16" alt="cesta de compras"/> <span id="cart_size" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/cart_size}" style="display: none;"></span></a>
     </li>
 
     <li class="right" sec:authorize="isAuthenticated()">
-      <a th:href="@{/orders}">Pedidos</a>
+      <a th:href="@{/orders}"><img src="@{/images/icon_order.png}" width="16" height="16" alt="pedidos"/></a>
     </li>
 
     <li class="right" sec:authorize="isAuthenticated()">
@@ -42,11 +42,11 @@
     </li>
 
     <li class="right" sec:authorize="hasPermission(#user, 'admin')">
-      <a th:href="@{/admin}">Admin</a>
+      <a th:href="@{/admin}"><img src="@{/images/icon_admin.png}" width="16" height="16" alt="admin"/></a>
     </li>
 
     <li class="right" sec:authorize="isAuthenticated()">
-      <a th:href="@{/logout}">Sair</a>
+      <a th:href="@{/logout}"><img src="@{/images/icon_logout.png}" width="16" height="16" alt="sair"/></a>
     </li>
   </ul>
 </nav>

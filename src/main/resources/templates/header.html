@@ -11,7 +11,7 @@
       <title th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${geral.titulo + ' | ' + t.conteudo}"></title>
     </th:block>
     <th:block th:if="${pagina}">
-      <title th:each="t : ${pagina.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${geral.titulo + ' | ' + t.conteudo}"></title>
+      <title th:each="t : ${pagina.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${geral.titulo + ' | ' + t.conteudo}"></title>
     </th:block>
     <link th:href="@{/css/style.css}" rel="stylesheet">
   </head>

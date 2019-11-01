@@ -9,7 +9,7 @@
 
       <th:block th:if="${pagina}">
         <li th:each="p : ${paginas}" th:if="${p.parent != null and #strings.equals(p.parent, pagina)}">
-            <a th:href="@{/page/__${p.slug}__}" th:text="${p.titulo.slug()}"></a>
+            <a th:each="t : ${p.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/page/__${t.slug}__}" th:text="${t.conteudo}"></a>
         </li>
       </th:block>
 
