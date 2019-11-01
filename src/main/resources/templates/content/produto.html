@@ -1,52 +1,44 @@
 <th:block th:fragment="copy">
-  <th:block th:if="${produto.icone}">
-    <img th:src="@{/imagem/download/__${produto.icone.id}__}" width=64 height=64 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
-  </th:block>
-
-  <th:block th:unless="${produto.icone}">
-    <img th:src="@{/images/icon_product.png}" width=64 height=64 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
-  </th:block>
-
-  <h3 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${t.conteudo}"></h3>
-
   <div class="row">
+    <h3 class="row_title">
+      <th:block th:if="${produto.icone}">
+        <img th:src="@{/imagem/download/__${produto.icone.id}__}" width=64 height=64 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
+      </th:block>
+
+      <th:block th:unless="${produto.icone}">
+        <img th:src="@{/images/icon_product.png}" width=64 height=64 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
+      </th:block>
+
+      <span th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${t.conteudo}"></span>
+
+      <small th:each="t : ${produto.resumo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${t.conteudo}"></small>
+    </h3>
+
     <div class="col">
-      <p class="button" th:text="${#numbers.formatCurrency(produto.preco)}"></p>
+      <p th:text="${#numbers.formatCurrency(produto.preco)}"></p>
     </div>
 
-    <div class="col" sec:authorize="isAuthenticated()">
-      <button class="button" onclick="add_to_cart(this)" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}, data-url=@{/usuario/add_to_cart}">
+    <div class="col">
+      <button sec:authorize="isAuthenticated()" class="button" onclick="add_to_cart(this)" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}, data-url=@{/usuario/add_to_cart}">
         Comprar <br/> <small>Vers&atilde;o Pro</small>
       </button>
     </div>
 
     <div class="col">
       <div class="dropdown">
-        <button class="dropbtn" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Baixar <br/> <small>Vers&atilde;o Lite</small>
-        </button>
+        <span>Baixar <br/> <small>Vers&atilde;o Lite</small> </span>
         <div class="dropdown-content">
           <a th:each="arquivo : ${produto.versaoGratuita}" th:href="@{/arquivo/download/__${arquivo.id}__}" th:text="${arquivo.type}"></a>
         </div>
       </div>
     </div>
 
-    <div class="col" sec:authorize="isAuthenticated()">
-      <a class="button" th:href="@{/forum/view/__${produto.forum.id}__}">
+    <div class="col">
+      <a sec:authorize="isAuthenticated()" class="button" th:href="@{/forum/view/__${produto.forum.id}__}">
         F&oacute;rum
       </a>
     </div>
   </div>
 
-  <div class="row">
-    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-      <div class="carousel-inner">
-        <div th:each="pic,stat : ${produto.thumbnails}" th:class="${stat.index == 0}? 'carousel-item active' : 'carousel-item'">
-          <img th:src="@{/imagem/download/__${pic.id}__}" class="d-block w-100" th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}">
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <p class="lead" th:each="d : ${produto.descricao}" th:if="${#strings.equals(#strings.substringBefore(d.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${d.conteudo}"></p>
+  <p th:each="d : ${produto.descricao}" th:if="${#strings.equals(#strings.substringBefore(d.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${d.conteudo}"></p>
 </th:block>

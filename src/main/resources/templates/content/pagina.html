@@ -1,23 +1,23 @@
 <th:block th:fragment="copy">
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-        <a th:href="@{/}">
-          <i class="fas fa-home"></i>
-        </a>
-      </li>
+  <ul class="breadcrumb">
+    <li>
+      <a th:href="@{/}">
+        <img th:src="@{/images/icon_home.png}"/>
+      </a>
+    </li>
 
-      <li class="breadcrumb-item" th:each="item : ${breadcrumb}">
-        <a th:each="t : ${item.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/page/__${t.slug()}__}" th:text="${t.conteudo}"></a>
-      </li>
+    <li th:each="item : ${breadcrumb}">
+      <a th:each="t : ${item.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/page/__${t.slug()}__}" th:text="${t.conteudo}"></a>
+    </li>
 
-      <li class="breadcrumb-item active">
-        <a href="#" th:each="t : ${pagina.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></a>
-      </li>
-    </ol>
-  </nav>
+    <li>
+      <a href="#" th:each="t : ${pagina.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></a>
+    </li>
+  </ul>
 
-  <h2 th:each="t : ${pagina.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></h2>
+  <div class="row">
+    <h3 class="row_title" th:each="t : ${pagina.titulo}" th:if="${#strings.equals(#strings.substringBefore(d.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${d.conteudo}"></h3>
+  </div>
 
   <span th:each="d : ${pagina.descricao}" th:if="${#strings.equals(#strings.substringBefore(d.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${d.conteudo}"></span>
 </th:block>
