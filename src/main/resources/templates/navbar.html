@@ -1,0 +1,53 @@
+<th:block th:fragment="copy">
+<nav class="navbar">
+  <ul>
+    <li>
+      <img th:if="${geral.logo}" th:src="@{/imagem/download/__${geral.logo.id}__}" th:alt="${geral.titulo}">
+    </li>
+
+    <li>
+      <a th:href="@{/}" th:text="${geral.titulo}"></a>
+    </li>
+
+    <li th:if="${pagina}" th:each="p : ${paginas}">
+      <th:block th:each="t : ${p.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}">
+        <a th:unless="${p.parent}" th:href="@{/page/__${t.slug()}__}" th:text="${t.conteudo}"></a>
+      <th:block>
+    </li>
+
+    <li th:unless="${pagina}" th:each="p : ${paginas}">
+      <th:block th:each="t : ${p.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}">
+        <a th:unless="${p.parent}" th:href="@{/page/__${t.slug()}__}" th:text="${t.conteudo}"></a>
+      </th:block>
+    </li>
+
+    <li class="right" sec:authorize="isAnonymous()">
+      <a th:href="@{/login}">Login</a>
+    </li>
+
+    <li class="right" sec:authorize="isAnonymous()">
+      <a th:href="@{/usuario/register}">Cadastro</a>
+    </li>
+
+    <li class="right" sec:authorize="isAuthenticated()">
+      <a id="cart" th:href="@{/cart}">Cesta <span id="cart_size" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/cart_size}" style="display: none;"></span></a>
+    </li>
+
+    <li class="right" sec:authorize="isAuthenticated()">
+      <a th:href="@{/orders}">Pedidos</a>
+    </li>
+
+    <li class="right" sec:authorize="isAuthenticated()">
+      <a href="#" th:text="${usuario}"></a>
+    </li>
+
+    <li class="right" sec:authorize="hasPermission(#user, 'admin')">
+      <a th:href="@{/admin}">Admin</a>
+    </li>
+
+    <li class="right" sec:authorize="isAuthenticated()">
+      <a th:href="@{/logout}">Sair</a>
+    </li>
+  </ul>
+</nav>
+</th:block>

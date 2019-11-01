@@ -1,60 +1,19 @@
 <th:block th:fragment="copy">
-  <!DOCTYPE html>
-  <html>
-  	<head>
-      <title th:if="${categoria == null and produto == null and pagina == null}" th:text="${geral.titulo}"></title>
-      <title th:if="${categoria}" th:each="t : ${categoria.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${geral.titulo + ' | ' + t.conteudo}"></title>
-      <title th:if="${produto}" th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${geral.titulo + ' | ' + t.conteudo}"></title>
-      <title th:if="${pagina}" th:each="t : ${pagina.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${geral.titulo + ' | ' + t.conteudo}"></title>
-      <link th:href="@{/css/style.css}" rel="stylesheet">
-  	</head>
-  	<body onload="show_cart_size(); show_cart_total();">
-      <nav class="header">
-        <ul>
-          <li>
-            <img th:if="${geral.logo}" th:src="@{/imagem/download/__${geral.logo.id}__}" th:alt="${geral.titulo}">
-            <a th:href="@{/}" th:text="${geral.titulo}"></a>
-          </li>
-
-          <li th:if="${pagina}" th:each="p : ${paginas}">
-            <th:block th:each="t : ${p.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}">
-              <a th:unless="${p.parent}" th:href="@{/page/__${t.slug()}__}" th:text="${t.conteudo}"></a>
-            <th:block>
-          </li>
-
-          <li th:unless="${pagina}" th:each="p : ${paginas}">
-            <th:block th:each="t : ${p.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}">
-              <a th:unless="${p.parent}" th:href="@{/page/__${t.slug()}__}" th:text="${t.conteudo}"></a>
-            </th:block>
-          </li>
-
-          <li class="right" sec:authorize="isAnonymous()">
-            <a th:href="@{/login}">Login</a>
-          </li>
-
-          <li class="right" sec:authorize="isAnonymous()">
-            <a th:href="@{/usuario/register}">Cadastro</a>
-          </li>
-
-          <li class="right" sec:authorize="isAuthenticated()">
-            <a id="cart" th:href="@{/cart}">Cesta <span id="cart_size" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/cart_size}" style="display: none;"></span></a>
-          </li>
-
-          <li class="right" sec:authorize="isAuthenticated()">
-            <a th:href="@{/orders}">Pedidos</a>
-          </li>
-
-          <li class="right" sec:authorize="isAuthenticated()">
-            <a href="#" th:text="${usuario}"></a>
-          </li>
-
-          <li class="right" sec:authorize="hasPermission(#user, 'admin')">
-            <a th:href="@{/admin}">Admin</a>
-          </li>
-
-          <li class="right" sec:authorize="isAuthenticated()">
-            <a th:href="@{/logout}">Sair</a>
-          </li>
-        </ul>
-      </nav>
+<!DOCTYPE html>
+<html lang="pt-BR" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title th:if="${categoria == null and produto == null and pagina == null}" th:text="${geral.titulo}"></title>
+    <th:block th:if="${categoria}">
+      <title th:each="t : ${categoria.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${geral.titulo + ' | ' + t.conteudo}"></title>
+    </th:block>
+    <th:block th:if="${produto}">
+      <title th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${geral.titulo + ' | ' + t.conteudo}"></title>
+    </th:block>
+    <th:block th:if="${pagina}">
+      <title th:each="t : ${pagina.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${geral.titulo + ' | ' + t.conteudo}"></title>
+    </th:block>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+  </head>
+  <body onload="show_cart_size(); show_cart_total();">
 </th:block>

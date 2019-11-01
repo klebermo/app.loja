@@ -1,6 +1,6 @@
 <th:block th:fragment="copy">
-  <aside class="menu">
-    <ul class="vertical-menu">
+  <aside class="sidebar">
+    <ul>
       <th:block th:if="${categoria == null and produto == null and pagina == null}">
         <li th:each="c : ${categorias}">
           <a th:each="t : ${c.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}"></a>
