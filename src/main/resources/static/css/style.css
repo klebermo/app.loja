@@ -1,154 +1,114 @@
 body {
   margin: 0;
   padding: 0;
-}
-
-.header { grid-area: header; }
-.menu { grid-area: menu; }
-.main { grid-area: main; }
-.footer { grid-area: footer; }
-
-.grid-container {
   display: grid;
-  grid-template-areas:
-    'header header header header header'
-    'menu main main main main'
-    'footer footer footer footer footer';
-  grid-gap: 5px;
-  padding: 5px;
+  grid-template-areas: "header header header" "sidebar main main";
+  grid-gap: 32px;
 }
 
-.col {
-  float: left;
-  width: 20%;
-  padding: 5px;
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.title {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.row:nth-child(even) .col:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.row:nth-child(even) .col:nth-child(odd) {
-  background-color: #ccc;
-}
-
-.row:nth-child(odd) .col:nth-child(even) {
-  background-color: #ccc;
-}
-
-.row:nth-child(odd) .col:nth-child(odd) {
-  background-color: #f2f2f2;
-}
-
-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+.navbar {
+  grid-area: header;
   overflow: hidden;
-  background-color: #333333;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
-nav ul li {
-  float: left;
-}
-
-nav ul li a {
-  display: block;
+.navbar ul li a {
   color: white;
-  text-align: center;
-  padding: 16px;
+  padding: 8px 16px;
   text-decoration: none;
 }
 
-nav ul li a:hover {
-  background-color: #111111;
+.navbar ul li a:hover {
+  background-color: #555;
+  color: white;
+}
+
+.sidebar {
+  grid-area: sidebar;
+}
+
+.main {
+  grid-area: main;
+}
+
+.navbar ul {
+  list-style-type: none;
+}
+
+.navbar ul li {
+  display: inline;
 }
 
 .right {
   float: right;
 }
 
-aside ul {
+.sidebar ul {
   list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 200px;
-  background-color: #f1f1f1;
 }
 
-aside li a {
+.sidebar ul li {
   display: block;
-  color: #000;
-  padding: 8px 16px;
-  text-decoration: none;
 }
 
-/* Change the link color on hover */
-aside li a:hover {
-  background-color: #555;
-  color: white;
-}
-
-aside ul li.active {
-  background-color: #4CAF50;
-  color: white;
-}
-
-/* Style The Dropdown Button */
-.dropbtn .button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}
-
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
+.sidebar ul li a {
+  background-color: #eee;
   color: black;
-  padding: 12px 16px;
+  display: block;
+  padding: 12px;
   text-decoration: none;
-  display: block;
 }
 
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #f1f1f1}
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
+.sidebar ul li a:hover {
+  background-color: #ccc;
 }
 
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {
-  background-color: #3e8e41;
+.sidebar ul li a.active {
+  background-color: #4CAF50; /* Add a green color to the "active/current" link */
+  color: white;
+}
+
+.main .row {
+  display: grid;
+  grid-template-areas: auto auto auto auto auto;
+  grid-gap: 10px;
+  padding: 10px;
+}
+
+.title {
+  grid-row-start: 1;
+  grid-row-end: 1;
+  grid-column-start: 1;
+  grid-column-end: 5;
+  background-color: blue;
+  color: white;
+}
+
+.col {
+  grid-row-start: 2;
+  grid-row-end: 2;
+  grid-column: auto;
+}
+
+.row:nth-child(even) .col:nth-child(even) {
+  background-color: #D3D3D3;
+  color: white;
+}
+
+.row:nth-child(even) .col:nth-child(odd) {
+  background-color: #A9A9A9;
+  color: white;
+}
+
+.row:nth-child(odd) .col:nth-child(even) {
+  background-color: #A9A9A9;
+  color: white;
+}
+
+.row:nth-child(odd) .col:nth-child(odd) {
+  background-color: #D3D3D3;
+  color: white;
 }
