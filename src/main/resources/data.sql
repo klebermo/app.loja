@@ -238,3 +238,21 @@ insert into produto_resumo values (5,15);
 insert into produto_descricao values (5,13);
 insert into produto_descricao values (5,14);
 insert into produto_descricao values (5,15);
+
+insert into pagina(id) values (1);
+
+insert into titulo (conteudo, idioma) values ('hum', 'pt-BR,Portuguese (Brazil)');
+insert into titulo (conteudo, idioma) values ('one', 'en-US');
+insert into titulo (conteudo, idioma) values ('uno', 'es-ES,Spanish (Spain)');
+
+insert into texto (conteudo, idioma) values ('teste', 'pt-BR,Portuguese (Brazil)');
+insert into texto (conteudo, idioma) values ('test', 'en-US,English (United States)');
+insert into texto (conteudo, idioma) values ('teste', 'es-ES,Spanish (Spain)');
+
+insert into pagina_titulo values (1,1);
+insert into pagina_titulo values (1,2);
+insert into pagina_titulo values (1,3);
+
+insert into pagina_descricao values (1,1);
+insert into pagina_descricao values (1,2);
+insert into pagina_descricao values (1,3);
