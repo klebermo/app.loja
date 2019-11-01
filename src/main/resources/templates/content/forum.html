@@ -1,16 +1,17 @@
 <th:block th:fragment="copy">
   <div class="media">
-    <img th:src="@{/images/icon_forum.png}" class="mr-3" th:alt="forum">
+    <img th:src="@{/images/icon_forum.png}" class="mr-3" width=64 height=64 th:alt="forum">
     <div class="media-body">
       <h5 class="mt-0">
         F&oacute;rum
         <th:block th:each="p : ${produtos}" th:if="${p.forum.id == forum.id}">
           <small th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></small>
         </th:block>
-        <a th:href="@{/topic/new}" class="btn btn-primary">Novo t&oacute;pico</a>
       </h5>
     </div>
   </div>
+
+  <a th:href="@{/topic/new}" class="btn btn-primary">Novo t&oacute;pico</a>
 
   <section th:each="topico : ${forum.topicos}">
     <div class="media">

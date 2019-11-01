@@ -1,59 +1,52 @@
 <th:block th:fragment="copy">
-<section>
-  <div class="media">
-    <th:block th:if="${produto.icone}">
-      <img th:src="@{/imagem/download/__${produto.icone.id}__}" width=64 height=64 class="mr-3" th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
-    </th:block>
+  <th:block th:if="${produto.icone}">
+    <img th:src="@{/imagem/download/__${produto.icone.id}__}" width=64 height=64 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
+  </th:block>
 
-    <th:block th:unless="${produto.icone}">
-      <img th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
-    </th:block>
+  <th:block th:unless="${produto.icone}">
+    <img th:src="@{/images/icon_product.png}" width=64 height=64 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
+  </th:block>
 
-    <div class="media-body">
-      <h5 class="mt-0" th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${t.conteudo}"></h5>
+  <h3 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${t.conteudo}"></h3>
 
-      <span th:each="r : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(r.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${r.conteudo}"></span>
+  <div class="row">
+    <div class="col">
+      <p class="button" th:text="${#numbers.formatCurrency(produto.preco)}"></p>
+    </div>
 
-      <div class="row">
-        <div class="col">
-          <button type="button" class="btn btn-primary" th:text="${#numbers.formatCurrency(produto.preco)}"></button>
-        </div>
-        <div class="col" sec:authorize="isAuthenticated()">
-          <button type="button" class="btn btn-secondary" onclick="add_to_cart(this)" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}, data-url=@{/usuario/add_to_cart}">
-            Comprar
-          </button>
-        </div>
-        <div class="col">
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Baixar
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a th:each="arquivo : ${produto.versaoGratuita}" class="dropdown-item" th:href="@{/arquivo/download/__${arquivo.id}__}" th:text="${arquivo.type}"></a>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <a class="btn btn-secondary" th:href="@{/forum/view/__${produto.forum.id}__}">
-            F&oacute;rum
-          </a>
+    <div class="col" sec:authorize="isAuthenticated()">
+      <button class="button" onclick="add_to_cart(this)" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}, data-url=@{/usuario/add_to_cart}">
+        Comprar <br/> <small>Vers&atilde;o Pro</small>
+      </button>
+    </div>
+
+    <div class="col">
+      <div class="dropdown">
+        <button class="dropbtn" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Baixar <br/> <small>Vers&atilde;o Lite</small>
+        </button>
+        <div class="dropdown-content">
+          <a th:each="arquivo : ${produto.versaoGratuita}" th:href="@{/arquivo/download/__${arquivo.id}__}" th:text="${arquivo.type}"></a>
         </div>
       </div>
+    </div>
 
-      <div class="row">
-        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
-            <div th:each="pic,stat : ${produto.thumbnails}" th:class="${stat.index == 0}? 'carousel-item active' : 'carousel-item'">
-              <img th:src="@{/imagem/download/__${pic.id}__}" class="d-block w-100" th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}">
-            </div>
-          </div>
+    <div class="col" sec:authorize="isAuthenticated()">
+      <a class="button" th:href="@{/forum/view/__${produto.forum.id}__}">
+        F&oacute;rum
+      </a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div th:each="pic,stat : ${produto.thumbnails}" th:class="${stat.index == 0}? 'carousel-item active' : 'carousel-item'">
+          <img th:src="@{/imagem/download/__${pic.id}__}" class="d-block w-100" th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}">
         </div>
       </div>
     </div>
   </div>
 
-  <div class="jumbotron">
-    <p class="lead" th:each="d : ${produto.descricao}" th:if="${#strings.equals(#strings.substringBefore(d.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${d.conteudo}"></p>
-  </div>
-</section>
+  <p class="lead" th:each="d : ${produto.descricao}" th:if="${#strings.equals(#strings.substringBefore(d.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${d.conteudo}"></p>
 </th:block>
