@@ -528,14 +528,26 @@ for (i = 0; i < tab_pane.length; i++) {
 function detect_editor() {
   var editor = document.getElementsByClassName("summernote");
   for (i = 0; i < editor.length; i++) {
-    $(editor).summernote({height: 300});
+    //
   }
 }
 
-$('#left').click(function() {
-  return !$('#selectLeft option:selected').remove().appendTo('#selectRight');
+var left = document.getElementById('selectLeft');
+left.addEventListener("click", function(){
+  let collection = itemList.selectedOptions;
+  for (let i=0; i<collection.length; i++) {
+    var right = document.getElementById('selectRight');
+    right.appendChild(collection[i]);
+    left.remove(collection[i]);
+  }
 });
 
-$('#right').click(function() {
-  return !$('#selectRight option:selected').remove().appendTo('#selectLeft');
+var right = document.getElementById('selectRight');
+right.addEventListener("click", function(){
+  let collection = itemList.selectedOptions;
+  for (let i=0; i<collection.length; i++) {
+    var left = document.getElementById('selectLeft');
+    left.appendChild(collection[i]);
+    right.remove(collection[i]);
+  }
 });
