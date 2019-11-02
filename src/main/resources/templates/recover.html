@@ -1,13 +1,22 @@
-<div class="grid-container">
-  <div th:replace="header :: copy"></div>
+<div th:replace="header :: copy"></div>
 
-  <h5>Recover Password</h5>
+<main class="main">
+  <div class="row">
+    <h5 class="row_title">Recover Password</h5>
+  </div>
 
-  <form method="post" th:action="@{/usuario/recoverPassword}">
-    <p> <input class="form-control" type="text" name="email" placeholder="E-mail"/> </p>
+  <div class="col"></div>
 
-    <p> <button type="submit" class="btn btn-primary">Recover</button> </p>
-  </form>
+  <div class="col">
+    <form method="post" th:action="@{/usuario/recoverPassword}">
+      <p> <input class="form-control" type="text" name="email" placeholder="E-mail"/> </p>
+      <p> <button type="submit" class="btn btn-primary">Recover</button> </p>
+    </form>
+  </div>
 
-  <div th:replace="footer :: copy"></div>
-</div>
+  <div class="col"></div>
+
+  <div class="col"></div>
+</main>
+
+<div th:replace="footer :: copy"></div>

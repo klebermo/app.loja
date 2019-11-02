@@ -1,21 +1,27 @@
-<div class="grid-container">
-  <div th:replace="header :: copy"></div>
+<div th:replace="header :: copy"></div>
 
-  <h5>Login</h5>
+<main class="main">
+  <div class="row">
+    <h5 class="row_title">Login</h5>
+  </div>
 
-  <form method="post" th:action="@{/doLogin}">
-    <p> <input class="form-control" type="text" name="login" placeholder="login"/> </p>
+  <div class="col"></div>
 
-    <p> <input class="form-control" type="password" name="senha" placeholder="senha"/> </p>
+  <div class="col">
+    <form method="post" th:action="@{/doLogin}">
+      <p> <input class="form-control" type="text" name="login" placeholder="login"/> </p>
+      <p> <input class="form-control" type="password" name="senha" placeholder="senha"/> </p>
+      <p> <button type="submit" class="btn btn-primary">Login</button> </p>
+      <p> <input class="checkbox" type="checkbox" value="remember-me"> Remember me </input> </p>
+    </form>
+  </div>
 
-    <p> <button type="submit" class="btn btn-primary">Login</button> </p>
+  <div class="col"></div>
 
-    <p> <input class="checkbox" type="checkbox" value="remember-me"> Remember me </input> </p>
-
+  <div class="col">
     <p><a th:href="@{/usuario/register}">Não tem cadastro? Clique aqui para se cadatrar</a></p>
-
     <p><a th:href="@{/usuario/recoverPassword}">Esqueceu a senha? Clique aqui para recuperar</a></p>
-  </form>
+  </div>
+</main>
 
-  <div th:replace="footer :: copy"></div>
-</div>
+<div th:replace="footer :: copy"></div>
