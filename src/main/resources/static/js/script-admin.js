@@ -50,7 +50,7 @@ function load_content() {
 }
 
 function insert_data() {
-  if(document.getElementById('insert-tab').parentNode.style.display === 'none') {
+  if(document.getElementById('insert-tab').style.display === 'none') {
     var url = document.getElementById('insert').dataset.url;
 
     var xmlhttp = new XMLHttpRequest();
@@ -61,19 +61,9 @@ function insert_data() {
         parser = new DOMParser();
         var doc = parser.parseFromString(myObj, "text/html");
         var form_html = doc.getElementById('form-container');
-
         document.getElementById('insert').innerHTML = form_html.innerHTML;
-        document.getElementById('tab-insert').removeAttribute('style');
-
-        document.getElementById("listagem-tab").classList.remove('show');
-        document.getElementById("listagem-tab").classList.remove('active');
-        document.getElementById("listagem").classList.remove('show');
-        document.getElementById("listagem").classList.remove('active');
-
-        document.getElementById("insert-tab").classList.add('show');
-        document.getElementById("insert-tab").classList.add('active');
-        document.getElementById('insert').classList.add('show');
-        document.getElementById('insert').classList.add('active');
+        document.getElementById('insert-tab').style.display = "block";
+        openTab("insert-tab", "insert");
       }
     };
     xmlhttp.open("GET", url, true);
@@ -84,29 +74,22 @@ function insert_data() {
 function update_data(element) {
   var id = element.dataset.id;
 
-  if(document.getElementById('tab_content').contains(document.getElementById("update-"+id))) {
-    document.getElementById("listagem-tab").classList.remove('show');
-    document.getElementById("listagem-tab").classList.remove('active');
-    document.getElementById("listagem").classList.remove('show');
-    document.getElementById("listagem").classList.remove('active');
-
-    document.getElementById("tab-update-"+id).classList.add('show');
-    document.getElementById("tab-update-"+id).classList.add('active');
-    document.getElementById('update-'+id).classList.add('show');
-    document.getElementById('update-'+id).classList.add('active');
+  if(document.getElementById("update-"+id) != null) {
+    openTab("update-tab-"+id, "update-"+id);
   } else {
     var url = element.dataset.url;
     url = url + '?id=' + id;
 
-    var tab_update = document.getElementById('tab-update').cloneNode(true);
-    tab_update.setAttribute('id', 'tab-update-'+id);
-    tab_update.removeAttribute('style');
+    var tab_update = document.getElementById('update-tab').cloneNode(true);
+    tab_update.setAttribute('id', 'update-tab-'+id);
+    tab_update.style.display = "block";
 
     var panel_update = document.getElementById('update').cloneNode(true);
     panel_update.setAttribute('id', 'update-'+id);
 
-    document.getElementById("tabset").appendChild(tab_update);
-    document.getElementById("tab_content").appendChild(panel_update);
+    var ref = document.querySelector('div.tab');
+    document.getElementById("tab").appendChild(tab_update);
+    document.getElementById("tab_content").appendChild(panel_update, ref);
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
@@ -116,18 +99,8 @@ function update_data(element) {
         parser = new DOMParser();
         var doc = parser.parseFromString(myObj, "text/html");
         var form_html = doc.getElementById('form-container');
-
         document.getElementById('update-'+id).innerHTML = form_html.innerHTML;
-
-        document.getElementById("listagem-tab").classList.remove('show');
-        document.getElementById("listagem-tab").classList.remove('active');
-        document.getElementById("listagem").classList.remove('show');
-        document.getElementById("listagem").classList.remove('active');
-
-        document.getElementById("tab-update-"+id).classList.add('show');
-        document.getElementById("tab-update-"+id).classList.add('active');
-        document.getElementById('update-'+id).classList.add('show');
-        document.getElementById('update-'+id).classList.add('active');
+        openTab("update-tab-"+id, "update-"+id);
       }
     };
     xmlhttp.open("GET", url, true);
@@ -138,29 +111,22 @@ function update_data(element) {
 function delete_data(element) {
   var id = element.dataset.id;
 
-  if(document.getElementById('tab_content').contains(document.getElementById("delete-"+id))) {
-    document.getElementById("listagem-tab").classList.remove('show');
-    document.getElementById("listagem-tab").classList.remove('active');
-    document.getElementById("listagem").classList.remove('show');
-    document.getElementById("listagem").classList.remove('active');
-
-    document.getElementById("tab-delete-"+id).classList.add('show');
-    document.getElementById("tab-delete-"+id).classList.add('active');
-    document.getElementById('delete-'+id).classList.add('show');
-    document.getElementById('delete-'+id).classList.add('active');
+  if(document.getElementById("delete-"+id) != null) {
+    openTab("delete-tab-"+id, "delete-"+id);
   } else {
     var url = element.dataset.url;
     url = url + '?id=' + id;
 
-    var tab_update = document.getElementById('tab-delete').cloneNode(true);
-    tab_update.setAttribute('id', 'tab-delete-'+id);
-    tab_update.removeAttribute('style');
+    var tab_update = document.getElementById('delete-tab').cloneNode(true);
+    tab_update.setAttribute('id', 'delete-tab-'+id);
+    tab_update.style.display = "block";
 
     var panel_update = document.getElementById('delete').cloneNode(true);
     panel_update.setAttribute('id', 'delete-'+id);
 
-    document.getElementById("tabset").appendChild(tab_update);
-    document.getElementById("tab_content").appendChild(panel_update);
+    var ref = document.querySelector('div.tab');
+    document.getElementById("tab").appendChild(tab_update);
+    document.getElementById("tab_content").appendChild(panel_update, tab);
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
@@ -170,18 +136,8 @@ function delete_data(element) {
         parser = new DOMParser();
         var doc = parser.parseFromString(myObj, "text/html");
         var form_html = doc.getElementById('form-container');
-
         document.getElementById('delete-'+id).innerHTML = form_html.innerHTML;
-
-        document.getElementById("listagem-tab").classList.remove('show');
-        document.getElementById("listagem-tab").classList.remove('active');
-        document.getElementById("listagem").classList.remove('show');
-        document.getElementById("listagem").classList.remove('active');
-
-        document.getElementById("tab-delete-"+id).classList.add('show');
-        document.getElementById("tab-delete-"+id).classList.add('active');
-        document.getElementById('delete-'+id).classList.add('show');
-        document.getElementById('delete-'+id).classList.add('active');
+        openTab("delete-tab-"+id, "delete-"+id);
       }
     };
     xmlhttp.open("GET", url, true);
@@ -192,29 +148,22 @@ function delete_data(element) {
 function credencial_data(element) {
   var id = element.dataset.id;
 
-  if(document.getElementById('tab_content').contains(document.getElementById("credencial-"+id))) {
-    document.getElementById("listagem-tab").classList.remove('show');
-    document.getElementById("listagem-tab").classList.remove('active');
-    document.getElementById("listagem").classList.remove('show');
-    document.getElementById("listagem").classList.remove('active');
-
-    document.getElementById("tab-credencial-"+id).classList.add('show');
-    document.getElementById("tab-credencial-"+id).classList.add('active');
-    document.getElementById('credencial-'+id).classList.add('show');
-    document.getElementById('credencial-'+id).classList.add('active');
+  if(document.getElementById("credencial-"+id) != null) {
+    openTab("credencial-tab-"+id, "credencial-"+id);
   } else {
     var url = element.dataset.url;
     url = url + '?id=' + id;
 
-    var tab_credencial = document.getElementById('tab-credencial').cloneNode(true);
-    tab_credencial.setAttribute('id', 'tab-credencial-'+id);
-    tab_credencial.removeAttribute('style');
+    var tab_credencial = document.getElementById('credencial-tab').cloneNode(true);
+    tab_credencial.setAttribute('id', 'credencial-tab-'+id);
+    tab_credencial.style.display = "block";
 
     var panel_credencial = document.getElementById('credencial').cloneNode(true);
     panel_credencial.setAttribute('id', 'credencial-'+id);
 
-    document.getElementById("tabset").appendChild(tab_credencial);
-    document.getElementById("tab_content").appendChild(panel_credencial);
+    var ref = document.querySelector('div.tab');
+    document.getElementById("tab").appendChild(tab_credencial);
+    document.getElementById("tab_content").appendChild(panel_credencial, ref);
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
@@ -224,18 +173,8 @@ function credencial_data(element) {
         parser = new DOMParser();
         var doc = parser.parseFromString(myObj, "text/html");
         var form_html = doc.getElementById('form-container');
-
         document.getElementById('credencial-'+id).innerHTML = form_html.innerHTML;
-
-        document.getElementById("listagem-tab").classList.remove('show');
-        document.getElementById("listagem-tab").classList.remove('active');
-        document.getElementById("listagem").classList.remove('show');
-        document.getElementById("listagem").classList.remove('active');
-
-        document.getElementById("tab-credencial-"+id).classList.add('show');
-        document.getElementById("tab-credencial-"+id).classList.add('active');
-        document.getElementById('credencial-'+id).classList.add('show');
-        document.getElementById('credencial-'+id).classList.add('active');
+        openTab("credencial-tab-"+id, "credencial-"+id);
       }
     };
     xmlhttp.open("GET", url, true);
@@ -252,14 +191,8 @@ function submit_insert() {
   xhr.onload = function(event) {
     event.preventDefault();
     document.getElementById('insert').innerHTML = '';
-    document.getElementById('tab-insert').setAttribute('style', 'display: none;');
-
-    document.getElementById("listagem-tab").classList.add('show');
-    document.getElementById("listagem-tab").classList.add('active');
-    document.getElementById("listagem").classList.add('show');
-    document.getElementById("listagem").classList.add('active');
-
     document.getElementById('table-body').innerHTML = '';
+    openTab('listagem-tab', 'listagem');
     load_content();
   };
   xhr.send(formData);
@@ -276,13 +209,8 @@ function submit_update(element) {
     var id = document.getElementById('id').value;
     document.getElementById('tab-update-'+id).remove();
     document.getElementById('update-'+id).remove();
-
-    document.getElementById("listagem-tab").classList.add('show');
-    document.getElementById("listagem-tab").classList.add('active');
-    document.getElementById("listagem").classList.add('show');
-    document.getElementById("listagem").classList.add('active');
-
     document.getElementById('table-body').innerHTML = '';
+    openTab('listagem-tab', 'listagem');
     load_content();
   };
   xhr.send(formData);
@@ -296,15 +224,10 @@ function submit_delete(element) {
   xhr.open("DELETE", url);
   xhr.onload = function(event) {
     var id = document.getElementById('id').value;
-    document.getElementById('tab-delete-'+id).remove();
+    document.getElementById('delete-tab-'+id).remove();
     document.getElementById('delete-'+id).remove();
-
-    document.getElementById("listagem-tab").classList.add('show');
-    document.getElementById("listagem-tab").classList.add('active');
-    document.getElementById("listagem").classList.add('show');
-    document.getElementById("listagem").classList.add('active');
-
     document.getElementById('table-body').innerHTML = '';
+    openTab('listagem-tab', 'listagem');
     load_content();
   };
   xhr.send(formData);
@@ -353,48 +276,70 @@ function submit_setting(element) {
 
 function cancel_insert() {
   document.getElementById('insert').innerHTML = '';
-  document.getElementById('insert-tab').parentNode.setAttribute('style', 'display: none;');
-
-  document.getElementById("listagem-tab").classList.add('show');
-  document.getElementById("listagem-tab").classList.add('active');
-  document.getElementById("listagem").classList.add('show');
-  document.getElementById("listagem").classList.add('active');
+  document.getElementById('insert-tab').style.display = "none";
+  openTab('listagem-tab', 'listagem');
 }
 
 function cancel_update(element) {
   var id = element.dataset.id;
-
   document.getElementById('update-'+id).remove();
-  document.getElementById('tab-update-'+id).remove();
-
-  document.getElementById("listagem-tab").classList.add('show');
-  document.getElementById("listagem-tab").classList.add('active');
-  document.getElementById("listagem").classList.add('show');
-  document.getElementById("listagem").classList.add('active');
+  document.getElementById('update-tab-'+id).remove();
+  openTab('listagem-tab', 'listagem');
 }
 
 function cancel_delete(element) {
   var id = element.dataset.id;
-
   document.getElementById('delete-'+id).remove();
-  document.getElementById('tab-delete-'+id).remove();
-
-  document.getElementById("listagem-tab").classList.add('show');
-  document.getElementById("listagem-tab").classList.add('active');
-  document.getElementById("listagem").classList.add('show');
-  document.getElementById("listagem").classList.add('active');
+  document.getElementById('delete-tab-'+id).remove();
+  openTab('listagem-tab', 'listagem');
 }
 
 function cancel_credencial(element) {
   var id = element.dataset.id;
-
   document.getElementById('credencial-'+id).remove();
-  document.getElementById('tab-credencial-'+id).remove();
+  document.getElementById('credencial-tab-'+id).remove();
+  openTab('listagem-tab', 'listagem');
+}
 
-  document.getElementById("listagem-tab").classList.add('show');
-  document.getElementById("listagem-tab").classList.add('active');
-  document.getElementById("listagem").classList.add('show');
-  document.getElementById("listagem").classList.add('active');
+function openTab(tab, tabName) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  document.getElementById(tabName).style.display = "block";
+  document.getElementById(tab).className += " active";
+}
+
+function openIdiomaTab(element) {
+  // Declare all variables
+  var id = element.dataset.id;
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent_idioma");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tabidioma");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  document.getElementById(id).style.display = "block";
+  document.getElementById(id+'-tab').className += " active";
 }
 
 var tab_content = document.getElementsByClassName("tab-content");
@@ -531,23 +476,3 @@ function detect_editor() {
     //
   }
 }
-
-var left = document.getElementById('selectLeft');
-left.addEventListener("click", function(){
-  let collection = itemList.selectedOptions;
-  for (let i=0; i<collection.length; i++) {
-    var right = document.getElementById('selectRight');
-    right.appendChild(collection[i]);
-    left.remove(collection[i]);
-  }
-});
-
-var right = document.getElementById('selectRight');
-right.addEventListener("click", function(){
-  let collection = itemList.selectedOptions;
-  for (let i=0; i<collection.length; i++) {
-    var left = document.getElementById('selectLeft');
-    left.appendChild(collection[i]);
-    right.remove(collection[i]);
-  }
-});
