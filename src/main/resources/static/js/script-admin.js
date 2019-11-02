@@ -282,6 +282,7 @@ function cancel_insert() {
 
 function cancel_update(element) {
   var id = element.dataset.id;
+  console.log('cancel update - id:'+id);
   document.getElementById('update-'+id).remove();
   document.getElementById('update-tab-'+id).remove();
   openTab('listagem-tab', 'listagem');
@@ -322,24 +323,29 @@ function openTab(tab, tabName) {
 }
 
 function openIdiomaTab(element) {
+  console.log('openIdiomaTab');
   // Declare all variables
   var id = element.dataset.id;
   var i, tabcontent, tablinks;
+  console.log('openIdiomaTab id: '+id);
 
   // Get all elements with class="tabcontent" and hide them
   tabcontent = document.getElementsByClassName("tabcontent_idioma");
   for (i = 0; i < tabcontent.length; i++) {
+    console.log('openIdiomaTab tabcontent nr.'+i);
     tabcontent[i].style.display = "none";
   }
 
   // Get all elements with class="tablinks" and remove the class "active"
   tablinks = document.getElementsByClassName("tabidioma");
   for (i = 0; i < tablinks.length; i++) {
+    console.log('openIdiomaTab tabidioma nr.'+i);
     tablinks[i].className = tablinks[i].className.replace(" active", "");
   }
 
   document.getElementById(id).style.display = "block";
   document.getElementById(id+'-tab').className += " active";
+  console.log('openIdiomaTab end');
 }
 
 var tab_content = document.getElementsByClassName("tab-content");
