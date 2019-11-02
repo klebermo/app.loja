@@ -1,37 +1,33 @@
 <!doctype html>
 <html lang="pt-br">
   <body>
-    <div id="form-container">
-      <form th:if="${#strings.equals(classe.simpleName, 'Categoria')}" class="form" id="form" method="post" th:action="@{/categoria/__${action}__}">
+    <div class="container" id="form-container">
+      <form th:if="${#strings.equals(classe.simpleName, 'Categoria')}" method="post" th:action="@{/categoria/__${action}__}">
         <div th:replace="admin/form/categoria :: copy"></div>
       </form>
 
-      <form th:if="${#strings.equals(classe.simpleName, 'Produto')}" class="form" id="form" method="post" th:action="@{/produto/__${action}__}">
+      <form th:if="${#strings.equals(classe.simpleName, 'Produto')}" method="post" th:action="@{/produto/__${action}__}">
         <div th:replace="admin/form/produto :: copy"></div>
       </form>
 
-      <form th:if="${#strings.equals(classe.simpleName, 'Pagina')}" class="form" id="form" method="post" th:action="@{/pagina/__${action}__}">
+      <form th:if="${#strings.equals(classe.simpleName, 'Pagina')}" method="post" th:action="@{/pagina/__${action}__}">
         <div th:replace="admin/form/pagina :: copy"></div>
       </form>
 
-      <form th:if="${#strings.equals(classe.simpleName, 'Usuario')}" class="form" id="form" method="post" th:action="@{/usuario/__${action}__}">
+      <form th:if="${#strings.equals(classe.simpleName, 'Usuario')}" method="post" th:action="@{/usuario/__${action}__}">
         <div th:replace="admin/form/usuario :: copy"></div>
       </form>
 
-      <div class="container">
-        <div class="row">
-          <div class="col-sm">
-            <button th:if="${#strings.equals(action, 'insert')}" class="btn btn-primary" id="cancel" onclick="cancel_insert(this);">Cancelar</button>
-            <button th:if="${#strings.equals(action, 'update')}" class="btn btn-primary" id="cancel" th:attr="data-id=${command.id}" onclick="cancel_update(this);">Cancelar</button>
-            <button th:if="${#strings.equals(action, 'delete')}" class="btn btn-primary" id="cancel" th:attr="data-id=${command.id}" onclick="cancel_delete(this);">Cancelar</button>
-          </div>
-          <div class="col-sm">
-          </div>
-          <div class="col-sm">
-            <button th:if="${#strings.equals(action, 'insert')}" type="submit" class="btn btn-primary" id="submit" onclick="submit_insert(this);">Aplicar</button>
-            <button th:if="${#strings.equals(action, 'update')}" type="submit" class="btn btn-primary" id="submit" th:attr="data-id=${command.id}" onclick="submit_update(this);">Aplicar</button>
-            <button th:if="${#strings.equals(action, 'delete')}" type="submit" class="btn btn-primary" id="submit" th:attr="data-id=${command.id}" onclick="submit_delete(this);">Aplicar</button>
-          </div>
+      <div class="row">
+        <div class="col">
+          <button class="submit" th:if="${#strings.equals(action, 'insert')}" onclick="cancel_insert(this);">Cancelar</button>
+          <button class="submit" th:if="${#strings.equals(action, 'update')}" th:attr="data-id=${command.id}" onclick="cancel_update(this);">Cancelar</button>
+          <button class="submit" th:if="${#strings.equals(action, 'delete')}" th:attr="data-id=${command.id}" onclick="cancel_delete(this);">Cancelar</button>
+        </div>
+        <div class="col">
+          <button class="submit" th:if="${#strings.equals(action, 'insert')}" onclick="submit_insert(this);">Aplicar</button>
+          <button class="submit" th:if="${#strings.equals(action, 'update')}" th:attr="data-id=${command.id}" onclick="submit_update(this);">Aplicar</button>
+          <button class="submit" th:if="${#strings.equals(action, 'delete')}" th:attr="data-id=${command.id}" onclick="submit_delete(this);">Aplicar</button>
         </div>
       </div>
     </div>

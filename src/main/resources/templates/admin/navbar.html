@@ -1,13 +1,9 @@
 <th:block th:fragment="copy">
-  <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" th:href="@{/}" th:text="${geral.titulo}"></a>
-    <ul class="navbar-nav px-3">
-      <li class="nav-item" style="display: inline;">
-        <a class="nav-link" th:href="@{/messages}"> <i class="fas fa-envelope"></i> <span class="badge badge-secondary" id="msg">0</span> </a>
-      </li>
-      <li class="nav-item" style="display: inline;">
-        <a class="nav-link" th:href="@{/logout}"> <i class="fas fa-sign-out-alt"></i> </a>
-      </li>
+  <div class="floating-menu">
+    <ul>
+      <li> <a th:href="@{/messages}"><img th:src="@{/images/icon_messages.png}" width="32" height="32" alt="mensagens"></a> <span class="badge" id="messages">0</span> </li>
+      <li> <h3 th:text="${usuario}"></h3> </li>
+      <li> <a th:href="@{/logout}"><img th:src="@{/images/icon_logout.png}" width="32" height="32" alt="sair"></a> </li>
     </ul>
-  </nav>
+  </div>
 </th:block>

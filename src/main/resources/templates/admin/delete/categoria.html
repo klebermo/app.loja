@@ -1,4 +1,12 @@
 <th:block th:fragment="copy">
-  <input type="hidden" name="id" th:value="${command.id}" id="id"/>
-  <p> Confirma remoção da categoria: <strong th:text="${command}"/>? </p>
+  <div class="row">
+    <div class="col-25">
+      <input type="hidden" name="id" th:value="${command.id}" id="id"/>
+      <p>
+        Confirma remoção da categoria:
+        <strong th:each="value : ${command.nome}" th:if="${#strings.equals(value.idioma, idioma)}" th:text="${value.conteudo}"/>
+        ?
+      </p>
+    </div>
+  </div>
 </th:block>

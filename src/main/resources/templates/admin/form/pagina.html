@@ -31,7 +31,7 @@
     <div class="form-group">
       <input type="hidden" th:name="${'descricao[' + stat.index + '].idioma'}" th:value="${idioma}"/>
       <th:block th:if="${command.descricao}">
-        <textarea class="summernote" th:name="${'descricao[' + stat.index + '].conteudo'}" th:each="value : ${command.descricao}" th:if="${#strings.equals(value.idioma, idioma)}" th:text="{value.conteudo}"></textarea>
+        <textarea class="summernote" th:name="${'descricao[' + stat.index + '].conteudo'}" th:each="value : ${command.descricao}" th:if="${#strings.equals(value.idioma, idioma)}" th:text="${value.conteudo}"></textarea>
       </th:block>
       <th:block th:unless="${command.descricao}">
         <textarea class="summernote" th:name="${'descricao[' + stat.index + '].conteudo'}"></textarea>

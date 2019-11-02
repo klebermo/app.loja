@@ -1,32 +1,32 @@
 <!doctype html>
 <html lang="pt-br">
   <body>
-    <div id="form-container">
-      <form th:if="${#strings.equals(classe.simpleName, 'Categoria')}" class="form" id="form" method="post" th:action="@{/categoria/delete}">
+    <div class="container" id="form-container">
+      <form th:if="${#strings.equals(classe.simpleName, 'Categoria')}" class="form" id="form" method="delete" th:action="@{/categoria/delete}">
         <div th:replace="admin/delete/categoria :: copy"></div>
       </form>
 
-      <form th:if="${#strings.equals(classe.simpleName, 'Produto')}" class="form" id="form" method="post" th:action="@{/produto/delete}">
+      <form th:if="${#strings.equals(classe.simpleName, 'Produto')}" class="form" id="form" method="delete" th:action="@{/produto/delete}">
         <div th:replace="admin/delete/produto :: copy"></div>
       </form>
 
-      <form th:if="${#strings.equals(classe.simpleName, 'Pagina')}" class="form" id="form" method="post" th:action="@{/pagina/delete}">
+      <form th:if="${#strings.equals(classe.simpleName, 'Pagina')}" class="form" id="form" method="delete" th:action="@{/pagina/delete}">
         <div th:replace="admin/delete/pagina :: copy"></div>
       </form>
 
-      <form th:if="${#strings.equals(classe.simpleName, 'Usuario')}" class="form" id="form" method="post" th:action="@{/usuario/delete}">
+      <form th:if="${#strings.equals(classe.simpleName, 'Usuario')}" class="form" id="form" method="delete" th:action="@{/usuario/delete}">
         <div th:replace="admin/delete/usuario :: copy"></div>
       </form>
 
       <div class="container">
         <div class="row">
           <div class="col-sm">
-            <button class="btn btn-primary" id="cancel" onclick="cancel_insert(this);">Cancelar</button>
+            <button class="submit" onclick="cancel_delete(this);">Cancelar</button>
           </div>
           <div class="col-sm">
           </div>
           <div class="col-sm">
-            <button type="submit" class="btn btn-primary" id="submit" onclick="submit_insert(this);">Remover</button>
+            <button class="submit" onclick="submit_delete(this);">Remover</button>
           </div>
         </div>
       </div>

@@ -1,49 +1,51 @@
 <div th:replace="admin/header :: copy"></div>
-  <div th:replace="admin/sidebar :: copy"></div>
+<div th:replace="admin/navbar :: copy"></div>
+<div th:replace="admin/sidebar :: copy"></div>
 
-  <main th:if="${class == null and command == null and setting == null}"></main>
+<div class="main" th:if="${classe == null and command == null and setting == null}"></div>
 
-  <main th:if="${classe != null and setting != null}">
-    <div id="form-container" th:if="${#strings.equals(classe.simpleName, 'Geral')}">
-      <div th:replace="admin/settings/geral :: copy"></div>
-    </div>
+<div class="main" th:if="${classe != null and setting != null}">
+  <div id="form-container" th:if="${#strings.equals(classe.simpleName, 'Geral')}">
+    <div th:replace="admin/settings/geral :: copy"></div>
+  </div>
 
-    <div id="form-container" th:if="${#strings.equals(classe.simpleName, 'Idiomas')}">
-      <div th:replace="admin/settings/idiomas :: copy"></div>
-    </div>
+  <div id="form-container" th:if="${#strings.equals(classe.simpleName, 'Idiomas')}">
+    <div th:replace="admin/settings/idiomas :: copy"></div>
+  </div>
 
-    <div id="form-container" th:if="${#strings.equals(classe.simpleName, 'Email')}">
-      <div th:replace="admin/settings/email :: copy"></div>
-    </div>
+  <div id="form-container" th:if="${#strings.equals(classe.simpleName, 'Email')}">
+    <div th:replace="admin/settings/email :: copy"></div>
+  </div>
 
-    <div id="form-container" th:if="${#strings.equals(classe.simpleName, 'Paypal')}">
-      <div th:replace="admin/settings/paypal :: copy"></div>
-    </div>
+  <div id="form-container" th:if="${#strings.equals(classe.simpleName, 'Paypal')}">
+    <div th:replace="admin/settings/paypal :: copy"></div>
+  </div>
 
-    <div id="form-container" th:if="${#strings.equals(classe.simpleName, 'MercadoPago')}">
-      <div th:replace="admin/settings/mercadopago :: copy"></div>
-    </div>
+  <div id="form-container" th:if="${#strings.equals(classe.simpleName, 'MercadoPago')}">
+    <div th:replace="admin/settings/mercadopago :: copy"></div>
+  </div>
 
-    <div id="form-container" th:if="${#strings.equals(classe.simpleName, 'PagSeguro')}">
-      <div th:replace="admin/settings/pagseguro :: copy"></div>
-    </div>
-  </main>
+  <div id="form-container" th:if="${#strings.equals(classe.simpleName, 'PagSeguro')}">
+    <div th:replace="admin/settings/pagseguro :: copy"></div>
+  </div>
+</div>
 
-  <main th:if="${classe != null and command == null and setting == null}">
-    <th:block th:if="${#strings.equals(classe.simpleName, 'Categoria')}">
-      <div th:replace="admin/list/categoria :: copy"></div>
-    </th:block>
+<div class="main" th:if="${classe != null and setting == null and command == null}">
+  <th:block th:if="${#strings.equals(classe.simpleName, 'Categoria')}">
+    <div th:replace="admin/list/categoria :: copy"></div>
+  </th:block>
 
-    <th:block th:if="${#strings.equals(classe.simpleName, 'Produto')}">
-      <div th:replace="admin/list/produto :: copy"></div>
-    </th:block>
+  <th:block th:if="${#strings.equals(classe.simpleName, 'Produto')}">
+    <div th:replace="admin/list/produto :: copy"></div>
+  </th:block>
 
-    <th:block th:if="${#strings.equals(classe.simpleName, 'Pagina')}">
-      <div th:replace="admin/list/pagina :: copy"></div>
-    </th:block>
+  <th:block th:if="${#strings.equals(classe.simpleName, 'Pagina')}">
+    <div th:replace="admin/list/pagina :: copy"></div>
+  </th:block>
 
-    <th:block th:if="${#strings.equals(classe.simpleName, 'Usuario')}">
-      <div th:replace="admin/list/usuario :: copy"></div>
-    </th:block>
-  </main>
+  <th:block th:if="${#strings.equals(classe.simpleName, 'Usuario')}">
+    <div th:replace="admin/list/usuario :: copy"></div>
+  </th:block>
+</div>
+
 <div th:replace="admin/footer :: copy"></div>
