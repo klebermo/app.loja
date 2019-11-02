@@ -1,50 +1,87 @@
 <th:block th:fragment="copy">
-<input type="hidden" name="id" th:value="${command.id}"/>
+  <input type="hidden" name="id" th:value="${command.id}"/>
 
-<div class="form-group">
-  <label for="login">Login</label>
-  <input type="text" class="form-control" id="login" name="username" th:value="${command.username}" placeholder="Login">
-</div>
+  <div class="row">
+    <div class="col-25">
+      <label for="login">Login</label>
+    </div>
+    <div class="col-75">
+      <input type="text" class="form-control" id="login" name="username" th:value="${command.username}" placeholder="Login">
+    </div>
+  </div>
 
-<div class="form-group">
-  <label for="senha">Senha</label>
-  <input type="password" class="form-control" id="senha" name="password" placeholder="Senha">
-</div>
+  <div class="row">
+    <div class="col-25">
+      <label for="senha">Senha</label>
+    </div>
+    <div class="col-75">
+      <input type="password" class="form-control" id="senha" name="password" placeholder="Senha">
+    </div>
+  </div>
 
-<div class="form-group">
-  <label for="nome">Nome</label>
-  <input type="text" class="form-control" id="nome" name="firstName" th:value="${command.firstName}" placeholder="Nome">
-</div>
+  <div class="row">
+    <div class="col-25">
+      <label for="nome">Nome</label>
+    </div>
+    <div class="col-75">
+      <input type="text" class="form-control" id="nome" name="firstName" th:value="${command.firstName}" placeholder="Nome">
+    </div>
+  </div>
 
-<div class="form-group">
-  <label for="sobrenome">Sobrenome</label>
-  <input type="text" class="form-control" id="sobrenome" name="lastName" th:value="${command.lastName}" placeholder="Sobrenome">
-</div>
+  <div class="row">
+    <div class="col-25">
+      <label for="sobrenome">Sobrenome</label>
+    </div>
+    <div class="col-75">
+      <input type="text" class="form-control" id="sobrenome" name="lastName" th:value="${command.lastName}" placeholder="Sobrenome">
+    </div>
+  </div>
 
-<div class="form-group">
-  <label for="email">E-mail</label>
-  <input type="email" class="form-control" id="email" name="email" th:value="${command.email}" placeholder="E-mail">
-</div>
+  <div class="row">
+    <div class="col-25">
+      <label for="email">E-mail</label>
+    </div>
+    <div class="col-75">
+      <input type="email" class="form-control" id="email" name="email" th:value="${command.email}" placeholder="E-mail">
+    </div>
+  </div>
 
-<div class="form-group form-check">
-  <input type="checkbox" name="enabled" class="form-check-input" id="enabled" th:selected="${command.enabled}">
-  <label class="form-check-label" for="enabled">ativo</label>
-</div>
+  <div class="row">
+    <div class="col-25">
+      <label class="form-check-label" for="enabled">ativo</label>
+    </div>
+    <div class="col-75">
+      <input type="checkbox" name="enabled" class="form-check-input" id="enabled" th:selected="${command.enabled}">
+    </div>
+  </div>
 
-<div class="form-group form-check">
-  <input type="checkbox" name="locked" class="form-check-input" id="locked" th:selected="command.locked">
-  <label class="form-check-label" for="locked">bloqueado</label>
-</div>
+  <div class="row">
+    <div class="col-25">
+      <label class="form-check-label" for="locked">bloqueado</label>
+    </div>
+    <div class="col-75">
+      <input type="checkbox" name="locked" class="form-check-input" id="locked" th:selected="command.locked">
+    </div>
+  </div>
 
-<div class="form-group">
-  <label for="dataExpiracao">Data de expira&ccedil;&atilde;o</label>
-  <input type="date" class="form-control" id="dataExpiracao" name="dataExpiracao" th:value="${command.dataExpiracao}" placeholder="Data de expira&ccedil;&atilde;o">
-</div>
+  <div class="row">
+    <div class="col-25">
+      <label for="dataExpiracao">Data de expira&ccedil;&atilde;o</label>
+    </div>
+    <div class="col-75">
+      <input type="date" class="form-control" id="dataExpiracao" name="dataExpiracao" th:value="${command.dataExpiracao}" placeholder="Data de expira&ccedil;&atilde;o">
+    </div>
+  </div>
 
-<div class="form-group">
-  <label for="credenciais">Credenciais</label>
-  <select class="form-control" id="credenciais" name="credenciais[]" multiple="multiple" size="10">
-    <option th:each="credencial : ${credenciais}" th:value="${credencial.id}" th:selected="${#lists.contains(command.credenciais, credencial)}" th:text="${credencial.nome}"/>
-  </select>
-</div>
+  <div class="row">
+    <div class="col-25">
+      <label for="credenciais">Credenciais</label>
+    </div>
+    <div class="col-75">
+      <select class="form-control" id="credenciais" name="credenciais[]" multiple="multiple" size="10">
+        <option th:if="${command.credenciais}" th:each="credencial : ${credenciais}" th:value="${credencial.id}" th:selected="${#lists.contains(command.credenciais, credencial)}" th:text="${credencial.nome}"/>
+        <option th:unless="${command.credenciais}" th:each="credencial : ${credenciais}" th:value="${credencial.id}" th:text="${credencial.nome}"/>
+      </select>
+    </div>
+  </div>
 </th:block>

@@ -13,7 +13,7 @@
 
   <!-- Tab links -->
   <div class="tab_idioma">
-    <button th:each="idioma,stat : ${idiomas.listaDeIdiomas}" th:class="${stat.index == 0}? 'tabidioma active' : 'tabidioma'" th:id="${#strings.substringBefore(idioma,',') + '-tab'}" th:attr="data-id=${#strings.substringBefore(idioma,',')}" onclick="openIdiomaTab(this)" th:text="${#strings.substringBefore(idioma,',')}"></button>
+    <button th:each="idioma,stat : ${idiomas.listaDeIdiomas}" th:class="${stat.index == 0}? 'tabidioma active' : 'tabidioma'" th:id="${#strings.substringBefore(idioma,',') + '-tab'}" th:attr="data-id=${#strings.substringBefore(idioma,',')}" onclick="openIdiomaTab(this);" th:text="${#strings.substringBefore(idioma,',')}"></button>
   </div>
 
   <!-- Tab content -->
