@@ -18,6 +18,10 @@
         <div th:replace="admin/form/usuario :: copy"></div>
       </form>
 
+      <form th:if="${#strings.equals(classe.simpleName, 'Pedido')}" method="post" th:action="@{/pedido/__${action}__}">
+        <div th:replace="admin/form/pedido :: copy"></div>
+      </form>
+
       <div class="row">
         <div class="col">
           <button class="submit" th:if="${#strings.equals(action, 'insert')}" onclick="cancel_insert(this);">Cancelar</button>
