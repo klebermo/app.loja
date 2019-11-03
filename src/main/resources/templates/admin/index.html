@@ -46,6 +46,10 @@
   <th:block th:if="${#strings.equals(classe.simpleName, 'Usuario')}">
     <div th:replace="admin/list/usuario :: copy"></div>
   </th:block>
+
+  <th:block th:if="${#strings.equals(classe.simpleName, 'Pedido')}">
+    <div th:replace="admin/list/pedido :: copy"></div>
+  </th:block>
 </div>
 
 <div th:replace="admin/footer :: copy"></div>
