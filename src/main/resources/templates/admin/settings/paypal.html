@@ -1,5 +1,5 @@
 <th:block th:fragment="copy">
-  <form class="form" id="form" method="post" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/set}">
+  <form method="post" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/set}">
     <div class="form-group">
       <label for="clientId">client-id</label>
       <input type="text" name="clientId" th:value="${setting.clientId}" class="form-control" id="clientId" placeholder="ClientID">
@@ -11,23 +11,15 @@
     </div>
   </form>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-sm">
-      </div>
-      <div class="col-sm">
-      </div>
-      <div class="col-sm">
-        <button type="submit" class="btn btn-primary" id="paypal" onclick="submit_setting(this);">Salvar</button>
-      </div>
-    </div>
+  <button type="submit" onclick="submit_setting(this);">Salvar</button>
+
+  <div class="alert-ok" id="ok" style="display: none;">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <strong>Sucesso!</strong> Configura&ccedil;&otilde;es salvas com sucesso!
   </div>
 
-  <div class="alert alert-success" id="sucess" role="alert" style="display: none;">
-    Configura&ccedil;&otilde;es salvas com sucesso!
-  </div>
-
-  <div class="alert alert-danger" id="error" role="alert" style="display: none;">
-    Ocorreu um erro ao salvar as configura&ccedil;&otilde;es!
+  <div class="alert-error" id="error" style="display: none;">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <strong>Erro!</strong> Ocorreu um erro ao salvar as configura&ccedil;&otilde;es!
   </div>
 </th:block>

@@ -1,43 +1,51 @@
 <th:block th:fragment="copy">
-  <form class="form" id="form" method="post" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/set}">
-    <div class="form-group">
-      <label for="clientId">client-id</label>
-      <input type="text" name="clientId" th:value="${setting.clientId}" class="form-control" id="clientId" placeholder="ClientID">
+  <form method="post" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/set}">
+    <div class="row">
+      <div class="col-25">
+        <label for="clientId">client-id</label>
+      </div>
+      <div class="col-75">
+        <input type="text" name="clientId" th:value="${setting.clientId}" class="form-control" id="clientId" placeholder="ClientID">
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="clientSecret">client-secret</label>
-      <input type="text" name="clientSecret" th:value="${setting.clientSecret}" class="form-control" id="clientSecret" placeholder="clientSecret">
+    <div class="row">
+      <div class="col-25">
+        <label for="clientSecret">client-secret</label>
+      </div>
+      <div class="col-75">
+        <input type="text" name="clientSecret" th:value="${setting.clientSecret}" class="form-control" id="clientSecret" placeholder="clientSecret">
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="email">e-mail</label>
-      <input type="email" name="email" th:value="${setting.email}" class="form-control" id="email" placeholder="e-mail">
+    <div class="row">
+      <div class="col-25">
+        <label for="email">e-mail</label>
+      </div>
+      <div class="col-75">
+        <input type="email" name="email" th:value="${setting.email}" class="form-control" id="email" placeholder="e-mail">
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="token">token</label>
-      <input type="text" name="token" th:value="${setting.token}" class="form-control" id="token" placeholder="token">
+    <div class="row">
+      <div class="col-25">
+        <label for="token">token</label>
+      </div>
+      <div class="col-75">
+        <input type="text" name="token" th:value="${setting.token}" class="form-control" id="token" placeholder="token">
+      </div>
     </div>
   </form>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-sm">
-      </div>
-      <div class="col-sm">
-      </div>
-      <div class="col-sm">
-        <button type="submit" class="btn btn-primary" id="pagseguro" onclick="submit_setting(this);">Salvar</button>
-      </div>
-    </div>
+  <button type="submit" onclick="submit_setting(this);">Salvar</button>
+
+  <div class="alert-ok" id="ok" style="display: none;">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <strong>Sucesso!</strong> Configura&ccedil;&otilde;es salvas com sucesso!
   </div>
 
-  <div class="alert alert-success" id="sucess" role="alert" style="display: none;">
-    Configura&ccedil;&otilde;es salvas com sucesso!
-  </div>
-
-  <div class="alert alert-danger" id="error" role="alert" style="display: none;">
-    Ocorreu um erro ao salvar as configura&ccedil;&otilde;es!
+  <div class="alert-error" id="error" style="display: none;">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <strong>Erro!</strong> Ocorreu um erro ao salvar as configura&ccedil;&otilde;es!
   </div>
 </th:block>
