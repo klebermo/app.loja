@@ -21,33 +21,37 @@
       </th:block>
     </li>
 
-    <li class="right" sec:authorize="isAnonymous()">
-      <a th:href="@{/login}">Login</a>
-    </li>
+    <div class="right">
+      <li sec:authorize="isAnonymous()">
+        <a th:href="@{/login}">Login</a>
+      </li>
 
-    <li class="right" sec:authorize="isAnonymous()">
-      <a th:href="@{/usuario/register}">Cadastro</a>
-    </li>
+      <li sec:authorize="isAnonymous()">
+        <a th:href="@{/usuario/register}">Cadastro</a>
+      </li>
+    </div>
 
-    <li class="right" sec:authorize="isAuthenticated()">
-      <a id="cart" th:href="@{/cart}"><img src="@{/images/icon_shopping_cart.png}" width="16" height="16" alt="cesta de compras"/> <span id="cart_size" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/cart_size}" style="display: none;"></span></a>
-    </li>
+    <div class="right">
+      <li sec:authorize="isAuthenticated()">
+        <a id="cart" th:href="@{/cart}"><img th:src="@{/images/icon_shopping_cart.png}" width="24" height="24" alt="cesta de compras"/> <span id="cart_size" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/cart_size}" style="display: none;"></span></a>
+      </li>
 
-    <li class="right" sec:authorize="isAuthenticated()">
-      <a th:href="@{/orders}"><img src="@{/images/icon_order.png}" width="16" height="16" alt="pedidos"/></a>
-    </li>
+      <li sec:authorize="isAuthenticated()">
+        <a th:href="@{/orders}"><img th:src="@{/images/icon_order.png}" width="24" height="24" alt="pedidos"/></a>
+      </li>
 
-    <li class="right" sec:authorize="isAuthenticated()">
-      <a href="#" th:text="${usuario}"></a>
-    </li>
+      <li sec:authorize="isAuthenticated()">
+        <a href="#" th:text="${usuario}"></a>
+      </li>
 
-    <li class="right" sec:authorize="hasPermission(#user, 'admin')">
-      <a th:href="@{/admin}"><img src="@{/images/icon_admin.png}" width="16" height="16" alt="admin"/></a>
-    </li>
+      <li sec:authorize="hasPermission(#user, 'admin')">
+        <a th:href="@{/admin}"><img th:src="@{/images/icon_admin.png}" width="24" height="24" alt="admin"/></a>
+      </li>
 
-    <li class="right" sec:authorize="isAuthenticated()">
-      <a th:href="@{/logout}"><img src="@{/images/icon_logout.png}" width="16" height="16" alt="sair"/></a>
-    </li>
+      <li sec:authorize="isAuthenticated()">
+        <a th:href="@{/logout}"><img th:src="@{/images/icon_logout.png}" width="24" height="24" alt="sair"/></a>
+      </li>
+    </div>
   </ul>
 </nav>
 </th:block>
