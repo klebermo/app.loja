@@ -1,0 +1,53 @@
+<th:block th:fragment="copy">
+  <input type="hidden" name="id" th:value="${command.id}"/>
+
+  <div class="row">
+    <div class="col-25">
+      <label for="senha">transactionId</label>
+    </div>
+    <div class="col-75">
+      <input type="text" class="form-control" id="transactionId" name="transactionId" th:value="${command.transactionId}" placeholder="transactionId">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-25">
+      <label for="login">M&eacute;todo de Pagamento</label>
+    </div>
+    <div class="col-75">
+      <input type="text" class="form-control" id="metodoPagamento" name="metodoPagamento" th:value="${command.metodoPagamento}" placeholder="M&eacute;todo de Pagamento">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-25">
+      <label for="dataExpiracao">Data da compra</label>
+    </div>
+    <div class="col-75">
+      <input type="date" class="form-control" id="dataCompra" name="dataCompra" th:value="${command.dataCompra}" placeholder="Data da compra">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-75">
+      <table>
+        <tr>
+          <td>
+            <select multiple="multiple" size="15" class="form-control" id="selectRight">
+              <option th:each="option : ${produtos}" th:unless="${#lists.contains(command.produtos, option)}" th:text="${option}"><option>
+            </select>
+          </td>
+          <td>
+            <p> <button type="button" class="btn btn-dark" id="right"> &gt;&gt; </button> </p>
+            <p> <button type="button" class="btn btn-dark" id="left"> &lt;&lt; </button> </p>
+          </td>
+          <td>
+            <select multiple="multiple" size="15" class="form-control" id="selectLeft" name="listaDeIdiomas">
+              <option th:each="option : ${produtos}" th:if="${#lists.contains(command.produtos, option)}" th:text="${option}"><option>
+            </select>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</th:block>
