@@ -75,5 +75,13 @@
         </a>
       </li>
     </ul>
+
+    <ul>
+      <li sec:authorize="hasPermission(#user, 'consulta_pedido')">
+        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Pedido')}? 'active' : ''" th:href="@{/pedido/}">
+          pedidos
+        </a>
+      </li>
+    </ul>
   </div>
 </th:block>
