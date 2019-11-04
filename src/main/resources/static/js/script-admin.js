@@ -477,3 +477,37 @@ function detect_editor() {
     //
   }
 }
+
+function move_left() {
+  var fromEl = document.getElementById( "selectRight" ),
+      toEl = document.getElementById( "selectLeft" );
+
+  if ( fromEl.selectedIndex >= 0 ) {
+      var index = toEl.options.length;
+
+      for ( var i = 0; i < fromEl.options.length; i++ ) {
+          if ( fromEl.options[ i ].selected ) {
+              toEl.options[ index ] = fromEl.options[ i ];
+              i--;
+              index++
+          }
+      }
+  }
+}
+
+function move_right() {
+  var fromEl = document.getElementById( "selectLeft" ),
+      toEl = document.getElementById( "selectRight" );
+
+  if ( fromEl.selectedIndex >= 0 ) {
+      var index = toEl.options.length;
+
+      for ( var i = 0; i < fromEl.options.length; i++ ) {
+          if ( fromEl.options[ i ].selected ) {
+              toEl.options[ index ] = fromEl.options[ i ];
+              i--;
+              index++
+          }
+      }
+  }
+}
