@@ -3,16 +3,16 @@
     <table>
       <tr>
         <td>
-          <select multiple="multiple" size="15" class="form-control" id="selectRight">
+          <select multiple="multiple" size="15" id="selectLeft">
             <option th:each="option : ${lista_de_idiomas}" th:unless="${#lists.contains(idiomas.listaDeIdiomas, option)}" th:text="${option}"><option>
           </select>
         </td>
         <td>
-          <p> <button type="button" class="btn btn-dark" id="right"> &gt;&gt; </button> </p>
-          <p> <button type="button" class="btn btn-dark" id="left"> &lt;&lt; </button> </p>
+          <p> <button type="button" class="button" id="right" onclick="move_right();"> &gt;&gt; </button> </p>
+          <p> <button type="button" class="button" id="left" onclick="move_left();"> &lt;&lt; </button> </p>
         </td>
         <td>
-          <select multiple="multiple" size="15" class="form-control" id="selectLeft" name="listaDeIdiomas">
+          <select multiple="multiple" size="15" id="selectRight" name="listaDeIdiomas">
             <option th:each="option : ${lista_de_idiomas}" th:if="${#lists.contains(idiomas.listaDeIdiomas, option)}" th:text="${option}"><option>
           </select>
         </td>
