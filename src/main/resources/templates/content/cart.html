@@ -11,6 +11,7 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Produto</th>
+        <th scope="col">Resumo</th>
         <th scope="col">Pre&ccedil;o</th>
         <th scope="col"></th>
       </tr>
@@ -32,17 +33,20 @@
               <div class="media-body">
                 <h5 class="mt-0">
                   <span th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></span>
-                  <small th:each="t : ${produto.resumo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></small>
                 </h5>
               </div>
             </div>
           </td>
 
+          <td>
+            <span th:each="t : ${produto.resumo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></span>
+          </td>
+
           <td th:text="${#numbers.formatCurrency(produto.preco)}"></td>
 
           <td>
-            <button class="btn btn-secondary" onclick="remove_from_cart(this)" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}, data-url=@{/usuario/remove_from_cart}" type="button">
-              <i class="fas fa-trash"></i>
+            <button class="button" onclick="remove_from_cart(this)" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}, data-url=@{/usuario/remove_from_cart}" type="button">
+              <img th:src="@{/images/icon_delete.png}" width="32" height="32" alt="remover item">
             </button>
           </td>
         </tr>
@@ -53,7 +57,7 @@
       <tr>
         <td></td>
         <td></td>
-        <td><h3>Total:<span class="badge badge-secondary" id="cart_total" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/cart_total}"></span></h3></td>
+        <td><h3>Total:<span class="badge" id="cart_total" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/cart_total}"></span></h3></td>
         <td></td>
       </tr>
 
@@ -63,7 +67,7 @@
         <td>
           <form th:action="@{/paypal/checkout}" method="POST">
             <input type="hidden" name="usuario_id" th:value="${usuario.id}"/>
-            <button type="submit" class="btn btn-secondary">Finalizar compra com PayPal</button>
+            <button type="submit" class="button">Finalizar compra com PayPal</button>
           </form>
         </td>
         <td></td>
@@ -87,7 +91,7 @@
         <td>
           <form th:action="@{/pagseguro/checkout}" method="POST">
             <input type="hidden" name="usuario_id" th:value="${usuario.id}"/>
-            <button type="submit" class="btn btn-secondary">Finalizar compra com PagSeguro</button>
+            <button type="submit" class="button">Finalizar compra com PagSeguro</button>
           </form>
         </td>
         <td></td>
