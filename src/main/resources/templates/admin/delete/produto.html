@@ -1,7 +1,6 @@
 <th:block th:fragment="copy">
   <div class="row">
     <div class="col-25">
-      <input type="hidden" name="id" th:value="${command.id}" id="id"/>
       <p>
         Confirma remoção do produto:
         <strong th:each="value : ${command.nome}" th:if="${#strings.equals(value.idioma, idioma)}" th:text="${value.conteudo}"/>
