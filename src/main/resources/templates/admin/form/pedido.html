@@ -1,12 +1,10 @@
 <th:block th:fragment="copy">
-  <input type="hidden" name="id" th:value="${command.id}"/>
-
   <div class="row">
     <div class="col-25">
       <label for="senha">transactionId</label>
     </div>
     <div class="col-75">
-      <input type="text" class="form-control" id="transactionId" name="transactionId" th:value="${command.transactionId}" placeholder="transactionId">
+      <input type="text" id="transactionId" name="transactionId" th:value="${command.transactionId}" placeholder="transactionId">
     </div>
   </div>
 
@@ -15,7 +13,7 @@
       <label for="login">M&eacute;todo de Pagamento</label>
     </div>
     <div class="col-75">
-      <input type="text" class="form-control" id="metodoPagamento" name="metodoPagamento" th:value="${command.metodoPagamento}" placeholder="M&eacute;todo de Pagamento">
+      <input type="text" id="metodoPagamento" name="metodoPagamento" th:value="${command.metodoPagamento}" placeholder="M&eacute;todo de Pagamento">
     </div>
   </div>
 
@@ -24,7 +22,7 @@
       <label for="dataExpiracao">Data da compra</label>
     </div>
     <div class="col-75">
-      <input type="date" class="form-control" id="dataCompra" name="dataCompra" th:value="${command.dataCompra}" placeholder="Data da compra">
+      <input type="date" id="dataCompra" name="dataCompra" th:value="${command.dataCompra}">
     </div>
   </div>
 
@@ -33,17 +31,30 @@
       <table>
         <tr>
           <td>
-            <select multiple="multiple" size="15" class="form-control" id="selectRight">
-              <option th:each="option : ${produtos}" th:unless="${#lists.contains(command.produtos, option)}" th:text="${option}"><option>
+            <select multiple="multiple" size="15" id="selectLeft">
+              <th:block th:if="${command.produtos}">
+                <option th:if="${command.produtos}" th:each="option : ${produtos}" th:unless="${#lists.contains(command.produtos, option)}">
+                  <span th:each="t : ${option.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}"></span>
+                <option>
+              </th:block>
+              <th:block th:unless="${command.produtos}">
+                <option th:each="option : ${produtos}" th:text="${option.nome}">
+                  <span th:each="t : ${option.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}"></span>
+                <option>
+              </th:block>
             </select>
           </td>
           <td>
-            <p> <button type="button" class="btn btn-dark" id="right"> &gt;&gt; </button> </p>
-            <p> <button type="button" class="btn btn-dark" id="left"> &lt;&lt; </button> </p>
+            <p> <button type="button" class="button" id="right" onclick="move_right();"> &gt;&gt; </button> </p>
+            <p> <button type="button" class="button" id="left" onclick="move_left();"> &lt;&lt; </button> </p>
           </td>
           <td>
-            <select multiple="multiple" size="15" class="form-control" id="selectLeft" name="listaDeIdiomas">
-              <option th:each="option : ${produtos}" th:if="${#lists.contains(command.produtos, option)}" th:text="${option}"><option>
+            <select multiple="multiple" size="15" id="selectRight" name="produtos">
+              <th:block th:if="${command.produtos}">
+                <option th:each="option : ${produtos}" th:if="${#lists.contains(command.produtos, option)}" th:text="${option.nome}">
+                  <span th:each="t : ${option.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}"></span>
+                <option>
+              </th:block>
             </select>
           </td>
         </tr>

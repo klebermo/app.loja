@@ -1,6 +1,4 @@
 <th:block th:fragment="copy">
-  <input type="hidden" name="id" th:value="${command.id}"/>
-
   <div class="row">
     <div class="col-25">
       <label for="parent">Pagina m&atilde;e</label>
@@ -8,14 +6,16 @@
     <div class="col-75">
       <select class="form-control" id="parent" name="parent">
         <option value=""></option>
-        <option th:each="pagina : ${paginas}" th:value="${pagina.id}" th:selected="${#strings.equals(pagina, command.parent)}" th:text="${pagina.titulo}"/>
+        <option th:each="pagina : ${paginas}" th:value="${pagina.id}" th:selected="${#strings.equals(pagina, command.parent)}" th:text="${pagina.titulo}">
+          <span th:each="t : ${pagina.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}"></span>
+        </option>
       </select>
     </div>
   </div>
 
   <!-- Tab links -->
   <div class="tab_idioma">
-    <button th:each="idioma,stat : ${idiomas.listaDeIdiomas}" th:class="${stat.index == 0}? 'tabidioma active' : 'tabidioma'" th:id="${#strings.substringBefore(idioma,',') + '-tab'}" th:attr="data-id=${#strings.substringBefore(idioma,',')}" onclick="openIdiomaTab(this)" th:text="${#strings.substringBefore(idioma,',')}"></button>
+    <button type="button" th:each="idioma,stat : ${idiomas.listaDeIdiomas}" th:class="${stat.index == 0}? 'tabidioma active' : 'tabidioma'" th:id="${#strings.substringBefore(idioma,',') + '-tab'}" th:attr="data-id=${#strings.substringBefore(idioma,',')}" onclick="openIdiomaTab(this)" th:text="${#strings.substringBefore(idioma,',')}"></button>
   </div>
 
   <!-- Tab content -->
