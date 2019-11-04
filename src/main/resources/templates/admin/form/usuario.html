@@ -82,4 +82,37 @@
       </select>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-25">
+      <label for="credenciais">Pedidos</label>
+    </div>
+    <div class="col-75">
+      <table>
+        <tr>
+          <td>
+            <select multiple="multiple" size="15" id="selectLeft">
+              <th:block th:if="${command.pedidos}">
+                <option th:each="option : ${pedidos}" th:unless="${#lists.contains(command.pedidos, option)}" th:value="${option.id}" th:text="${option}"><option>
+              </th:block>
+              <th:block th:unless="${command.pedidos}">
+                <option th:each="option : ${pedidos}" th:value="${option.id}" th:text="${option}"><option>
+              </th:block>
+            </select>
+          </td>
+          <td>
+            <p> <button type="button" class="button" id="right" onclick="move_right();"> &gt;&gt; </button> </p>
+            <p> <button type="button" class="button" id="left" onclick="move_left();"> &lt;&lt; </button> </p>
+          </td>
+          <td>
+            <select multiple="multiple" size="15" id="selectRight" name="pedidos">
+              <th:block th:if="${command.pedidos}">
+                <option th:each="option : ${pedidos}" th:if="${#lists.contains(command.pedidos, option)}" th:value="${option.id}" th:text="${option}"><option>
+              </th:block>
+            </select>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </th:block>

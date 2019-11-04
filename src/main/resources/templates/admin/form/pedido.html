@@ -33,12 +33,12 @@
           <td>
             <select multiple="multiple" size="15" id="selectLeft">
               <th:block th:if="${command.produtos}">
-                <option th:if="${command.produtos}" th:each="option : ${produtos}" th:unless="${#lists.contains(command.produtos, option)}">
+                <option th:each="option : ${produtos}" th:unless="${#lists.contains(command.produtos, option)}" th:value="${option.id}">
                   <span th:each="t : ${option.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}"></span>
                 <option>
               </th:block>
               <th:block th:unless="${command.produtos}">
-                <option th:each="option : ${produtos}" th:text="${option.nome}">
+                <option th:each="option : ${produtos}" th:value="${option.id}">
                   <span th:each="t : ${option.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}"></span>
                 <option>
               </th:block>
@@ -51,7 +51,7 @@
           <td>
             <select multiple="multiple" size="15" id="selectRight" name="produtos">
               <th:block th:if="${command.produtos}">
-                <option th:each="option : ${produtos}" th:if="${#lists.contains(command.produtos, option)}" th:text="${option.nome}">
+                <option th:each="option : ${command.produtos}" th:value="${option.id}">
                   <span th:each="t : ${option.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}"></span>
                 <option>
               </th:block>
