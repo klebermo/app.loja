@@ -14,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import org.loja.model.categoria.Categoria;
 import org.loja.model.produto.Produto;
 import org.loja.model.pagina.Pagina;
+import org.loja.model.pedido.Pedido;
 //import org.loja.model.usuario.Usuario;
 import org.loja.model.credencial.Credencial;
 import org.loja.model.autorizacao.Autorizacao;
@@ -26,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.loja.model.categoria.CategoriaService;
 import org.loja.model.produto.ProdutoService;
 import org.loja.model.pagina.PaginaService;
+import org.loja.model.pedido.PedidoService;
 //import org.loja.model.usuario.UsuarioService;
 import org.loja.model.credencial.CredencialService;
 import org.loja.model.autorizacao.AutorizacaoService;
@@ -47,6 +49,9 @@ public class Model {
 
   @Autowired
   private PaginaService pagina;
+
+  @Autowired
+  private PedidoService pedido;
 
   /*@Autowired
   private UsuarioService usuario;*/
@@ -85,6 +90,11 @@ public class Model {
   @ModelAttribute("paginas")
   public List<Pagina> paginas() {
     return pagina.select();
+  }
+
+  @ModelAttribute("pedidos")
+  public List<Pedido> pedidos() {
+    return pedido.select();
   }
 
   /*@ModelAttribute("usuario")
