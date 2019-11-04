@@ -75,6 +75,6 @@ public class Pedido extends Model {
   }
 
   public String toString() {
-    return produtos.toString();
+    return transactionId + " em " + dataCompra + " [" + produtos.toString() + "] via " + metodoPagamento;
   }
 }
