@@ -13,8 +13,9 @@ public class DateEditor extends PropertyEditorSupport {
   public void setAsText(String text) {
     if (!text.equals("")) {
       try {
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        setValue(df.parse(text));
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date data = df.parse(text);
+        setValue(data);
       } catch (ParseException e) {
         setValue(null);
       }
