@@ -213,7 +213,7 @@ ul.breadcrumb li a:hover {
 		top: -1px;
 }
 
-input[type=text], input[type=file], input[type=password], input[type=email], select, textarea {
+input[type=text], input[type=file], input[type=password], input[type=email], input[type=date], select, textarea {
   width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
