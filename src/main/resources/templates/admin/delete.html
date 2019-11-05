@@ -2,7 +2,7 @@
 <html lang="pt-br">
   <body>
     <div class="container" id="form-container">
-      <form id="form" th:if="${#strings.equals(classe.simpleName, 'Categoria')}" class="form" id="form" method="delete" th:action="@{/categoria/delete}">
+      <form class="form" id="form" th:if="${#strings.equals(classe.simpleName, 'Categoria')}" method="delete" th:action="@{/categoria/delete}">
         <input type="hidden" id="id" name="id" th:value="${command.id}"/>
         <div th:replace="admin/delete/categoria :: copy"></div>
       </form>
