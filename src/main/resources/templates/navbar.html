@@ -33,7 +33,7 @@
 
     <div class="right">
       <li sec:authorize="isAuthenticated()">
-        <a id="cart" th:href="@{/cart}">
+        <a id="cart" th:href="@{/cart}" th:if=" ${usuario}">
           <img th:src="@{/images/icon_shopping_cart.png}" width="24" height="24" alt="cesta de compras"/>
           <span class="badge" id="cart_size" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/cart_size}" style="display: none;"></span>
         </a>
