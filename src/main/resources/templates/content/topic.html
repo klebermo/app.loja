@@ -1,50 +1,73 @@
 <th:block th:fragment="copy">
-  <th:block th:if="${#strings.equals(topic, 'new')}">
-    <div class="media">
-      <img th:src="@{/images/icon_topic.png}" class="mr-3" width=64 height=64 th:alt="forum">
-      <div class="media-body">
-        <h5 class="mt-0">Novo T&oacute;pico</h5>
-      </div>
-    </div>
+  <table th:if="${#string.equals(topic, 'new')}">
+    <thead>
+      <tr>
+        <th>Novo t&oacute;pico</th>
+      </tr>
+    </thead>
 
-    <hr/>
+    <tbody>
+      <tr>
+        <td>
+          <form class="form-container" id="form" method="post" th:action="/topic/save">
+            <div class="row">
+              <div class="col-25"></div>
+              <div class="col-75"> <input type="text" name="titulo" placeholder="Titulo"/> </div>
+            </div>
 
-    <form class="form" id="form" method="post" th:action="@{/topic/save}">
-      <div class="form-group">
-        <input type="text" name="titulo" placeholder="Titulo" class="form-control" id="titulo"/>
-      </div>
+            <div class="row">
+              <div class="col-25"></div>
+              <div class="col-75"> <textarea name="descricao" rows="25"/> </div>
+            </div>
 
-      <div class="form-group">
-        <textarea name="descricao" class="summernote" id="descricao"></textarea>
-      </div>
+            <input type="hidden" name="dataPublicacao" th:value="${#dates.createNow()}"/>
 
-      <button type="submit" class="btn btn-primary">Enviar</button>
-    </form>
-  </th:block>
+            <input type="hidden" name="autor" th:value="${usuario.id}"/>
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-  <th:block th:unless="${#strings.equals(topic, 'new')}">
-    <div class="media">
-      <img th:src="@{/images/icon_topic.png}" class="mr-3" th:alt="forum">
-      <div class="media-body">
-        <h5 class="mt-0">T&oacute;pico <small th:text="${topic}"></small> </h5>
-      </div>
-    </div>
+  <th:block th:unless="${#string.equals(topic, 'new')}">
+    <table>
+      <thead>
+        <tr>
+          <th th:text="${topic.titulo}"></th>
+        </tr>
+      </thead>
 
-    <hr/>
+      <tbody>
+        <tr>
+          <td th:text="${topic.descricao}"></td>
+        </tr>
+      </tbody>
 
-    <div class="jumbotron">
-      <p class="lead" th:text="${topic.descricao}"></p>
-      <hr class="my-4">
-      <p th:text="${#dates.format(topic.dataPublicacao)}"></p>
-    </div>
+      <tfoot>
+        <tr>
+          <td th:text="${topic.autor}"></td>
+        </tr>
+      </tfoot>
+    </table>
 
-    <hr/>
+    <table th:if="topic.resposta">
+      <thead>
+        <tr>
+          <th th:text="${topic.resposta.titulo}"></th>
+        </tr>
+      </thead>
 
-    <div class="jumbotron" th:if="${topic.resposta}">
-      <h1 class="display-4">Resposta <small th:text="${topic.resposta.titulo}"></small> </h1>
-      <p class="lead" th:text="${topic.resposta.descricao}"></p>
-      <hr class="my-4">
-      <p th:text="${#dates.format(topic.dataPublicacao)}"></p>
-    </div>
+      <tbody>
+        <tr>
+          <td th:text="${topic.resposta.descricao}"></td>
+        </tr>
+      </tbody>
+
+      <tfoot>
+        <tr>
+          <td th:text="${topic.resposta.autor}"></td>
+        </tr>
+      </tfoot>
+    </table>
   </th:block>
 </th:block>
