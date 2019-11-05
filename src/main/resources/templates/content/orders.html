@@ -32,15 +32,15 @@
         </td>
 
         <td>
-          <span th:text="${#dates.format(order.dataCompra)}"></span>
+          <span th:text="${#dates.format(order.dataCompra, 'dd/MMM/yyyy')}"></span>
         </td>
 
         <td>
-          <span th:text="${#dates.format(order.metodoPagamento)}"></span>
+          <span th:text="${order.metodoPagamento}"></span>
         </td>
 
         <td>
-          <a th:href="@{/order/__${order.id}__}" class="btn btn-primary">Detalhes</a>
+          <a th:href="@{/order/__${order.id}__}" class="button">Detalhes</a>
         </td>
       </tr>
     </tbody>
