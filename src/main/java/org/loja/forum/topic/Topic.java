@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.persistence.OneToOne;
 import javax.persistence.FetchType;
 import org.loja.model.usuario.Usuario;
+import org.loja.forum.forum.Forum;
 
 @Entity
 public class Topic extends org.loja.model.Model {
