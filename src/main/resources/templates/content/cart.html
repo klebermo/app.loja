@@ -57,11 +57,13 @@
       <tr>
         <td></td>
         <td></td>
+        <td></td>
         <td><h3>Total:<span class="badge" id="cart_total" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/cart_total}"></span></h3></td>
         <td></td>
       </tr>
 
       <tr>
+        <td></td>
         <td></td>
         <td></td>
         <td>
@@ -76,6 +78,7 @@
       <tr>
         <td></td>
         <td></td>
+        <td></td>
         <td>
           <form th:action="@{/mercadopago/checkout}" method="POST">
             <input type="hidden" name="usuario_id" th:value="${usuario.id}"/>
@@ -86,6 +89,7 @@
       </tr>
 
       <tr>
+        <td></td>
         <td></td>
         <td></td>
         <td>

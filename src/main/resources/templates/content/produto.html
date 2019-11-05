@@ -26,7 +26,7 @@
 
     <div class="col">
       <div class="dropdown">
-        <span>Baixar <br/> <small>Vers&atilde;o Lite</small> </span>
+        <button class="button">Baixar <br/> <small>Vers&atilde;o Lite</small> </button>
         <div class="dropdown-content">
           <a th:each="arquivo : ${produto.versaoGratuita}" th:href="@{/arquivo/download/__${arquivo.id}__}" th:text="${arquivo.type}"></a>
         </div>
@@ -35,7 +35,7 @@
 
     <div class="col">
       <a sec:authorize="isAuthenticated()" class="button" th:href="@{/forum/view/__${produto.forum.id}__}">
-        F&oacute;rum
+        F&oacute;rum <br/> <small>Suporte</small>
       </a>
     </div>
   </div>
