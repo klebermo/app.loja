@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
 
@@ -18,9 +19,10 @@ public class TopicController extends org.loja.forum.Controller<Topic> {
     super(Topic.class);
   }
 
-  @RequestMapping("/new")
-  public String new_topic(Model model) {
-    model.addAttribute("topic", "new");
+  @RequestMapping(value = "/new", method=RequestMethod.GET)
+  public String new_topic(Model model, @RequestParam(value="forum") Integer forum_id) {
+    model.addAttribute("new_topic", "new");
+    model.addAttribute("forum_id", forum_id);
     return "index";
   }
 

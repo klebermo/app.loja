@@ -8,8 +8,8 @@ public class TopicService extends org.loja.forum.Service<Topic> {
     super(Topic.class);
   }
 
-  public Integer save(Topic object) {
+  public Topic save(Topic object) {
     this.dao.insert(object);
-    return object.getId();
+    return object;
   }
 }

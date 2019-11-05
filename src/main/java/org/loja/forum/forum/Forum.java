@@ -12,6 +12,7 @@ import org.hibernate.annotations.FetchMode;
 import java.util.List;
 import org.loja.forum.topic.Topic;
 import org.loja.model.produto.Produto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Forum extends org.loja.model.Model {
@@ -19,8 +20,9 @@ public class Forum extends org.loja.model.Model {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
 
-  @OneToMany(fetch = FetchType.EAGER)
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "forum")
   @Fetch(FetchMode.SELECT)
+  @JsonIgnore
   private List<Topic> topicos;
 
   public Integer getId() {

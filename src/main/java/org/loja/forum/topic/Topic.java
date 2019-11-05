@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import java.util.Date;
 import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 import javax.persistence.FetchType;
 import org.loja.model.usuario.Usuario;
 import org.loja.forum.forum.Forum;
@@ -31,6 +33,10 @@ public class Topic extends org.loja.model.Model {
 
   @OneToOne(fetch = FetchType.EAGER)
   private Topic resposta;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "fk_forum")
+  private Forum forum;
 
   @Override
   public Integer getId() {
@@ -79,6 +85,14 @@ public class Topic extends org.loja.model.Model {
 
   public void setResposta(Topic resposta) {
     this.resposta = resposta;
+  }
+
+  public Forum getForum() {
+    return forum;
+  }
+
+  public void setForum(Forum forum) {
+    this.forum = forum;
   }
 
   @Override
