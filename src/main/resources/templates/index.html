@@ -25,6 +25,10 @@
     <div th:replace="content/topic :: copy"></div>
   </div>
 
+  <div th:if="${new_topic}">
+    <div th:replace="content/topic_new :: copy"></div>
+  </div>
+
   <div th:if="${pagina}">
     <div th:replace="content/pagina :: copy"></div>
   </div>
