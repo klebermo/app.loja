@@ -266,9 +266,9 @@ function submit_setting(element) {
     if (xhr.readyState == 4 && xhr.status == 200) {
       var result = this.responseText;
       if(result === '')
-        document.getElementById('ok').style.display = block;
+        document.getElementById('ok').style.display = 'block';
       else
-        document.getElementById('error').style.display = block;
+        document.getElementById('error').style.display = 'block';
     }
   };
   xhr.send(new FormData(form));
