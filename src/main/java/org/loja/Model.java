@@ -15,7 +15,7 @@ import org.loja.model.categoria.Categoria;
 import org.loja.model.produto.Produto;
 import org.loja.model.pagina.Pagina;
 import org.loja.model.pedido.Pedido;
-//import org.loja.model.usuario.Usuario;
+import org.loja.model.usuario.Usuario;
 import org.loja.model.credencial.Credencial;
 import org.loja.model.autorizacao.Autorizacao;
 import org.loja.settings.geral.Geral;
@@ -28,7 +28,7 @@ import org.loja.model.categoria.CategoriaService;
 import org.loja.model.produto.ProdutoService;
 import org.loja.model.pagina.PaginaService;
 import org.loja.model.pedido.PedidoService;
-//import org.loja.model.usuario.UsuarioService;
+import org.loja.model.usuario.UsuarioService;
 import org.loja.model.credencial.CredencialService;
 import org.loja.model.autorizacao.AutorizacaoService;
 import org.loja.settings.geral.GeralService;
@@ -53,8 +53,8 @@ public class Model {
   @Autowired
   private PedidoService pedido;
 
-  /*@Autowired
-  private UsuarioService usuario;*/
+  @Autowired
+  private UsuarioService usuario;
 
   @Autowired
   private CredencialService credencial;
@@ -101,6 +101,11 @@ public class Model {
   public Usuario usuario() {
     return usuario.findBy("username", SecurityContextHolder.getContext().getAuthentication().getName());
   }*/
+
+  @ModelAttribute("usuarios")
+  public List<Usuario> usuarios() {
+    return usuario.select();
+  }
 
   @ModelAttribute("credenciais")
   public List<Credencial> credenciais() {
