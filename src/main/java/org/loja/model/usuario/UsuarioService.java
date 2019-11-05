@@ -39,10 +39,8 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
   }
 
   public Boolean register(Usuario novo) {
-    BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder(4);
-    String senha = bcrypt.encode(novo.getPassword());
-    novo.setPassword(senha);
     novo.setEnabled(true);
+    novo.setLocked(false);
     this.dao.insert(novo);
     return true;
   }

@@ -61,7 +61,7 @@ public class Usuario extends Model implements UserDetails {
   @JsonIgnore
   private org.loja.model.cesta.Cesta cesta;
 
-  @OneToMany(fetch = FetchType.EAGER)
+  @OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario")
   @Fetch(FetchMode.SELECT)
   @JsonIgnore
   private List<org.loja.model.pedido.Pedido> pedidos;
