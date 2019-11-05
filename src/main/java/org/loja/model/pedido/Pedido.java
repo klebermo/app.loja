@@ -3,11 +3,14 @@ package org.loja.model.pedido;
 import org.loja.model.Model;
 import java.util.List;
 import org.loja.model.produto.Produto;
+import org.loja.model.usuario.Usuario;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import org.hibernate.annotations.Fetch;
@@ -32,6 +35,11 @@ public class Pedido extends Model {
 
   @Column
   private String transactionId;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @Fetch(FetchMode.SELECT)
+  @JoinColumn(name = "fk_usuario")
+  private Usuario usuario;
 
   @Override
   public Integer getId() {
@@ -72,6 +80,14 @@ public class Pedido extends Model {
 
   public void setTransactionId(String transactionId) {
     this.transactionId = transactionId;
+  }
+
+  public Usuario getUsuario() {
+    return usuario;
+  }
+
+  public void setUsuario(Usuario usuario) {
+    this.usuario = usuario;
   }
 
   public String toString() {
