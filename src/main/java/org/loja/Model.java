@@ -37,7 +37,7 @@ import org.loja.settings.paypal.PaypalService;
 import org.loja.settings.mercadopago.MercadoPagoService;
 import org.loja.settings.pagseguro.PagSeguroService;
 import com.mercadopago.resources.Preference;
-//import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @ControllerAdvice
 public class Model {
@@ -97,10 +97,10 @@ public class Model {
     return pedido.select();
   }
 
-  /*@ModelAttribute("usuario")
+  @ModelAttribute("usuario")
   public Usuario usuario() {
     return usuario.findBy("username", SecurityContextHolder.getContext().getAuthentication().getName());
-  }*/
+  }
 
   @ModelAttribute("usuarios")
   public List<Usuario> usuarios() {
