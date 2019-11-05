@@ -5,22 +5,19 @@
 <div th:replace="sidebar :: copy"></div>
 
 <main class="main">
-  <div class="row">
-    <h5 class="row_title">Recover Password</h5>
-  </div>
+  <form class="form-container" id= form method="post" th:action="@{/usuario/recoverPassword}">
+    <div class="form-row">
+      <div class="col-75">
+        <input type="email" name="email" placeholder="E-mail"/>
+      </div>
+    </div>
 
-  <div class="col"></div>
-
-  <div class="col">
-    <form method="post" th:action="@{/usuario/recoverPassword}">
-      <p> <input class="form-control" type="text" name="email" placeholder="E-mail"/> </p>
-      <p> <button type="submit" class="btn btn-primary">Recover</button> </p>
-    </form>
-  </div>
-
-  <div class="col"></div>
-
-  <div class="col"></div>
+    <div class="form-row">
+      <div class="col-75">
+        <button type="submit" class="button">Recover</button>
+      </div>
+    </div>
+  </form>
 </main>
 
 <div th:replace="footer :: copy"></div>
