@@ -5,11 +5,13 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.FetchType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import java.util.List;
 import org.loja.forum.topic.Topic;
+import org.loja.model.produto.Produto;
 
 @Entity
 public class Forum extends org.loja.model.Model {
