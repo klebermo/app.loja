@@ -1,56 +1,26 @@
 <th:block th:fragment="copy">
-  <table th:if="${#string.equals(topic, 'new')}">
-    <thead>
-      <tr>
-        <th>Novo t&oacute;pico</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr>
-        <td>
-          <form class="form-container" id="form" method="post" th:action="/topic/save">
-            <div class="row">
-              <div class="col-25"></div>
-              <div class="col-75"> <input type="text" name="titulo" placeholder="Titulo"/> </div>
-            </div>
-
-            <div class="row">
-              <div class="col-25"></div>
-              <div class="col-75"> <textarea name="descricao" rows="25"/> </div>
-            </div>
-
-            <input type="hidden" name="dataPublicacao" th:value="${#dates.createNow()}"/>
-
-            <input type="hidden" name="autor" th:value="${usuario.id}"/>
-          </form>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <th:block th:unless="${#string.equals(topic, 'new')}">
-    <table>
+  <th:block>
+    <table class="table">
       <thead>
         <tr>
-          <th th:text="${topic.titulo}"></th>
+          <th th:utext="${topic.titulo}"></th>
         </tr>
       </thead>
 
       <tbody>
         <tr>
-          <td th:text="${topic.descricao}"></td>
+          <td th:utext="${topic.descricao}"></td>
         </tr>
       </tbody>
 
       <tfoot>
         <tr>
-          <td th:text="${topic.autor}"></td>
+          <td th:utext="${topic.autor}"></td>
         </tr>
       </tfoot>
     </table>
 
-    <table th:if="topic.resposta">
+    <table class="table" th:if="${topic.resposta}">
       <thead>
         <tr>
           <th th:text="${topic.resposta.titulo}"></th>

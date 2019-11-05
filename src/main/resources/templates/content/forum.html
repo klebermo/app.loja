@@ -3,9 +3,9 @@
     <h3 class="row_title">
       <span>F&oacute;rum</span>
       <th:block th:each="produto : ${produtos}">
-        <th:block th:if="${#string.equals(produto.forum.id, forum.id)}">
+        <th:block th:if="${produto.forum.id == forum.id}">
           <small th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${t.conteudo}"></small>
-        <th:block>
+        </th:block>
       </th:block>
     </h3>
 
@@ -16,7 +16,7 @@
     <div class="col"></div>
 
     <div class="col">
-      <a th:href="@{/topic/new}" class="button">Novo t&oacute;pico</a>
+      <a th:href="@{/topic/new?forum=__${forum.id}__}" class="button">Novo t&oacute;pico</a>
     </div>
   </div>
 
