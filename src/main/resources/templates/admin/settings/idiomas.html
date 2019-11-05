@@ -4,7 +4,8 @@
       <tr>
         <td>
           <select multiple="multiple" size="15" id="selectLeft">
-            <option th:each="option : ${lista_de_idiomas}" th:unless="${#lists.contains(idiomas.listaDeIdiomas, option)}" th:text="${option}"><option>
+            <option th:if="${idiomas.listaDeIdiomas}" th:each="option : ${lista_de_idiomas}" th:unless="${#lists.contains(idiomas.listaDeIdiomas, option)}" th:text="${option}"><option>
+            <option th:unless="${idiomas.listaDeIdiomas}" th:each="option : ${lista_de_idiomas}" th:text="${option}"><option>
           </select>
         </td>
         <td>
@@ -13,14 +14,16 @@
         </td>
         <td>
           <select multiple="multiple" size="15" id="selectRight" name="listaDeIdiomas">
-            <option th:each="option : ${lista_de_idiomas}" th:if="${#lists.contains(idiomas.listaDeIdiomas, option)}" th:text="${option}"><option>
+            <th:block th:if="${idiomas.listaDeIdiomas}">
+              <option th:each="option : ${lista_de_idiomas}" th:if="${#lists.contains(idiomas.listaDeIdiomas, option)}" th:text="${option}"><option>
+            </th:block>
           </select>
         </td>
       </tr>
     </table>
   </form>
 
-  <button type="submit" onclick="submit_setting(this);">Salvar</button>
+  <button type="submit" class="submit" onclick="submit_setting(this);">Salvar</button>
 
   <div class="alert-ok" id="ok" style="display: none;">
     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
