@@ -1,5 +1,5 @@
 <th:block th:fragment="copy">
-  <form method="post" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/set}">
+  <form class="form-container" id="form" method="post" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/set}">
     <div class="form-group">
       <label for="clientId">client-id</label>
       <input type="text" name="clientId" th:value="${setting.clientId}" class="form-control" id="clientId" placeholder="ClientID">

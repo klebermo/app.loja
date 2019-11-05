@@ -1,5 +1,5 @@
 <th:block th:fragment="copy">
-  <form method="post" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/set}">
+  <form class="form-container" id="form" method="post" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/set}">
     <div class="row">
       <div class="col-25">
         <label for="protocol">protocol</label>
