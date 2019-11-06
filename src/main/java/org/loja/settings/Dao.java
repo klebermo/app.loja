@@ -3,6 +3,8 @@ package org.loja.settings;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.DirectoryNotEmptyException;
 
 import java.io.File;
 import java.io.InputStream;
@@ -75,6 +77,8 @@ public abstract class Dao<E> {
 
 	public void set(E object) {
 		try {
+			if(Files.exists(file))
+				delete();
 			OutputStream fileOut = Files.newOutputStream(file);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(object);
@@ -82,6 +86,21 @@ public abstract class Dao<E> {
 			fileOut.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	public void delete() {
+		try {
+		    Files.delete(file);
+		} catch (NoSuchFileException x) {
+				x.printStackTrace();
+		    System.err.format("%s: no such" + " file or directory%n", file);
+		} catch (DirectoryNotEmptyException x) {
+				x.printStackTrace();
+		    System.err.format("%s not empty%n", file);
+		} catch (IOException x) {
+				x.printStackTrace();
+		    System.err.println(x);
 		}
 	}
 
