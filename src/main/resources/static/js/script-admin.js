@@ -510,4 +510,7 @@ function move_right() {
           }
       }
   }
+
+  for (var i = 0; i < toEl.options.length; i++)
+      toEl.options[i].selected = true;
 }
