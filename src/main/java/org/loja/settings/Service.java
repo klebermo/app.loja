@@ -1,6 +1,7 @@
 package org.loja.settings;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 
 import org.loja.model.usuario.UsuarioDao;
 import org.loja.model.usuario.Usuario;
@@ -28,6 +29,9 @@ public abstract class Service<E> {
 
   @Autowired
   protected PedidoDao pedidoDao;
+
+  @Autowired
+  private JavaMailSender mailSender;
 
   protected Class<E> clazz;
 
