@@ -45,6 +45,11 @@
       </dependency>
 
       <dependency>
+           <groupId>org.springframework.boot</groupId>
+           <artifactId>spring-boot-starter-mail</artifactId>
+       </dependency>
+
+      <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <version>2.4.1</version>
@@ -78,6 +83,12 @@
           <groupId>org.javassist</groupId>
           <artifactId>javassist</artifactId>
           <version>3.23.1-GA</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.thymeleaf</groupId>
+          <artifactId>thymeleaf-spring4</artifactId>
+          <version>3.0.11.RELEASE</version>
       </dependency>
 
       <dependency>
