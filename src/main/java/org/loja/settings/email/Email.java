@@ -7,7 +7,7 @@ public class Email extends org.loja.settings.Model {
 
   private String host;
 
-  private String port;
+  private Integer port;
 
   private String username;
 
@@ -29,11 +29,11 @@ public class Email extends org.loja.settings.Model {
     this.host = host;
   }
 
-  public String getPort() {
+  public Integer getPort() {
     return port;
   }
 
-  public void setPort(String port) {
+  public void setPort(Integer port) {
     this.port = port;
   }
 
