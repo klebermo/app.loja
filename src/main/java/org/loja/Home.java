@@ -17,6 +17,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
 import java.util.List;
+import org.loja.settings.mercadopago.MercadoPagoService;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.loja.model.usuario.Usuario;
+import org.loja.model.usuario.UsuarioService;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Controller
 public class Home {
@@ -33,10 +38,10 @@ public class Home {
     private PedidoService pedido;
 
     @Autowired
-    private org.loja.model.usuario.UsuarioService usuario;
+    private UsuarioService usuario;
 
     @Autowired
-    private org.loja.settings.mercadopago.MercadoPagoService mercadoPago;
+    private MercadoPagoService mercadoPago;
 
     @RequestMapping("/")
     public String index(Model model) {
@@ -107,8 +112,7 @@ public class Home {
       return "index";
     }
 
-    @org.springframework.web.bind.annotation.ModelAttribute("usuario")
-    public org.loja.model.usuario.Usuario usuario() {
-      return usuario.findBy("username", org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication().getName());
+    public Usuario usuario() {
+      return usuario.findBy("username", SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }
