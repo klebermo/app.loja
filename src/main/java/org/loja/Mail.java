@@ -26,6 +26,7 @@ public class Mail {
       final JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 
       Email email = emailService.get();
+      System.out.println("emailService.get = "+email);
       mailSender.setHost(email.getHost());
       mailSender.setPort(email.getPort());
       mailSender.setProtocol("SMTP");
