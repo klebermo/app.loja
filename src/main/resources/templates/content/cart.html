@@ -82,7 +82,7 @@
         <td>
           <form th:action="@{/mercadopago/checkout}" method="POST">
             <input type="hidden" name="usuario_id" th:value="${usuario.id}"/>
-            <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js" th:attr="data-preference-id=${mercadoPagoPreference.id}" data-button-label="Finalizar compra com MercadoPago"></script>
+            <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js" th:attr="data-preference-id=${mercadoPagoPreference}" data-button-label="Finalizar compra com MercadoPago"></script>
           </form>
         </td>
         <td></td>
