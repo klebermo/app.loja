@@ -16,12 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
+
 import java.util.List;
-import org.loja.settings.mercadopago.MercadoPagoService;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.loja.model.usuario.Usuario;
-import org.loja.model.usuario.UsuarioService;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 @Controller
 public class Home {
@@ -36,12 +32,6 @@ public class Home {
 
     @Autowired
     private PedidoService pedido;
-
-    @Autowired
-    private UsuarioService usuario;
-
-    @Autowired
-    private MercadoPagoService mercadoPago;
 
     @RequestMapping("/")
     public String index(Model model) {
@@ -93,10 +83,8 @@ public class Home {
     }
 
     @RequestMapping("/cart")
-    public String cesta(Model model) throws com.mercadopago.exceptions.MPException {
+    public String cesta(Model model) {
       model.addAttribute("cart", "cart");
-      if(usuario().getCesta() != null && !usuario().getCesta().getProdutos().isEmpty())
-        model.addAttribute("mercadoPagoPreference", mercadoPago.preference(usuario()));
       return "index";
     }
 
@@ -110,9 +98,5 @@ public class Home {
     public String pedidos(Model model, @PathVariable("order") Integer order_id) {
       model.addAttribute("order", pedido.findBy("id", order_id));
       return "index";
-    }
-
-    public Usuario usuario() {
-      return usuario.findBy("username", SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }
