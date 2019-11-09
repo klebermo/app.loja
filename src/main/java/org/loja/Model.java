@@ -36,8 +36,9 @@ import org.loja.settings.idiomas.IdiomasService;
 import org.loja.settings.paypal.PaypalService;
 import org.loja.settings.mercadopago.MercadoPagoService;
 import org.loja.settings.pagseguro.PagSeguroService;
-import com.mercadopago.resources.Preference;
 import org.springframework.security.core.context.SecurityContextHolder;
+import com.mercadopago.resources.Preference;
+import com.mercadopago.exceptions.MPException;
 
 @ControllerAdvice
 public class Model {
@@ -135,6 +136,15 @@ public class Model {
   @ModelAttribute("mercadoPago")
   public MercadoPago mercadoPago() {
     return mercadoPago.get();
+  }
+
+  @ModelAttribute("mercadoPagoPreference")
+  public Preference mercadoPagoPreference() throws MPException {
+    Usuario u = usuario();
+    if(u!= null && u.getCesta() != null && !u.getCesta().getProdutos().isEmpty())
+      return mercadoPago.preference(u);
+    else
+      return null;
   }
 
   @ModelAttribute("pagSeguro")
