@@ -13,6 +13,14 @@ public class Email extends org.loja.settings.Model {
 
   private String password;
 
+  public Email() {
+    this.protocol = "";
+    this.host = "";
+    this.port = 0;
+    this.username = "";
+    this.password = "";
+  }
+
   public String getProtocol() {
     return protocol;
   }
