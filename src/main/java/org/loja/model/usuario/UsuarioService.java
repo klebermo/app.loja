@@ -13,13 +13,6 @@ import org.loja.model.produto.ProdutoDao;
 import org.loja.model.produto.Produto;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.mail.javamail.JavaMailSender;
-import javax.mail.internet.MimeMessage;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.thymeleaf.context.Context;
-import java.util.Locale;
-import javax.mail.MessagingException;
-import org.thymeleaf.TemplateEngine;
 
 @Service
 public class UsuarioService extends org.loja.model.Service<Usuario> {
@@ -40,12 +33,6 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
 
   @Autowired
   private HttpServletRequest httpServletRequest;
-
-  @Autowired
-  private TemplateEngine templateEngine;
-
-  @Autowired
-  private JavaMailSender mailSender;
 
   public UsuarioService() {
     super(Usuario.class);
@@ -125,25 +112,5 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
         break;
       }
     }
-  }
-
-  public void send_mail(String recipientName, String recipientEmail, String subject, String sender, String content, Locale locale) throws MessagingException {
-      // Prepare the evaluation context
-      Context ctx = new Context(locale);
-      ctx.setVariable("name", recipientName);
-
-      // Prepare message using a Spring helper
-      MimeMessage mimeMessage = this.mailSender.createMimeMessage();
-      MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8"); // true = multipart
-      message.setSubject(subject);
-      message.setFrom(sender);
-      message.setTo(recipientEmail);
-
-      // Create the HTML body using Thymeleaf
-      final String htmlContent = this.templateEngine.process(content, ctx);
-      message.setText(htmlContent, true); // true = isHtml
-
-      // Send mail
-      this.mailSender.send(mimeMessage);
   }
 }
