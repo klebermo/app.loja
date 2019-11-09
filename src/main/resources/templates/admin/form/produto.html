@@ -16,7 +16,7 @@
       <label for="categoria">Categoria</label>
     </div>
     <div class="col-75">
-      <select class="form-control" id="categoria" name="categoria.id">
+      <select class="form-control" id="categoria" name="categoria">
         <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:selected="${#strings.equals(categoria, command.categoria)}">
           <span th:each="t : ${categoria.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}"></span>
         </option>
