@@ -66,6 +66,8 @@ public abstract class Service<E> {
       usuarioDao.update(usuario);
     }
 
+    this.pedido.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Destalhes do pedido", "...");
+
     return pedido.getId();
   }
 
