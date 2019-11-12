@@ -12,6 +12,7 @@ import org.loja.model.pedido.Pedido;
 import org.loja.model.produto.ProdutoDao;
 import org.loja.model.produto.Produto;
 import java.util.ArrayList;
+import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 @Service
@@ -39,14 +40,22 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
   }
 
   public Boolean register(Usuario novo) {
+    this.pedido.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Confirmação de cadastro", "...");
     novo.setEnabled(true);
     novo.setLocked(false);
     this.dao.insert(novo);
     return true;
   }
 
-  public Boolean recoverPassword(String email) {
-    return true;
+  public String recoverPassword(String email, String token) {
+    if(token == null) {
+      token = UUID.randomUUID().toString();
+      this.pedido.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Recuperação de senha", "...");
+      return token;
+    } else {
+      this.pedido.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Nova senha", "...");
+      return null;
+    }
   }
 
   public void toggle_credencial(Integer usuario_id, Integer credencial_id) {

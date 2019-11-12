@@ -42,11 +42,12 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   }
 
   @RequestMapping(value = "/recoverPassword", method=RequestMethod.POST)
-  public String doRecoverPassword(@RequestParam("email") String email) {
-    if(this.serv.recoverPassword(email))
+  public String doRecoverPassword(@RequestParam("email") String email, @RequestParam(value="token", required=false) String token) {
+    String result = this.serv.recoverPassword(email, token);
+    if(result == null)
       return "redirect:/login";
     else
-      return "redirect:/recoverPassword";
+      return "redirect:/recoverPassword?email="+email+"&token="+result;
   }
 
   @RequestMapping(value = "/credenciais", method=RequestMethod.GET)
