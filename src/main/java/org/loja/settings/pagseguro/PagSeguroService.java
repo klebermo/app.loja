@@ -19,6 +19,7 @@ import org.loja.model.produto.Produto;
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.HashMap;
+import javax.mail.MessagingException;
 
 @Service
 public class PagSeguroService extends org.loja.settings.Service<PagSeguro> {
@@ -53,7 +54,7 @@ public class PagSeguroService extends org.loja.settings.Service<PagSeguro> {
     return registeredCheckout.getRedirectURL();
   }
 
-  public String create_order(String transaction_id) {
+  public String create_order(String transaction_id) throws MessagingException {
     Integer usuario_id = Integer.valueOf(map.get("usuario_id"));
     Usuario usuario = this.usuarioDao.findBy("id", usuario_id);
     return "/order/" + this.create_order(usuario, this.clazz.getSimpleName(), transaction_id);

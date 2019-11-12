@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import javax.mail.MessagingException;
 
 @Controller
 @RequestMapping("mercadopago")
@@ -17,12 +18,12 @@ public class MercadoPagoController extends org.loja.settings.Controller<MercadoP
   }
 
   @RequestMapping(value = "/checkout", method=RequestMethod.POST)
-  public String checkout(@RequestParam("usuario_id") Integer usuario_id) {
+  public String checkout(@RequestParam("usuario_id") Integer usuario_id) throws MessagingException {
     return "redirect:"+this.serv.checkout(usuario_id);
   }
 
   @RequestMapping(value = "/process_order", method=RequestMethod.GET)
-  public String process_order(@RequestParam("usuario_id") Integer usuario_id, @RequestParam("transaction_id") String transaction_id) {
+  public String process_order(@RequestParam("usuario_id") Integer usuario_id, @RequestParam("transaction_id") String transaction_id) throws MessagingException {
     return "redirect:"+this.serv.create_order(usuario_id, transaction_id);
   }
 }
