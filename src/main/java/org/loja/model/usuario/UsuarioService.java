@@ -14,6 +14,8 @@ import org.loja.model.produto.Produto;
 import java.util.ArrayList;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
+import javax.mail.MessagingException;
+import org.loja.MailSender;
 
 @Service
 public class UsuarioService extends org.loja.model.Service<Usuario> {
@@ -33,29 +35,36 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
   private PedidoDao pedidoDao;
 
   @Autowired
+  private MailSender mailServer;
+
+  @Autowired
   private HttpServletRequest httpServletRequest;
 
   public UsuarioService() {
     super(Usuario.class);
   }
 
-  public Boolean register(Usuario novo) {
-    this.pedido.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Confirmação de cadastro", "...");
+  public Boolean register(Usuario novo) throws MessagingException {
+    mailServer.send_mail(novo.getEmail(), novo.getFirstName(), novo.getLastName(), "Confirmação de cadastro", "...");
     novo.setEnabled(true);
     novo.setLocked(false);
     this.dao.insert(novo);
     return true;
   }
 
-  public String recoverPassword(String email, String token) {
-    if(token == null) {
-      token = UUID.randomUUID().toString();
-      this.pedido.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Recuperação de senha", "...");
-      return token;
-    } else {
-      this.pedido.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Nova senha", "...");
+  public String recoverPassword(String email, String token) throws MessagingException {
+    Usuario usuario = this.dao.findBy("email", email);
+    if(usuario != null)
+      if(token == null) {
+        token = UUID.randomUUID().toString();
+        mailServer.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Recuperação de senha", "...");
+        return token;
+      } else {
+        mailServer.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Nova senha", "...");
+        return null;
+      }
+    else
       return null;
-    }
   }
 
   public void toggle_credencial(Integer usuario_id, Integer credencial_id) {

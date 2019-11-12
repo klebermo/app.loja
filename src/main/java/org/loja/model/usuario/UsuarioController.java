@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
 import org.springframework.security.access.prepost.PreAuthorize;
+import javax.mail.MessagingException;
 
 @Controller
 @RequestMapping("usuario")
@@ -29,7 +30,7 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   }
 
   @RequestMapping(value = "/register", method=RequestMethod.POST)
-  public String doRegister(@Valid Usuario object, BindingResult result) {
+  public String doRegister(@Valid Usuario object, BindingResult result) throws MessagingException {
       if(this.serv.register(object))
         return "redirect:/";
       else
@@ -42,7 +43,7 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   }
 
   @RequestMapping(value = "/recoverPassword", method=RequestMethod.POST)
-  public String doRecoverPassword(@RequestParam("email") String email, @RequestParam(value="token", required=false) String token) {
+  public String doRecoverPassword(@RequestParam("email") String email, @RequestParam(value="token", required=false) String token) throws MessagingException {
     String result = this.serv.recoverPassword(email, token);
     if(result == null)
       return "redirect:/login";
