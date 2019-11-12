@@ -10,10 +10,14 @@ import org.loja.model.pedido.PedidoDao;
 import org.loja.model.pedido.Pedido;
 import org.loja.model.produto.ProdutoDao;
 import org.loja.model.produto.Produto;
+import org.loja.MailSender;
 
 import java.util.ArrayList;
+import  javax.mail.MessagingException;
 
 public abstract class Service<E> {
+  protected Class<E> clazz;
+
   @Autowired
   protected Dao<E> dao;
 
@@ -29,18 +33,19 @@ public abstract class Service<E> {
   @Autowired
   protected PedidoDao pedidoDao;
 
-  protected Class<E> clazz;
+  @Autowired
+  protected MailSender mailServer;
 
   public Service(Class<E> clazz) {
     this.clazz = clazz;
   }
 
-  public String create_order(Integer usuario_id, String transaction_id) {
+  public String create_order(Integer usuario_id, String transaction_id) throws MessagingException {
     Usuario usuario = usuarioDao.findBy("id", usuario_id);
     return "/order/" + create_order(usuario, clazz.getSimpleName(), transaction_id);
   }
 
-  public Integer create_order(Usuario usuario, String metodoPagamento, String transaction_id) {
+  public Integer create_order(Usuario usuario, String metodoPagamento, String transaction_id) throws MessagingException {
     Pedido pedido = new Pedido();
     pedido.setProdutos(new ArrayList<Produto>());
 
@@ -66,7 +71,7 @@ public abstract class Service<E> {
       usuarioDao.update(usuario);
     }
 
-    this.pedido.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Destalhes do pedido", "...");
+    mailServer.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Destalhes do pedido", "...");
 
     return pedido.getId();
   }
