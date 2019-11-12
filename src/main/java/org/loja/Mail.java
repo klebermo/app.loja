@@ -22,7 +22,7 @@ public class Mail {
     private EmailService emailService;
 
     @Bean
-    public JavaMailSender mailSender() {
+    public JavaMailSender SendMail() {
       final JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 
       Email email = emailService.get();
