@@ -3,28 +3,13 @@ package org.loja.settings.pagseguro;
 public class PagSeguro extends org.loja.settings.Model {
   private static final long serialVersionUID = 2L;
 
-  private String clientId;
-
-  private String clientSecret;
-
   public String email;
 
   public String token;
 
-  public String getClientId() {
-    return clientId;
-  }
-
-  public void setClientId(String clientId) {
-    this.clientId = clientId;
-  }
-
-  public String getClientSecret() {
-    return clientSecret;
-  }
-
-  public void setClientSecret(String clientSecret) {
-    this.clientSecret = clientSecret;
+  public PagSeguro() {
+    email = "...";
+    token = "...";
   }
 
   public String getEmail() {
@@ -44,6 +29,6 @@ public class PagSeguro extends org.loja.settings.Model {
   }
 
   public String toString() {
-    return "{clientId: "+clientId+", clientSecret: "+clientSecret+"}";
+    return "{email: "+email+", token: "+token+"}";
   }
 }

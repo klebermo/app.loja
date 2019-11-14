@@ -7,6 +7,11 @@ public class Paypal extends org.loja.settings.Model {
 
   private String clientSecret;
 
+  public Paypal() {
+    clientId = "...";
+    clientSecret = "...";
+  }
+
   public String getClientId() {
     return clientId;
   }

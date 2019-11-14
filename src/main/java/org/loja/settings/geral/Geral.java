@@ -13,6 +13,13 @@ public class Geral extends org.loja.settings.Model {
 
   private Imagem logo;
 
+  public Geral() {
+    titulo = "...";
+    desenvolvedor = "...";
+    email = "...";
+    logo = null;
+  }
+
   public String getTitulo() {
     return titulo;
   }

@@ -12,8 +12,8 @@ import org.loja.model.produto.ProdutoDao;
 import org.loja.model.produto.Produto;
 import org.loja.MailSender;
 
-import java.util.ArrayList;
-import  javax.mail.MessagingException;
+import java.util.HashSet;
+import javax.mail.MessagingException;
 
 public abstract class Service<E> {
   protected Class<E> clazz;
@@ -47,7 +47,7 @@ public abstract class Service<E> {
 
   public Integer create_order(Usuario usuario, String metodoPagamento, String transaction_id) throws MessagingException {
     Pedido pedido = new Pedido();
-    pedido.setProdutos(new ArrayList<Produto>());
+    pedido.setProdutos(new HashSet<Produto>());
 
     Cesta cesta = usuario.getCesta();
     if(cesta.getProdutos() != null) {
@@ -63,7 +63,7 @@ public abstract class Service<E> {
     pedidoDao.insert(pedido);
 
     if(usuario.getPedidos() == null) {
-      usuario.setPedidos(new ArrayList<Pedido>());
+      usuario.setPedidos(new HashSet<Pedido>());
       usuario.getPedidos().add(pedido);
       usuarioDao.update(usuario);
     } else {

@@ -14,11 +14,11 @@ public class Email extends org.loja.settings.Model {
   private String password;
 
   public Email() {
-    this.protocol = "";
-    this.host = "";
-    this.port = 0;
-    this.username = "";
-    this.password = "";
+    protocol = "...";
+    host = "...";
+    port = 25;
+    username = "...";
+    password = "...";
   }
 
   public String getProtocol() {
