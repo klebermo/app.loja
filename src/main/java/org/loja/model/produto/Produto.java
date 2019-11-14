@@ -2,7 +2,7 @@ package org.loja.model.produto;
 
 import org.loja.model.Model;
 import org.loja.model.categoria.Categoria;
-import java.util.List;
+import java.util.Set;
 import org.loja.model.imagem.Imagem;
 import org.loja.model.arquivo.Arquivo;
 import javax.persistence.Entity;
@@ -11,8 +11,6 @@ import javax.persistence.Column;
 import javax.persistence.OneToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import javax.persistence.GeneratedValue;
@@ -29,19 +27,13 @@ public class Produto extends Model {
   private Integer id;
 
   @OneToMany(fetch = FetchType.EAGER)
-  @Fetch(FetchMode.SELECT)
-  @Cascade(CascadeType.ALL)
-  private List<Titulo> nome;
+  private Set<Titulo> nome;
 
   @OneToMany(fetch = FetchType.EAGER)
-  @Fetch(FetchMode.SELECT)
-  @Cascade(CascadeType.ALL)
-  private List<Resumo> resumo;
+  private Set<Resumo> resumo;
 
   @OneToMany(fetch = FetchType.EAGER)
-  @Fetch(FetchMode.SELECT)
-  @Cascade(CascadeType.ALL)
-  private List<Texto> descricao;
+  private Set<Texto> descricao;
 
   @OneToOne(fetch = FetchType.EAGER)
   private Categoria categoria;
@@ -53,16 +45,13 @@ public class Produto extends Model {
   private Imagem icone;
 
   @OneToMany(fetch = FetchType.EAGER)
-  @Fetch(FetchMode.SELECT)
-  private List<Imagem> thumbnails;
+  private Set<Imagem> thumbnails;
 
   @OneToMany(fetch = FetchType.EAGER)
-  @Fetch(FetchMode.SELECT)
-  private List<Arquivo> versaoGratuita;
+  private Set<Arquivo> versaoGratuita;
 
   @OneToMany(fetch = FetchType.EAGER)
-  @Fetch(FetchMode.SELECT)
-  private List<Arquivo> versaoPaga;
+  private Set<Arquivo> versaoPaga;
 
   @OneToOne(fetch = FetchType.EAGER)
   private Forum forum;
@@ -76,27 +65,27 @@ public class Produto extends Model {
     this.id = id;
   }
 
-  public List<Titulo> getNome() {
+  public Set<Titulo> getNome() {
     return nome;
   }
 
-  public void setNome(List<Titulo> nome) {
+  public void setNome(Set<Titulo> nome) {
     this.nome = nome;
   }
 
-  public List<Resumo> getResumo() {
+  public Set<Resumo> getResumo() {
     return resumo;
   }
 
-  public void setResumo(List<Resumo> resumo) {
+  public void setResumo(Set<Resumo> resumo) {
     this.resumo = resumo;
   }
 
-  public List<Texto> getDescricao() {
+  public Set<Texto> getDescricao() {
     return descricao;
   }
 
-  public void setDescricao(List<Texto> descricao) {
+  public void setDescricao(Set<Texto> descricao) {
     this.descricao = descricao;
   }
 
@@ -124,27 +113,27 @@ public class Produto extends Model {
     this.icone = icone;
   }
 
-  public List<Imagem> getThumbnails() {
+  public Set<Imagem> getThumbnails() {
     return thumbnails;
   }
 
-  public void setThumbnails(List<Imagem> thumbnails) {
+  public void setThumbnails(Set<Imagem> thumbnails) {
     this.thumbnails = thumbnails;
   }
 
-  public List<Arquivo> getVersaoGratuita() {
+  public Set<Arquivo> getVersaoGratuita() {
     return versaoGratuita;
   }
 
-  public void setVersaoGratuita(List<Arquivo> versaoGratuita) {
+  public void setVersaoGratuita(Set<Arquivo> versaoGratuita) {
     this.versaoGratuita = versaoGratuita;
   }
 
-  public List<Arquivo> getVersaoPaga() {
+  public Set<Arquivo> getVersaoPaga() {
     return versaoPaga;
   }
 
-  public void setVersaoPaga(List<Arquivo> versaoPaga) {
+  public void setVersaoPaga(Set<Arquivo> versaoPaga) {
     this.versaoPaga = versaoPaga;
   }
 

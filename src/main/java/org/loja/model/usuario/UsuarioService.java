@@ -11,10 +11,9 @@ import org.loja.model.pedido.PedidoDao;
 import org.loja.model.pedido.Pedido;
 import org.loja.model.produto.ProdutoDao;
 import org.loja.model.produto.Produto;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
-import javax.mail.MessagingException;
 import org.loja.MailSender;
 
 @Service
@@ -44,17 +43,17 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     super(Usuario.class);
   }
 
-  public void register(Usuario novo) throws MessagingException {
-    //mailServer.send_mail(novo.getEmail(), novo.getFirstName(), novo.getLastName(), "Confirmação de cadastro", "...");
+  public void register(Usuario novo) throws Exception {
     novo.setEnabled(true);
     novo.setLocked(false);
-    novo.setCredenciais(new ArrayList<Credencial>());
+    novo.setCredenciais(new HashSet<Credencial>());
     Credencial credencial = credencialDao.findBy("nome", "web");
     novo.getCredenciais().add(credencial);
     this.dao.insert(novo);
+    mailServer.send_mail(novo.getEmail(), novo.getFirstName(), novo.getLastName(), "Confirmação de cadastro", "...");
   }
 
-  public String recoverPassword(String email, String token) throws MessagingException {
+  public String recoverPassword(String email, String token) throws Exception {
     Usuario usuario = this.dao.findBy("email", email);
     if(usuario != null)
       if(token == null) {
@@ -73,7 +72,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     Usuario usuario = this.dao.findBy("id", usuario_id);
     Credencial credencial = credencialDao.findBy("id", credencial_id);
     if(usuario.getCredenciais() == null) {
-      usuario.setCredenciais(new ArrayList<Credencial>());
+      usuario.setCredenciais(new HashSet<Credencial>());
       usuario.getCredenciais().add(credencial);
       this.dao.update(usuario);
     } else {
@@ -114,7 +113,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     }
     Cesta cesta = usuario.getCesta();
     if(cesta.getProdutos() == null) {
-      cesta.setProdutos(new ArrayList<Produto>());
+      cesta.setProdutos(new HashSet<Produto>());
       cestaDao.update(cesta);
     }
     Produto produto = produtoDao.findBy("id", produto_id);
