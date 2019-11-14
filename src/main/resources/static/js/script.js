@@ -1,3 +1,19 @@
+function register() {
+  var formData = new FormData(document.getElementById("form"));
+  var url = document.getElementById("form").action;
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url);
+  xhr.onload = function(event) {
+    event.preventDefault();
+    var result = this.responseText;
+    if(result == "")
+      document.getElementById("ok").style.display = 'block';
+    else
+      document.getElementById("error").style.display = 'block';
+  };
+  xhr.send(formData);
+}
 
 function show_cart_size() {
   var cart_size = document.getElementById('cart_size');
