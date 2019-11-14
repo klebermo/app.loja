@@ -30,11 +30,9 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   }
 
   @RequestMapping(value = "/register", method=RequestMethod.POST)
-  public String doRegister(@Valid Usuario object, BindingResult result) throws MessagingException {
-      if(this.serv.register(object))
-        return "redirect:/";
-      else
-        return "redirect:/usuario/register";
+  @ResponseBody
+  public void doRegister(@Valid Usuario object, BindingResult result) throws MessagingException {
+    this.serv.register(object);
   }
 
   @RequestMapping(value = "/recoverPassword", method=RequestMethod.GET)

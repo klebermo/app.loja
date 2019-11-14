@@ -44,12 +44,14 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     super(Usuario.class);
   }
 
-  public Boolean register(Usuario novo) throws MessagingException {
-    mailServer.send_mail(novo.getEmail(), novo.getFirstName(), novo.getLastName(), "Confirmação de cadastro", "...");
+  public void register(Usuario novo) throws MessagingException {
+    //mailServer.send_mail(novo.getEmail(), novo.getFirstName(), novo.getLastName(), "Confirmação de cadastro", "...");
     novo.setEnabled(true);
     novo.setLocked(false);
+    novo.setCredenciais(new ArrayList<Credencial>());
+    Credencial credencial = credencialDao.findBy("nome", "web");
+    novo.getCredenciais().add(credencial);
     this.dao.insert(novo);
-    return true;
   }
 
   public String recoverPassword(String email, String token) throws MessagingException {
