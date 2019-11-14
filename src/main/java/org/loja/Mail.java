@@ -28,10 +28,7 @@ public class Mail {
       Email email = emailService.get();
       if(email != null) {
         mailSender.setHost(email.getHost());
-        if(email.getPort() == null)
-          mailSender.setPort(25);
-        else
-          mailSender.setPort(email.getPort());
+        mailSender.setPort(email.getPort());
         mailSender.setProtocol("SMTP");
         mailSender.setUsername(email.getUsername());
         mailSender.setPassword(email.getPassword());
