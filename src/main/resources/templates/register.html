@@ -7,7 +7,7 @@
 <main class="main">
     <h3>Login</h3>
 
-    <form class="form-container" id="form" method="post" th:action="@{/doLogin}">
+    <form class="form-container" id="form" method="post" th:action="@{/usuario/register}">
       <div class="form-row">
         <div class="col-75">
           <input type="text" name="username" placeholder="Login"/>
@@ -40,8 +40,18 @@
 
       <div class="form-row">
         <div class="col-75">
-          <button type="submit" class="button">Cadastre-se</button>
+          <button type="button" class="button" onclick="register();">Cadastre-se</button>
         </div>
+      </div>
+
+      <div class="alert-ok" id="ok" style="display: none;">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong>Sucesso!</strong> Cadastro realizado com sucesso.
+      </div>
+
+      <div class="alert-error" id="error" style="display: none;">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong>Erro!</strong> Não foi possivel realizar o cadastro.
       </div>
     </form>
 </main>
