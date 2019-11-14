@@ -92,6 +92,10 @@ insert into credencial_autorizacoes values (10,35);
 insert into credencial_autorizacoes values (10,36);
 insert into credencial_autorizacoes values (10,37);
 
+insert into credencial (nome) values ('web');
+insert into autorizacao (nome) values ('web');
+insert into credencial_autorizacoes values (11,38);
+
 insert into usuario (username, password, first_name, last_name, email, enabled, locked) values ('kleber', '$2a$04$q8j56WcbSTMViRYqBOfGPOVbUKqSR0tdUoa9awU/cA/TRdPA/krRW', 'Kleber', 'Mota', 'kleber@mail.com', true, false);
 insert into usuario_credenciais values (1,1);
 insert into usuario_credenciais values (1,2);
