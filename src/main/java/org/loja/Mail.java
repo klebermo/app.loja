@@ -26,12 +26,16 @@ public class Mail {
       final JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 
       Email email = emailService.get();
-      System.out.println("emailService.get = "+email);
-      mailSender.setHost(email.getHost());
-      mailSender.setPort(email.getPort());
-      mailSender.setProtocol("SMTP");
-      mailSender.setUsername(email.getUsername());
-      mailSender.setPassword(email.getPassword());
+      if(email != null) {
+        mailSender.setHost(email.getHost());
+        if(email.getPort() == null)
+          mailSender.setPort(25);
+        else
+          mailSender.setPort(email.getPort());
+        mailSender.setProtocol("SMTP");
+        mailSender.setUsername(email.getUsername());
+        mailSender.setPassword(email.getPassword());
+      }
 
       return mailSender;
     }
