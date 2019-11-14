@@ -7,34 +7,34 @@
 <main class="main">
     <h3>Login</h3>
 
-    <form class="form-container" id="form" method="post" th:action="@{/usuario/register}">
+    <form class="form-container" id="form" method="post" th:object="${command}" th:action="@{/usuario/register}">
       <div class="form-row">
         <div class="col-75">
-          <input type="text" name="username" placeholder="Login"/>
+          <input type="text" th:field="*{username}" placeholder="Login"/>
         </div>
       </div>
 
       <div class="form-row">
         <div class="col-75">
-          <input type="password" name="password" placeholder="Senha"/>
+          <input type="password" th:field="*{password}" placeholder="Senha"/>
         </div>
       </div>
 
       <div class="form-row">
         <div class="col-75">
-          <input type="text" name="firstName" placeholder="Nome"/>
+          <input type="text" th:field="*{firstName}" placeholder="Nome"/>
         </div>
       </div>
 
       <div class="form-row">
         <div class="col-75">
-          <input type="text" name="lastName" placeholder="Sobrenome"/>
+          <input type="text" th:field="*{lastName}" placeholder="Sobrenome"/>
         </div>
       </div>
 
       <div class="form-row">
         <div class="col-75">
-          <input type="email" name="email" placeholder="E-mail"/>
+          <input type="email" th:field="*{email}" placeholder="E-mail"/>
         </div>
       </div>
 
