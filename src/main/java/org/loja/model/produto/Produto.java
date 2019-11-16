@@ -2,7 +2,7 @@ package org.loja.model.produto;
 
 import org.loja.model.Model;
 import org.loja.model.categoria.Categoria;
-import java.util.Set;
+import java.util.List;
 import org.loja.model.imagem.Imagem;
 import org.loja.model.arquivo.Arquivo;
 import javax.persistence.Entity;
@@ -11,6 +11,8 @@ import javax.persistence.Column;
 import javax.persistence.OneToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import javax.persistence.GeneratedValue;
@@ -27,13 +29,19 @@ public class Produto extends Model {
   private Integer id;
 
   @OneToMany(fetch = FetchType.EAGER)
-  private Set<Titulo> nome;
+  @Fetch(FetchMode.SELECT)
+  @Cascade(CascadeType.ALL)
+  private List<Titulo> nome;
 
   @OneToMany(fetch = FetchType.EAGER)
-  private Set<Resumo> resumo;
+  @Fetch(FetchMode.SELECT)
+  @Cascade(CascadeType.ALL)
+  private List<Resumo> resumo;
 
   @OneToMany(fetch = FetchType.EAGER)
-  private Set<Texto> descricao;
+  @Fetch(FetchMode.SELECT)
+  @Cascade(CascadeType.ALL)
+  private List<Texto> descricao;
 
   @OneToOne(fetch = FetchType.EAGER)
   private Categoria categoria;
@@ -42,18 +50,26 @@ public class Produto extends Model {
   private Float preco;
 
   @OneToOne(fetch = FetchType.EAGER)
+  @Fetch(FetchMode.SELECT)
   private Imagem icone;
 
   @OneToMany(fetch = FetchType.EAGER)
-  private Set<Imagem> thumbnails;
+  @Fetch(FetchMode.SELECT)
+  @Cascade(CascadeType.ALL)
+  private List<Imagem> thumbnails;
 
   @OneToMany(fetch = FetchType.EAGER)
-  private Set<Arquivo> versaoGratuita;
+  @Fetch(FetchMode.SELECT)
+  @Cascade(CascadeType.ALL)
+  private List<Arquivo> versaoGratuita;
 
   @OneToMany(fetch = FetchType.EAGER)
-  private Set<Arquivo> versaoPaga;
+  @Fetch(FetchMode.SELECT)
+  @Cascade(CascadeType.ALL)
+  private List<Arquivo> versaoPaga;
 
   @OneToOne(fetch = FetchType.EAGER)
+  @Fetch(FetchMode.SELECT)
   private Forum forum;
 
   @Override
@@ -65,27 +81,27 @@ public class Produto extends Model {
     this.id = id;
   }
 
-  public Set<Titulo> getNome() {
+  public List<Titulo> getNome() {
     return nome;
   }
 
-  public void setNome(Set<Titulo> nome) {
+  public void setNome(List<Titulo> nome) {
     this.nome = nome;
   }
 
-  public Set<Resumo> getResumo() {
+  public List<Resumo> getResumo() {
     return resumo;
   }
 
-  public void setResumo(Set<Resumo> resumo) {
+  public void setResumo(List<Resumo> resumo) {
     this.resumo = resumo;
   }
 
-  public Set<Texto> getDescricao() {
+  public List<Texto> getDescricao() {
     return descricao;
   }
 
-  public void setDescricao(Set<Texto> descricao) {
+  public void setDescricao(List<Texto> descricao) {
     this.descricao = descricao;
   }
 
@@ -113,27 +129,27 @@ public class Produto extends Model {
     this.icone = icone;
   }
 
-  public Set<Imagem> getThumbnails() {
+  public List<Imagem> getThumbnails() {
     return thumbnails;
   }
 
-  public void setThumbnails(Set<Imagem> thumbnails) {
+  public void setThumbnails(List<Imagem> thumbnails) {
     this.thumbnails = thumbnails;
   }
 
-  public Set<Arquivo> getVersaoGratuita() {
+  public List<Arquivo> getVersaoGratuita() {
     return versaoGratuita;
   }
 
-  public void setVersaoGratuita(Set<Arquivo> versaoGratuita) {
+  public void setVersaoGratuita(List<Arquivo> versaoGratuita) {
     this.versaoGratuita = versaoGratuita;
   }
 
-  public Set<Arquivo> getVersaoPaga() {
+  public List<Arquivo> getVersaoPaga() {
     return versaoPaga;
   }
 
-  public void setVersaoPaga(Set<Arquivo> versaoPaga) {
+  public void setVersaoPaga(List<Arquivo> versaoPaga) {
     this.versaoPaga = versaoPaga;
   }
 
