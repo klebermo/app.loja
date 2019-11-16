@@ -2,27 +2,27 @@
 <html lang="pt-br">
   <body>
     <div class="container" id="form-container">
-      <form id="form" th:if="${#strings.equals(classe.simpleName, 'Categoria')}" method="post" th:action="@{/categoria/__${action}__}">
+      <form id="form" th:if="${#strings.equals(classe.simpleName, 'Categoria')}" method="post" th:object="${command}" th:action="@{/categoria/__${action}__}">
         <input type="hidden" id="id" name="id" th:value="${command.id}"/>
         <div th:replace="admin/form/categoria :: copy"></div>
       </form>
 
-      <form id="form" th:if="${#strings.equals(classe.simpleName, 'Produto')}" method="post" th:action="@{/produto/__${action}__}">
+      <form id="form" th:if="${#strings.equals(classe.simpleName, 'Produto')}" method="post" th:object="${command}" th:action="@{/produto/__${action}__}">
         <input type="hidden" id="id" name="id" th:value="${command.id}"/>
         <div th:replace="admin/form/produto :: copy"></div>
       </form>
 
-      <form id="form" th:if="${#strings.equals(classe.simpleName, 'Pagina')}" method="post" th:action="@{/pagina/__${action}__}">
+      <form id="form" th:if="${#strings.equals(classe.simpleName, 'Pagina')}" method="post" th:object="${command}" th:action="@{/pagina/__${action}__}">
         <input type="hidden" id="id" name="id" th:value="${command.id}"/>
         <div th:replace="admin/form/pagina :: copy"></div>
       </form>
 
-      <form id="form" th:if="${#strings.equals(classe.simpleName, 'Usuario')}" method="post" th:action="@{/usuario/__${action}__}">
+      <form id="form" th:if="${#strings.equals(classe.simpleName, 'Usuario')}" method="post" th:object="${command}" th:action="@{/usuario/__${action}__}">
         <input type="hidden" id="id" name="id" th:value="${command.id}"/>
         <div th:replace="admin/form/usuario :: copy"></div>
       </form>
 
-      <form id="form" th:if="${#strings.equals(classe.simpleName, 'Pedido')}" method="post" th:action="@{/pedido/__${action}__}">
+      <form id="form" th:if="${#strings.equals(classe.simpleName, 'Pedido')}" method="post" th:object="${command}" th:action="@{/pedido/__${action}__}">
         <input type="hidden" id="id" name="id" th:value="${command.id}"/>
         <div th:replace="admin/form/pedido :: copy"></div>
       </form>
