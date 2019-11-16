@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import javax.validation.Valid;
+import org.springframework.validation.BindingResult;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 @Controller
@@ -29,7 +30,7 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
 
   @RequestMapping(value = "/register", method=RequestMethod.POST)
   @ResponseBody
-  public void doRegister(@ModelAttribute("command") Usuario object) throws Exception {
+  public void doRegister(@Valid Usuario object, BindingResult result) throws Exception {
     this.serv.register(object);
   }
 

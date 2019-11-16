@@ -3,7 +3,6 @@ package org.loja.model.usuario;
 import org.loja.model.Model;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.List;
-import java.util.Set;
 import java.util.Date;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -41,7 +40,8 @@ public class Usuario extends Model implements UserDetails {
   private String email;
 
   @OneToMany(fetch = FetchType.EAGER)
-  private Set<org.loja.model.credencial.Credencial> credenciais;
+  @Fetch(FetchMode.SELECT)
+  private List<org.loja.model.credencial.Credencial> credenciais;
 
   @Column
   private Date dataExpiracao;
@@ -53,10 +53,12 @@ public class Usuario extends Model implements UserDetails {
   private Boolean locked;
 
   @OneToOne(fetch = FetchType.EAGER)
+  @Fetch(FetchMode.SELECT)
   private org.loja.model.cesta.Cesta cesta;
 
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario")
-  private Set<org.loja.model.pedido.Pedido> pedidos;
+  @Fetch(FetchMode.SELECT)
+  private List<org.loja.model.pedido.Pedido> pedidos;
 
   @Override
   public Integer getId() {
@@ -108,11 +110,11 @@ public class Usuario extends Model implements UserDetails {
     this.email = email;
   }
 
-  public Set<org.loja.model.credencial.Credencial> getCredenciais() {
+  public List<org.loja.model.credencial.Credencial> getCredenciais() {
     return credenciais;
   }
 
-  public void setCredenciais(Set<org.loja.model.credencial.Credencial> credenciais) {
+  public void setCredenciais(List<org.loja.model.credencial.Credencial> credenciais) {
     this.credenciais = credenciais;
   }
 
@@ -156,11 +158,11 @@ public class Usuario extends Model implements UserDetails {
     this.cesta = cesta;
   }
 
-  public Set<org.loja.model.pedido.Pedido> getPedidos() {
+  public List<org.loja.model.pedido.Pedido> getPedidos() {
     return pedidos;
   }
 
-  public void setPedidos(Set<org.loja.model.pedido.Pedido> pedidos) {
+  public void setPedidos(List<org.loja.model.pedido.Pedido> pedidos) {
     this.pedidos = pedidos;
   }
 
