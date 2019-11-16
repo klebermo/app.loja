@@ -4,7 +4,7 @@
       <label for="icone">Icone</label>
     </div>
     <div class="col-75">
-      <input th:if="${command.icone}" type="hidden" name="icone" th:value="${command.icone.id}"/>
+      <input type="hidden" th:field="*{icone}"/>
       <input type="file" accept=".png" class="image-uploader" id="icone" th:attr="data-url=@{/imagem/upload}">
     </div>
   </div>

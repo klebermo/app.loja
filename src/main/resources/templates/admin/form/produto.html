@@ -6,7 +6,7 @@
       <label for="icone">Icone</label>
     </div>
     <div class="col-75">
-      <input th:if="${command.icone}" type="hidden" name="icone" th:value="${command.icone.id}"/>
+      <input th:if="${command.icone}" type="hidden" th:field="*{icone}"/>
       <input type="file" accept=".png" class="image-uploader" id="icone" th:attr="data-url=@{/imagem/upload}">
     </div>
   </div>
@@ -16,7 +16,7 @@
       <label for="categoria">Categoria</label>
     </div>
     <div class="col-75">
-      <select class="form-control" id="categoria" name="categoria">
+      <select class="form-control" id="categoria" th:field="*{categoria}">
         <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:selected="${#strings.equals(categoria, command.categoria)}">
           <span th:each="t : ${categoria.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}"></span>
         </option>
@@ -29,7 +29,7 @@
       <label for="preco">Pre&ccedil;o</label>
     </div>
     <div class="col-75">
-      <input type="text" name="preco" th:value="${command.preco}" class="form-control" id="preco" placeholder="Pre&ccedil;o">
+      <input type="text" th:field="*{preco}" class="form-control" id="preco" placeholder="Pre&ccedil;o">
     </div>
   </div>
 

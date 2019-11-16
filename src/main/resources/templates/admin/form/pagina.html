@@ -4,7 +4,7 @@
       <label for="parent">Pagina m&atilde;e</label>
     </div>
     <div class="col-75">
-      <select class="form-control" id="parent" name="parent">
+      <select class="form-control" id="parent" th:field="*{parent}">
         <option value=""></option>
         <option th:each="pagina : ${paginas}" th:value="${pagina.id}" th:selected="${#strings.equals(pagina, command.parent)}" th:text="${pagina.titulo}">
           <span th:each="t : ${pagina.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}"></span>
