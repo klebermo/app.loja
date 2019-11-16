@@ -2,27 +2,27 @@
 <html lang="pt-br">
   <body>
     <div class="container" id="form-container">
-      <form class="form" id="form" th:if="${#strings.equals(classe.simpleName, 'Categoria')}" method="delete" th:action="@{/categoria/delete}">
+      <form class="form" id="form" th:if="${#strings.equals(classe.simpleName, 'Categoria')}" method="delete" th:object="${command}" th:action="@{/categoria/delete}">
         <input type="hidden" id="id" name="id" th:value="${command.id}"/>
         <div th:replace="admin/delete/categoria :: copy"></div>
       </form>
 
-      <form class="form" id="form" th:if="${#strings.equals(classe.simpleName, 'Produto')}" method="delete" th:action="@{/produto/delete}">
+      <form class="form" id="form" th:if="${#strings.equals(classe.simpleName, 'Produto')}" method="delete" th:object="${command}" th:action="@{/produto/delete}">
         <input type="hidden" id="id" name="id" th:value="${command.id}"/>
         <div th:replace="admin/delete/produto :: copy"></div>
       </form>
 
-      <form class="form" id="form" th:if="${#strings.equals(classe.simpleName, 'Pagina')}"  method="delete" th:action="@{/pagina/delete}">
+      <form class="form" id="form" th:if="${#strings.equals(classe.simpleName, 'Pagina')}"  method="delete" th:object="${command}" th:action="@{/pagina/delete}">
         <input type="hidden" id="id" name="id" th:value="${command.id}"/>
         <div th:replace="admin/delete/pagina :: copy"></div>
       </form>
 
-      <form class="form" id="form" th:if="${#strings.equals(classe.simpleName, 'Usuario')}" method="delete" th:action="@{/usuario/delete}">
+      <form class="form" id="form" th:if="${#strings.equals(classe.simpleName, 'Usuario')}" method="delete" th:object="${command}" th:action="@{/usuario/delete}">
         <input type="hidden" id="id" name="id" th:value="${command.id}"/>
         <div th:replace="admin/delete/usuario :: copy"></div>
       </form>
 
-      <form class="form" id="form" th:if="${#strings.equals(classe.simpleName, 'Pedido')}" method="delete" th:action="@{/pedido/delete}">
+      <form class="form" id="form" th:if="${#strings.equals(classe.simpleName, 'Pedido')}" method="delete" th:object="${command}" th:action="@{/pedido/delete}">
         <input type="hidden" id="id" name="id" th:value="${command.id}"/>
         <div th:replace="admin/delete/pedido :: copy"></div>
       </form>
