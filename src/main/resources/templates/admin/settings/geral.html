@@ -1,4 +1,5 @@
 <th:block th:fragment="copy">
+<div class="tab_content" id="tab_content">
   <form class="form-container" id="form" method="post" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/set}">
     <div class="row">
       <div class="col-25">
@@ -49,4 +50,5 @@
     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
     <strong>Erro!</strong> Ocorreu um erro ao salvar as configura&ccedil;&otilde;es!
   </div>
+</div>
 </th:block>

@@ -2,24 +2,6 @@
   <form class="form-container" id="form" method="post" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/set}">
     <div class="row">
       <div class="col-25">
-        <label for="clientId">client-id</label>
-      </div>
-      <div class="col-75">
-        <input type="text" name="clientId" th:value="${setting.clientId}" class="form-control" id="clientId" placeholder="ClientID">
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-25">
-        <label for="clientSecret">client-secret</label>
-      </div>
-      <div class="col-75">
-        <input type="text" name="clientSecret" th:value="${setting.clientSecret}" class="form-control" id="clientSecret" placeholder="clientSecret">
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-25">
         <label for="publicKey">publicKey</label>
       </div>
       <div class="col-75">
