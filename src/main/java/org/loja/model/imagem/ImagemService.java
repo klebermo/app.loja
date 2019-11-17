@@ -14,7 +14,9 @@ import java.util.Base64;
 
 @Service
 public class ImagemService extends org.loja.model.Service<Imagem> {
-  private String file_path = System.getProperty("user.home")+File.separator+".app"+File.separator+"Pictures";
+  //private String file_path = System.getProperty("user.home")+File.separator+".app"+File.separator+"Pictures";
+
+  private String file_path = new File("").getAbsolutePath() + File.separator + ".app" + File.separator + "Pictures";
 
   public ImagemService() {
     super(Imagem.class);
