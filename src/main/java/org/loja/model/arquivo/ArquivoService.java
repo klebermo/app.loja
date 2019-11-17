@@ -14,7 +14,9 @@ import org.springframework.http.MediaType;
 
 @Service
 public class ArquivoService extends org.loja.model.Service<Arquivo> {
-  private String file_path = System.getProperty("user.home")+File.separator+".app"+File.separator+"Uploads";
+  //private String file_path = System.getProperty("user.home")+File.separator+".app"+File.separator+"Uploads";
+
+  private String file_path = new File("").getAbsolutePath() + File.separator + ".app" + File.separator + "Uploads";
 
   public ArquivoService() {
     super(Arquivo.class);
