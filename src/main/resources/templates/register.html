@@ -5,36 +5,51 @@
 <div th:replace="sidebar :: copy"></div>
 
 <main class="main">
-    <h3>Login</h3>
+    <h3>Cadastro</h3>
 
     <form class="form-container" id="form" method="post" th:object="${command}" th:action="@{/usuario/register}">
       <div class="form-row">
+        <div class="col-25">
+          <label for="login">Login</label>
+        </div>
         <div class="col-75">
-          <input type="text" th:field="*{username}" placeholder="Login"/>
+          <input type="text" id="login" th:field="*{username}" placeholder="Login">
         </div>
       </div>
 
       <div class="form-row">
+        <div class="col-25">
+          <label for="senha">Senha</label>
+        </div>
         <div class="col-75">
-          <input type="password" th:field="*{password}" placeholder="Senha"/>
+          <input type="password" id="senha" th:field="*{password}" placeholder="Senha">
         </div>
       </div>
 
       <div class="form-row">
+        <div class="col-25">
+          <label for="nome">Nome</label>
+        </div>
         <div class="col-75">
-          <input type="text" th:field="*{firstName}" placeholder="Nome"/>
+          <input type="text" id="nome" th:field="*{firstName}" placeholder="Nome">
         </div>
       </div>
 
       <div class="form-row">
+        <div class="col-25">
+          <label for="sobrenome">Sobrenome</label>
+        </div>
         <div class="col-75">
-          <input type="text" th:field="*{lastName}" placeholder="Sobrenome"/>
+          <input type="text" id="sobrenome" th:field="*{lastName}" placeholder="Sobrenome">
         </div>
       </div>
 
       <div class="form-row">
+        <div class="col-25">
+          <label for="email">E-mail</label>
+        </div>
         <div class="col-75">
-          <input type="email" th:field="*{email}" placeholder="E-mail"/>
+          <input type="email" id="email" th:field="*{email}" placeholder="E-mail">
         </div>
       </div>
 
