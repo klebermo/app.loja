@@ -23,7 +23,9 @@ public abstract class Dao<E> {
 	public Dao(Class<E> clazz) {
 		this.clazz = clazz;
 
-		String dir_name = System.getProperty("user.home")+File.separator+".app"+File.separator+"Config";
+		//String dir_name = System.getProperty("user.home")+File.separator+".app"+File.separator+"Config";
+
+		String dir_name = new File("").getAbsolutePath() + File.separator + ".app" + File.separator + "Config";
 		try {
 			dir = Paths.get(dir_name);
 			if(!Files.exists(dir))
