@@ -44,12 +44,13 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
   }
 
   public void register(Usuario novo) throws Exception {
+    this.dao.insert(novo);
     novo.setEnabled(true);
     novo.setLocked(false);
     novo.setCredenciais(new ArrayList<Credencial>());
     Credencial credencial = credencialDao.findBy("nome", "web");
     novo.getCredenciais().add(credencial);
-    this.dao.insert(novo);
+    this.dao.update(novo);
     //mailServer.send_mail(novo.getEmail(), novo.getFirstName(), novo.getLastName(), "Confirmação de cadastro", "...");
   }
 
