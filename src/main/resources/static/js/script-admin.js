@@ -235,22 +235,11 @@ function submit_delete(element) {
 
 function toggle_credencial(element) {
   var usuario = element.dataset.usuario;
-  var credencial = element.getAttribute('id');
+  var credencial = element.dataset.credencial;
   var url = element.dataset.url;
+
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-      if(element.checked == false) {
-          element.checked = true;
-      }
-      else {
-          if(element.checked == true) {
-              element.checked = false;
-           }
-      }
-    }
-  };
   var formData = new FormData();
   formData.append('usuario_id', usuario);
   formData.append('credencial_id', credencial);
@@ -343,61 +332,75 @@ function openIdiomaTab(element) {
   document.getElementById(id+'-tab').className += " active";
 }
 
-var tab_content = document.getElementsByClassName("tab-content");
-
-for (i = 0; i < tab_content.length; i++) {
-  // Select the node that will be observed for mutations
-  var targetNode = tab_content[i];
-
-  // Options for the observer (which mutations to observe)
-  var config = { attributes: true, childList: true, subtree: true };
-
-  // Callback function to execute when mutations are observed
-  var callback = function(mutationsList, observer) {
-      for(var mutation of mutationsList) {
-        if (mutation.type == 'childList')
-            detect_uploader();
-        else if (mutation.type == 'attributes')
-            detect_uploader();
-        else
-          detect_uploader();
-      }
-  };
-
-  // Create an observer instance linked to the callback function
-  var observer = new MutationObserver(callback);
-
-  // Start observing the target node for configured mutations
-  observer.observe(targetNode, config);
+function select_single_image() {
+  document.getElementById('icone').click();
 }
 
-function detect_uploader() {
-  var image_uploader = document.getElementsByClassName("image-uploader");
-  for (i = 0; i < image_uploader.length; i++)
-    image_uploader[i].addEventListener("change", image_upload, false);
-
-  var file_uploader = document.getElementsByClassName("file-uploader");
-  for (i = 0; i < file_uploader.length; i++)
-    file_uploader[i].addEventListener("change", file_upload, false);
+function add_single_imagem() {
+  document.getElementById('thumbnails').click();
 }
 
-function image_upload() {
-  var file_input = this;
-  var name = file_input.getAttribute("id");
+function edit_imagem() {
+  document.getElementById('thumbnails').click();
+}
+
+function remove_imagem() {
+  //
+}
+
+function select_single_file(element) {
+  var target = element.dataset.target;
+  document.getElementById(target).click();
+}
+
+function edit_file(element) {
+  var target = element.dataset.target;
+  document.getElementById(target).click();
+}
+
+function remove_file() {
+  //
+}
+
+function image_upload(file_input) {
+  var name = file_input.dataset.target;
   var url = file_input.dataset.url;
+  var path = file_input.dataset.path;
 
-  for(var i = 0; i<this.files.length; i++) {
-    var file =  this.files[i];
+  for(var i = 0; i<file_input.files.length; i++) {
+    var file =  file_input.files[i];
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var id = xhr.responseText;
-            var input = document.createElement("input");
-            input.setAttribute("type", "hidden");
-            input.setAttribute("name", name);
-            input.setAttribute("value", id);
-            file_input.after(input);
+
+            if(name === 'icone') {
+              document.getElementById("empty_image").style.display = 'none';
+              var input = document.createElement("input");
+              input.setAttribute("type", "hidden");
+              input.setAttribute("name", name);
+              input.setAttribute("value", id);
+              var img = document.createElement("img");
+              img.setAttribute("class", "thumbnail");
+              img.setAttribute("id", "single_image_"+id);
+              img.setAttribute('src', path + '/' + id);
+              document.getElementById('btn_upload').append(input);
+              document.getElementById('btn_upload').append(img);
+            }
+
+            if(name === 'thumbnails') {
+              var input = document.createElement("input");
+              input.setAttribute("type", "hidden");
+              input.setAttribute("name", name);
+              input.setAttribute("value", id);
+              var img = document.createElement("img");
+              img.setAttribute("class", "thumbnail");
+              img.setAttribute("id", "image_"+id);
+              img.setAttribute('src', path + '/' + id);
+              document.getElementById('gallery').append(input);
+              document.getElementById('gallery').append(img);
+            }
         }
     };
     var reader  = new FileReader();
@@ -415,7 +418,7 @@ function image_upload() {
 
 function file_upload() {
   var file_input = this;
-  var name = file_input.getAttribute("id");
+  var name = file_input.dataset.target;
   var url = file_input.dataset.url;
 
   for(var i = 0; i<this.files.length; i++) {
