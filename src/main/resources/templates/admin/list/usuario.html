@@ -35,6 +35,9 @@
                 <button sec:authorize="hasPermission(#user, 'remove_usuario')" class="button" th:attr="data-url=@{/usuario/delete}" onclick="delete_data(this)">
                   <img th:src="@{/images/icon_delete.png}" width="32" height="32" alt="remover"/>
                 </button>
+                <button sec:authorize="hasPermission(#user, 'consulta_credencial')" class="button" th:attr="data-url=@{/usuario/credenciais}" onclick="credencial_data(this)">
+                  <img th:src="@{/images/icon_credencial.png}" width="32" height="32" alt="remover"/>
+                </button>
               </div>
             </th>
           </tr>
