@@ -8,8 +8,9 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Column;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +24,9 @@ public class Pedido extends Model {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
 
-  @OneToMany(fetch = FetchType.EAGER)
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name="pedido_produtos", joinColumns={@JoinColumn(name="pedido_id")}, inverseJoinColumns={@JoinColumn(name="produto_id")})
+  @Fetch(FetchMode.SELECT)
   private List<Produto> produtos;
 
   @Column
@@ -36,7 +39,7 @@ public class Pedido extends Model {
   private String transactionId;
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "fk_usuario")
+  @Fetch(FetchMode.SELECT)
   private Usuario usuario;
 
   @Override
