@@ -1,3 +1,27 @@
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {n = 1}
+  if (n < 1) {n = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[n].style.display = "block";
+  dots[n].className += " active";
+}
+
 function register() {
   var formData = new FormData(document.getElementById("form"));
   var url = document.getElementById("form").action;
