@@ -9,6 +9,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Column;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.FetchType;
@@ -39,7 +42,8 @@ public class Usuario extends Model implements UserDetails {
   @Column
   private String email;
 
-  @OneToMany(fetch = FetchType.EAGER)
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name="usuario_credenciais", joinColumns={@JoinColumn(name="usuario_id")}, inverseJoinColumns={@JoinColumn(name="credencial_id")})
   @Fetch(FetchMode.SELECT)
   private List<org.loja.model.credencial.Credencial> credenciais;
 
@@ -56,7 +60,7 @@ public class Usuario extends Model implements UserDetails {
   @Fetch(FetchMode.SELECT)
   private org.loja.model.cesta.Cesta cesta;
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario")
+  @OneToMany(fetch = FetchType.EAGER)
   @Fetch(FetchMode.SELECT)
   private List<org.loja.model.pedido.Pedido> pedidos;
 
