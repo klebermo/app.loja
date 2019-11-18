@@ -2,7 +2,7 @@
   <div class="row">
     <h3 class="row_title">
       <th:block th:if="${categoria.icone}">
-        <img th:src="@{/download/imagem/__${categoria.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${categoria.nome}"/>
+        <img th:src="@{/imagem/download/__${categoria.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${categoria.nome}"/>
       </th:block>
 
       <th:block th:unless="${categoria.icone}">

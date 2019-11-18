@@ -14,8 +14,24 @@
       <small th:each="t : ${produto.resumo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${t.conteudo}"></small>
     </h3>
 
+    <div class="slideshow-container">
+      <div class="mySlides fade" th:each="img,stat : ${produto.thumbnails}">
+        <div class="numbertext"><span th:text="${stat.count}"></span> / <span th:text="${#lists.size(produto.thumbnails)}"></span></div>
+        <img th:src="@{/imagem/download/__${img.id}__}" style="width:100%">
+      </div>
+
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+
+    <div style="text-align:center">
+      <span th:each="dot,stat : ${produto.thumbnails}" class="dot" th:onclick="${'currentSlide(' + stat.count + ')'}"></span>
+    </div>
+
     <div class="col">
-      <p th:text="${#numbers.formatCurrency(produto.preco)}"></p>
+      <a href="#" class="button">
+        <h2> Pre&ccedil;o <br/> <small th:text="${#numbers.formatCurrency(produto.preco)}"></small> </h2>
+      </a>
     </div>
 
     <div class="col">
