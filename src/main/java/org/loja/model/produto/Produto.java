@@ -44,6 +44,7 @@ public class Produto extends Model {
   private List<Texto> descricao;
 
   @OneToOne(fetch = FetchType.EAGER)
+  @Fetch(FetchMode.SELECT)
   private Categoria categoria;
 
   @Column
