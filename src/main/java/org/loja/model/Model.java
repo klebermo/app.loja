@@ -6,7 +6,7 @@ public abstract class Model extends Object {
   @Override
   public boolean equals(Object object) {
     Model other = (Model)object;
-    return toString().equals(other.toString());
+    return this.toString().equals(other.toString());
   }
 
   /*@Override
