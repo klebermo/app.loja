@@ -1,0 +1,39 @@
+<th:block th:fragment="copy">
+<div id="form-container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Credencial</th>
+        <th>Autoriza&ccedil;&otilde;es</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr th:each="credencial : ${credenciais}">
+        <td>
+          <input type="checkbox" class="credencial" th:checked="${#lists.contains(command.credenciais, credencial)}" th:attr="data-usuario=${command.id}, data-credencial=${credencial.id}, data-url=@{/usuario/toggle_credencial}" onclick="toggle_credencial(this);">
+        </td>
+        <td>
+          <strong th:text="${credencial.nome}"></strong>
+        </td>
+        <td>
+          <ul>
+            <li th:each="autorizacao : ${credencial.autorizacoes}" th:text="${autorizacao.nome}"></li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+
+    <tfoot>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>
+          <button class="submit" th:attr="data-id=${command.id}" onclick="cancel_credencial(this);">Cancelar</button>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+</th:block>
