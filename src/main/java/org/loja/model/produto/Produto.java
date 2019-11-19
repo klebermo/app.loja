@@ -1,22 +1,25 @@
 package org.loja.model.produto;
 
-import org.loja.model.Model;
-import org.loja.model.categoria.Categoria;
-import java.util.Set;
-import org.loja.model.imagem.Imagem;
-import org.loja.model.arquivo.Arquivo;
 import javax.persistence.Entity;
+import org.loja.model.Model;
 import javax.persistence.Id;
-import javax.persistence.Column;
-import javax.persistence.OneToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.FetchType;
-import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.OneToMany;
 import org.loja.model.titulo.Titulo;
 import org.loja.model.resumo.Resumo;
 import org.loja.model.texto.Texto;
+import javax.persistence.OneToOne;
+import javax.persistence.FetchType;
+import javax.persistence.CascadeType;
+import org.loja.model.categoria.Categoria;
+import javax.persistence.Column;
+import org.loja.model.imagem.Imagem;
+import org.loja.model.arquivo.Arquivo;
+import java.util.Set;
+import java.util.List;
+import java.util.HashSet;
+import java.util.ArrayList;
 import org.loja.forum.forum.Forum;
 
 @Entity
@@ -68,6 +71,13 @@ public class Produto extends Model {
     return nome;
   }
 
+  public List<Titulo> getNomeAsList() {
+    if(nome == null)
+      return new ArrayList<Titulo>(new HashSet<Titulo>());
+    else
+      return new ArrayList<Titulo>(nome);
+  }
+
   public void setNome(Set<Titulo> nome) {
     this.nome = nome;
   }
@@ -76,12 +86,26 @@ public class Produto extends Model {
     return resumo;
   }
 
+  public List<Resumo> getResumoAsList() {
+    if(resumo == null)
+      return new ArrayList<Resumo>(new HashSet<Resumo>());
+    else
+      return new ArrayList<Resumo>(resumo);
+  }
+
   public void setResumo(Set<Resumo> resumo) {
     this.resumo = resumo;
   }
 
   public Set<Texto> getDescricao() {
     return descricao;
+  }
+
+  public List<Texto> getDescricaoAsList() {
+    if(descricao == null)
+      return new ArrayList<Texto>(new HashSet<Texto>());
+    else
+      return new ArrayList<Texto>(descricao);
   }
 
   public void setDescricao(Set<Texto> descricao) {
