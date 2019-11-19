@@ -33,9 +33,6 @@ public abstract class Service<E> {
   @Autowired
   protected PedidoDao pedidoDao;
 
-  @Autowired
-  protected MailSender mailSender;
-
   public Service(Class<E> clazz) {
     this.clazz = clazz;
   }
@@ -71,7 +68,7 @@ public abstract class Service<E> {
       usuarioDao.update(usuario);
     }
 
-    mailSender.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Destalhes do pedido", "...");
+    //mailSender.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Destalhes do pedido", "...");
 
     return pedido.getId();
   }
