@@ -34,7 +34,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
   private PedidoDao pedidoDao;
 
   @Autowired
-  private MailSender mailServer;
+  private MailSender mailSender;
 
   @Autowired
   private HttpServletRequest httpServletRequest;
@@ -51,7 +51,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     Credencial credencial = credencialDao.findBy("nome", "web");
     novo.getCredenciais().add(credencial);
     this.dao.update(novo);
-    //mailServer.send_mail(novo.getEmail(), novo.getFirstName(), novo.getLastName(), "Confirmação de cadastro", "...");
+    //mailSender.send_mail(novo.getEmail(), novo.getFirstName(), novo.getLastName(), "Confirmação de cadastro", "...");
   }
 
   public String recoverPassword(String email, String token) throws Exception {
@@ -59,10 +59,10 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     if(usuario != null)
       if(token == null) {
         token = UUID.randomUUID().toString();
-        mailServer.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Recuperação de senha", "...");
+        mailSender.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Recuperação de senha", "...");
         return token;
       } else {
-        mailServer.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Nova senha", "...");
+        mailSender.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Nova senha", "...");
         return null;
       }
     else
