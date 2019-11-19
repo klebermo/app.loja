@@ -71,6 +71,8 @@ public abstract class Dao<E> {
 			object = (E) in.readObject();
 			in.close();
 			fileIn.close();
+			if(object == null)
+				object = clazz.newInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
