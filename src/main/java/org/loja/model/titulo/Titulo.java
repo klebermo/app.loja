@@ -14,9 +14,6 @@ public class Titulo extends Model {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
 
-  @Column
-  private String idioma;
-
   @Column(length=32)
   private String conteudo;
 
