@@ -20,7 +20,7 @@
     </div>
     <div class="col-75">
       <select class="form-control" id="categoria" th:field="*{categoria}">
-        <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:selected="${#strings.equals(categoria.nome, command.categoria.nome)}">
+        <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:selected="${#strings.equals(categoria, command.categoria)}">
           <span th:each="t : ${categoria.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}"></span>
         </option>
       </select>
