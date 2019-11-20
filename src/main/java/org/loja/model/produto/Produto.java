@@ -28,13 +28,13 @@ public class Produto extends Model {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
 
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @OneToMany(fetch = FetchType.EAGER)
   private Set<Titulo> nome;
 
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @OneToMany(fetch = FetchType.EAGER)
   private Set<Resumo> resumo;
 
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @OneToMany(fetch = FetchType.EAGER)
   private Set<Texto> descricao;
 
   @OneToOne(fetch = FetchType.EAGER)
@@ -73,7 +73,7 @@ public class Produto extends Model {
 
   public List<Titulo> getNomeAsList() {
     if(nome == null)
-      return new ArrayList<Titulo>(new HashSet<Titulo>());
+      return new ArrayList<Titulo>();
     else
       return new ArrayList<Titulo>(nome);
   }
@@ -88,7 +88,7 @@ public class Produto extends Model {
 
   public List<Resumo> getResumoAsList() {
     if(resumo == null)
-      return new ArrayList<Resumo>(new HashSet<Resumo>());
+      return new ArrayList<Resumo>();
     else
       return new ArrayList<Resumo>(resumo);
   }
@@ -103,7 +103,7 @@ public class Produto extends Model {
 
   public List<Texto> getDescricaoAsList() {
     if(descricao == null)
-      return new ArrayList<Texto>(new HashSet<Texto>());
+      return new ArrayList<Texto>();
     else
       return new ArrayList<Texto>(descricao);
   }
