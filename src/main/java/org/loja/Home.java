@@ -62,11 +62,7 @@ public class Home {
 
     @RequestMapping("/p/{nome}")
     public String produto(Model model, @PathVariable("nome") String nome) {
-      List<Produto> lista = produto.select();
-      for(Produto p : lista)
-        for(Titulo titulo : p.getNome())
-          if(titulo.getConteudo().equals(nome))
-            model.addAttribute("produto", p);
+      model.addAttribute("produto", produto.findBy("nome", nome));
       return "index";
     }
 
