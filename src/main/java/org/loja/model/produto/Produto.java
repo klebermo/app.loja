@@ -12,6 +12,7 @@ import org.loja.model.texto.Texto;
 import javax.persistence.OneToOne;
 import javax.persistence.FetchType;
 import javax.persistence.CascadeType;
+import javax.persistence.OrderColumn;
 import org.loja.model.categoria.Categoria;
 import javax.persistence.Column;
 import org.loja.model.imagem.Imagem;
@@ -28,14 +29,17 @@ public class Produto extends Model {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
 
-  @OneToMany(fetch = FetchType.EAGER)
-  private Set<Titulo> nome;
+  @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+  @OrderColumn
+  private List<Titulo> nome;
 
-  @OneToMany(fetch = FetchType.EAGER)
-  private Set<Resumo> resumo;
+  @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+  @OrderColumn
+  private List<Resumo> resumo;
 
-  @OneToMany(fetch = FetchType.EAGER)
-  private Set<Texto> descricao;
+  @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+  @OrderColumn
+  private List<Texto> descricao;
 
   @OneToOne(fetch = FetchType.EAGER)
   private Categoria categoria;
@@ -67,48 +71,27 @@ public class Produto extends Model {
     this.id = id;
   }
 
-  public Set<Titulo> getNome() {
+  public List<Titulo> getNome() {
     return nome;
   }
 
-  public List<Titulo> getNomeAsList() {
-    if(nome == null)
-      return new ArrayList<Titulo>();
-    else
-      return new ArrayList<Titulo>(nome);
-  }
-
-  public void setNome(Set<Titulo> nome) {
+  public void setNome(List<Titulo> nome) {
     this.nome = nome;
   }
 
-  public Set<Resumo> getResumo() {
+  public List<Resumo> getResumo() {
     return resumo;
   }
 
-  public List<Resumo> getResumoAsList() {
-    if(resumo == null)
-      return new ArrayList<Resumo>();
-    else
-      return new ArrayList<Resumo>(resumo);
-  }
-
-  public void setResumo(Set<Resumo> resumo) {
+  public void setResumo(List<Resumo> resumo) {
     this.resumo = resumo;
   }
 
-  public Set<Texto> getDescricao() {
+  public List<Texto> getDescricao() {
     return descricao;
   }
 
-  public List<Texto> getDescricaoAsList() {
-    if(descricao == null)
-      return new ArrayList<Texto>();
-    else
-      return new ArrayList<Texto>(descricao);
-  }
-
-  public void setDescricao(Set<Texto> descricao) {
+  public void setDescricao(List<Texto> descricao) {
     this.descricao = descricao;
   }
 
