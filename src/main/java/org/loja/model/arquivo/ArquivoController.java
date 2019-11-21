@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.io.IOException;
 import org.springframework.http.HttpEntity;
@@ -27,13 +26,13 @@ public class ArquivoController extends org.loja.model.Controller<Arquivo> {
   }
 
   @RequestMapping("download/{id}")
-  public HttpEntity<byte[]> download(@PathVariable("id") Integer id) throws IOException {
-    return this.serv.download(id);
+  public HttpEntity<byte[]> download(@RequestParam("arquivo") Integer arquivo_id, @RequestParam("produto") String produto_nome) throws IOException {
+    return this.serv.download(arquivo_id, produto_nome);
   }
 
   @RequestMapping("remove/{id}")
   @ResponseBody
-  public void remove(@PathVariable("id") Integer id) throws IOException {
+  public void remove(@RequestParam("id") Integer id) throws IOException {
     this.serv.remove(id);
   }
 }

@@ -42,8 +42,8 @@ public class ArquivoService extends org.loja.model.Service<Arquivo> {
     return arquivo.getId();
   }
 
-  public HttpEntity<byte[]> download(Integer id) throws IOException {
-    Arquivo arquivo = this.dao.findBy("id", id);
+  public HttpEntity<byte[]> download(Integer arquivo_id, String produto_nome) throws IOException {
+    Arquivo arquivo = this.dao.findBy("id", arquivo_id);
 
     File file = new File(arquivo.getFileName());
 		FileInputStream in = new FileInputStream(file);
@@ -51,7 +51,7 @@ public class ArquivoService extends org.loja.model.Service<Arquivo> {
 
     HttpHeaders header = new HttpHeaders();
     header.setContentType(new MediaType("application", "octet-stream"));
-    header.set("Content-Disposition", "attachment; filename=" + arquivo.getFileName());
+    header.set("Content-Disposition", "attachment; filename=" + produto_nome);
     header.setContentLength(documentBody.length);
 
     return new HttpEntity<byte[]>(documentBody, header);
