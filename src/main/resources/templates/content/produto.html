@@ -9,7 +9,7 @@
         <img th:src="@{/images/icon_product.png}" width=64 height=64 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
       </th:block>
 
-      <span th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${t.conteudo}"></span>
+      <span th:text="${produto.nome}"></span>
 
       <small th:each="t : ${produto.resumo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${t.conteudo}"></small>
     </h3>
@@ -30,7 +30,7 @@
       <div class="dropdown">
         <button class="dropbtn">Baixar <br/> <small>Vers&atilde;o Lite</small> </button>
         <div class="dropdown-content">
-          <a th:each="arquivo : ${produto.versaoGratuita}" th:href="@{/arquivo/download/__${arquivo.id}__}" th:text="${arquivo.type}"></a>
+          <a th:each="arquivo : ${produto.versaoGratuita}" th:href="@{/arquivo/download?/arquivo=__${arquivo.id}__&produto=__${produto.nome}__}" th:text="${arquivo.type}"></a>
         </div>
       </div>
     </div>
