@@ -4,7 +4,7 @@
       <label for="icone">Icone</label>
     </div>
     <div class="col-75">
-      <button type="button" id="btn_upload" onclick="select_single_image();">
+      <button type="button" class="btn_upload" id="btn_upload_icone" data-target="icone" onclick="select_imagem(this);">
         <img th:if="${command.icone}" class="thumbnail" th:id="${'single_image_' + command.id}" th:src="@{/imagem/download/__${command.icone.id}__}">
         <img th:unless="${command.icone}" class="thumbnail" id="empty_image" th:src="@{/images/icon_add_imagem.png}"/>
         <input type="file" accept="png" class="image-uploader" id="icone" style="display: none;" th:attr="data-target=${'icone'}, data-url=@{/imagem/upload}, data-path=@{/imagem/download}" onchange="image_upload(this);"/>
