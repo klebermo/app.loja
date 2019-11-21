@@ -3,16 +3,18 @@
 
   <div class="row">
     <div class="col-25">
-      <label for="icone">Icone</label>
-    </div>
-    <div class="col-75">
       <button type="button" class="btn_upload" id="btn_upload_icone" data-target="icone" onclick="select_imagem(this);">
         <img th:if="${command.icone}" class="thumbnail" id="single_image" th:src="@{/imagem/download/__${command.icone.id}__}" th:alt="${command.nome}">
         <img th:unless="${command.icone}" class="thumbnail" id="empty_image" th:src="@{/images/icon_add_imagem.png}" alt="icone do produto"/>
         <input type="file" accept="png" class="image-uploader" id="icone" style="display: none;" th:attr="data-target=${'icone'}, data-url=@{/imagem/upload}, data-path=@{/imagem/download}" onchange="image_upload(this);"/>
       </button>
     </div>
+    <div class="col-75">
+      <input type="text" th:field="*{nome}" id="nome" placeholder="Nome">
+    </div>
   </div>
+
+  <hr/>
 
   <div class="row">
     <div class="col-25">
@@ -36,6 +38,8 @@
     </div>
   </div>
 
+  <hr/>
+
   <!-- Tab links -->
   <div class="tab_idioma">
     <button type="button" th:each="idioma,stat : ${idiomas.listaDeIdiomas}" th:class="${stat.index == 0}? 'tabidioma active' : 'tabidioma'" th:id="${#strings.substringBefore(idioma,',') + '-tab'}" th:attr="data-id=${#strings.substringBefore(idioma,',')}" onclick="openIdiomaTab(this)" th:text="${#strings.substringBefore(idioma,',')}"></button>
@@ -45,22 +49,10 @@
   <div th:each="idioma,stat : ${idiomas.listaDeIdiomas}" th:id="${#strings.substringBefore(idioma,',')}" class="tabcontent_idioma" th:style="${stat.index == 0}? 'display: block;': 'display: none;'">
     <div class="row">
       <div class="col-25">
-        <label for="nome">Nome</label>
-      </div>
-      <div class="col-75">
-        <input type="hidden" th:name="${'nome['+stat.index+'].idioma'}" th:value="${idioma}"/>
-        <th:block th:if="${command.nome}">
-          <input type="text" th:name="${'nome['+stat.index+'].conteudo'}" th:each="value : ${command.nome}" th:if="${#strings.equals(value.idioma, idioma)}" th:value="${value.conteudo}" id="nome" placeholder="Nome">
-        </th:block>
-        <input th:unless="${command.nome}" type="text" th:name="${'nome['+stat.index+'].conteudo'}" id="nome" placeholder="Nome">
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-25">
         <label for="resumo">Resumo</label>
       </div>
       <div class="col-75">
+        <input type="hidden" th:name="${'nome[' + stat.index + '].id'}" th:each="value : ${command.resumo}" th:if="${#strings.equals(value.idioma, idioma)}" th:value="${value.id}"/>
         <input type="hidden" th:name="${'resumo['+stat.index+'].idioma'}" th:value="${idioma}"/>
         <th:block th:if="${command.resumo}">
           <input type="text" th:name="${'resumo['+stat.index+'].conteudo'}" th:each="value : ${command.resumo}" th:if="${#strings.equals(value.idioma, idioma)}" th:value="${value.conteudo}" id="resumo" placeholder="Resumo">
@@ -71,6 +63,7 @@
 
     <div class="row">
       <div class="col-75">
+        <input type="hidden" th:name="${'nome[' + stat.index + '].id'}" th:each="value : ${command.descricao}" th:if="${#strings.equals(value.idioma, idioma)}" th:value="${value.id}"/>
         <input type="hidden" th:name="${'descricao['+stat.index+'].idioma'}" th:value="${idioma}"/>
         <th:block th:if="${command.descricao}">
           <textarea th:name="${'descricao['+stat.index+'].conteudo'}" th:each="value : ${command.resumo}" th:if="${#strings.equals(value.idioma, idioma)}" th:text="${value.conteudo}" id="descricao"></textarea>
@@ -79,6 +72,8 @@
       </div>
     </div>
   </div>
+
+  <hr/>
 
   <div class="row">
     <div class="col-25">

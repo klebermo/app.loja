@@ -49,7 +49,7 @@
       <label class="form-check-label" for="enabled">ativo</label>
     </div>
     <div class="col-75">
-      <input type="checkbox" name="enabled" class="form-check-input" id="enabled" th:selected="${command.enabled}">
+      <input type="checkbox" name="enabled" class="form-check-input" id="enabled" th:checked="${command.enabled}">
     </div>
   </div>
 
@@ -58,7 +58,7 @@
       <label class="form-check-label" for="locked">bloqueado</label>
     </div>
     <div class="col-75">
-      <input type="checkbox" name="locked" class="form-check-input" id="locked" th:selected="command.locked">
+      <input type="checkbox" name="locked" class="form-check-input" id="locked" th:checked="command.locked">
     </div>
   </div>
 

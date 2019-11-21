@@ -24,6 +24,7 @@
         <label for="nome">Nome</label>
       </div>
       <div class="col-75">
+        <input type="hidden" th:name="${'nome[' + stat.index + '].id'}" th:each="value : ${command.nome}" th:if="${#strings.equals(value.idioma, idioma)}" th:value="${value.id}"/>
         <input type="hidden" th:name="${'nome[' + stat.index + '].idioma'}" th:value="${idioma}"/>
         <th:block th:if="${command.nome}">
           <input type="text" th:name="${'nome[' + stat.index + '].conteudo'}" th:each="value : ${command.nome}" th:if="${#strings.equals(value.idioma, idioma)}" th:value="${value.conteudo}" class="form-control" id="nome" placeholder="Nome">
