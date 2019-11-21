@@ -49,11 +49,7 @@ public class MercadoPagoService extends org.loja.settings.Service<MercadoPago> {
     if(usuario.getCesta() != null)
       for(Produto p : usuario.getCesta().getProdutos()) {
         Item item = new Item();
-        String nome = "";
-        for(Titulo t : p.getNome())
-          if(t.getIdioma().equals(httpServletRequest.getLocale().toString()))
-            nome = t.getConteudo();
-        item.setTitle(nome)
+        item.setTitle(p.getNome())
             .setQuantity(1)
             .setUnitPrice(p.getPreco());
         preference.appendItem(item);
