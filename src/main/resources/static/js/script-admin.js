@@ -332,28 +332,16 @@ function openIdiomaTab(element) {
   document.getElementById(id+'-tab').className += " active";
 }
 
-function select_single_image() {
-  document.getElementById('icone').click();
-}
-
-function add_single_imagem() {
-  document.getElementById('thumbnails').click();
-}
-
-function edit_imagem() {
-  document.getElementById('thumbnails').click();
+function select_imagem(element) {
+  var target = element.dataset.target;
+  document.getElementById(target).click();
 }
 
 function remove_imagem() {
   //
 }
 
-function select_single_file(element) {
-  var target = element.dataset.target;
-  document.getElementById(target).click();
-}
-
-function edit_file(element) {
+function select_file(element) {
   var target = element.dataset.target;
   document.getElementById(target).click();
 }
@@ -385,8 +373,8 @@ function image_upload(file_input) {
               img.setAttribute("class", "thumbnail");
               img.setAttribute("id", "single_image_"+id);
               img.setAttribute('src', path + '/' + id);
-              document.getElementById('btn_upload').append(input);
-              document.getElementById('btn_upload').append(img);
+              document.getElementById('btn_upload_icone').append(input);
+              document.getElementById('btn_upload_icone').append(img);
             }
 
             if(name === 'thumbnails') {
@@ -416,13 +404,14 @@ function image_upload(file_input) {
   }
 }
 
-function file_upload() {
-  var file_input = this;
+function file_upload(file_input) {
   var name = file_input.dataset.target;
   var url = file_input.dataset.url;
+  var path = file_input.dataset.path;
 
-  for(var i = 0; i<this.files.length; i++) {
-    var file = this.files[i];
+  for(var i = 0; i<file_input.files.length; i++) {
+    var file = file_input.files[i];
+    let ext = file.name.split('.').pop();
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.onreadystatechange = function() {
@@ -432,13 +421,14 @@ function file_upload() {
             input.setAttribute("type", "hidden");
             input.setAttribute("name", name);
             input.setAttribute("value", id);
-            file_input.after(input);
+            document.getElementById("btn_upload_"+name+"_"+ext).append(input);
+            document.getElementById("empty_"+name+"_"+ext).style.display = 'none';
+            document.getElementById("single_"+name+"_"+ext).style.display = 'block';
         }
     };
     var reader  = new FileReader();
     reader.onloadend = function() {
       var bytes = reader.result;
-      var ext = file.name.split(".").pop();
       var formData = new FormData();
       formData.append('bytes', bytes);
       formData.append('type', ext);
