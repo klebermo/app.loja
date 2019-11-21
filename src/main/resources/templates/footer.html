@@ -1,7 +1,8 @@
 <th:block th:fragment="copy">
     <script th:src="@{/js/script.js}"></script>
     <script th:if="${produto}" type="text/javascript">
-      showSlides(1);
+      var slideIndex = 1;
+      showSlides(slideIndex);
     </script>
   </body>
 </html>
