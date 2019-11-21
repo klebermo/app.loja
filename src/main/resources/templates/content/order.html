@@ -44,7 +44,7 @@
 
         <td>
           <div class="dropdown">
-            <span class="button">Baixar</span>
+            <span class="dropbtn">Baixar</span>
             <div class="dropdown-content">
               <a th:each="arquivo : ${produto.versaoPaga}" th:href="@{/arquivo/download/__${arquivo.id}__}" th:text="${arquivo.type}"></a>
             </div>
