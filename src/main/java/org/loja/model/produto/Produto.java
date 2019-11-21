@@ -29,9 +29,8 @@ public class Produto extends Model {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
 
-  @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-  @OrderColumn
-  private List<Titulo> nome;
+  @Column
+  private String nome;
 
   @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
   @OrderColumn
@@ -71,11 +70,11 @@ public class Produto extends Model {
     this.id = id;
   }
 
-  public List<Titulo> getNome() {
+  public String getNome() {
     return nome;
   }
 
-  public void setNome(List<Titulo> nome) {
+  public void setNome(String nome) {
     this.nome = nome;
   }
 
@@ -152,6 +151,6 @@ public class Produto extends Model {
   }
 
   public String toString() {
-    return nome.toString();
+    return nome;
   }
 }
