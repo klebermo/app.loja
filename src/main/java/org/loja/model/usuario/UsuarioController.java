@@ -24,6 +24,7 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   @RequestMapping(value = "/register", method=RequestMethod.GET)
   public String formRegister(Model model) {
     model.addAttribute("command", new Usuario());
+    model.addAttribute("login", "login");
     return "register";
   }
 
@@ -34,7 +35,8 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   }
 
   @RequestMapping(value = "/recoverPassword", method=RequestMethod.GET)
-  public String formRecover() {
+  public String formRecover(Model model) {
+    model.addAttribute("login", "login");
     return "recover";
   }
 
