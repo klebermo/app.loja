@@ -1,74 +1,34 @@
 <th:block th:fragment="copy">
-  <div class="row">
-    <h3 class="row_title">
-      <th:block th:if="${categoria.icone}">
-        <img th:src="@{/imagem/download/__${categoria.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${categoria.nome}"/>
-      </th:block>
+  <div class="container">
+    <div class="row">
+      <h3>
+        <th:block th:if="${categoria.icone}">
+          <img th:src="@{/imagem/download/__${categoria.icone.id}__}" width=64 height=64 th:alt="${categoria.nome}"/>
+        </th:block>
 
-      <th:block th:unless="${categoria.icone}">
-        <img th:src="@{/images/icon_category.png}" width=64 height=64 class="mr-3" th:alt="${categoria.nome}"/>
-      </th:block>
+        <th:block th:unless="${categoria.icone}">
+          <i class="fas fa-object-group"></i>
+        </th:block>
 
-      <span th:each="t : ${categoria.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></span>
+        <span th:each="t : ${categoria.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></span>
 
-      <small th:each="r : ${categoria.resumo}" th:if="${#strings.equals(#strings.substringBefore(r.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${r.conteudo}"></small>
-    </h3>
+        <small th:each="r : ${categoria.resumo}" th:if="${#strings.equals(#strings.substringBefore(r.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${r.conteudo}"></small>
+      </h3>
 
-    <div class="col" th:each="p : ${produtos}" th:if="${#strings.equals(p.categoria, categoria)}">
-      <h4 th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></h4>
-
-      <th:block th:if="${p.icone}">
-        <img th:src="@{/imagem/download/__${p.icone.id}__}" width=64 height=64 th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
-      </th:block>
-
-      <th:block th:unless="${p.icone}">
-        <img th:src="@{/images/icon_product.png}" width=64 height=64 th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
-      </th:block>
-
-      <p th:each="r : ${p.resumo}" th:if="${#strings.equals(#strings.substringBefore(r.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${r.conteudo}"></p>
-
-      <a th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/p/__${t.conteudo}__}">Ver detalhes</a>
-    </div>
+      <div class="row">
+        <div class="row">
+          <div class="col-sm" th:each="p : ${produtos}" th:if="${#strings.equals(p.categoria, c)}">
+            <div class="card" style="width: 18rem;">
+              <img th:if="${p.icone}" th:src="@{/imagem/download/__${p.icone.id}__}" class="card-img-top" th:alt="@{p.nome}">
+              <img th:unless="${p.icone}" src="#" class="card-img-top" th:alt="@{p.nome}">
+              <div class="card-body">
+                <h5 class="card-title" th:text="p.nome"></h5>
+                <p class="card-text" th:each="r : ${p.resumo}" th:if="${#strings.equals(#strings.substringBefore(r.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${r.conteudo}"></p>
+                <a class="btn btn-primary" th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/p/__${t.conteudo}__}">Ver detalhes</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
   </div>
 </th:block>
-
-<!--
-<div class="row">
-  <div class="col-2">
-    <th:block th:if="${categoria.icone}">
-      <img th:src="@{/download/imagem/__${categoria.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${categoria.nome}"/>
-    </th:block>
-
-    <th:block th:unless="${categoria.icone}">
-      <img th:src="@{/images/icon_category.png}" width=64 height=64 class="mr-3" th:alt="${categoria.nome}"/>
-    </th:block>
-  </div>
-
-  <div class="col-10">
-    <h5>
-      <span th:each="t : ${categoria.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></span>
-      <small th:each="r : ${categoria.resumo}" th:if="${#strings.equals(#strings.substringBefore(r.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${r.conteudo}"></small>
-    </h5>
-  </div>
-</div>
-
-<div class="row no-gutters">
-  <div class="col" th:each="p : ${produtos}" th:if="${#strings.equals(p.categoria, categoria)}">
-    <div class="card" style="width: 18rem;">
-      <th:block th:if="${p.icone}">
-        <img th:src="@{/imagem/download/__${p.icone}__}" class="card-img-top" th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}">
-      </th:block>
-
-      <th:block th:unless="${p.icone}">
-        <img th:src="@{/images/icon_product.png}" width=64 height=64 class="mr-3" th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}">
-      </th:block>
-
-      <div class="card-body">
-        <h5 class="card-title" th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></h5>
-        <p class="card-text" th:each="r : ${p.resumo}" th:if="${#strings.equals(#strings.substringBefore(r.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${r.conteudo}"></p>
-        <a th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}"  th:href="@{/p/__${t.conteudo}__}" class="btn btn-primary">Ver detalhes</a>
-      </div>
-    </div>
-  </div>
-</div>
--->
