@@ -1,55 +1,21 @@
 <th:block th:fragment="copy">
-  <p>
-    <button sec:authorize="hasPermission(#user, 'cadastra_categoria')" class="button" onclick="insert_data()">
-      <img th:src="@{/images/icon_insert.png}" width="32" height="32" alt="inserir"/>
+  <p id="insert">
+    <button sec:authorize="hasPermission(#user, 'cadastra_categoria')" type="button" class="btn btn-dark" id="insert" th:attr="data-url=@{/categoria/insert}" onclick="open_tab(this)">
+      <i class="fas fa-plus"></i> Novo item
     </button>
   </p>
 
-  <!-- Tab links -->
-  <div class="tab" id="tab">
-    <button class="tablinks active" id="listagem-tab" onclick="openTab('listagem-tab', 'listagem')">Listagem</button>
-    <button class="tablinks" id="insert-tab" style="display: none;" onclick="openTab('insert-tab', 'insert')">Insert</button>
-    <button class="tablinks" id="update-tab" style="display: none;" onclick="openTab('update-tab', 'update')">Update</button>
-    <button class="tablinks" id="delete-tab" style="display: none;" onclick="openTab('delete-tab', 'delete')">Delete</button>
-    <button class="tablinks" id="credencial-tab" style="display: none;" onclick="openTab('credencial-tab', 'credencial')">Credenciais</button>
-  </div>
-
-  <!-- Tab content -->
-  <div class="tab_content" id="tab_content">
-    <div id="listagem" class="tabcontent" style="display: block;">
-      <table class="table" id="table" th:attr="data-json=@{/__${#strings.toLowerCase(classe.simpleName)}__/list.json}">
-        <thead class="thead-dark">
-          <tr id="table-header">
-            <th>#</th>
-            <th class="col">nome</th>
-            <th class="col">resumo</th>
-            <th>
-              <div id="buttons" style="display: none;">
-                <button sec:authorize="hasPermission(#user, 'atualiza_categoria')" class="button" th:attr="data-url=@{/categoria/update}" onclick="update_data(this)">
-                  <img th:src="@{/images/icon_update.png}" width="32" height="32" alt="atualizar"/>
-                </button>
-                <button sec:authorize="hasPermission(#user, 'remove_categoria')" class="button" th:attr="data-url=@{/categoria/delete}" onclick="delete_data(this)">
-                  <img th:src="@{/images/icon_delete.png}" width="32" height="32" alt="remover"/>
-                </button>
-              </div>
-            </th>
-          </tr>
-        </thead>
-
-        <tbody id="table-body"></tbody>
-      </table>
+  <th>#</th>
+  <th class="col">nome</th>
+  <th class="col">resumo</th>
+  <th>
+    <div class="btn-group" id="buttons" role="group" aria-label="comandos" style="display: none;">
+      <button sec:authorize="hasPermission(#user, 'atualiza_categoria')" type="button" class="btn btn-secondary" id="update" th:attr="data-url=@{/categoria/update}" onclick="open_tab(this)">
+        <i class="fas fa-edit"></i>
+      </button>
+      <button sec:authorize="hasPermission(#user, 'remove_categoria')" type="button" class="btn btn-secondary" id="delete" th:attr="data-url=@{/categoria/delete}" onclick="open_tab(this)">
+        <i class="fas fa-trash"></i>
+      </button>
     </div>
-
-    <div id="insert" class="tabcontent" th:attr="data-url=@{/__${#strings.toLowerCase(classe.simpleName)} __/insert}">
-    </div>
-
-    <div id="update" class="tabcontent" th:attr="data-url=@{/__${#strings.toLowerCase(classe.simpleName)} __/update}">
-    </div>
-
-    <div id="delete" class="tabcontent" th:attr="data-url=@{/__${#strings.toLowerCase(classe.simpleName)} __/delete}">
-    </div>
-
-    <div id="credencial" class="tabcontent" th:attr="data-url=@{/__${#strings.toLowerCase(classe.simpleName)} __/credenciais}">
-    </div>
-  </div>
+  </th>
 </th:block>
