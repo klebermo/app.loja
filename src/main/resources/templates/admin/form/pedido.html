@@ -1,80 +1,31 @@
 <th:block th:fragment="copy">
-  <div class="row">
-    <div class="col-25">
-      <label for="senha">transactionId</label>
-    </div>
-    <div class="col-75">
-      <input type="text" id="transactionId" th:field="*{transactionId}" placeholder="transactionId"/>
-    </div>
+  <div class="form-group">
+    <label for="transactionId">transactionId</label>
+    <input type="text" th:field="*{transactionId}" class="form-control" id="transactionId">
   </div>
 
-  <div class="row">
-    <div class="col-25">
-      <label for="login">M&eacute;todo de Pagamento</label>
-    </div>
-    <div class="col-75">
-      <input type="text" id="metodoPagamento" th:field="*{metodoPagamento}" placeholder="M&eacute;todo de Pagamento"/>
-    </div>
+  <div class="form-group">
+    <label for="metodoPagamento">metodoPagamento</label>
+    <input type="text" th:field="*{metodoPagamento}" class="form-control" id="metodoPagamento">
   </div>
 
-  <div class="row">
-    <div class="col-25">
-      <label for="dataExpiracao">Data da compra</label>
-    </div>
-    <div class="col-75">
-      <input type="date" id="dataCompra" th:field="*{dataCompra}"/>
-    </div>
+  <div class="form-group">
+    <label for="dataCompra">dataCompra</label>
+    <input type="date" th:field="*{dataCompra}" class="form-control" id="dataCompra">
   </div>
 
-  <div class="row">
-    <div class="col-25">
-      <label for="dataExpiracao">Comprador</label>
-    </div>
-    <div class="col-75">
-      <select th:field="*{usuario}">
-        <th:block th:if="${command.usuario}">
-          <option th:each="option : ${usuarios}" th:selected="${#string.equals(command.usuario, option)}" th:value="${option.id}" th:text="${option}"><option>
-        </th:block>
-        <th:block th:unless="${command.usuario}">
-          <option th:each="option : ${usuarios}" th:value="${option.id}" th:text="${option}"><option>
-        </th:block>
-      </select>
-    </div>
+  <div class="form-group">
+    <label for="comprador">comprador</label>
+    <select class="form-control" id="comprador" th:field="*{usuario}">
+      <option value=""></option>
+      <option th:each="option : ${usuarios}" th:value="${option.id}" th:text="${option}"></option>
+    </select>
   </div>
 
-  <div class="row">
-    <div class="col-75">
-      <table>
-        <tr>
-          <td>
-            <select multiple="multiple" size="15" id="selectLeft">
-              <th:block th:if="${command.produtos}">
-                <option th:each="option : ${produtos}" th:unless="${#lists.contains(command.produtos, option)}" th:value="${option.id}">
-                  <span th:each="t : ${option.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}"></span>
-                <option>
-              </th:block>
-              <th:block th:unless="${command.produtos}">
-                <option th:each="option : ${produtos}" th:value="${option.id}">
-                  <span th:each="t : ${option.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}"></span>
-                <option>
-              </th:block>
-            </select>
-          </td>
-          <td>
-            <p> <button type="button" class="button" id="right" onclick="move_right();"> &gt;&gt; </button> </p>
-            <p> <button type="button" class="button" id="left" onclick="move_left();"> &lt;&lt; </button> </p>
-          </td>
-          <td>
-            <select multiple="multiple" size="15" id="selectRight" name="produtos">
-              <th:block th:if="${command.produtos}">
-                <option th:each="option : ${command.produtos}" th:value="${option.id}">
-                  <span th:each="t : ${option.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}"></span>
-                <option>
-              </th:block>
-            </select>
-          </td>
-        </tr>
-      </table>
-    </div>
+  <div class="form-group">
+    <label for="produtos">produtos</label>
+    <select multiple="multiple" class="form-control" id="produtos" th:field="*{produtos}">
+      <option th:each="option : ${produtos}" th:value="${option.id}" th:value="${option.nome}"></option>
+    </select>
   </div>
 </th:block>

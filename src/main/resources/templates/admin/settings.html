@@ -1,0 +1,31 @@
+<th:block th:fragment="copy">
+  <div class="container">
+    <h4 th:text="${target}"></h4>
+
+    <hr>
+
+    <th:block th:if="${#strings.equals(target, 'geral')}">
+      <th:block th:replace="admin/settings/geral :: copy"></th:block>
+    </th:block>
+
+    <th:block th:if="${#strings.equals(target, 'idiomas')}">
+      <th:block th:replace="admin/settings/idiomas :: copy"></th:block>
+    </th:block>
+
+    <th:block th:if="${#strings.equals(target, 'email')}">
+      <th:block th:replace="admin/settings/email :: copy"></th:block>
+    </th:block>
+
+    <th:block th:if="${#strings.equals(target, 'paypal')}">
+      <th:block th:replace="admin/settings/paypal :: copy"></th:block>
+    </th:block>
+
+    <th:block th:if="${#strings.equals(target, 'mercadopago')}">
+      <th:block th:replace="admin/settings/mercadopago :: copy"></th:block>
+    </th:block>
+
+    <th:block th:if="${#strings.equals(target, 'pagseguro')}">
+      <th:block th:replace="admin/settings/pagseguro :: copy"></th:block>
+    </th:block>
+  </div>
+</th:block>

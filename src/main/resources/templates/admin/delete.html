@@ -1,44 +1,46 @@
 <!doctype html>
 <html lang="pt-br">
   <body>
-    <div class="container" id="form-container">
-      <form class="form" id="form" th:if="${#strings.equals(classe.simpleName, 'Categoria')}" method="delete" th:object="${command}" th:action="@{/categoria/delete}">
-        <input type="hidden" id="id" name="id" th:value="${command.id}"/>
-        <div th:replace="admin/delete/categoria :: copy"></div>
-      </form>
+    <div class="container" id="container">
+      <form class="form" id="form" method="post" th:action="@{/__${target}__/__${action}__}" th:object="${command}">
+        <input type="hidden" th:field="*{id}"/>
 
-      <form class="form" id="form" th:if="${#strings.equals(classe.simpleName, 'Produto')}" method="delete" th:object="${command}" th:action="@{/produto/delete}">
-        <input type="hidden" id="id" name="id" th:value="${command.id}"/>
-        <div th:replace="admin/delete/produto :: copy"></div>
-      </form>
+        <th:block th:switch="${target}">
+          <th:block th:case="'categoria'">
+            <th:block th:replace="admin/delete/categoria :: copy"></th:block>
+          </th:block>
 
-      <form class="form" id="form" th:if="${#strings.equals(classe.simpleName, 'Pagina')}"  method="delete" th:object="${command}" th:action="@{/pagina/delete}">
-        <input type="hidden" id="id" name="id" th:value="${command.id}"/>
-        <div th:replace="admin/delete/pagina :: copy"></div>
-      </form>
+          <th:block th:case="'pagina'">
+            <th:block th:replace="admin/delete/pagina :: copy"></th:block>
+          </th:block>
 
-      <form class="form" id="form" th:if="${#strings.equals(classe.simpleName, 'Usuario')}" method="delete" th:object="${command}" th:action="@{/usuario/delete}">
-        <input type="hidden" id="id" name="id" th:value="${command.id}"/>
-        <div th:replace="admin/delete/usuario :: copy"></div>
-      </form>
+          <th:block th:case="'pedido'">
+            <th:block th:replace="admin/delete/pedido :: copy"></th:block>
+          </th:block>
 
-      <form class="form" id="form" th:if="${#strings.equals(classe.simpleName, 'Pedido')}" method="delete" th:object="${command}" th:action="@{/pedido/delete}">
-        <input type="hidden" id="id" name="id" th:value="${command.id}"/>
-        <div th:replace="admin/delete/pedido :: copy"></div>
-      </form>
+          <th:block th:case="'produto'">
+            <th:block th:replace="admin/delete/produto :: copy"></th:block>
+          </th:block>
 
-      <div class="container">
-        <div class="row">
-          <div class="col-sm">
-            <button class="submit" th:attr="data-id=${command.id}" onclick="cancel_delete(this);">Cancelar</button>
-          </div>
-          <div class="col-sm">
-          </div>
-          <div class="col-sm">
-            <button class="submit" th:attr="data-id=${command.id}" onclick="submit_delete(this);">Remover</button>
+          <th:block th:case="'usuario'">
+            <th:block th:replace="admin/delete/usuario :: copy"></th:block>
+          </th:block>
+        </th:block>
+
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+              <button type="button" class="btn btn-primary" onclick="submit()">Sim</button>
+            </div>
+
+            <div class="col-sm"></div>
+
+            <div class="col-sm">
+              <button type="button" class="btn btn-danger" onclick="close_tab(this)">Não</button>
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   </body>
 </html>

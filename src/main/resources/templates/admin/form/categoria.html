@@ -1,52 +1,37 @@
 <th:block th:fragment="copy">
-  <div class="row">
-    <div class="col-25">
-      <label for="icone">Icone</label>
-    </div>
-    <div class="col-75">
-      <button type="button" class="btn_upload" id="btn_upload_icone" data-target="icone" onclick="select_imagem(this);">
-        <img th:if="${command.icone}" class="thumbnail" th:id="${'single_image_' + command.id}" th:src="@{/imagem/download/__${command.icone.id}__}">
-        <img th:unless="${command.icone}" class="thumbnail" id="empty_image" th:src="@{/images/icon_add_imagem.png}"/>
-        <input type="file" accept="png" class="image-uploader" id="icone" style="display: none;" th:attr="data-target=${'icone'}, data-url=@{/imagem/upload}, data-path=@{/imagem/download}" onchange="image_upload(this);"/>
-      </button>
-    </div>
-  </div>
-
-  <!-- Tab links -->
-  <div class="tab_idioma">
-    <button type="button" th:each="idioma,stat : ${idiomas.listaDeIdiomas}" th:class="${stat.index == 0}? 'tabidioma active' : 'tabidioma'" th:id="${#strings.substringBefore(idioma,',') + '-tab'}" th:attr="data-id=${#strings.substringBefore(idioma,',')}" onclick="openIdiomaTab(this);" th:text="${#strings.substringBefore(idioma,',')}"></button>
-  </div>
-
-  <!-- Tab content -->
-  <div th:each="idioma,stat : ${idiomas.listaDeIdiomas}" th:id="${#strings.substringBefore(idioma,',')}" class="tabcontent_idioma" th:style="${stat.index == 0}? 'display: block;': 'display: none;'">
+  <div class="container">
     <div class="row">
-      <div class="col-25">
-        <label for="nome">Nome</label>
+      <div class="col-4">
+        <div class="row text-center text-lg-left">
+          <div class="col-lg-3 col-md-4 col-6">
+            <a href="#" class="d-block mb-4 h-100" id="btn_upload_icone" data-target="icone" onclick="select_imagem(this);">
+              <img th:if="${command.icone}" id="single_image" th:src="@{/imagem/download/__${command.icone.id}__}">
+              <img th:unless="${command.icone}" id="empty_image" th:src="@{/images/icon_add_imagem.png}"/>
+              <input type="file" accept="png" class="image-uploader" id="icone" style="display: none;" th:attr="data-target=${'icone'}, data-url=@{/imagem/upload}, data-path=@{/imagem/download}" onchange="image_upload(this);"/>
+            </a>
+          </div>
+        </div>
       </div>
-      <div class="col-75">
-        <input type="hidden" th:name="${'nome[' + stat.index + '].id'}" th:each="value : ${command.nome}" th:if="${#strings.equals(value.idioma, idioma)}" th:value="${value.id}"/>
-        <input type="hidden" th:name="${'nome[' + stat.index + '].idioma'}" th:value="${idioma}"/>
-        <th:block th:if="${command.nome}">
-          <input type="text" th:name="${'nome[' + stat.index + '].conteudo'}" th:each="value : ${command.nome}" th:if="${#strings.equals(value.idioma, idioma)}" th:value="${value.conteudo}" class="form-control" id="nome" placeholder="Nome">
-        </th:block>
-        <th:block th:unless="${command.nome}">
-          <input type="text" th:name="${'nome[' + stat.index + '].conteudo'}" id="nome" placeholder="Nome">
-        </th:block>
-      </div>
-    </div>
 
-    <div class="row">
-      <div class="col-25">
-        <label for="resumo">Resumo</label>
-      </div>
-      <div class="col-75">
-        <input type="hidden" th:name="${'nome[' + stat.index + '].idioma'}" th:value="${idioma}"/>
-        <th:block th:if="${command.resumo}">
-          <input type="text" th:name="${'resumo[' + stat.index + '].conteudo'}" th:each="value : ${command.resumo}" th:if="${#strings.equals(value.idioma, idioma)}" th:value="${value.conteudo}" class="form-control" id="resumo" placeholder="Resumo">
-        </th:block>
-        <th:block th:unless="${command.resumo}">
-          <input type="text" th:name="${'resumo[' + stat.index + '].conteudo'}" id="resumo" placeholder="Resumo">
-        </th:block>
+      <div class="col-8">
+        <ul class="nav nav-tabs" id="nome" role="tablist">
+          <li th:each="idioma,stat : ${idiomas.listaDeIdiomas}" class="nav-item">
+            <a th:class="${stat.index == 0}? 'nav-link active' : 'nav-link'" th:id="${#strings.substringBefore(idioma,',') + '-tab'}" data-toggle="tab" th:href="${'#' + #strings.substringBefore(idioma,',')}" role="tab" th:attr="aria-controls=${#strings.substringBefore(idioma,',')}" aria-selected="true" th:text="${#strings.substringBefore(idioma,',')}"></a>
+          </li>
+        </ul>
+
+        <div class="tab-content">
+          <div th:each="idioma,stat : ${idiomas.listaDeIdiomas}" th:class="${stat.index == 0}? 'tab-pane active' : 'tab-pane'" th:id="${#strings.substringBefore(idioma,',')}" role="tabpanel" th:attr="aria-labelledby=${#strings.substringBefore(idioma,',')}">
+            <input type="hidden" th:name="${'nome[' + stat.index + '].id'}" th:each="value : ${command.nome}" th:if="${#strings.equals(value.idioma, idioma)}" th:value="${value.id}"/>
+
+            <input type="hidden" th:name="${'nome[' + stat.index + '].idioma'}" th:value="${idioma}"/>
+
+            <div class="form-group">
+              <label for="nome">nome</label>
+              <input type="text" th:name="${'nome[' + stat.index + '].conteudo'}" class="form-control" id="nome">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

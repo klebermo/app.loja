@@ -1,87 +1,95 @@
 <th:block th:fragment="copy">
-  <div class="sidebar">
-    <ul>
-      <li>
-        <a th:class="${classe == null} ? 'active' : ''" th:href="@{/admin}">
+<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+  <div class="sidebar-sticky">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a th:class="${classe == null} ? 'nav-link active' : 'nav-link'" th:href="@{/admin}">
+          <i class="fas fa-home"></i>
           in&iacute;cio
         </a>
       </li>
 
-      <li sec:authorize="hasPermission(#user, 'consulta_categoria')">
-        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Categoria')}? 'active' : ''" th:href="@{/categoria/}">
+      <li class="nav-item" sec:authorize="hasPermission(#user, 'consulta_categoria')">
+        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Categoria')}? 'nav-link active' : 'nav-link'" th:href="@{/categoria/}">
+          <i class="fas fa-list-alt"></i>
           categorias
         </a>
       </li>
 
-      <li sec:authorize="hasPermission(#user, 'consulta_produto')">
-        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Produto')}? 'active' : ''" th:href="@{/produto/}">
+      <li class="nav-item" sec:authorize="hasPermission(#user, 'consulta_produto')">
+        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Produto')}? 'nav-link active' : 'nav-link'" th:href="@{/produto/}">
+          <i class="fas fa-box"></i>
           produtos
         </a>
       </li>
 
-      <li sec:authorize="hasPermission(#user, 'consulta_pagina')">
-        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Pagina')}? 'active' : ''" th:href="@{/pagina/}">
+      <li class="nav-item" sec:authorize="hasPermission(#user, 'consulta_pedido')">
+        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Pedido')}? 'nav-link active' : 'nav-link'" th:href="@{/pedido/}">
+          <i class="fas fa-shopping-bag"></i>
+          pedidos
+        </a>
+      </li>
+
+      <li class="nav-item" sec:authorize="hasPermission(#user, 'consulta_pagina')">
+        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Pagina')}? 'nav-link active' : 'nav-link'" th:href="@{/pagina/}">
+          <i class="fas fa-file-alt"></i>
           p&aacute;ginas
         </a>
       </li>
     </ul>
 
-    <hr/>
-
-    <ul>
-      <li>
-        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Geral')}? 'active' : ''" th:href="@{/geral/get}" tabindex="-1" aria-disabled="true">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a th:class="${setting != null and #strings.equals(setting.simpleName, 'Geral')}? 'nav-link active' : 'nav-link'" th:href="@{/geral/get}" tabindex="-1" aria-disabled="true">
+          <i class="fas fa-cog"></i>
           Geral
         </a>
       </li>
 
-      <li>
-        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Email')}? 'active' : ''" th:href="@{/email/get}" tabindex="-1" aria-disabled="true">
+      <li class="nav-item">
+        <a th:class="${setting != null and #strings.equals(setting.simpleName, 'Email')}? 'nav-link active' : 'nav-link'" th:href="@{/email/get}" tabindex="-1" aria-disabled="true">
+          <i class="fas fa-at"></i>
           Email
         </a>
       </li>
 
-      <li>
-        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Idiomas')}? 'active' : ''" th:href="@{/idiomas/get}" tabindex="-1" aria-disabled="true">
+      <li class="nav-item">
+        <a th:class="${setting != null and #strings.equals(setting.simpleName, 'Idiomas')}? 'nav-link active' : 'nav-link'" th:href="@{/idiomas/get}" tabindex="-1" aria-disabled="true">
+          <i class="fas fa-globe-americas"></i>
           Idiomas
         </a>
       </li>
 
-      <li>
-        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Paypal')}? 'active' : ''" th:href="@{/paypal/get}" tabindex="-1" aria-disabled="true">
+      <li class="nav-item">
+        <a th:class="${setting != null and #strings.equals(setting.simpleName, 'Paypal')}? 'nav-link active' : 'nav-link'" th:href="@{/paypal/get}" tabindex="-1" aria-disabled="true">
+          <i class="fab fa-paypal"></i>
           Paypal
         </a>
       </li>
 
-      <li>
-        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'MercadoPago')}? 'active' : ''" th:href="@{/mercadopago/get}" tabindex="-1" aria-disabled="true">
+      <li class="nav-item">
+        <a th:class="${setting != null and #strings.equals(setting.simpleName, 'MercadoPago')}? 'nav-link active' : 'nav-link'" th:href="@{/mercadopago/get}" tabindex="-1" aria-disabled="true">
+          <i class="fas fa-credit-card"></i>
           MercadoPago
         </a>
       </li>
 
-      <li>
-        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'PagSeguro')}? 'active' : ''" th:href="@{/pagseguro/get}" tabindex="-1" aria-disabled="true">
+      <li class="nav-item">
+        <a th:class="${setting != null and #strings.equals(setting.simpleName, 'PagSeguro')}? 'nav-link active' : 'nav-link'" th:href="@{/pagseguro/get}" tabindex="-1" aria-disabled="true">
+          <i class="fas fa-credit-card"></i>
           PagSeguro
         </a>
       </li>
     </ul>
 
-    <hr/>
-
-    <ul>
-      <li sec:authorize="hasPermission(#user, 'consulta_usuario')">
-        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Usuario')}? 'active' : ''" th:href="@{/usuario/}">
+    <ul class="nav flex-column">
+      <li class="nav-item" sec:authorize="hasPermission(#user, 'consulta_usuario')">
+        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Usuario')}? 'nav-link active' : 'nav-link'" th:href="@{/usuario/}">
+          <i class="fas fa-users"></i>
           usu&aacute;rios
         </a>
       </li>
     </ul>
-
-    <ul>
-      <li sec:authorize="hasPermission(#user, 'consulta_pedido')">
-        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Pedido')}? 'active' : ''" th:href="@{/pedido/}">
-          pedidos
-        </a>
-      </li>
-    </ul>
   </div>
+</nav>
 </th:block>

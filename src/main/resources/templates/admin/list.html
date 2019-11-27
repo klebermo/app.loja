@@ -1,0 +1,68 @@
+<th:block th:fragment="copy">
+  <div class="container" id="container">
+    <h4 th:text="${target}"></h4>
+
+    <hr>
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+      </li>
+
+      <li class="nav-item" style="display: none;">
+        <a class="nav-link" id="insert-tab" data-toggle="tab" href="#insert-pane" role="tab" aria-controls="insert-pane" aria-selected="false">Insert</a>
+      </li>
+
+      <li class="nav-item" style="display: none;">
+        <a class="nav-link" id="update-tab" data-toggle="tab" href="#update-pane" role="tab" aria-controls="update-pane" aria-selected="false">Update</a>
+      </li>
+
+      <li class="nav-item" style="display: none;">
+        <a class="nav-link" id="delete-tab" data-toggle="tab" href="#delete-pane" role="tab" aria-controls="delete-pane" aria-selected="false">Delete</a>
+      </li>
+
+      <li class="nav-item" style="display: none;">
+        <a class="nav-link" id="credencial-tab" data-toggle="tab" href="#credencial-pane" role="tab" aria-controls="credencial-pane" aria-selected="false">Credencial</a>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <table class="table" id="table" th:attr="data-json=@{/__${target}__/list.json}">
+          <thead>
+            <tr id="table-header">
+              <th:block th:if="${#strings.equals(target, 'categoria')}">
+                <div th:replace="admin/list/categoria :: copy"></div>
+              </th:block>
+
+              <th:block th:if="${#strings.equals(target, 'produto')}">
+                <div th:replace="admin/list/produto :: copy"></div>
+              </th:block>
+
+              <th:block th:if="${#strings.equals(target, 'pagina')}">
+                <div th:replace="admin/list/pagina :: copy"></div>
+              </th:block>
+
+              <th:block th:if="${#strings.equals(target, 'usuario')}">
+                <div th:replace="admin/list/usuario :: copy"></div>
+              </th:block>
+
+              <th:block th:if="${#strings.equals(target, 'pedido')}">
+                <div th:replace="admin/list/pedido :: copy"></div>
+              </th:block>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+
+      <div class="tab-pane" id="insert-pane" role="tabpanel" aria-labelledby="insert-tab"></div>
+
+      <div class="tab-pane" id="update-pane" role="tabpanel" aria-labelledby="update-tab"></div>
+
+      <div class="tab-pane" id="delete-pane" role="tabpanel" aria-labelledby="delete-tab"></div>
+
+      <div class="tab-pane" id="credencial-pane" role="tabpanel" aria-labelledby="credencial-tab"></div>
+    </div>
+  </div>
+</th:block>

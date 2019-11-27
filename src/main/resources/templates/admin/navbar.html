@@ -1,10 +1,41 @@
 <th:block th:fragment="copy">
-  <div class="floating-menu">
-    <ul>
-      <li> <a th:href="@{/}"><img th:src="@{/images/icon_home.png}" width="32" height="32" alt="homepage"></a> </li>
-      <li> <a th:href="@{/messages}"><img th:src="@{/images/icon_messages.png}" width="32" height="32" alt="mensagens"></a> <span class="badge" id="messages">0</span> </li>
-      <li> <h3 th:text="${usuario}"></h3> </li>
-      <li> <a th:href="@{/logout}"><img th:src="@{/images/icon_logout.png}" width="32" height="32" alt="sair"></a> </li>
+  <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <a th:if="${geral.logo}" class="navbar-brand col-sm-3 col-md-2 mr-0" th:href="@{/}">
+      <img th:src="@{/imagem/download/__${geral.logo.id}__}" th:alt="${geral.titulo}">
+      <span th:text="${geral.titulo}"></span>
+    </a>
+
+    <a th:unless="${geral.logo}" class="navbar-brand col-sm-3 col-md-2 mr-0" th:href="@{/}" th:text="${geral.titulo}"></a>
+
+    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+
+    <ul class="navbar-nav px-3">
+      <li class="nav-item text-nowrap">
+        <table>
+          <tr>
+            <td>
+              <h4>
+                <a class="nav-link" th:href="@{/messages}">
+                  <i class="fas fa-envelope"></i>
+                  <span class="badge badge-secondary" id="messages" style="display: none;">0</span>
+                </a>
+              </h4>
+            </td>
+            <th>
+              <h4>
+                <a class="nav-link" href="#" th:text="${usuario}"></a>
+              </h4>
+            </th>
+            <th>
+              <h4>
+                <a class="nav-link" th:href="@{/logout}">
+                  <i class="fas fa-sign-out-alt"></i>
+                </a>
+              </h4>
+            </th>
+          </tr>
+        </table>
+      </li>
     </ul>
-  </div>
+  </nav>
 </th:block>
