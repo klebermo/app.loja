@@ -40,14 +40,16 @@ public class Home {
     }
 
     @RequestMapping("/login")
-    public String login() {
-        return "login";
+    public String login(Model model) {
+      model.addAttribute("login", "login");
+      return "login";
     }
 
     @RequestMapping("/admin")
     @PreAuthorize("hasPermission(#user, 'admin')")
     public String admin(Model model) {
-        return "admin/index";
+      model.addAttribute("admin", "admin");
+      return "admin/index";
     }
 
     @RequestMapping("/c/{nome}")
