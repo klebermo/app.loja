@@ -21,7 +21,7 @@ public abstract class Controller<E> {
 
   @RequestMapping(value = "/get")
   public String get(Model model) {
-    model.addAttribute("setting", serv.get());
+    model.addAttribute("command", serv.get());
     return "admin/index";
   }
 
@@ -31,8 +31,13 @@ public abstract class Controller<E> {
     serv.set(object);
   }
 
-  @ModelAttribute("classe")
+  @ModelAttribute("setting")
   public Class<E> getClazz() {
     return clazz;
+  }
+
+  @ModelAttribute("target")
+  public String getName() {
+    return clazz.getSimpleName().toLowerCase();
   }
 }
