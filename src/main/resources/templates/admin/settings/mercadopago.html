@@ -1,33 +1,29 @@
 <th:block th:fragment="copy">
-  <form class="form-container" id="form" method="post" th:action="@{/__${#strings.toLowerCase(classe.simpleName)}__/set}">
-    <div class="row">
-      <div class="col-25">
-        <label for="publicKey">publicKey</label>
-      </div>
-      <div class="col-75">
-        <input type="text" name="publicKey" th:value="${setting.publicKey}" class="form-control" id="publicKey" placeholder="publicKey">
-      </div>
+  <form class="form" id="form" method="post" th:action="@{/__${target}__/set}" th:object="${command}">
+    <div class="form-group">
+      <label for="publicKey">publicKey</label>
+      <input type="text" th:field="*{publicKey}" class="form-control" id="publicKey" placeholder="publicKey">
     </div>
 
-    <div class="row">
-      <div class="col-25">
-        <label for="accessToken">accessToken</label>
-      </div>
-      <div class="col-75">
-        <input type="text" name="accessToken" th:value="${setting.accessToken}" class="form-control" id="accessToken" placeholder="accessToken">
-      </div>
+    <div class="form-group">
+      <label for="accessToken">accessToken</label>
+      <input type="text" th:field="*{accessToken}" class="form-control" id="accessToken" placeholder="accessToken">
+    </div>
+
+    <button type="button" class="btn btn-dark" id="submit" onclick="submit_setting(this);">Salvar</button>
+
+    <div class="alert alert-success alert-dismissible fade show" id="ok" role="alert" style="display: none;">
+      <strong>Sucesso!</strong> Configura&ccedil;&otilde;es salvas com sucesso!
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade show" id="error" role="alert" style="display: none;">
+      <strong>Erro!</strong> Ocorreu um erro ao salvar as configura&ccedil;&otilde;es!
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
   </form>
-
-  <button type="submit" class="submit" onclick="submit_setting(this);">Salvar</button>
-
-  <div class="alert-ok" id="ok" style="display: none;">
-    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-    <strong>Sucesso!</strong> Configura&ccedil;&otilde;es salvas com sucesso!
-  </div>
-
-  <div class="alert-error" id="error" style="display: none;">
-    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-    <strong>Erro!</strong> Ocorreu um erro ao salvar as configura&ccedil;&otilde;es!
-  </div>
 </th:block>
