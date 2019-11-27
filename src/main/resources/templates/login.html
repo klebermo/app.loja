@@ -2,44 +2,32 @@
 
 <div th:replace="navbar :: copy"></div>
 
-<div th:replace="sidebar :: copy"></div>
+<form class="form-signin" id="form" method="post" th:action="@{/doLogin}">
+  <h1 class="h3 mb-3 font-weight-normal">
+    <i class="fas fa-sign-in-alt"></i> Entrar
+  </h1>
 
-<main class="main">
-    <h3>Login</h3>
+  <label for="username" class="sr-only">Username</label>
+  <input type="text" name="login" id="username" class="form-control" placeholder="Username" required autofocus>
 
-    <form class="form-container" id="form" method="post" th:action="@{/doLogin}">
-      <div class="form-row">
-        <div class="col-75">
-          <input type="text" name="login" placeholder="login"/>
-        </div>
-      </div>
+  <label for="password" class="sr-only">Password</label>
+  <input type="password" name="senha" id="password" class="form-control" placeholder="Password" required>
 
-      <div class="form-row">
-        <div class="col-75">
-          <input type="password" name="senha" placeholder="senha"/>
-        </div>
-      </div>
+  <div class="checkbox mb-3">
+    <label>
+      <input type="checkbox" value="remember-me"> Remember me
+    </label>
+  </div>
 
-      <div class="form-row">
-        <div class="col-75">
-          <button type="submit" class="button">Login</button>
-        </div>
-      </div>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 
-      <div class="form-row">
-        <div class="col-75">
-          <input class="checkbox" type="checkbox" value="remember-me"> Remember me </input>
-        </div>
-      </div>
+  <p class="mt-5 mb-3 text-muted">
+    <a th:href="@{/usuario/register}">Não tem cadastro? Clique aqui para se cadatrar</a>
+  </p>
 
-      <div class="form-row">
-        <a th:href="@{/usuario/register}">Não tem cadastro? Clique aqui para se cadatrar</a>
-      </div>
-
-      <div class="form-row">
-        <a th:href="@{/usuario/recoverPassword}">Esqueceu a senha? Clique aqui para recuperar</a>
-      </div>
-    </form>
-</main>
+  <p class="mt-5 mb-3 text-muted">
+    <a th:href="@{/usuario/recoverPassword}">Esqueceu a senha? Clique aqui para recuperar</a>
+  </p>
+</form>
 
 <div th:replace="footer :: copy"></div>

@@ -2,73 +2,29 @@
 
 <div th:replace="navbar :: copy"></div>
 
-<div th:replace="sidebar :: copy"></div>
+<div class="container">
+  <form class="form" id="form" method="post" th:object="${command}" th:action="@{/usuario/register}">
+    <h1 class="h3 mb-3 font-weight-normal">
+      <i class="fas fa-sign-in-alt"></i> Cadastrar
+    </h1>
 
-<main class="main">
-    <h3>Cadastro</h3>
+    <label for="username" class="sr-only">Username</label>
+    <input type="text" th:field="*{username}" id="username" class="form-control" placeholder="Username" required autofocus>
 
-    <form class="form-container" id="form" method="post" th:object="${command}" th:action="@{/usuario/register}">
-      <div class="form-row">
-        <div class="col-25">
-          <label for="login">Login</label>
-        </div>
-        <div class="col-75">
-          <input type="text" id="login" th:field="*{username}" placeholder="Login">
-        </div>
-      </div>
+    <label for="password" class="sr-only">Password</label>
+    <input type="password" th:field="*{password}" id="password" class="form-control" placeholder="Password" required>
 
-      <div class="form-row">
-        <div class="col-25">
-          <label for="senha">Senha</label>
-        </div>
-        <div class="col-75">
-          <input type="password" id="senha" th:field="*{password}" placeholder="Senha">
-        </div>
-      </div>
+    <label for="firstName" class="sr-only">Nome</label>
+    <input type="text" th:field="*{firstName}" id="firstName" class="form-control" placeholder="Nome" required>
 
-      <div class="form-row">
-        <div class="col-25">
-          <label for="nome">Nome</label>
-        </div>
-        <div class="col-75">
-          <input type="text" id="nome" th:field="*{firstName}" placeholder="Nome">
-        </div>
-      </div>
+    <label for="lastName" class="sr-only">Sobrenome</label>
+    <input type="text" th:field="*{lastName}" id="lastName" class="form-control" placeholder="Sobrenome" required>
 
-      <div class="form-row">
-        <div class="col-25">
-          <label for="sobrenome">Sobrenome</label>
-        </div>
-        <div class="col-75">
-          <input type="text" id="sobrenome" th:field="*{lastName}" placeholder="Sobrenome">
-        </div>
-      </div>
+    <label for="email" class="sr-only">E-mail</label>
+    <input type="email" th:field="*{email}" id="email" class="form-control" placeholder="E-mail" required>
 
-      <div class="form-row">
-        <div class="col-25">
-          <label for="email">E-mail</label>
-        </div>
-        <div class="col-75">
-          <input type="email" id="email" th:field="*{email}" placeholder="E-mail">
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="col-75">
-          <button type="button" class="button" onclick="register();">Cadastre-se</button>
-        </div>
-      </div>
-
-      <div class="alert-ok" id="ok" style="display: none;">
-        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-        <strong>Sucesso!</strong> Cadastro realizado com sucesso.
-      </div>
-
-      <div class="alert-error" id="error" style="display: none;">
-        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-        <strong>Erro!</strong> Não foi possivel realizar o cadastro.
-      </div>
-    </form>
-</main>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Enviar</button>
+  </form>
+</div>
 
 <div th:replace="footer :: copy"></div>

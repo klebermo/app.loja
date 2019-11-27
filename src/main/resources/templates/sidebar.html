@@ -1,29 +1,21 @@
 <th:block th:fragment="copy">
-  <aside class="sidebar">
-    <ul>
-      <th:block th:if="${categoria == null and produto == null and pagina == null}">
-        <li th:each="c : ${categorias}">
-          <a th:each="t : ${c.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}"></a>
-        </li>
+  <div class="list-group">
+    <th:block th:if="${categoria == null and produto == null}">
+      <th:block th:each="c : ${categorias}">
+        <a th:each="t : ${c.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}" class="list-group-item list-group-item-action"></a>
       </th:block>
+    </th:block>
 
-      <th:block th:if="${pagina}">
-        <li th:each="p : ${paginas}" th:if="${p.parent != null and #strings.equals(p.parent, pagina)}">
-            <a th:each="t : ${p.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/page/__${t.slug}__}" th:text="${t.conteudo}"></a>
-        </li>
+    <th:block th:if="${produto}">
+      <th:block th:each="c : ${categorias}">
+        <a th:each="t : ${c.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}" th:class="${#strings.equals(c.id, produto.categoria.id)}? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'"></a>
       </th:block>
+    </th:block>
 
-      <th:block th:if="${produto}">
-        <li th:each="c : ${categorias}">
-          <a th:with="categoria = ${produto.categoria}" th:each="t : ${c.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}"></a>
-        </li>
+    <th:block th:if="${categoria}">
+      <th:block th:each="c : ${categorias}">
+        <a th:each="t : ${c.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}" th:class="${#strings.equals(c.id, categoria.id)}? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'"></a>
       </th:block>
-
-      <th:block th:if="${categoria}">
-        <li th:each="c : ${categorias}">
-          <a th:each="t : ${c.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}"></a>
-        </li>
-      </th:block>
-    </ul>
-  </aside>
+    </th:block>
+  </div>
 </th:block>

@@ -2,22 +2,17 @@
 
 <div th:replace="navbar :: copy"></div>
 
-<div th:replace="sidebar :: copy"></div>
+<div class="container">
+  <form class="form" id="form" method="post" th:action="@{/usuario/recoverPassword}">
+    <h1 class="h3 mb-3 font-weight-normal">
+      <i class="fas fa-sign-in-alt"></i> Recuperer senha
+    </h1>
 
-<main class="main">
-  <form class="form-container" id= form method="post" th:action="@{/usuario/recoverPassword}">
-    <div class="form-row">
-      <div class="col-75">
-        <input type="email" name="email" placeholder="E-mail"/>
-      </div>
-    </div>
+    <label for="email" class="sr-only">E-mail</label>
+    <input type="email" name="email" id="email" class="form-control" placeholder="E-mail" required>
 
-    <div class="form-row">
-      <div class="col-75">
-        <button type="submit" class="button">Recover</button>
-      </div>
-    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Enviar</button>
   </form>
-</main>
+</div>
 
 <div th:replace="footer :: copy"></div>

@@ -2,48 +2,57 @@
 
 <div th:replace="navbar :: copy"></div>
 
-<div th:replace="sidebar :: copy"></div>
+<div class="container">
+  <div class="container">
+    <div class="row">
+      <div class="col-3">
+        <div th:replace="sidebar :: copy"></div>
+      </div>
+      <div class="col-9">
+        <main class="contaner">
+          <div th:if="${index}">
+            <div th:replace="content/home :: copy"></div>
+          </div>
 
-<main class="main">
-  <div th:if="${index}">
-    <div th:replace="content/home :: copy"></div>
-  </div>
+          <div th:if="${categoria}">
+            <div th:replace="content/categoria :: copy"></div>
+          </div>
 
-  <div th:if="${categoria}">
-    <div th:replace="content/categoria :: copy"></div>
-  </div>
+          <div th:if="${produto}">
+            <div th:replace="content/produto :: copy"></div>
+          </div>
 
-  <div th:if="${produto}">
-    <div th:replace="content/produto :: copy"></div>
-  </div>
+          <div th:if="${forum}">
+            <div th:replace="content/forum :: copy"></div>
+          </div>
 
-  <div th:if="${forum}">
-    <div th:replace="content/forum :: copy"></div>
-  </div>
+          <div th:if="${topic}">
+            <div th:replace="content/topic :: copy"></div>
+          </div>
 
-  <div th:if="${topic}">
-    <div th:replace="content/topic :: copy"></div>
-  </div>
+          <div th:if="${new_topic}">
+            <div th:replace="content/topic_new :: copy"></div>
+          </div>
 
-  <div th:if="${new_topic}">
-    <div th:replace="content/topic_new :: copy"></div>
-  </div>
+          <div th:if="${pagina}">
+            <div th:replace="content/pagina :: copy"></div>
+          </div>
 
-  <div th:if="${pagina}">
-    <div th:replace="content/pagina :: copy"></div>
-  </div>
+          <div th:if="${cart}">
+            <div th:replace="content/cart :: copy"></div>
+          </div>
 
-  <div th:if="${cart}">
-    <div th:replace="content/cart :: copy"></div>
-  </div>
+          <div th:if="${orders}">
+            <div th:replace="content/orders :: copy"></div>
+          </div>
 
-  <div th:if="${orders}">
-    <div th:replace="content/orders :: copy"></div>
+          <div th:if="${order}">
+            <div th:replace="content/order :: copy"></div>
+          </div>
+        </main>
+      </div>
+    </div>
   </div>
-
-  <div th:if="${order}">
-    <div th:replace="content/order :: copy"></div>
-  </div>
-</main>
+</div>
 
 <div th:replace="footer :: copy"></div>
