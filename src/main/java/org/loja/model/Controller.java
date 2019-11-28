@@ -71,7 +71,7 @@ public abstract class Controller<E> {
     return "admin/delete";
   }
 
-  @RequestMapping(value = "/delete", method=RequestMethod.DELETE)
+  @RequestMapping(value = "/delete", method=RequestMethod.POST)
   @ResponseBody
   @PreAuthorize("hasPermission(#user, 'remove_'+#this.this.name)")
   public void delete(@Valid E object, BindingResult result) {
