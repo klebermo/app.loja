@@ -7,8 +7,12 @@
     <script type="text/javascript" th:src="@{/js/script-admin.js}"></script>
 
     <script type="text/javascript">
-      $(document).ready(function() {
-        $('#descricao').summernote();
+      $(document).ready(function(){
+        $(document).on("change", function(){
+          $('.summernote').summernote({
+            height: 300
+          });
+        });
       });
     </script>
   </body>
