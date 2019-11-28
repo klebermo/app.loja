@@ -4,10 +4,10 @@
       <div class="col-4">
         <div class="row text-center text-lg-left">
           <div class="col-lg-3 col-md-4 col-6">
-            <a href="#" class="d-block mb-4 h-100" id="btn_upload_icone" data-target="icone" onclick="select_imagem(this);">
-              <img th:if="${command.icone}" id="single_image" th:src="@{/imagem/download/__${command.icone.id}__}">
-              <img th:unless="${command.icone}" id="empty_image" th:src="@{/images/icon_add_imagem.png}"/>
-              <input type="file" accept="png" class="image-uploader" id="icone" style="display: none;" th:attr="data-target=${'icone'}, data-url=@{/imagem/upload}, data-path=@{/imagem/download}" onchange="image_upload(this);"/>
+            <a href="#" class="d-block mb-4 h-100" data-target="icone" onclick="select(this);">
+              <img th:if="${command.icone}" class="thumbnail" id="single_image" th:src="@{/imagem/download/__${command.icone.id}__}" width="64" height="64"/>
+              <img th:unless="${command.icone}" class="thumbnail" id="empty_image" th:src="@{/img/add.png}" width="64" height="64"/>
+              <input type="file" accept="image/png" class="image-uploader" id="icone" style="display: none;" th:attr="data-target=${'icone'}, data-url=@{/imagem/upload}, data-path=@{/imagem/download}" onchange="image_upload(this);"/>
             </a>
           </div>
         </div>
@@ -28,7 +28,14 @@
 
             <div class="form-group">
               <label for="nome">nome</label>
-              <input type="text" th:name="${'nome[' + stat.index + '].conteudo'}" class="form-control" id="nome">
+
+              <th:block th:if="${command.nome}">
+                <input type="text" th:name="${'nome[' + stat.index + '].conteudo'}" th:each="value : ${command.nome}" th:if="${#strings.equals(value.idioma, idioma)}" th:value="${value.conteudo}" class="form-control" id="nome"/>
+              </th:block>
+
+              <th:block th:unless="${command.nome}">
+                <input type="text" th:name="${'nome[' + stat.index + '].conteudo'}" class="form-control" id="nome"/>
+              </th:block>
             </div>
           </div>
         </div>

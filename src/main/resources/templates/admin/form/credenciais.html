@@ -1,18 +1,27 @@
 <th:block th:fragment="copy">
   <div id="container">
     <table class="table">
+      <input type="hidden" id="id" value=""/>
+      <caption>
+        <button type="button" style="float: right;" class="btn btn-dark" id="credencial" onclick="close_tab(this);">
+          <i class="fas fa-window-close"></i> Fechar
+        </button>
+      </caption>
+
       <thead>
         <tr>
-          <th>#</th>
-          <th>Credencial</th>
-          <th>Autoriza&ccedil;&otilde;es</th>
+          <th scope="col">#</th>
+          <th scope="col">Credencial</th>
+          <th scope="col">Autoriza&ccedil;&otilde;es</th>
         </tr>
       </thead>
 
       <tbody>
         <tr th:each="credencial : ${credenciais}">
           <td>
-            <input type="checkbox" class="credencial" th:checked="${#lists.contains(command.credenciais, credencial)}" th:attr="data-usuario=${command.id}, data-credencial=${credencial.id}, data-url=@{/usuario/toggle_credencial}" onclick="toggle_credencial(this);">
+            <div class="form-group form-check">
+              <input type="checkbox" th:checked="${#lists.contains(command.credenciais, credencial)}" class="form-check-input" id="credencial" th:attr="data-usuario=${command.id}, data-credencial=${credencial.id}, data-url=@{/usuario/toggle_credencial}" onclick="toggle_credencial(this);">
+            </div>
           </td>
           <td>
             <strong th:text="${credencial.nome}"></strong>
@@ -24,16 +33,6 @@
           </td>
         </tr>
       </tbody>
-
-      <tfoot>
-        <tr>
-          <td></td>
-          <td></td>
-          <td>
-            <button class="submit" th:attr="data-id=${command.id}" onclick="cancel_credencial(this);">Cancelar</button>
-          </td>
-        </tr>
-      </tfoot>
     </table>
   </div>
 </th:block>
