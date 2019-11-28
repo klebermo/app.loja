@@ -68,15 +68,15 @@ public class Home {
       return "index";
     }
 
-    @RequestMapping("/page/{slug}")
-    public String pagina(Model model, @PathVariable("slug") String pagina_slug) {
-      List<Pagina> lista = pagina.select();
-      for(Pagina p : lista)
-        for(Titulo titulo : p.getTitulo())
-          if(titulo.slug().equals(pagina_slug)) {
-            model.addAttribute("pagina", p);
-            model.addAttribute("breadcrumb", pagina.breadcrumb(p));
-          }
+    @RequestMapping("/page/{titulo}")
+    public String pagina(Model model, @PathVariable("titulo") String titulo) {
+      Pagina page = new Pagina();
+      for(Pagina p : pagina.select())
+        for(Titulo t : p.getTitulo())
+          if(t.getConteudo().equals(titulo))
+            page = p;
+      model.addAttribute("pagina", page);
+      model.addAttribute("breadcrumb", pagina.breadcrumb(page));
       return "index";
     }
 
