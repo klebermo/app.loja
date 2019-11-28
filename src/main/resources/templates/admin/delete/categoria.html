@@ -2,9 +2,7 @@
   <div class="row">
     <div class="col-25">
       <p>
-        Confirma remoção da categoria:
-        <strong th:each="value : ${command.nome}" th:if="${#strings.equals(value.idioma, idioma)}" th:text="${value.conteudo}"/>
-        ?
+        Confirma remoção da categoria: <strong th:each="t : ${command.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></strong>?
       </p>
     </div>
   </div>

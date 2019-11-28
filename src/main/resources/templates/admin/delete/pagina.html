@@ -2,9 +2,7 @@
   <div class="row">
     <div class="col-25">
       <p>
-        Confirma remoção da p&aacute;gina:
-        <strong th:each="value : ${command.nome}" th:if="${#strings.equals(value.idioma, idioma)}" th:text="${value.conteudo}"/>
-        ?
+        Confirma remoção da p&aacute;gina: <strong th:each="t : ${command.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></strong>?
       </p>
     </div>
   </div>
