@@ -8,13 +8,16 @@
       <title th:each="t : ${categoria.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${geral.titulo + ' | ' + t.conteudo}"></title>
     </th:block>
     <th:block th:if="${produto}">
-      <title th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${geral.titulo + ' | ' + t.conteudo}"></title>
+      <title th:text="${geral.titulo + ' | ' + produto.nome}"></title>
     </th:block>
     <th:block th:if="${pagina}">
       <title th:each="t : ${pagina.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${geral.titulo + ' | ' + t.conteudo}"></title>
     </th:block>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha384-SI27wrMjH3ZZ89r4o+fGIJtnzkAnFs3E4qz9DIYioCQ5l9Rd/7UAa8DHcaL8jkWt" crossorigin="anonymous"/>
-    <link th:if="${login}" rel="stylesheet" th:href="@{/css/style-signin.css}">
+
+    <link th:unless="${login}" rel="stylesheet" th:href="@{/css/style.css}"/>
+
+    <link th:if="${login}" rel="stylesheet" th:href="@{/css/style-signin.css}"/>
   </head>
   <body onload="show_cart_size(); show_cart_total();">
 </th:block>

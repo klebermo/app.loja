@@ -13,16 +13,10 @@
 
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item" th:if="${pagina}" th:each="p : ${paginas}">
+      <li class="nav-item" th:each="p : ${paginas}">
         <th:block th:each="t : ${p.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}">
-          <a class="nav-link" th:unless="${p.parent}" th:href="@{/page/__${t.slug()}__}" th:text="${t.conteudo}"></a>
+          <a class="nav-link" th:unless="${p.parent}" th:href="@{/page/__${t.conteudo}__}" th:text="${t.conteudo}"></a>
         <th:block>
-      </li>
-
-      <li class="nav-item" th:unless="${pagina}" th:each="p : ${paginas}">
-        <th:block th:each="t : ${p.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}">
-          <a class="nav-link" th:unless="${p.parent}" th:href="@{/page/__${t.slug()}__}" th:text="${t.conteudo}"></a>
-        </th:block>
       </li>
     </ul>
 

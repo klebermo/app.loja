@@ -1,8 +1,14 @@
 <th:block th:fragment="copy">
   <div class="list-group">
-    <th:block th:if="${categoria == null and produto == null}">
+    <th:block th:if="${categoria == null and produto == null and pagina == null}">
       <th:block th:each="c : ${categorias}">
         <a th:each="t : ${c.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/c/__${t.conteudo}__}" th:text="${t.conteudo}" class="list-group-item list-group-item-action"></a>
+      </th:block>
+    </th:block>
+
+    <th:block th:if="${pagina}">
+      <th:block th:each="p : ${categorias}">
+        <a th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/page/__${t.conteudo}__}" th:text="${t.conteudo}" class="list-group-item list-group-item-action"></a>
       </th:block>
     </th:block>
 
