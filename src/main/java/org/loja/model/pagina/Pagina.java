@@ -10,11 +10,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.OneToMany;
 import java.util.List;
 import javax.persistence.FetchType;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import java.text.Normalizer;
+import javax.persistence.CascadeType;
+import javax.persistence.OrderColumn;
 import org.loja.model.titulo.Titulo;
 import org.loja.model.texto.Texto;
 
@@ -24,18 +21,15 @@ public class Pagina extends Model {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
 
-  @OneToMany(fetch = FetchType.EAGER)
-  @Fetch(FetchMode.SELECT)
-  @Cascade(CascadeType.ALL)
+  @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+  @OrderColumn
   private List<Titulo> titulo;
 
-  @OneToMany(fetch = FetchType.EAGER)
-  @Fetch(FetchMode.SELECT)
-  @Cascade(CascadeType.ALL)
+  @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+  @OrderColumn
   private List<Texto> descricao;
 
   @OneToOne(fetch = FetchType.EAGER)
-  @Fetch(FetchMode.SELECT)
   private Pagina parent;
 
   @Override
