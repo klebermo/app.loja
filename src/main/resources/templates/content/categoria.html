@@ -11,16 +11,20 @@
         </th:block>
 
         <span th:each="t : ${categoria.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></span>
-
-        <small th:each="r : ${categoria.resumo}" th:if="${#strings.equals(#strings.substringBefore(r.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${r.conteudo}"></small>
       </h3>
 
       <div class="row">
         <div class="row">
           <div class="col-sm" th:each="p : ${produtos}" th:if="${#strings.equals(p.categoria, c)}">
             <div class="card" style="width: 18rem;">
-              <img th:if="${p.icone}" th:src="@{/imagem/download/__${p.icone.id}__}" class="card-img-top" th:alt="@{p.nome}">
-              <img th:unless="${p.icone}" src="#" class="card-img-top" th:alt="@{p.nome}">
+              <th:block th:if="${p.icone}">
+                <img th:src="@{/imagem/download/__${p.icone.id}__}" class="card-img-top" th:alt="${p.nome}">
+              </th:block>
+
+              <th:block th:unless="${p.icone}">
+                <i class="fas fa-box"></i>
+              </th:block>
+              
               <div class="card-body">
                 <h5 class="card-title" th:text="p.nome"></h5>
                 <p class="card-text" th:each="r : ${p.resumo}" th:if="${#strings.equals(#strings.substringBefore(r.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${r.conteudo}"></p>

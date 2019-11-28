@@ -3,11 +3,11 @@
     <div class="row">
       <div class="col-2">
         <th:block th:if="${produto.icone}">
-          <img th:src="@{/imagem/download/__${produto.icone.id}__}" width=64 height=64 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
+          <img th:src="@{/imagem/download/__${produto.icone.id}__}" width=64 height=64 th:alt="${produto.nome}"/>
         </th:block>
 
         <th:block th:unless="${produto.icone}">
-          <i class="fas fa-vector-square"></i>
+          <i class="fas fa-list-alt"></i>
         </th:block>
 
         <h3>
@@ -27,24 +27,24 @@
       </div>
 
       <div class="col-2">
-        <button type="button" class="btn btn-dark" sec:authorize="isAuthenticated()" onclick="add_to_cart(this)" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}, data-url=@{/usuario/add_to_cart}">Comprar <br/> <small>Vers&atilde;o Pro</small></button>
+        <p>
+          <button type="button" class="btn btn-dark" sec:authorize="isAuthenticated()" onclick="add_to_cart(this)" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}, data-url=@{/usuario/add_to_cart}">Comprar <br/> <small>Vers&atilde;o Pro</small></button>
+        </p>
+
         <div class="dropdown">
           <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Baixar <br/> <small>Vers&atilde;o Lite</small>
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" th:each="arquivo : ${produto.versaoGratuita}" th:href="@{/arquivo/download?/arquivo=__${arquivo.id}__&produto=__${produto.nome}__}" th:text="${arquivo.type}"></a>
+            <a class="dropdown-item" th:each="arquivo : ${produto.versaoGratuita}" th:href="@{/arquivo/download/__${arquivo.id}__}" th:text="${arquivo.type}"></a>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="container">
-    <h4 th:each="t : ${produto.resumo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${t.conteudo}"></h4>
-  </div>
-
-  <div class="container">
-    <div th:each="d : ${produto.descricao}" th:if="${#strings.equals(#strings.substringBefore(d.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${d.conteudo}"></div>
+    <div class="starter-template">
+      <h1 th:each="t : ${produto.resumo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${t.conteudo}"></h1>
+      <p class="lead" th:each="d : ${produto.descricao}" th:if="${#strings.equals(#strings.substringBefore(d.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${d.conteudo}"></p>
+    </div>
   </div>
 </th:block>
