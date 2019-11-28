@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 import java.io.IOException;
 import org.springframework.http.HttpEntity;
 
@@ -21,13 +22,13 @@ public class ArquivoController extends org.loja.model.Controller<Arquivo> {
 
   @RequestMapping(value="upload", method=RequestMethod.POST)
   @ResponseBody
-  public Integer upload(@RequestParam("bytes") String arquivo, @RequestParam("type") String type) throws IOException {
-    return this.serv.upload(arquivo, type);
+  public Integer upload(@RequestParam("name") String name, @RequestParam("bytes") String arquivo, @RequestParam("type") String type) throws IOException {
+    return this.serv.upload(name, arquivo, type);
   }
 
   @RequestMapping("download/{id}")
-  public HttpEntity<byte[]> download(@RequestParam("arquivo") Integer arquivo_id, @RequestParam("produto") String produto_nome) throws IOException {
-    return this.serv.download(arquivo_id, produto_nome);
+  public HttpEntity<byte[]> download(@PathVariable("id") Integer arquivo_id) throws IOException {
+    return this.serv.download(arquivo_id);
   }
 
   @RequestMapping("remove/{id}")

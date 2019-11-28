@@ -22,8 +22,8 @@ public class ArquivoService extends org.loja.model.Service<Arquivo> {
     super(Arquivo.class);
   }
 
-  public Integer upload(String bytes, String type) throws IOException {
-    String file_name = file_path + File.separator + fileName(type);
+  public Integer upload(String name, String bytes, String type) throws IOException {
+    String file_name = file_path + File.separator + name;
 
     File file = new File(file_name);
 		if(!file.exists())
@@ -42,7 +42,7 @@ public class ArquivoService extends org.loja.model.Service<Arquivo> {
     return arquivo.getId();
   }
 
-  public HttpEntity<byte[]> download(Integer arquivo_id, String produto_nome) throws IOException {
+  public HttpEntity<byte[]> download(Integer arquivo_id) throws IOException {
     Arquivo arquivo = this.dao.findBy("id", arquivo_id);
 
     File file = new File(arquivo.getFileName());
@@ -51,7 +51,7 @@ public class ArquivoService extends org.loja.model.Service<Arquivo> {
 
     HttpHeaders header = new HttpHeaders();
     header.setContentType(new MediaType("application", "octet-stream"));
-    header.set("Content-Disposition", "attachment; filename=" + produto_nome);
+    header.set("Content-Disposition", "attachment; filename=" + downloadName(arquivo.getFileName()));
     header.setContentLength(documentBody.length);
 
     return new HttpEntity<byte[]>(documentBody, header);
@@ -65,7 +65,11 @@ public class ArquivoService extends org.loja.model.Service<Arquivo> {
       this.dao.delete(arquivo);
   }
 
-  public String fileName(String type) {
-    return UUID.randomUUID().toString()+"."+type;
+  public String downloadName(String name) {
+    java.util.StringTokenizer st = new java.util.StringTokenizer(name, File.separator);
+    String token = "";
+    while (st.hasMoreTokens())
+        token = st.nextToken();
+    return token;
   }
 }
