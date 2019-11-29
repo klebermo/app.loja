@@ -1,7 +1,8 @@
 function load_content() {
-  var json = document.getElementById("table").dataset.json;
+  var table = document.getElementById("table");
 
-  if(json != null) {
+  if(table) {
+    var json = table.dataset.json;
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
