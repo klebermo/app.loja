@@ -107,3 +107,5 @@ insert into usuario_credenciais values (1,7);
 insert into usuario_credenciais values (1,8);
 insert into usuario_credenciais values (1,9);
 insert into usuario_credenciais values (1,10);
+
+insert into cliente (usuario_id) values (1);
