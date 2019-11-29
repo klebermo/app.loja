@@ -16,8 +16,8 @@ import com.paypal.api.payments.RedirectUrls;
 import com.paypal.api.payments.Transaction;
 import com.paypal.base.rest.APIContext;
 
-import org.loja.model.usuario.UsuarioDao;
-import org.loja.model.usuario.Usuario;
+import org.loja.model.cliente.ClienteDao;
+import org.loja.model.cliente.Cliente;
 import org.loja.model.produto.Produto;
 
 import java.util.Iterator;
@@ -31,7 +31,7 @@ import javax.mail.MessagingException;
 @Service
 public class PaypalService extends org.loja.settings.Service<Paypal> {
   @Autowired
-  private UsuarioDao usuarioDao;
+  private ClienteDao clienteDao;
 
   private Map<String, String> map = new HashMap<String, String>();
 
@@ -39,8 +39,8 @@ public class PaypalService extends org.loja.settings.Service<Paypal> {
     super(Paypal.class);
   }
 
-  public String checkout(Integer usuario_id, String payerId, String guid) throws PayPalRESTException, MessagingException {
-    Usuario usuario = usuarioDao.findBy("id", usuario_id);
+  public String checkout(Integer cliente_id, String payerId, String guid) throws PayPalRESTException, MessagingException {
+    Cliente cliente = clienteDao.findBy("id", cliente_id);
     Payment createdPayment = null;
 
     Paypal paypal = (Paypal) this.dao.get();
@@ -56,10 +56,10 @@ public class PaypalService extends org.loja.settings.Service<Paypal> {
 			  paymentExecution.setPayerId(payerId);
         createdPayment = payment.execute(apiContext, paymentExecution);
       }
-      return this.create_order(usuario.getId(), createdPayment.getId());
+      return this.create_order(cliente.getId(), createdPayment.getId());
     } else {
       Float total = 0.f;
-      for(Produto produto : usuario.getCesta().getProdutos())
+      for(Produto produto : cliente.getCesta().getProdutos())
         total += produto.getPreco();
 
       Details details = new Details();
@@ -75,7 +75,7 @@ public class PaypalService extends org.loja.settings.Service<Paypal> {
 
       ItemList itemList = new ItemList();
       List<Item> items = new ArrayList<Item>();
-      for(Produto p : usuario.getCesta().getProdutos()) {
+      for(Produto p : cliente.getCesta().getProdutos()) {
         Item item = new Item();
         item.setName(p.getNome().toString()).setQuantity("1").setCurrency("BRL").setPrice(String.valueOf(p.getPreco()));
         items.add(item);
@@ -97,7 +97,7 @@ public class PaypalService extends org.loja.settings.Service<Paypal> {
       RedirectUrls redirectUrls = new RedirectUrls();
       guid = UUID.randomUUID().toString().replaceAll("-", "");
       redirectUrls.setCancelUrl("http://localhost:8080/cart");
-      redirectUrls.setReturnUrl("http://localhost:8080/usuario/checkout_paypal?usuario_id="+usuario.getId().toString()+"&guid="+guid);
+      redirectUrls.setReturnUrl("http://localhost:8080/cliente/checkout_paypal?cliente_id="+cliente.getId().toString()+"&guid="+guid);
       payment.setRedirectUrls(redirectUrls);
 
       createdPayment = payment.create(apiContext);

@@ -19,7 +19,7 @@ public class PaypalController extends org.loja.settings.Controller<Paypal> {
   }
 
   @RequestMapping(value = "/checkout", method=RequestMethod.POST)
-  public String checkout(@RequestParam("usuario_id") Integer usuario_id, @RequestParam(value="PayerID", required=false) String payerId, @RequestParam(value="guid", required=false) String guid) throws PayPalRESTException, MessagingException {
-    return "redirect:"+this.serv.checkout(usuario_id, payerId, guid);
+  public String checkout(@RequestParam("cliente_id") Integer cliente_id, @RequestParam(value="PayerID", required=false) String payerId, @RequestParam(value="guid", required=false) String guid) throws PayPalRESTException, MessagingException {
+    return "redirect:"+this.serv.checkout(cliente_id, payerId, guid);
   }
 }
