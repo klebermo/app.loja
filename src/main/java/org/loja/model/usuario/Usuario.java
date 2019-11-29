@@ -1,25 +1,21 @@
 package org.loja.model.usuario;
 
+import javax.persistence.Entity;
 import org.loja.model.Model;
 import org.springframework.security.core.userdetails.UserDetails;
-import java.util.List;
-import java.util.Date;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Column;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.FetchType;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Column;
+import javax.persistence.ManyToMany;
+import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import java.util.List;
+import org.loja.model.credencial.Credencial;
+import java.util.Date;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 public class Usuario extends Model implements UserDetails {
@@ -44,8 +40,7 @@ public class Usuario extends Model implements UserDetails {
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name="usuario_credenciais", joinColumns={@JoinColumn(name="usuario_id")}, inverseJoinColumns={@JoinColumn(name="credencial_id")})
-  @Fetch(FetchMode.SELECT)
-  private List<org.loja.model.credencial.Credencial> credenciais;
+  private List<Credencial> credenciais;
 
   @Column
   private Date dataExpiracao;
@@ -55,14 +50,6 @@ public class Usuario extends Model implements UserDetails {
 
   @Column
   private Boolean locked;
-
-  @OneToOne(fetch = FetchType.EAGER)
-  @Fetch(FetchMode.SELECT)
-  private org.loja.model.cesta.Cesta cesta;
-
-  @OneToMany(fetch = FetchType.EAGER)
-  @Fetch(FetchMode.SELECT)
-  private List<org.loja.model.pedido.Pedido> pedidos;
 
   @Override
   public Integer getId() {
@@ -114,11 +101,11 @@ public class Usuario extends Model implements UserDetails {
     this.email = email;
   }
 
-  public List<org.loja.model.credencial.Credencial> getCredenciais() {
+  public List<Credencial> getCredenciais() {
     return credenciais;
   }
 
-  public void setCredenciais(List<org.loja.model.credencial.Credencial> credenciais) {
+  public void setCredenciais(List<Credencial> credenciais) {
     this.credenciais = credenciais;
   }
 
@@ -152,22 +139,6 @@ public class Usuario extends Model implements UserDetails {
     if(locked == null)
       this.locked = false;
     this.locked = locked;
-  }
-
-  public org.loja.model.cesta.Cesta getCesta() {
-    return cesta;
-  }
-
-  public void setCesta(org.loja.model.cesta.Cesta cesta) {
-    this.cesta = cesta;
-  }
-
-  public List<org.loja.model.pedido.Pedido> getPedidos() {
-    return pedidos;
-  }
-
-  public void setPedidos(List<org.loja.model.pedido.Pedido> pedidos) {
-    this.pedidos = pedidos;
   }
 
   @Override
