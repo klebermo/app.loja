@@ -20,7 +20,7 @@
       <button sec:authorize="hasPermission(#user, 'remove_usuario')" type="button" class="btn btn-secondary" id="delete" th:attr="data-url=@{/usuario/delete}" onclick="open_tab(this)">
         <i class="fas fa-trash"></i>
       </button>
-      <button sec:authorize="hasPermission(#user, 'consulta_credencial')" type="button" class="btn btn-secondary" id="credencial" th:attr="data-url=@{/usuario/credenciais}" onclick="open_tab(this)">
+      <button sec:authorize="hasPermission(#user, 'consulta_credencial')" type="button" class="btn btn-secondary" id="credencial" th:attr="data-url=@{/credenciais}" onclick="open_tab(this)">
         <i class="fas fa-user-tag"></i>
       </button>
     </div>
