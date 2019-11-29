@@ -11,7 +11,7 @@ import com.mercadopago.resources.datastructures.preference.Item;
 import com.mercadopago.resources.datastructures.preference.BackUrls;
 
 import org.loja.model.titulo.Titulo;
-import org.loja.model.usuario.Usuario;
+import org.loja.model.cliente.Cliente;
 import org.loja.model.produto.Produto;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,27 +27,27 @@ public class MercadoPagoService extends org.loja.settings.Service<MercadoPago> {
     super(MercadoPago.class);
   }
 
-  public String checkout(Integer usuario_id) throws MessagingException {
-    return create_order(usuario_id, UUID.randomUUID().toString());
+  public String checkout(Integer cliente_id) throws MessagingException {
+    return create_order(cliente_id, UUID.randomUUID().toString());
   }
 
-  public String create_order(Integer usuario_id, String transaction_id) throws MessagingException {
-    Usuario usuario = this.usuarioDao.findBy("id", usuario_id);
-    return "/order/" + create_order(usuario, clazz.getSimpleName(), transaction_id);
+  public String create_order(Integer cliente_id, String transaction_id) throws MessagingException {
+    Cliente cliente = this.clienteDao.findBy("id", cliente_id);
+    return "/order/" + create_order(cliente, clazz.getSimpleName(), transaction_id);
   }
 
-  public Preference preference(Usuario usuario) throws  MPException, MPConfException {
+  public Preference preference(Cliente cliente) throws  MPException, MPConfException {
     String accessToken = ((MercadoPago) this.dao.get()).getAccessToken();
     com.mercadopago.MercadoPago.SDK.setAccessToken(accessToken);
 
     Preference preference = new Preference();
 
     Payer payer = new Payer();
-    payer.setEmail(usuario.getEmail());
+    payer.setEmail(cliente.getUsuario().getEmail());
     preference.setPayer(payer);
 
-    if(usuario.getCesta() != null)
-      for(Produto p : usuario.getCesta().getProdutos()) {
+    if(cliente.getCesta() != null)
+      for(Produto p : cliente.getCesta().getProdutos()) {
         Item item = new Item();
         item.setTitle(p.getNome())
             .setQuantity(1)
