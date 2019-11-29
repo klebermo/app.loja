@@ -20,7 +20,7 @@
         <tr th:each="credencial : ${credenciais}">
           <td>
             <div class="form-group form-check">
-              <input type="checkbox" th:checked="${#lists.contains(command.credenciais, credencial)}" class="form-check-input" id="credencial" th:attr="data-usuario=${command.id}, data-credencial=${credencial.id}, data-url=@{/usuario/toggle_credencial}" onclick="toggle_credencial(this);">
+              <input type="checkbox" th:checked="${#lists.contains(command.credenciais, credencial)}" class="form-check-input" id="credencial" th:attr="data-usuario=${command.id}, data-credencial=${credencial.id}, data-url=@{/toggle_credencial}" onclick="toggle_credencial(this);">
             </div>
           </td>
           <td>

@@ -1,5 +1,6 @@
 <th:block th:fragment="copy">
   <div class="container">
+    <input type="hidden" name="forum" value=""/>
     <div class="row">
       <div class="col-2">
         <div class="row text-center text-lg-left">
@@ -27,8 +28,8 @@
       <div class="col-2">
         <div class="form-group">
           <label for="categoria">Categoria</label>
-          <select class="form-control" id="categoria" th:field="*{categoria}">
-            <option th:each="c : ${categorias}" th:value="${c}">
+          <select class="form-control" id="categoria" th:field="*{categoria.id}">
+            <option th:each="c : ${categorias}" th:value="${c.id}">
               <span th:each="t : ${c.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></span>
             </option>
           </select>
@@ -191,7 +192,7 @@
   </ul>
 
   <div class="tab-content">
-    <div th:each="idioma,stat : ${idiomas.listaDeIdiomas}" th:class="${stat.index == 0}? 'tab-pane active' : 'tab-pane'" th:id="${#strings.substringBefore(iconteudooma,',')}" role="tabpanel" th:attr="aria-labelledby=${#strings.substringBefore(idioma,',') + '-tab'}">
+    <div th:each="idioma,stat : ${idiomas.listaDeIdiomas}" th:class="${stat.index == 0}? 'tab-pane active' : 'tab-pane'" th:id="${#strings.substringBefore(idioma,',')}" role="tabpanel" th:attr="aria-labelledby=${#strings.substringBefore(idioma,',') + '-tab'}">
       <div class="form-group">
         <label for="resumo">Resumo</label>
         <input type="hidden" th:name="${'resumo[' + stat.index + '].id'}" th:each="value : ${command.resumo}" th:if="${#strings.equals(value.idioma, idioma)}" th:value="${value.id}"/>
