@@ -1,56 +1,26 @@
 <th:block th:fragment="copy">
-  <div class="row">
-    <h3 class="row_title">
-      Pedido <strong th:text="${order.transactionId}"></strong> realizado com <strong th:text="${order.metodoPagamento}"></strong> em <span th:text="${#dates.format(order.dataCompra, 'dd/MMM/yyyy')}"></span>
-    </h3>
+  <div class="media">
+    <h1> <i class="fas fa-receipt"></i> </h1>
+    <div class="media-body">
+      <h5 class="mt-0">Pedido #<span th:text="${order.transactionId}"></span></h5>
+      Realizado com <strong th:text="${order.metodoPagamento}"></strong> em <span th:text="${#dates.format(order.dataCompra, 'dd/MMM/yyyy')}"></span>
+    </div>
   </div>
 
-  <div class="col"></div>
-
-  <div class="col"></div>
-
-  <div class="col"></div>
-
-  <div class="col"></div>
-
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Produto</th>
-        <th scope="col">Resumo</th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr th:each="produto : ${order.produtos}">
-        <td>
-          <th:block th:if="${produto.icone}">
-            <img th:src="@{/imagem/download/__${produto.icone.id}__}" class="mr-3" width=64 height=64 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
-          </th:block>
-          <th:block th:unless="${produto.icone}">
-            <img th:src="@{/images/icon_product.png}" class="mr-3" width=64 height=64 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
-          </th:block>
-        </td>
-
-        <td>
-          <h5 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></h5>
-        </td>
-
-        <td>
-          <span th:each="r : ${produto.resumo}" th:if="${#strings.equals(#strings.substringBefore(r.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${r.conteudo}"></span>
-        </td>
-
-        <td>
-          <div class="dropdown">
-            <span class="dropbtn">Baixar</span>
-            <div class="dropdown-content">
-              <a th:each="arquivo : ${produto.versaoPaga}" th:href="@{/arquivo/download?arquivo=__${arquivo.id}__&produto=__${produto.nome}__}" th:text="${arquivo.type}"></a>
-            </div>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div th:each="produto : ${order.produtos}" class="media">
+    <img th:if="${produto.icone}" th:src="@{/imagem/download/__${produto.icone.id}__}" class="mr-3" th:alt="${produto.nome}">
+    <h1 th:unless="${produto.icone}"> <i class="fas fa-box"></i> </h1>
+    <div class="media-body">
+      <h5 class="mt-0" th:text="${produto.nome}"></h5>
+      <span th:each="t : ${p.resumo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${t.conteudo}"></span>
+      <div class="dropdown">
+        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Baixar
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" th:each="arquivo : ${produto.versaoPaga}" th:href="@{/arquivo/download/__${arquivo.id}__}" th:text="${arquivo.type}"></a>
+        </div>
+      </div>
+    </div>
+  </div>
 </th:block>

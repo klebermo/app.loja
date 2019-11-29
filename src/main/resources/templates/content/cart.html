@@ -1,82 +1,68 @@
 <th:block th:fragment="copy">
-  <div class="row">
-    <h3 class="row_title">
-      <img th:src="@{/images/icon_cart.png}" width=64 height=64 class="mr-3" alt="cesta de compras">
-      Cesta de compras
-    </h3>
+  <div class="media">
+    <h1> <i class="fas fa-shopping-cart"></i> </h1>
+    <div class="media-body">
+      <h5 class="mt-0">Cesta de compras</h5>
+      <span id="cart" th:style="${cliente.cart}? 'display: block?': 'display: none'">
+        <i th:attr="data-cliente=${cliente.id}, data-url=@{/cliente/cart_size}" id="size"></i> produtos adicionados, com valor total de <i th:attr="data-cliente=${cliente.id}, data-url=@{/cliente/cart_total}" id="cart_total"></i>
+      </span>
+      <span id="empty_cart" th:style="${cliente.cart}? 'display: none?': 'display: block'">
+        <i>A cesta de compras está vazia.</i>
+      </span>
+    </div>
   </div>
 
-  <table class="table" onload="display_cart();">
+  <table th:style="${cliente.cart}? 'display: block?': 'display: none'" class="table" id="table">
     <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col">Produto</th>
-        <th scope="col">Resumo</th>
-        <th scope="col">Pre&ccedil;o</th>
+        <th scope="col">Preco</th>
         <th scope="col"></th>
       </tr>
     </thead>
-
     <tbody>
-      <th:block th:if="${usuario.cesta}">
-        <tr th:each="produto : ${usuario.cesta.produtos}" th:id="${'produto_' + produto.id}">
-          <td></td>
-
-          <td>
-            <div class="media">
-              <th:block th:if="${produto.icone}">
-                <img th:src="@{/imagem/download/__${produto.icone.id}__}" class="mr-3" width=64 height=64 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
-              </th:block>
-              <th:block th:unless="${produto.icone}">
-                <img th:src="@{/images/icon_product.png}" class="mr-3" width=64 height=64 th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:alt="${t.conteudo}"/>
-              </th:block>
-              <div class="media-body">
-                <h5 class="mt-0">
-                  <span th:each="t : ${produto.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></span>
-                </h5>
-              </div>
+      <tr th:each="p,stat : ${cliente.cesta.produtos}" th:id="${'produto_' + p.id}">
+        <td scope="row" th:text="${stat.count}"></td>
+        <td>
+          <div class="media">
+            <img th:if="${p.icone}" th:src="@{/imagem/download/__${p.icone.id}__}" width="64" height="64" class="mr-3" th:alt="${p.nome}">
+            <h1 th:unless="${p.icone}"> <i class="fas fa-box"></i> </h1>
+            <div class="media-body">
+              <h5 class="mt-0" th:text="${p.nome}"></h5>
+              <span th:each="t : ${p.resumo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${t.conteudo}"></span>
             </div>
-          </td>
-
-          <td>
-            <span th:each="t : ${produto.resumo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></span>
-          </td>
-
-          <td th:text="${#numbers.formatCurrency(produto.preco)}"></td>
-
-          <td>
-            <button class="button" onclick="remove_from_cart(this)" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}, data-url=@{/usuario/remove_from_cart}" type="button">
-              <img th:src="@{/images/icon_delete.png}" width="32" height="32" alt="remover item">
-            </button>
-          </td>
-        </tr>
-      </th:block>
+          </div>
+        </td>
+        <td th:text="${#numbers.formatCurrency(p.preco)}"></td>
+        <td>
+          <button type="button" class="btn btn-dark" th:attr="data-cliente=${cliente.id}, data-produto=${p.id}, data-url=@{/cliente/remove_from_cart}" onclick="remove_from_cart(this)">
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      </tr>
     </tbody>
-
-    <tfoot th:if="${mercadoPagoPreference}">
+    <tfoot>
       <tr>
         <td></td>
         <td></td>
-        <td></td>
-        <td><h3>Total:<span class="badge" id="cart_total" th:attr="data-usuario=${usuario.id}, data-url=@{/usuario/cart_total}"></span></h3></td>
-        <td></td>
+        <td>
+          <h1>Total <span th:attr="data-cliente=${cliente.id}, data-url=@{/cliente/cart_total}" class="badge badge-secondary" id="total"></span></h1>
+        </td>
       </tr>
 
       <tr>
-        <td></td>
         <td></td>
         <td></td>
         <td>
           <form th:action="@{/paypal/checkout}" method="POST">
             <input type="hidden" name="usuario_id" th:value="${usuario.id}"/>
-            <button type="submit" class="button">Finalizar compra com PayPal</button>
+            <button type="submit" class="btn btn-primary">Finalizar compra com PayPal</button>
           </form>
         </td>
-        <td></td>
       </tr>
 
       <tr>
-        <td></td>
         <td></td>
         <td></td>
         <td>
@@ -85,20 +71,17 @@
             <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js" th:attr="data-preference-id=${mercadoPagoPreference}" data-button-label="Finalizar compra com MercadoPago"></script>
           </form>
         </td>
-        <td></td>
       </tr>
 
       <tr>
         <td></td>
         <td></td>
-        <td></td>
         <td>
           <form th:action="@{/pagseguro/checkout}" method="POST">
             <input type="hidden" name="usuario_id" th:value="${usuario.id}"/>
-            <button type="submit" class="button">Finalizar compra com PagSeguro</button>
+            <button type="submit" class="btn btn-primary">Finalizar compra com PagSeguro</button>
           </form>
         </td>
-        <td></td>
       </tr>
     </tfoot>
   </table>

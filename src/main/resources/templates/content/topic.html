@@ -1,43 +1,50 @@
 <th:block th:fragment="copy">
-  <th:block>
-    <table class="table">
-      <thead>
-        <tr>
-          <th th:utext="${topic.titulo}"></th>
-        </tr>
-      </thead>
+  <div class="media">
+    <th:block th:each="p : ${produtos}" th:if="${p.forum.id == topic.forum.id}">
+      <img th:if="${p.icone}" th:src="@{/imagem/download/__${p.icone.id}__}" width="64" height="64" class="mr-3" th:alt="${p.nome}">
+      <h1 th:unless="${p.icone}"> <i class="fas fa-box"></i> </h1>
+    </th:block>
+    <div class="media-body">
+      <div class="container">
+        <div class="row">
+          <div class="col-2">
+            <h3 class="mt-0">Forum <small th:each="p : ${produtos}" th:if="${p.forum.id == topic.forum.id}" th:text="${p.nome}"></small></h3>
+          </div>
+          <div class="col-8">
+          </div>
+          <div class="col-2">
+            <a class="btn btn-primary btn-lg" th:href="@{/forum/view/__${topic.forum.id}__}" role="button">
+              <i class="fas fa-arrow-circle-left"></i>
+              Voltar
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-      <tbody>
-        <tr>
-          <td th:utext="${topic.descricao}"></td>
-        </tr>
-      </tbody>
+  <div class="alert alert-dark" role="alert">
+    <h3 th:text="${topic.titulo}"></h3>
+  </div>
 
-      <tfoot>
-        <tr>
-          <td th:utext="${topic.autor}"></td>
-        </tr>
-      </tfoot>
-    </table>
+  <div class="jumbotron">
+    <p class="lead" th:utext="${topic.descricao}"></p>
+    <hr class="my-4">
+    <p>Publicado em <i th:text="${#dates.format(topic.dataPublicacao, 'dd/MMM/yyyy HH:mm')}"></i> por <i th:text="${topic.autor}"></i></p>
+  </div>
 
-    <table class="table" th:if="${topic.resposta}">
-      <thead>
-        <tr>
-          <th th:text="${topic.resposta.titulo}"></th>
-        </tr>
-      </thead>
+  <div th:if="${topic.resposta}" class="alert alert-light" role="alert">
+    <h3>Resposta</h3>
+  </div>
 
-      <tbody>
-        <tr>
-          <td th:text="${topic.resposta.descricao}"></td>
-        </tr>
-      </tbody>
+  <div th:if="${topic.resposta}" class="jumbotron">
+    <h3 class="display-4" th:text="${topic.resposta.titulo}"></h3>
+    <p class="lead" th:utext="${topic.resposta.descricao}"></p>
+    <hr class="my-4">
+    <p>Publicado em <i th:text="${#dates.format(topic.resposta.dataPublicacao, 'dd/MMM/yyyy HH:mm')}"></i> por <i th:text="${topic.resposta.autor}"></i></p>
+  </div>
 
-      <tfoot>
-        <tr>
-          <td th:text="${topic.resposta.autor}"></td>
-        </tr>
-      </tfoot>
-    </table>
-  </th:block>
+  <div th:unless="${topic.resposta}" class="alert alert-light" role="alert">
+    <h3>Aguardando Resposta</h3>
+  </div>
 </th:block>

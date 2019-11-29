@@ -1,22 +1,20 @@
 <th:block th:fragment="copy">
   <div class="container">
     <div class="row">
-      <div class="col-2">
-        <th:block th:if="${produto.icone}">
-          <img th:src="@{/imagem/download/__${produto.icone.id}__}" width=64 height=64 th:alt="${produto.nome}"/>
-        </th:block>
-
-        <th:block th:unless="${produto.icone}">
-          <i class="fas fa-list-alt"></i>
-        </th:block>
-
-        <h3>
-          <span th:text="${produto.nome}"></span>
-          <span class="badge badge-secondary" th:text="${#numbers.formatCurrency(produto.preco)}"></span>
-        </h3>
+      <div class="col-3">
+        <div class="media">
+          <img th:if="${produto.icone}" th:src="@{/imagem/download/__${produto.icone.id}__}" width=64 height=64 class="mr-3" th:alt="${produto.nome}">
+          <h1 th:unless="${produto.icone}"> <i class="fas fa-list-alt"></i> </h1>
+          <div class="media-body">
+            <h5 class="mt-0">
+              <span th:text="${produto.nome}"></span>
+              <span class="badge badge-secondary" th:text="${#numbers.formatCurrency(produto.preco)}"></span>
+            </h5>
+          </div>
+        </div>
       </div>
 
-      <div class="col-8">
+      <div class="col-6">
         <div id="screenshots" class="carousel slide" data-ride="carousel">
           <div class="carousel-inner">
             <div th:each="img,stat : ${produto.thumbnails}" th:class="${stat.index == 0}? 'carousel-item active' : 'carousel-item'">
@@ -26,9 +24,13 @@
         </div>
       </div>
 
-      <div class="col-2">
+      <div class="col-3">
         <p>
-          <button type="button" class="btn btn-dark" sec:authorize="isAuthenticated()" onclick="add_to_cart(this)" th:attr="data-usuario=${usuario.id}, data-produto=${produto.id}, data-url=@{/usuario/add_to_cart}">Comprar <br/> <small>Vers&atilde;o Pro</small></button>
+          <a sec:authorize="isAuthenticated()" th:href="@{/forum/view/__${produto.forum.id}__}" class="btn btn-dark">Forum <br/> <small>Suporte técnico</small></a>
+        </p>
+
+        <p>
+          <button sec:authorize="isAuthenticated()" type="button" class="btn btn-dark" onclick="add_to_cart(this)" th:attr="data-cliente=${cliente.id}, data-produto=${produto.id}, data-url=@{/cliente/add_to_cart}">Comprar <br/> <small>Vers&atilde;o Pro</small></button>
         </p>
 
         <div class="dropdown">
