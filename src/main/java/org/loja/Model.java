@@ -15,6 +15,7 @@ import org.loja.model.categoria.Categoria;
 import org.loja.model.produto.Produto;
 import org.loja.model.pagina.Pagina;
 import org.loja.model.pedido.Pedido;
+import org.loja.model.cliente.Cliente;
 import org.loja.model.usuario.Usuario;
 import org.loja.model.credencial.Credencial;
 import org.loja.model.autorizacao.Autorizacao;
@@ -28,6 +29,7 @@ import org.loja.model.categoria.CategoriaService;
 import org.loja.model.produto.ProdutoService;
 import org.loja.model.pagina.PaginaService;
 import org.loja.model.pedido.PedidoService;
+import org.loja.model.cliente.ClienteService;
 import org.loja.model.usuario.UsuarioService;
 import org.loja.model.credencial.CredencialService;
 import org.loja.model.autorizacao.AutorizacaoService;
@@ -53,6 +55,9 @@ public class Model {
 
   @Autowired
   private PedidoService pedido;
+
+  @Autowired
+  private ClienteService cliente;
 
   @Autowired
   private UsuarioService usuario;
@@ -98,6 +103,11 @@ public class Model {
     return pedido.select();
   }
 
+  @ModelAttribute("cliente")
+  public Cliente cliente() {
+    return cliente.findBy("usuario", usuario());
+  }
+
   @ModelAttribute("usuario")
   public Usuario usuario() {
     return usuario.findBy("username", SecurityContextHolder.getContext().getAuthentication().getName());
@@ -140,7 +150,7 @@ public class Model {
 
   @ModelAttribute("mercadoPagoPreference")
   public Preference mercadoPagoPreference() throws MPException {
-    Usuario u = usuario();
+    Cliente u = cliente();
     if(u!= null && u.getCesta() != null && !u.getCesta().getProdutos().isEmpty())
       return mercadoPago.preference(u);
     else
