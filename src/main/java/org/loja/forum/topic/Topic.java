@@ -19,7 +19,7 @@ public class Topic extends org.loja.model.Model {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
 
-  @Column(length=32)
+  @Column(length=140)
   private String titulo;
 
   @Column(length=2097152)
