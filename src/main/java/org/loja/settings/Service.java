@@ -2,8 +2,8 @@ package org.loja.settings;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.loja.model.usuario.UsuarioDao;
-import org.loja.model.usuario.Usuario;
+import org.loja.model.cliente.ClienteDao;
+import org.loja.model.cliente.Cliente;
 import org.loja.model.cesta.CestaDao;
 import org.loja.model.cesta.Cesta;
 import org.loja.model.pedido.PedidoDao;
@@ -22,31 +22,31 @@ public abstract class Service<E> {
   protected Dao<E> dao;
 
   @Autowired
-  protected UsuarioDao usuarioDao;
+  protected ClienteDao clienteDao;
 
   @Autowired
   protected CestaDao cestaDao;
 
   @Autowired
-  protected ProdutoDao produtoDao;
+  protected PedidoDao pedidoDao;
 
   @Autowired
-  protected PedidoDao pedidoDao;
+  protected ProdutoDao produtoDao;
 
   public Service(Class<E> clazz) {
     this.clazz = clazz;
   }
 
-  public String create_order(Integer usuario_id, String transaction_id) throws MessagingException {
-    Usuario usuario = usuarioDao.findBy("id", usuario_id);
-    return "/order/" + create_order(usuario, clazz.getSimpleName(), transaction_id);
+  public String create_order(Integer cliente_id, String transaction_id) throws MessagingException {
+    Cliente cliente = clienteDao.findBy("id", cliente_id);
+    return "/order/" + create_order(cliente, clazz.getSimpleName(), transaction_id);
   }
 
-  public Integer create_order(Usuario usuario, String metodoPagamento, String transaction_id) throws MessagingException {
+  public Integer create_order(Cliente cliente, String metodoPagamento, String transaction_id) throws MessagingException {
     Pedido pedido = new Pedido();
     pedido.setProdutos(new ArrayList<Produto>());
 
-    Cesta cesta = usuario.getCesta();
+    Cesta cesta = cliente.getCesta();
     if(cesta.getProdutos() != null) {
       for(Produto produto : cesta.getProdutos())
         pedido.getProdutos().add(produto);
@@ -59,16 +59,16 @@ public abstract class Service<E> {
     pedido.setTransactionId(transaction_id);
     pedidoDao.insert(pedido);
 
-    if(usuario.getPedidos() == null) {
-      usuario.setPedidos(new ArrayList<Pedido>());
-      usuario.getPedidos().add(pedido);
-      usuarioDao.update(usuario);
+    if(cliente.getPedidos() == null) {
+      cliente.setPedidos(new ArrayList<Pedido>());
+      cliente.getPedidos().add(pedido);
+      clienteDao.update(cliente);
     } else {
-      usuario.getPedidos().add(pedido);
-      usuarioDao.update(usuario);
+      cliente.getPedidos().add(pedido);
+      clienteDao.update(cliente);
     }
 
-    //mailSender.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Destalhes do pedido", "...");
+    //mailSender.send_mail(cliente.getEmail(), cliente.getFirstName(), cliente.getLastName(), "Destalhes do pedido", "...");
 
     return pedido.getId();
   }
