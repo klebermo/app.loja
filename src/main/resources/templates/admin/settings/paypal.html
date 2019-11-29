@@ -9,21 +9,5 @@
       <label for="clientSecret">clientSecret</label>
       <input type="text" th:field="*{clientSecret}" class="form-control" id="clientSecret" placeholder="clientSecretr">
     </div>
-
-    <button type="button" class="btn btn-dark" id="submit" onclick="submit_setting(this);">Salvar</button>
-
-    <div class="alert alert-success alert-dismissible fade show" id="ok" role="alert" style="display: none;">
-      <strong>Sucesso!</strong> Configura&ccedil;&otilde;es salvas com sucesso!
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-
-    <div class="alert alert-danger alert-dismissible fade show" id="error" role="alert" style="display: none;">
-      <strong>Erro!</strong> Ocorreu um erro ao salvar as configura&ccedil;&otilde;es!
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
   </form>
 </th:block>
