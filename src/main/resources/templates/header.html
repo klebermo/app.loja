@@ -20,5 +20,5 @@
 
     <link th:if="${login}" rel="stylesheet" th:href="@{/css/style-signin.css}"/>
   </head>
-  <body onload="show_cart_size(); show_cart_total();">
+  <body onload="update_cart(this);">
 </th:block>
