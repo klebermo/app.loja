@@ -1,0 +1,20 @@
+<th:block th:fragment="copy">
+  <p id="insert">
+    <button sec:authorize="hasPermission(#user, 'cadastra_cliente')" type="button" class="btn btn-dark" id="insert" th:attr="data-url=@{/cliente/insert}" onclick="open_tab(this)">
+      <i class="fas fa-plus"></i> Novo item
+    </button>
+  </p>
+
+  <th>#</th>
+  <th class="col">usuario</th>
+  <th>
+    <div class="btn-group" id="buttons" role="group" aria-label="comandos" style="display: none;">
+      <button sec:authorize="hasPermission(#user, 'atualiza_cliente')" type="button" class="btn btn-secondary" id="update" th:attr="data-url=@{/cliente/update}" onclick="open_tab(this)">
+        <i class="fas fa-edit"></i>
+      </button>
+      <button sec:authorize="hasPermission(#user, 'remove_cliente')" type="button" class="btn btn-secondary" id="delete" th:attr="data-url=@{/cliente/delete}" onclick="open_tab(this)">
+        <i class="fas fa-trash"></i>
+      </button>
+    </div>
+  </th>
+</th:block>
