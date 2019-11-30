@@ -15,58 +15,86 @@ function register() {
   xhr.send(formData);
 }
 
-function show_cart_size() {
+function update_cart() {
   var cart_size = document.getElementById('cart_size');
-  var span_size = document.getElementById('size');
-  if(cart_size !== null) {
-    var cliente = cart_size.dataset.cliente;
-    var url = cart_size.dataset.url;
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-        var size = xhr.responseText;
-        if(cart_size) {
-          cart_size.innerHTML = size;
-          if(size > 0)
-            cart_size.removeAttribute('style');
-          else
-            cart_size.setAttribute('style', 'display: none;');
-        }
-        if(span_size)
-          span_size.innerHTML = size;
-        return size;
-      }
-    };
-    var formData = new FormData();
-    formData.append('cliente', cliente);
-    xhr.send(formData);
-  }
-}
-
-function show_cart_total() {
+  var cart_status = document.getElementById('cart_status');
   var cart_total = document.getElementById('cart_total');
-  var span_total = document.getElementById('total');
-  if(cart_total !== null) {
-    var cliente = cart_total.dataset.cliente;
-    var url = cart_total.dataset.url;
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-        var total = xhr.responseText;
-        var currency = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(total);
-        if(cart_total)
-          cart_total.innerHTML = currency;
-        if(span_total)
-          span_total.innerHTML = currency;
-        return currency;
-      }
-    };
-    var formData = new FormData();
-    formData.append('cliente', cliente);
-    xhr.send(formData);
-  }
+
+  var size, total, currency;
+
+  var promise1 = new Promise(function(resolve, reject) {
+    if(cart_size !== null) {
+      var cliente = cart_size.dataset.cliente;
+      var url = cart_size.dataset.url;
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", url, true);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          resolve(xhr.responseText);
+        }
+      };
+      var formData = new FormData();
+      formData.append("cliente", cliente);
+      xhr.send(formData);
+    }
+  });
+
+  var promise2 = new Promise(function(resolve, reject) {
+    if(cart_total !== null) {
+      var cliente = cart_total.dataset.cliente;
+      var url = cart_total.dataset.url;
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", url, true);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          resolve(xhr.responseText);
+        }
+      };
+      var formData = new FormData();
+      formData.append("cliente", cliente);
+      xhr.send(formData);
+    }
+  });
+
+  var promise3 = new Promise(function(resolve, reject) {
+    if(cart_status !== null) {
+      resolve();
+    }
+  });
+
+  promise1.then(function(value) {
+    size = value;
+    cart_size.innerHTML = size;
+    if(size == 0)
+      cart_size.style.display = 'none';
+    else
+      cart_size.style.display = 'block';
+
+    promise2.then(function(value) {
+      total = value;
+      currency = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(total);
+      cart_total.innerHTML = currency;
+
+      promise3.then(function() {
+        switch(size) {
+          case '0':
+            cart_status.innerHTML = 'A cesta de compras está vazia.';
+            document.getElementById('table').style.display = 'none';
+            break;
+          case '1':
+            cart_status.innerHTML = size + ' produto adicionado na cesta, com valor ' + currency;
+            document.getElementById('table').style.display = 'block';
+            break;
+          default:
+            cart_status.innerHTML = size + ' produtos adicionados na cesta, com valor ' + currency;
+            document.getElementById('table').style.display = 'block';
+            break;
+        }
+      });
+    });
+  });
 }
 
 function add_to_cart(btn) {
@@ -77,7 +105,7 @@ function add_to_cart(btn) {
   xhr.open("POST", url, true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
-      var size = show_cart_size();
+      update_cart();
     }
   };
   var formData = new FormData();
@@ -96,15 +124,7 @@ function remove_from_cart(btn) {
     if (xhr.readyState == 4 && xhr.status == 200) {
       var target = document.getElementById('produto_'+produto);
       target.remove();
-
-      var size = show_cart_size();
-      var total = show_cart_total();
-
-      if(size == 0) {
-        document.getElementById("empty_cart").style.display = 'block';
-        document.getElementById("cart").style.display = 'none';
-        document.getElementById("table").style.display = 'none';
-      }
+      update_cart();
     }
   };
   var formData = new FormData();
