@@ -25,7 +25,7 @@
   <div class="form-group">
     <label for="produtos">produtos</label>
     <select multiple="multiple" class="form-control" id="produtos" th:field="*{produtos}">
-      <option th:each="option : ${produtos}" th:value="${option.id}" th:value="${option.nome}"></option>
+      <option th:each="option : ${produtos}" th:value="${option.id}" th:text="${option.nome}"></option>
     </select>
   </div>
 </th:block>

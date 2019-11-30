@@ -1,0 +1,108 @@
+<th:block th:fragment="copy">
+  <div class="container">
+    <input type="hidden" th:field="*{id}"/>
+
+    <div class="form-group">
+      <label for="categoria">usuario</label>
+      <select class="form-control" id="usuario" th:field="*{usuario.id}">
+        <option th:each="u : ${usuarios}" th:value="${u.id}" th:text="${u}"></option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="credenciais">cesta</label>
+      <select multiple="multiple" size="10" class="form-control" id="cesta" th:field="*{cesta.produtos}">
+        <option th:each="p : ${produtos}" th:value="${p.id}" th:text="${p.nome}"></option>
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="col-3">
+        <div class="nav flex-column nav-pills" id="pedidos" role="tablist" aria-orientation="vertical">
+          <a th:each="p,stat : ${command.pedidos}" th:class="${stat.index == 0}? 'nav-link active' : 'nav-link'" th:id="${'order-'+p.id+'-tab'}" data-toggle="pill" th:href="${'#order-'+p.id}" role="tab" th:attr="aria-controls=${'order-'+p.id}" aria-selected="false" th:text="${#dates.format(p.dataCompra, 'dd/MMM/yyyy')}"></a>
+          <a style="display: none;" class="nav-link" id="empty" data-toggle="pill" href="#" role="tab" aria-controls="#" aria-selected="false"></a>
+          <a th:class="${command.pedidos}? 'nav-link active': 'nav-link'" id="novo-tab" data-toggle="pill" href="#novo" role="tab" aria-controls="novo" th:attr="aria-selected=${command.pedidos}? 'false' : 'true'">novo pedido</a>
+        </div>
+      </div>
+      <div class="col-9">
+        <div class="tab-content" id="pedidos-content">
+          <div th:each="p,stat : ${command.pedidos}" th:class="${stat.index == 0}? 'tab-pane fade show active' : 'tab-pane fade'" th:id="${'order-'+p.id}" role="tabpanel" th:attr="aria-labelledby=${'order-'+p.id+'-tab'}">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">metodoPagamento</span>
+              </div>
+              <input type="text" class="form-control" readonly aria-label="metodoPagamento" aria-describedby="basic-addon1" th:value="${p.metodoPagamento}">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2">transactionId</span>
+              </div>
+              <input type="text" class="form-control" readonly aria-label="transactionId" aria-describedby="basic-addon2" th:value="${p.transactionId}">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">produtos</span>
+              </div>
+              <input type="text" class="form-control" readonly aria-label="produtos" aria-describedby="basic-addon3" th:value="${p.produtos}">
+            </div>
+            <button type="button" class="btn btn-dark" th:attr="data-cliente=${cliente.id}, data-pedido=${p.id}, data-url=@{/cliente/delete_pedido}" onclick="delete_pedido(this);">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+          <div style="display: none;" class="tab-pane fade" id="empty-content" role="tabpanel" aria-labelledby="#">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">metodoPagamento</span>
+              </div>
+              <input type="text" class="form-control" id="metodoPagamentoItem" readonly aria-label="metodoPagamento" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2">transactionId</span>
+              </div>
+              <input type="text" class="form-control" id="transactionIdItem" readonly aria-label="transactionId" aria-describedby="basic-addon2">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">produtos</span>
+              </div>
+              <input type="text" class="form-control" id="produtosItem" readonly aria-label="produtos" aria-describedby="basic-addon3">
+            </div>
+            <button type="button" class="btn btn-dark" id="btn_delete" data-cliente="#" data-pedido="#" th:attr="data-url=@{/cliente/delete_pedido}" onclick="delete_pedido(this);">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+          <div th:class="${command.pedidos}? 'tab-pane fade show active' : 'tab-pane fade'" id="novo" role="tabpanel" aria-labelledby="novo">
+            <div class="form" id="inner-form">
+              <div class="form-group">
+                <label for="transactionId">transactionId</label>
+                <input type="text" name="transactionId" class="form-control" id="transactionId">
+              </div>
+
+              <div class="form-group">
+                <label for="metodoPagamento">metodoPagamento</label>
+                <input type="text" name="metodoPagamento" class="form-control" id="metodoPagamento">
+              </div>
+
+              <div class="form-group">
+                <label for="dataCompra">dataCompra</label>
+                <input type="date" name="dataCompra" class="form-control" id="dataCompra">
+              </div>
+
+              <input th:if="${command}" type="hidden" name="cliente" id="cliente" th:value="${command.id}">
+
+              <div class="form-group">
+                <label for="produtos">produtos</label>
+                <select multiple="multiple" class="form-control" id="produtos" name="produtos">
+                  <option th:each="option : ${produtos}" th:value="${option.id}" th:text="${option.nome}"></option>
+                </select>
+              </div>
+
+              <button type="button" class="btn btn-dark" id="btn_delete" th:attr="data-cliente=${cliente.id}, data-url=@{/cliente/insert_pedido}" onclick="insert_pedido(this);">Aplicar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</th:block>
