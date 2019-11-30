@@ -92,9 +92,19 @@ insert into credencial_autorizacoes values (10,35);
 insert into credencial_autorizacoes values (10,36);
 insert into credencial_autorizacoes values (10,37);
 
+insert into credencial (nome) values ('cliente');
+insert into autorizacao (nome) values ('cadastra_cliente');
+insert into autorizacao (nome) values ('atualiza_cliente');
+insert into autorizacao (nome) values ('remove_cliente');
+insert into autorizacao (nome) values ('consulta_cliente');
+insert into credencial_autorizacoes values (11,38);
+insert into credencial_autorizacoes values (11,39);
+insert into credencial_autorizacoes values (11,40);
+insert into credencial_autorizacoes values (11,41);
+
 insert into credencial (nome) values ('web');
 insert into autorizacao (nome) values ('web');
-insert into credencial_autorizacoes values (11,38);
+insert into credencial_autorizacoes values (12,42);
 
 insert into usuario (username, password, first_name, last_name, email, enabled, locked) values ('kleber', '$2a$04$q8j56WcbSTMViRYqBOfGPOVbUKqSR0tdUoa9awU/cA/TRdPA/krRW', 'Kleber', 'Mota', 'kleber@mail.com', true, false);
 insert into usuario_credenciais values (1,1);
@@ -107,5 +117,6 @@ insert into usuario_credenciais values (1,7);
 insert into usuario_credenciais values (1,8);
 insert into usuario_credenciais values (1,9);
 insert into usuario_credenciais values (1,10);
+insert into usuario_credenciais values (1,11);
 
 insert into cliente (usuario_id) values (1);
