@@ -24,7 +24,7 @@
                 <p class="card-text" th:each="r : ${p.resumo}" th:if="${#strings.equals(#strings.substringBefore(r.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${r.conteudo}"></p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <a th:href="" class="btn btn-sm btn-outline-secondary">View</a>
+                    <a th:href="@{/p/__${p.nome}__}" class="btn btn-sm btn-outline-secondary">View</a>
                   </div>
                 </div>
               </div>

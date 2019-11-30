@@ -2,6 +2,7 @@
   <div class="container" th:each="c : ${categorias}">
     <div class="media">
       <img th:if="${c.icone}" th:src="@{/imagem/download/__${c.icone.id}__}" width="64" height="64" class="mr-3" th:alt="${c.nome}">
+      <h1 th:unless="${c.icone}"> <i class="fas fa-object-group"></i> </h1>
       <div class="media-body">
         <h5 class="mt-0" th:each="t : ${c.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${t.conteudo}"></h5>
       </div>
@@ -10,7 +11,7 @@
     <div class="album py-5 bg-light">
       <div class="container">
         <div class="row">
-          <div class="col-md-4" th:each="p,stat : ${produtos}" th:if="${#strings.equals(p.categoria, c) and stat.index < 5}">
+          <div class="col-md-4" th:each="p,stat : ${produtos}" th:if="${#strings.equals(p.categoria, c) and stat.index < 3}">
             <div class="card mb-4 shadow-sm">
               <th:block th:unless="${p.icone}">
                 <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em"><th:block th:text="${p.nome}"></th:block></text></svg>
