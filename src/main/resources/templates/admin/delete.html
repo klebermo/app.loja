@@ -10,6 +10,10 @@
             <th:block th:replace="admin/delete/categoria :: copy"></th:block>
           </th:block>
 
+          <th:block th:case="'cliente'">
+            <th:block th:replace="admin/delete/cliente :: copy"></th:block>
+          </th:block>
+
           <th:block th:case="'pagina'">
             <th:block th:replace="admin/delete/pagina :: copy"></th:block>
           </th:block>

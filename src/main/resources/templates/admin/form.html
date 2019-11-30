@@ -10,6 +10,10 @@
             <th:block th:replace="admin/form/categoria :: copy"></th:block>
           </th:block>
 
+          <th:block th:case="'cliente'">
+            <th:block th:replace="admin/form/cliente :: copy"></th:block>
+          </th:block>
+
           <th:block th:case="'pagina'">
             <th:block th:replace="admin/form/pagina :: copy"></th:block>
           </th:block>

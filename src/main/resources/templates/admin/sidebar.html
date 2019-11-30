@@ -30,10 +30,24 @@
         </a>
       </li>
 
+      <li class="nav-item" sec:authorize="hasPermission(#user, 'consulta_cliente')">
+        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Cliente')}? 'nav-link active' : 'nav-link'" th:href="@{/cliente/}">
+          <i class="fas fa-users"></i>
+          clientes
+        </a>
+      </li>
+
       <li class="nav-item" sec:authorize="hasPermission(#user, 'consulta_pagina')">
         <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Pagina')}? 'nav-link active' : 'nav-link'" th:href="@{/pagina/}">
           <i class="fas fa-file-alt"></i>
           p&aacute;ginas
+        </a>
+      </li>
+
+      <li class="nav-item" sec:authorize="hasPermission(#user, 'consulta_usuario')">
+        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Usuario')}? 'nav-link active' : 'nav-link'" th:href="@{/usuario/}">
+          <i class="fas fa-users"></i>
+          usu&aacute;rios
         </a>
       </li>
     </ul>
@@ -78,15 +92,6 @@
         <a th:class="${setting != null and #strings.equals(setting.simpleName, 'PagSeguro')}? 'nav-link active' : 'nav-link'" th:href="@{/pagseguro/get}" tabindex="-1" aria-disabled="true">
           <i class="fas fa-credit-card"></i>
           PagSeguro
-        </a>
-      </li>
-    </ul>
-
-    <ul class="nav flex-column">
-      <li class="nav-item" sec:authorize="hasPermission(#user, 'consulta_usuario')">
-        <a th:class="${classe != null and #strings.equals(classe.simpleName, 'Usuario')}? 'nav-link active' : 'nav-link'" th:href="@{/usuario/}">
-          <i class="fas fa-users"></i>
-          usu&aacute;rios
         </a>
       </li>
     </ul>

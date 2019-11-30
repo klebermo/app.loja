@@ -35,6 +35,10 @@
                 <div th:replace="admin/list/categoria :: copy"></div>
               </th:block>
 
+              <th:block th:if="${#strings.equals(target, 'cliente')}">
+                <div th:replace="admin/list/cliente :: copy"></div>
+              </th:block>
+
               <th:block th:if="${#strings.equals(target, 'produto')}">
                 <div th:replace="admin/list/produto :: copy"></div>
               </th:block>
