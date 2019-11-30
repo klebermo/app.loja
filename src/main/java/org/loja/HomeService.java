@@ -25,12 +25,19 @@ public class HomeService {
   @Autowired
   private MailSender mailSender;
 
-  public void register(Cliente novo) throws Exception {
-    clienteDao.insert(novo);
-    novo.getUsuario().setCredenciais(new ArrayList<Credencial>());
+  public void register(Usuario novo) throws Exception {
+    Cliente cliente = new Cliente();
+    clienteDao.insert(cliente);
+
+    novo.setEnabled(true);
+    novo.setLocked(false);
+    novo.setCredenciais(new ArrayList<Credencial>());
     Credencial credencial = credencialDao.findBy("nome", "web");
-    novo.getUsuario().getCredenciais().add(credencial);
-    clienteDao.update(novo);
+    novo.getCredenciais().add(credencial);
+    usuarioDao.insert(novo);
+
+    cliente.setUsuario(novo);
+    clienteDao.update(cliente);
     //mailSender.send_mail(novo.getEmail(), novo.getFirstName(), novo.getLastName(), "Confirmação de cadastro", "...");
   }
 
