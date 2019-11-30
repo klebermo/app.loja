@@ -13,6 +13,7 @@ import org.loja.model.pedido.PedidoService;
 import org.loja.model.pedido.Pedido;
 import org.loja.model.cliente.ClienteService;
 import org.loja.model.cliente.Cliente;
+import org.loja.model.usuario.Usuario;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -113,14 +114,14 @@ public class HomeController {
 
     @RequestMapping(value = "/register", method=RequestMethod.GET)
     public String formRegister(Model model) {
-      model.addAttribute("cliente", new Cliente());
+      model.addAttribute("command", new Usuario());
       model.addAttribute("login", "login");
       return "register";
     }
 
     @RequestMapping(value = "/register", method=RequestMethod.POST)
     @ResponseBody
-    public void doRegister(@ModelAttribute("cliente") Cliente object) throws Exception {
+    public void doRegister(@ModelAttribute("command") Usuario object) throws Exception {
       home.register(object);
     }
 
