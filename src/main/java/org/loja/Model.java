@@ -113,6 +113,11 @@ public class Model {
     return usuario.findBy("username", SecurityContextHolder.getContext().getAuthentication().getName());
   }
 
+  @ModelAttribute("clientes")
+  public List<Cliente> clientes() {
+    return cliente.select();
+  }
+
   @ModelAttribute("usuarios")
   public List<Usuario> usuarios() {
     return usuario.select();
