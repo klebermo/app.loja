@@ -28,11 +28,11 @@ public class Cliente extends Model implements Serializable {
   private Usuario usuario;
 
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  private org.loja.model.cesta.Cesta cesta;
+  private Cesta cesta;
 
-  @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @OrderColumn
-  private List<org.loja.model.pedido.Pedido> pedidos;
+  private List<Pedido> pedidos;
 
   @Override
   public Integer getId() {

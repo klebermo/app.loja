@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.loja.model.pedido.Pedido;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.ui.Model;
 
 @Controller
 @RequestMapping("cliente")
@@ -45,16 +43,22 @@ public class ClienteController extends org.loja.model.Controller<Cliente> {
     this.serv.remove_from_cart(cliente_id, produto_id);
   }
 
-  @RequestMapping(value = "/insert_pedido", method=RequestMethod.POST)
+  @RequestMapping(value = "/add_pedido", method=RequestMethod.POST)
   @ResponseBody
-  public String insert_pedido(@RequestParam("cliente") Integer cliente_id, @ModelAttribute("pedido") Pedido pedido) throws JsonProcessingException {
-    ObjectMapper mapper = new ObjectMapper();
-    return mapper.writeValueAsString(this.serv.insert_pedido(cliente_id, pedido));
+  public void add_pedido(@RequestParam("cliente") Integer cliente_id, @RequestParam("pedido") Integer pedido_id) {
+    this.serv.add_pedido(cliente_id, pedido_id);
   }
 
-  @RequestMapping(value = "/delete_pedido", method=RequestMethod.POST)
+  @RequestMapping(value = "/remove_pedido", method=RequestMethod.POST)
   @ResponseBody
-  public void delete_pedido(@RequestParam("cliente") Integer cliente_id, @RequestParam("pedido") Integer pedido_id) {
-    this.serv.delete_pedido(cliente_id, pedido_id);
+  public void remove_pedido(@RequestParam("cliente") Integer cliente_id, @RequestParam("pedido") Integer pedido_id) {
+    this.serv.remove_pedido(cliente_id, pedido_id);
+  }
+
+  @RequestMapping(value = "/pedidos", method=RequestMethod.GET)
+  @PreAuthorize("hasPermission(#user, 'consulta_pedido'")
+  public String formPedidos(Model model, @RequestParam("id") Integer id) {
+    model.addAttribute("command", this.serv.findBy("id", id));
+    return "admin/form/cliente_pedidos";
   }
 }
