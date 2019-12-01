@@ -1,36 +1,34 @@
 <th:block th:fragment="copy">
-  <form class="form" id="form" method="post" th:action="@{/__${target}__/set}" th:object="${command}">
-    <div class="container">
-      <div class="row">
-        <div class="col-5">
-          <div class="form-group">
-            <select multiple="multiple" size="15" class="form-control" id="selectLeft">
-              <option th:if="${idiomas.listaDeIdiomas}" th:each="option : ${lista_de_idiomas}" th:unless="${#lists.contains(idiomas.listaDeIdiomas, option)}" th:text="${option}"><option>
-              <option th:unless="${idiomas.listaDeIdiomas}" th:each="option : ${lista_de_idiomas}" th:text="${option}"><option>
-            </select>
-          </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-5">
+        <div class="form-group">
+          <select multiple="multiple" size="15" class="form-control" id="selectLeft">
+            <option th:if="${idiomas.listaDeIdiomas}" th:each="option : ${lista_de_idiomas}" th:unless="${#lists.contains(idiomas.listaDeIdiomas, option)}" th:text="${option}"><option>
+            <option th:unless="${idiomas.listaDeIdiomas}" th:each="option : ${lista_de_idiomas}" th:text="${option}"><option>
+          </select>
         </div>
-        <div class="col-2">
-          <p>
-            <button type="button" class="btn btn-dark" id="right" onclick="move_right();">
-              <i class="fas fa-chevron-right"></i>
-            </button>
-          </p>
+      </div>
+      <div class="col-2">
+        <p>
+          <button type="button" class="btn btn-dark" id="right" onclick="move_right();">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </p>
 
-          <p>
-            <button type="button" class="btn btn-dark" id="left" onclick="move_left();">
-              <i class="fas fa-chevron-left"></i>
-            </button>
-          </p>
-        </div>
-        <div class="col-5">
-          <div class="form-group">
-            <select th:field="*{listaDeIdiomas}" multiple="multiple" size="15" class="form-control" id="selectRight">
-              <option th:each="option : ${lista_de_idiomas}" th:if="${#lists.contains(idiomas.listaDeIdiomas, option)}" th:text="${option}"><option>
-            </select>
-          </div>
+        <p>
+          <button type="button" class="btn btn-dark" id="left" onclick="move_left();">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+        </p>
+      </div>
+      <div class="col-5">
+        <div class="form-group">
+          <select th:field="*{listaDeIdiomas}" multiple="multiple" size="15" class="form-control" id="selectRight">
+            <option th:each="option : ${lista_de_idiomas}" th:if="${#lists.contains(idiomas.listaDeIdiomas, option)}" th:text="${option}"><option>
+          </select>
         </div>
       </div>
     </div>
-  </form>
+  </div>
 </th:block>

@@ -1,13 +1,11 @@
 <th:block th:fragment="copy">
-  <form class="form" id="form" method="post" th:action="@{/__${target}__/set}" th:object="${command}">
-    <div class="form-group">
-      <label for="clientId">clientId</label>
-      <input type="text" th:field="*{clientId}" class="form-control" id="clientId" placeholder="clientId">
-    </div>
+  <div class="form-group">
+    <label for="clientId">clientId</label>
+    <input type="text" th:field="*{clientId}" class="form-control" id="clientId" placeholder="clientId">
+  </div>
 
-    <div class="form-group">
-      <label for="clientSecret">clientSecret</label>
-      <input type="text" th:field="*{clientSecret}" class="form-control" id="clientSecret" placeholder="clientSecretr">
-    </div>
-  </form>
+  <div class="form-group">
+    <label for="clientSecret">clientSecret</label>
+    <input type="text" th:field="*{clientSecret}" class="form-control" id="clientSecret" placeholder="clientSecretr">
+  </div>
 </th:block>

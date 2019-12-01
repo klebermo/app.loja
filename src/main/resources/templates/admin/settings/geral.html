@@ -1,18 +1,16 @@
 <th:block th:fragment="copy">
-  <form class="form" id="form" method="post" th:action="@{/__${target}__/set}" th:object="${command}">
-    <div class="form-group">
-      <label for="titulo">Titulo</label>
-      <input type="text" th:field="*{titulo}" class="form-control" id="titulo" placeholder="Titulo">
-    </div>
+  <div class="form-group">
+    <label for="titulo">Titulo</label>
+    <input type="text" th:field="*{titulo}" class="form-control" id="titulo" placeholder="Titulo">
+  </div>
 
-    <div class="form-group">
-      <label for="desenvolvedor">Desenvolvedor</label>
-      <input type="text" th:field="*{desenvolvedor}" class="form-control" id="desenvolvedor" placeholder="Desenvolvedor">
-    </div>
+  <div class="form-group">
+    <label for="desenvolvedor">Desenvolvedor</label>
+    <input type="text" th:field="*{desenvolvedor}" class="form-control" id="desenvolvedor" placeholder="Desenvolvedor">
+  </div>
 
-    <div class="form-group">
-      <label for="email">E-mail</label>
-      <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="E-mail">
-    </div>
-  </form>
+  <div class="form-group">
+    <label for="email">E-mail</label>
+    <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="E-mail">
+  </div>
 </th:block>

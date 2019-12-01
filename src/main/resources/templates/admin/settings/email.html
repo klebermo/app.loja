@@ -1,28 +1,26 @@
 <th:block th:fragment="copy">
-  <form class="form" id="form" method="post" th:action="@{/__${target}__/set}" th:object="${command}">
-    <div class="form-group">
-      <label for="protocol">protocol</label>
-      <input type="text" th:field="*{protocol}" class="form-control" id="protocol" placeholder="protocol">
-    </div>
+  <div class="form-group">
+    <label for="protocol">protocol</label>
+    <input type="text" th:field="*{protocol}" class="form-control" id="protocol" placeholder="protocol">
+  </div>
 
-    <div class="form-group">
-      <label for="host">host</label>
-      <input type="text" th:field="*{host}" class="form-control" id="host" placeholder="host">
-    </div>
+  <div class="form-group">
+    <label for="host">host</label>
+    <input type="text" th:field="*{host}" class="form-control" id="host" placeholder="host">
+  </div>
 
-    <div class="form-group">
-      <label for="port">port</label>
-      <input type="number" th:field="*{port}" class="form-control" id="port" placeholder="port">
-    </div>
+  <div class="form-group">
+    <label for="port">port</label>
+    <input type="number" th:field="*{port}" class="form-control" id="port" placeholder="port">
+  </div>
 
-    <div class="form-group">
-      <label for="username">username</label>
-      <input type="text" th:field="*{username}" class="form-control" id="username" placeholder="username">
-    </div>
+  <div class="form-group">
+    <label for="username">username</label>
+    <input type="text" th:field="*{username}" class="form-control" id="username" placeholder="username">
+  </div>
 
-    <div class="form-group">
-      <label for="password">password</label>
-      <input type="password" th:field="*{password}" class="form-control" id="password" placeholder="password">
-    </div>
-  </form>
+  <div class="form-group">
+    <label for="password">password</label>
+    <input type="password" th:field="*{password}" class="form-control" id="password" placeholder="password">
+  </div>
 </th:block>

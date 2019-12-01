@@ -1,13 +1,11 @@
 <th:block th:fragment="copy">
-  <form class="form" id="form" method="post" th:action="@{/__${target}__/set}" th:object="${command}">
-    <div class="form-group">
-      <label for="publicKey">publicKey</label>
-      <input type="text" th:field="*{publicKey}" class="form-control" id="publicKey" placeholder="publicKey">
-    </div>
+  <div class="form-group">
+    <label for="publicKey">publicKey</label>
+    <input type="text" th:field="*{publicKey}" class="form-control" id="publicKey" placeholder="publicKey">
+  </div>
 
-    <div class="form-group">
-      <label for="accessToken">accessToken</label>
-      <input type="text" th:field="*{accessToken}" class="form-control" id="accessToken" placeholder="accessToken">
-    </div>
-  </form>
+  <div class="form-group">
+    <label for="accessToken">accessToken</label>
+    <input type="text" th:field="*{accessToken}" class="form-control" id="accessToken" placeholder="accessToken">
+  </div>
 </th:block>

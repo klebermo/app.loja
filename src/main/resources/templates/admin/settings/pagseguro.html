@@ -1,13 +1,11 @@
 <th:block th:fragment="copy">
-  <form class="form" id="form" method="post" th:action="@{/__${target}__/set}" th:object="${command}">
-    <div class="form-group">
-      <label for="email">email</label>
-      <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="email">
-    </div>
+  <div class="form-group">
+    <label for="email">email</label>
+    <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="email">
+  </div>
 
-    <div class="form-group">
-      <label for="token">token</label>
-      <input type="text" th:field="*{token}" class="form-control" id="token" placeholder="token">
-    </div>
-  </form>
+  <div class="form-group">
+    <label for="token">token</label>
+    <input type="text" th:field="*{token}" class="form-control" id="token" placeholder="token">
+  </div>
 </th:block>
