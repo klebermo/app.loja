@@ -11,8 +11,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.FetchType;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import javax.persistence.OrderColumn;
 
 @Entity
 public class Cesta extends Model {
@@ -22,7 +21,7 @@ public class Cesta extends Model {
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name="cesta_produtos", joinColumns={@JoinColumn(name="cesta_id")}, inverseJoinColumns={@JoinColumn(name="produto_id")})
-  @Fetch(FetchMode.SELECT)
+  @OrderColumn
   private List<Produto> produtos;
 
   @Override
