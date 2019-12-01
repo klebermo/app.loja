@@ -1,0 +1,74 @@
+<th:block th:fragment="copy">
+<div class="container" id="container">
+  <input type="hidden" id="id" th:value="${command.id}"/>
+  <div class="row">
+    <div class="col-3">
+      <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <a class="nav-link active" id="novo-tab" data-toggle="pill" href="#novo" role="tab" aria-controls="novo" aria-selected="true">Novo pedido</a>
+        <a th:each="pedido : ${command.pedidos}" class="nav-link" th:id="${'order-'+pedido.id+'-tab'}" data-toggle="pill" th:href="${'order-'+pedido.id}" role="tab" th:attr="aria-controls=${'order-'+pedido.id}" aria-selected="false" th:text="${#dates.format(pedido.dataCompra, 'dd/MMM/yyyy')}"></a>
+      </div>
+    </div>
+    <div class="col-9">
+      <div class="tab-content" id="v-pills-tabContent">
+        <div class="tab-pane fade show active" id="novo" role="tabpanel" aria-labelledby="novo-tab">
+          <form class="form" id="form_pedido">
+            <div class="form-group">
+              <label for="transactionId">transactionId</label>
+              <input type="text" name="transactionId" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label for="metodoPagamento">metodoPagamento</label>
+              <input type="text" name="metodoPagamento" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label for="dataCompra">dataCompra</label>
+              <input type="date" name="dataCompra" class="form-control">
+            </div>
+
+            <button type="button" class="btn btn-dark" th:attr="data-cliente=${command.id}, data-url=@{/cliente/add_pedido}" onclick="add_pedido(this);">Ok</button>
+            <button type="button" class="btn btn-danger" id="pedidos" onclick="close_tab(this)">Fechar</button>
+          </form>
+        </div>
+        <div th:each="pedido : ${command.pedidos}" class="tab-pane fade" th:id="${'order-'+pedido.id}" role="tabpanel" th:attr="aria-labelledby=${'order-'+pedido.id+'-tab'}">
+          <form class="form" th:id="${'form_pedido_'+pedido.id}" th:action="@{/pedido/update}" method="post">
+            <input type="hidden" name="id" th:value="${pedido.id}">
+
+            <div class="form-group">
+              <label for="transactionId">transactionId</label>
+              <input type="text" name="transactionId" th:value="${command.transactionId}" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label for="metodoPagamento">metodoPagamento</label>
+              <input type="text" name="metodoPagamento" th:value="${command.metodoPagamento}" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label for="dataCompra">dataCompra</label>
+              <input type="date" name="dataCompra" th:value="${command.dataCompra}" class="form-control">
+            </div>
+
+            <button type="button" class="btn btn-dark" onclick="update_pedido();">Ok</button>
+
+            <div class="alert alert-success alert-dismissible fade show" id="ok" role="alert" style="display: none;">
+              Pedido atualizado com sucesso!
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="alert alert-danger alert-dismissible fade show" id="error" role="alert" style="display: none;">
+              Ocorreu um erro ao atualizar o pedido!
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</th:block>
