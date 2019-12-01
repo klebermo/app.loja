@@ -83,10 +83,28 @@ function open_tab(e) {
         li.appendChild(nav_tab);
         document.getElementById('myTab').appendChild(li);
 
+        var text = tab_pane.querySelector('.summernote');
+        $(text).summernote({height: 300});
+
+        var form = tab_pane.querySelector('.form');
+        $(form).on('submit', function(event){
+          event.preventDefault();
+        });
+
         $('#' + target + '-tab-' + id).tab('show');
       } else {
         document.getElementById(target + '-tab').parentElement.style.display = "block";
         document.getElementById(target + '-pane').innerHTML = form_html.getElementById('container').innerHTML;
+
+        var tab_pane = document.getElementById(target + '-pane');
+
+        var text = tab_pane.querySelector('.summernote');
+        $(text).summernote({height: 300});
+
+        var form = tab_pane.querySelector('.form');
+        form.addEventListener('submit', function(event){
+          event.preventDefault();
+        });
 
         $('#' + target + '-tab').tab('show');
       }
@@ -125,9 +143,10 @@ function close_tab(e) {
   }
 }
 
-function submit() {
-  var formData = new FormData(document.getElementById("form"));
-  var url = document.getElementById("form").action;
+function submit(e) {
+  var form = e.parentElement;
+  var formData = new FormData(form);
+  var url = form.action;
 
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url);
@@ -140,9 +159,9 @@ function submit() {
     if (this.readyState == 4 && this.status == 200) {
       var result = this.responseText;
       if(result === '')
-        document.getElementById('ok').style.display = 'block';
+        form.querySelector('#ok').style.display = 'block';
       else
-        document.getElementById('error').style.display = 'block';
+        form.querySelector('#error').style.display = 'block';
     }
   };
 
@@ -277,91 +296,18 @@ function file_upload(file_input) {
   }
 }
 
-function insert_pedido(e) {
-  var cliente = e.dataset.cliente;
-  var url = e.dataset.url;
-
-  var pedido = new FormData();
-  console.log(document.getElementById('transactionId').value);
-  console.log(document.getElementById('metodoPagamento').value);
-  console.log(document.getElementById('cliente').value);
-  console.log(document.getElementById('dataCompra').value);
-  console.log(document.getElementById('produtos').value);
-  pedido.append('transactionId', document.getElementById('transactionId').value);
-  pedido.append('metodoPagamento', document.getElementById('metodoPagamento').value);
-  pedido.append('cliente', document.getElementById('cliente').value);
-  pedido.append('dataCompra', document.getElementById('dataCompra').value);
-  pedido.append('produtos', document.getElementById('produtos').value);
-
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", url, true);
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-      var json = JSON.parse(xhr.responseText);
-
-      var id = json['id'];
-      var metodoPagamento = json['metodoPagamento'];
-      var transactionId = json['transactionId'];
-      var dataCompra = new Date(json['dataCompra']);
-      for(var p in json['produtos'])
-        produtos =  produtos + ',' + p['nome'];
-      console.log('metodoPagamento: '+metodoPagamento);
-      console.log('transactionId: '+transactionId);
-      console.log('dataCompra: '+dataCompra);
-      console.log('produtos: '+produtos);
-
-      var tab = document.getElementById('empty').cloneNode(true);
-      tab.removeAttribute('style');
-      tab.setAttribute('id', 'order-'+id+'-tab');
-      tab.setAttribute('href', '#order-'+id);
-      tab.setAttribute('aria-contols', 'order-'+id);
-      tab.innerText = dataCompra.getDate() + '/' + dataCompra.getMonth() + '/' + dataCompra.getFullYear();
-
-      var content = document.getElementById('empty-content').cloneNode(true);
-      content.removeAttribute('style');
-      content.setAttribute('id', 'order-'+id);
-      content.setAttribute('aria-labelledby', 'order-'+id+'-tab');
-      content.querySelector('#metodoPagamentoItem').value = metodoPagamento;
-      content.querySelector('#transactionIdItem').value = transactionId;
-      content.querySelector('#produtosItem').value = produtos;
-      content.querySelector('#metodoPagamentoItem').removeAttribute('id');
-      content.querySelector('#transactionIdItem').removeAttribute('id');
-      content.querySelector('#produtosItem').removeAttribute('id');
-      content.querySelector('#btn_delete').setAttribute('data-cliente', cliente);
-      content.querySelector('#btn_delete').setAttribute('data-pedido', id);
-
-      document.getElementById('pedidos').insertBefore(tab, document.getElementById('empty'));
-      document.getElementById('pedidos-content').insertBefore(content, document.getElementById('empty-content'));
-    }
-  };
-  formData = new FormData();
-  formData.append("cliente", cliente);
-  formData.append("pedido", pedido);
-  xhr.send(formData);
+function add_pedido(e) {
+  //
 }
 
-function delete_pedido(e) {
-  var cliente = e.dataset.cliente;
-  var pedido = e.dataset.pedido;
-  var url = e.dataset.url;
+function remove_pedido(e) {
+  //
+}
 
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", url, true);
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-      var result = xhr.responseText;
-      if(result == '') {
-        var tab = document.getElementById('order-'+pedido+'-tab');
-        document.getElementById('pedidos').removeChild(tab);
-        var content = document.getElementById('order-'+pedido);
-        document.getElementById('pedidos-content').removeChild(content);
-      } else {
-        alert("Ocorreu um erro ao tentar remover esse pedido do cliente.");
-      }
-    }
-  };
-  var formData = new FormData();
-  formData.append("cliente", cliente);
-  formData.append("pedido", pedido);
-  xhr.send(formData);
+function add_produto(e) {
+  //
+}
+
+function remove_produto(e) {
+  //
 }
