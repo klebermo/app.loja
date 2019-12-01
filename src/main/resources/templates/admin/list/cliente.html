@@ -7,6 +7,8 @@
 
   <th>#</th>
   <th class="col">usuario</th>
+  <th class="col">cesta</th>
+  <th class="col">pedidos</th>
   <th>
     <div class="btn-group" id="buttons" role="group" aria-label="comandos" style="display: none;">
       <button sec:authorize="hasPermission(#user, 'atualiza_cliente')" type="button" class="btn btn-secondary" id="update" th:attr="data-url=@{/cliente/update}" onclick="open_tab(this)">
@@ -14,6 +16,9 @@
       </button>
       <button sec:authorize="hasPermission(#user, 'remove_cliente')" type="button" class="btn btn-secondary" id="delete" th:attr="data-url=@{/cliente/delete}" onclick="open_tab(this)">
         <i class="fas fa-trash"></i>
+      </button>
+      <button sec:authorize="hasPermission(#user, 'cadastra_pedido')" type="button" class="btn btn-secondary" id="pedidos" th:attr="data-url=@{/cliente/pedidos}" onclick="open_tab(this)">
+        <i class="fas fa-shopping-bag"></i>
       </button>
     </div>
   </th>

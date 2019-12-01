@@ -17,6 +17,9 @@
       <button sec:authorize="hasPermission(#user, 'remove_pedido')" type="button" class="btn btn-secondary" id="delete" th:attr="data-url=@{/pedido/delete}" onclick="open_tab(this)">
         <i class="fas fa-trash"></i>
       </button>
+      <button sec:authorize="hasPermission(#user, 'cadastra_produto')" type="button" class="btn btn-secondary" id="produtos" th:attr="data-url=@{/pedido/produtos}" onclick="open_tab(this)">
+        <i class="fas fa-box"></i>
+      </button>
     </div>
   </th>
 </th:block>
