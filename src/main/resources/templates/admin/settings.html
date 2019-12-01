@@ -4,44 +4,56 @@
 
     <hr>
 
-    <th:block th:if="${#strings.equals(target, 'geral')}">
-      <th:block th:replace="admin/settings/geral :: copy"></th:block>
-    </th:block>
+    <form class="form" id="form" method="post" th:action="@{/__${target}__/set}" th:object="${command}">
+      <th:block th:if="${#strings.equals(target, 'geral')}">
+        <th:block th:replace="admin/settings/geral :: copy"></th:block>
+      </th:block>
 
-    <th:block th:if="${#strings.equals(target, 'idiomas')}">
-      <th:block th:replace="admin/settings/idiomas :: copy"></th:block>
-    </th:block>
+      <th:block th:if="${#strings.equals(target, 'idiomas')}">
+        <th:block th:replace="admin/settings/idiomas :: copy"></th:block>
+      </th:block>
 
-    <th:block th:if="${#strings.equals(target, 'email')}">
-      <th:block th:replace="admin/settings/email :: copy"></th:block>
-    </th:block>
+      <th:block th:if="${#strings.equals(target, 'email')}">
+        <th:block th:replace="admin/settings/email :: copy"></th:block>
+      </th:block>
 
-    <th:block th:if="${#strings.equals(target, 'paypal')}">
-      <th:block th:replace="admin/settings/paypal :: copy"></th:block>
-    </th:block>
+      <th:block th:if="${#strings.equals(target, 'paypal')}">
+        <th:block th:replace="admin/settings/paypal :: copy"></th:block>
+      </th:block>
 
-    <th:block th:if="${#strings.equals(target, 'mercadopago')}">
-      <th:block th:replace="admin/settings/mercadopago :: copy"></th:block>
-    </th:block>
+      <th:block th:if="${#strings.equals(target, 'mercadopago')}">
+        <th:block th:replace="admin/settings/mercadopago :: copy"></th:block>
+      </th:block>
 
-    <th:block th:if="${#strings.equals(target, 'pagseguro')}">
-      <th:block th:replace="admin/settings/pagseguro :: copy"></th:block>
-    </th:block>
+      <th:block th:if="${#strings.equals(target, 'pagseguro')}">
+        <th:block th:replace="admin/settings/pagseguro :: copy"></th:block>
+      </th:block>
 
-    <button type="button" class="btn btn-primary" onclick="submit()">Aplicar</button>
+      <div class="container">
+        <div class="row">
+          <div class="col-2"></div>
 
-    <div class="alert alert-success alert-dismissible fade show" id="ok" role="alert" style="display: none;">
-      <strong>Sucesso!</strong> Configura&ccedil;&otilde;es salvas com sucesso!
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
+          <div class="col-8">
+            <div class="alert alert-success alert-dismissible fade show" id="ok" role="alert" style="display: none;">
+              <strong>Sucesso!</strong> Configura&ccedil;&otilde;es salvas com sucesso!
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
 
-    <div class="alert alert-danger alert-dismissible fade show" id="error" role="alert" style="display: none;">
-      <strong>Erro!</strong> Ocorreu um erro ao salvar as configura&ccedil;&otilde;es!
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
+            <div class="alert alert-danger alert-dismissible fade show" id="error" role="alert" style="display: none;">
+              <strong>Erro!</strong> Ocorreu um erro ao salvar as configura&ccedil;&otilde;es!
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="col-2">
+            <button type="button" class="btn btn-primary" onclick="submit(this)">Aplicar</button>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
 </th:block>
