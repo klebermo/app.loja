@@ -3,20 +3,19 @@ package org.loja.model.pedido;
 import org.loja.model.Model;
 import java.util.List;
 import org.loja.model.produto.Produto;
-import org.loja.model.usuario.Usuario;
+import org.loja.model.cliente.Cliente;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import org.hibernate.annotations.Fetch;
 import javax.persistence.FetchType;
-import org.hibernate.annotations.FetchMode;
+import javax.persistence.CascadeType;
+import javax.persistence.OrderColumn;
 
 @Entity
 public class Pedido extends Model {
@@ -24,9 +23,9 @@ public class Pedido extends Model {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
 
-  @ManyToMany(fetch = FetchType.EAGER)
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinTable(name="pedido_produtos", joinColumns={@JoinColumn(name="pedido_id")}, inverseJoinColumns={@JoinColumn(name="produto_id")})
-  @Fetch(FetchMode.SELECT)
+  @OrderColumn
   private List<Produto> produtos;
 
   @Column
@@ -37,10 +36,6 @@ public class Pedido extends Model {
 
   @Column
   private String transactionId;
-
-  @ManyToOne(fetch = FetchType.EAGER)
-  @Fetch(FetchMode.SELECT)
-  private Usuario usuario;
 
   @Override
   public Integer getId() {
@@ -83,15 +78,7 @@ public class Pedido extends Model {
     this.transactionId = transactionId;
   }
 
-  public Usuario getUsuario() {
-    return usuario;
-  }
-
-  public void setUsuario(Usuario usuario) {
-    this.usuario = usuario;
-  }
-
   public String toString() {
-    return transactionId + " em " + dataCompra + " [" + produtos.toString() + "] via " + metodoPagamento;
+    return transactionId + " em " + dataCompra + " [" + produtos + "] via " + metodoPagamento;
   }
 }
