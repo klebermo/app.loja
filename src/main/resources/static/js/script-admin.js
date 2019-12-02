@@ -83,13 +83,9 @@ function open_tab(e) {
         li.appendChild(nav_tab);
         document.getElementById('myTab').appendChild(li);
 
-        var text = tab_pane.querySelector('.summernote');
-        $(text).summernote({height: 300});
-
-        var form = tab_pane.querySelector('.form');
-        $(form).on('submit', function(event){
-          event.preventDefault();
-        });
+        var textareas = tab_pane.querySelectorAll('.summernote');
+        for(var i=0; i<textareas.length; i++)
+          $(textareas[i]).summernote({height: 300});
 
         $('#' + target + '-tab-' + id).tab('show');
       } else {
@@ -98,13 +94,9 @@ function open_tab(e) {
 
         var tab_pane = document.getElementById(target + '-pane');
 
-        var text = tab_pane.querySelector('.summernote');
-        $(text).summernote({height: 300});
-
-        var form = tab_pane.querySelector('.form');
-        form.addEventListener('submit', function(event){
-          event.preventDefault();
-        });
+        var textareas = tab_pane.querySelectorAll('.summernote');
+        for(var i=0; i<textareas.length; i++)
+          $(textareas[i]).summernote({height: 300});
 
         $('#' + target + '-tab').tab('show');
       }
@@ -143,8 +135,8 @@ function close_tab(e) {
   }
 }
 
-function submit(e) {
-  var form = e.parentElement;
+function submit() {
+  var form = document.getElementById('form');
   var formData = new FormData(form);
   var url = form.action;
 
@@ -157,11 +149,24 @@ function submit(e) {
 
   xhr.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      var result = this.responseText;
-      if(result === '')
-        form.querySelector('#ok').style.display = 'block';
-      else
+      var json = JSON.parse(this.responseText);
+      if(json['erro']) {
+        form.querySelector('#error').querySelector('#texto').innerText = json['message'];
         form.querySelector('#error').style.display = 'block';
+      } else {
+        switch(json['action']) {
+          case 'insert':
+          form.querySelector('#ok').querySelector('#texto').innerText = 'o cadastro de '+json['entity']+' foi efetivado com sucesso!';
+          break;
+          case 'update':
+          form.querySelector('#ok').querySelector('#texto').innerText = 'a atualizacão de '+json['entity']+' foi efetivada com sucesso!';
+          break;
+          case 'delete':
+          form.querySelector('#ok').querySelector('#texto').innerText = 'a remoção de '+json['entity']+' foi efetivada com sucesso!';
+          break;
+        }
+        form.querySelector('#ok').style.display = 'block';
+      }
     }
   };
 
@@ -296,18 +301,218 @@ function file_upload(file_input) {
   }
 }
 
-function add_pedido(e) {
-  //
+function insert_pedido(e) {
+  var form = document.getElementById('form_pedido');
+  var url = form.action;
+  var cliente = e.dataset.cliente;
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url, true);
+  xhr.onreadystatechange = function()  {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      var pedido_json = JSON.parse(xhr.responseText);
+      var pedido = pedido_json['id'];
+      var url_add_pedido = e.dataset.url;
+
+      var xhr_add_pedido = new XMLHttpRequest();
+      xhr_add_pedido.open("POST", url_add_pedido, true);
+      xhr_add_pedido.onreadystatechange = function() {
+        if (xhr_add_pedido.readyState == 4 && xhr_add_pedido.status == 200) {
+          var json = JSON.parse(xhr_add_pedido.responseText);
+
+          var tab_link = document.getElementById('novo-tab').cloneNode(true);
+          tab_link.setAttribute('class', 'nav-link');
+          tab_link.setAttribute('id', 'order-'+json['id']+'-tab');
+          tab_link.setAttribute('href', '#order-'+json['id']);
+          tab_link.setAttribute('aria-controls', 'order-'+json['id']);
+          tab_link.setAttribute('aria-selected', 'false');
+          var dataPedido = new Date(json['dataCompra']);
+          tab_link.innerText = dataPedido.getDate() + '/' + dataPedido.getMonth() + '/' + dataPedido.getFullYear();
+
+          var novo_tab = document.getElementById('novo').cloneNode(true);
+          novo_tab.setAttribute('class', 'tab-pane fade');
+          novo_tab.setAttribute('id', 'order-'+json['id']);
+          novo_tab.setAttribute('aria-labelledby', 'order-'+json['id']+'-tab');
+          novo_tab.removeChild(novo_tab.querySelector('#form_pedido'));
+          novo_tab.removeChild(novo_tab.querySelector('#novo_pedido'));
+
+          var novo_form = document.getElementById('form_pedido').cloneNode(true);
+          var update_url = e.dataset.update;
+          var delete_url = e.dataset.delete;
+
+          novo_form.setAttribute('id', 'form_pedido_'+json['id']);
+          novo_form.setAttribute('method', 'post');
+          novo_form.setAttribute('action', update_url);
+
+          novo_form.querySelector('input[name=transactionId]').value = json['transactionId'];
+          novo_form.querySelector('input[name=metodoPagamento]').value = json['metodoPagamento'];
+          var dataPedido = new Date(json['dataCompra']);
+          novo_form.querySelector('input[name=dataCompra]').value = dataPedido.getDate() + '/' + dataPedido.getMonth() + '/' + dataPedido.getFullYear();
+
+          var btn1 = document.createElement('button');
+          btn1.setAttribute('type', 'button');
+          btn1.setAttribute('class', 'btn btn-dark');
+          btn1.setAttribute('data-url', update_url);
+          btn1.setAttribute('data-cliente', cliente);
+          btn1.setAttribute('data-pedido', json['id']);
+          btn1.setAttribute('onclick', 'update_pedido(this)');
+          btn1.innerHTML = '<i class="fas fa-edit"></i>';
+
+          var btn2 = document.createElement('button');
+          btn2.setAttribute('type', 'button');
+          btn2.setAttribute('class', 'btn btn-dark');
+          btn2.setAttribute('data-url', delete_url);
+          btn2.setAttribute('data-cliente', cliente);
+          btn2.setAttribute('data-pedido', json['id']);
+          btn2.setAttribute('onclick', 'delete_pedido(this)');
+          btn2.innerHTML = '<i class="fas fa-trash"></i>';
+
+          novo_tab.appendChild(novo_form);
+          novo_tab.appendChild(btn1);
+          novo_tab.appendChild(btn2);
+
+          document.getElementById('my_pedidos-tab').appendChild(tab_link);
+          document.getElementById('my_pedidos').appendChild(novo_tab);
+        }
+      };
+      var formData = new FormData();
+      formData.append('cliente', cliente);
+      formData.append('pedido', pedido);
+      xhr_add_pedido.send(formData);
+    }
+  };
+  var pedidoData = new FormData(form);
+  xhr.send(pedidoData);
 }
 
-function remove_pedido(e) {
-  //
+function update_pedido(e) {
+  var url = e.dataset.url;
+  var pedido = e.dataset.pedido;
+  var cliente = e.dataset.cliente;
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url, true);
+  xhr.onreadystatechange = function()  {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      var json = JSON.parse(xhr.responseText);
+      var form = document.getElementById('form_pedido_'+pedido);
+      if(json['erro'])
+        form.querySelector('#error').style.display = 'block';
+      else
+        form.querySelector('#ok').style.display = 'block';
+    }
+  };
+  var formData = new FormData();
+  formData.append('cliente', cliente);
+  formData.append('pedido', pedido);
+  xhr.send(formData);
 }
 
-function add_produto(e) {
-  //
+function delete_pedido(e) {
+  var cliente = e.dataset.cliente;
+  var pedido = e.dataset.pedido;
+  var url = e.dataset.url;
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url, true);
+  xhr.onreadystatechange = function()  {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      var json = JSON.parse(xhr.responseText);
+
+      if(json['erro']) {
+        //
+      } else {
+        var parent_tab = document.getElementById('my_pedidos-tab');
+        var parent = document.getElementById('my_pedidos');
+        parent_tab.removeChild(parent_tab.querySelector('#order-'+pedido+'-tab'));
+        parent.removeChild(parent.querySelector('#order-'+pedido));
+        var tab = parent_tab.querySelector('#novo');
+        $(tab).tab('show');
+      }
+    }
+  };
+  var formData = new FormData();
+  formData.append('cliente', cliente);
+  formData.append('pedido', pedido);
+  xhr.send(formData);
 }
 
-function remove_produto(e) {
-  //
+function insert_produto(e) {
+  move_right();
+
+  var pedido = document.getElementById('id').value;
+  var produtos = document.getElementById('selectRight');
+  var url = e.dataset.url;
+
+  for (var i = 0; i < produtos.length; i = i + 1) {
+      console.log('produto: ' + produtos.options[i].value);
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", url, true);
+      xhr.onreadystatechange = function()  {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          var json = JSON.parse(xhr.responseText);
+          console.log('json: '+json);
+        }
+      };
+      var produto = produtos.options[i].value;
+      var formData = new FormData();
+      formData.append('pedido', pedido);
+      formData.append('produto', produto);
+      xhr.send(formData);
+  }
+}
+
+function delete_produto(e) {
+  move_left();
+
+  var form = document.getElementById('form');
+  var pedido = document.getElementById('id').value;
+  var url = form.action;
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url, true);
+  xhr.onreadystatechange = function()  {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      var json = JSON.parse(xhr.responseText);
+    }
+  };
+  var formData = new FormData(form);
+  xhr.send(formData);
+}
+
+function move_right() {
+  var m1 = document.getElementById('selectLeft');
+  var m2 = document.getElementById('selectRight');
+    m1len = m1.length ;
+    for ( i=0; i<m1len ; i++){
+        if (m1.options[i].selected == true ) {
+            m2len = m2.length;
+            var option = new Option(m1.options[i].text);
+            option.value = m1.options[i].value;
+            m2.options[m2len]= option;
+        }
+    }
+
+    for ( i = (m1len -1); i>=0; i--){
+        if (m1.options[i].selected == true ) {
+            m1.options[i] = null;
+        }
+    }
+}
+
+function move_left() {
+  var m1 = document.getElementById('selectLeft');
+  var m2 = document.getElementById('selectRight');
+    m2len = m2.length ;
+        for ( i=0; i<m2len ; i++){
+            if (m2.options[i].selected == true ) {
+                m1len = m1.length;
+                m1.options[m1len]= new Option(m2.options[i].text);
+            }
+        }
+        for ( i=(m2len-1); i>=0; i--) {
+            if (m2.options[i].selected == true ) {
+                m2.options[i] = null;
+            }
+        }
 }
