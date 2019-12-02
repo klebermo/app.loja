@@ -12,7 +12,7 @@
     <h1 th:unless="${produto.icone}"> <i class="fas fa-box"></i> </h1>
     <div class="media-body">
       <h5 class="mt-0" th:text="${produto.nome}"></h5>
-      <span th:each="t : ${p.resumo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${t.conteudo}"></span>
+      <span th:each="t : ${produto.resumo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${t.conteudo}"></span>
       <div class="dropdown">
         <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Baixar
