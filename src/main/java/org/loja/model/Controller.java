@@ -44,8 +44,9 @@ public abstract class Controller<E> {
   @RequestMapping(value = "/insert", method=RequestMethod.POST)
   @ResponseBody
   @PreAuthorize("hasPermission(#user, 'cadastra_'+#this.this.name)")
-  public void insert(@Valid E object, BindingResult result) {
-    serv.insert(object);
+  public String insert(@Valid E object, BindingResult result) throws JsonProcessingException {
+    ObjectMapper mapper = new ObjectMapper();
+    return mapper.writeValueAsString(serv.insert(object));
   }
 
   @RequestMapping(value = "/update", method=RequestMethod.GET)
@@ -59,8 +60,9 @@ public abstract class Controller<E> {
   @RequestMapping(value = "/update", method=RequestMethod.POST)
   @ResponseBody
   @PreAuthorize("hasPermission(#user, 'atualiza_'+#this.this.name)")
-  public void update(@Valid E object, BindingResult result) {
-    serv.update(object);
+  public String update(@Valid E object, BindingResult result) throws JsonProcessingException {
+    ObjectMapper mapper = new ObjectMapper();
+    return mapper.writeValueAsString(serv.update(object));
   }
 
   @RequestMapping(value = "/delete", method=RequestMethod.GET)
@@ -74,8 +76,9 @@ public abstract class Controller<E> {
   @RequestMapping(value = "/delete", method=RequestMethod.POST)
   @ResponseBody
   @PreAuthorize("hasPermission(#user, 'remove_'+#this.this.name)")
-  public void delete(@Valid E object, BindingResult result) {
-    serv.delete(object);
+  public String delete(@Valid E object, BindingResult result) throws JsonProcessingException {
+    ObjectMapper mapper = new ObjectMapper();
+    return mapper.writeValueAsString(serv.delete(object));
   }
 
   @RequestMapping("/list.json")
