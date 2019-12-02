@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 @RequestMapping("pedido")
@@ -19,16 +21,18 @@ public class PedidoController extends org.loja.model.Controller<Pedido> {
     super(Pedido.class);
   }
 
-  @RequestMapping(value = "/add_produto", method=RequestMethod.POST)
+  @RequestMapping(value = "/insert_produto", method=RequestMethod.POST)
   @ResponseBody
-  public void add_produto(@RequestParam("pedido") Integer pedido_id, @RequestParam("produto") Integer produto_id) {
-    this.serv.add_produto(pedido_id, produto_id);
+  public String insert_produto(@RequestParam("pedido") Integer pedido_id, @RequestParam("produto") Integer produto_id) throws JsonProcessingException {
+    ObjectMapper mapper = new ObjectMapper();
+    return mapper.writeValueAsString(this.serv.insert_produto(pedido_id, produto_id));
   }
 
-  @RequestMapping(value = "/remove_produto", method=RequestMethod.POST)
+  @RequestMapping(value = "/delete_produto", method=RequestMethod.POST)
   @ResponseBody
-  public void remove_produto(@RequestParam("pedido") Integer pedido_id, @RequestParam("produto") Integer produto_id) {
-    this.serv.remove_produto(pedido_id, produto_id);
+  public String delete_produto(@RequestParam("pedido") Integer pedido_id, @RequestParam("produto") Integer produto_id) throws JsonProcessingException {
+    ObjectMapper mapper = new ObjectMapper();
+    return mapper.writeValueAsString(this.serv.delete_produto(pedido_id, produto_id));
   }
 
   @RequestMapping(value = "/produtos", method=RequestMethod.GET)
