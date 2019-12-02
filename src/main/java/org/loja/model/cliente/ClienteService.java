@@ -72,21 +72,27 @@ public class ClienteService extends org.loja.model.Service<Cliente> {
     }
   }
 
-  public void add_pedido(Integer cliente_id, Integer pedido_id) {
+  public Pedido insert_pedido(Integer cliente_id, Integer pedido_id) {
     Cliente cliente = this.dao.findBy("id", cliente_id);
     if(cliente.getPedidos() == null)
       cliente.setPedidos(new ArrayList<Pedido>());
     Pedido pedido = pedidoDao.findBy("id", pedido_id);
     cliente.getPedidos().add(pedido);
     this.dao.update(cliente);
+    return pedido;
   }
 
-  public void remove_pedido(Integer cliente_id, Integer pedido_id) {
+  public Pedido update_pedido(Integer cliente_id, Integer pedido_id) {
+    return null;
+  }
+
+  public Pedido delete_pedido(Integer cliente_id, Integer pedido_id) {
     Cliente cliente = this.dao.findBy("id", cliente_id);
 
     Pedido pedido = pedidoDao.findBy("id", pedido_id);
     cliente.getPedidos().remove(pedido);
 
     this.dao.update(cliente);
+    return pedido;
   }
 }
