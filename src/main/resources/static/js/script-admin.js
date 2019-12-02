@@ -507,6 +507,8 @@ function move_left() {
         for ( i=0; i<m2len ; i++){
             if (m2.options[i].selected == true ) {
                 m1len = m1.length;
+                var option = new Option(m2.options[i].text);
+                option.value = m2.options[i].value;
                 m1.options[m1len]= new Option(m2.options[i].text);
             }
         }
