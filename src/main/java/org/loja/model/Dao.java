@@ -20,28 +20,46 @@ public abstract class Dao<E> {
     return factory.createEntityManager();
   }
 
-  public void insert(E object) {
-    EntityManager entityManager = getEntityManager();
-		entityManager.getTransaction().begin();
-		entityManager.persist(object);
-		entityManager.getTransaction().commit();
-    entityManager.close();
+  public Result insert(E object) {
+    try {
+      EntityManager entityManager = getEntityManager();
+  		entityManager.getTransaction().begin();
+  		entityManager.persist(object);
+  		entityManager.getTransaction().commit();
+      entityManager.close();
+      return new Result(false, clazz.getSimpleName().toLowerCase(), "insert", ((Model)object).getId(), null, null);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return new Result(true, clazz.getSimpleName().toLowerCase(), "insert", null, e.toString(), e.getStackTrace());
+    }
   }
 
-  public void update(E object) {
-    EntityManager entityManager = getEntityManager();
-		entityManager.getTransaction().begin();
-		entityManager.merge(object);
-		entityManager.getTransaction().commit();
-    entityManager.close();
+  public Result update(E object) {
+    try {
+      EntityManager entityManager = getEntityManager();
+  		entityManager.getTransaction().begin();
+  		E result = entityManager.merge(object);
+  		entityManager.getTransaction().commit();
+      entityManager.close();
+      return new Result(false, clazz.getSimpleName().toLowerCase(), "update", ((Model)result).getId(), null, null);
+    }catch (Exception e) {
+      e.printStackTrace();
+      return new Result(true, clazz.getSimpleName().toLowerCase(), "update", null, e.toString(), e.getStackTrace());
+    }
   }
 
-  public void delete(E object) {
-    EntityManager entityManager = getEntityManager();
-		entityManager.getTransaction().begin();
-		entityManager.remove(entityManager.contains(object) ? object : entityManager.merge(object));
-		entityManager.getTransaction().commit();
-    entityManager.close();
+  public Result delete(E object) {
+    try {
+      EntityManager entityManager = getEntityManager();
+  		entityManager.getTransaction().begin();
+  		entityManager.remove(entityManager.contains(object) ? object : entityManager.merge(object));
+  		entityManager.getTransaction().commit();
+      entityManager.close();
+      return new Result(false, clazz.getSimpleName().toLowerCase(), "delete", ((Model)object).getId(), null, null);
+    } catch(Exception e) {
+      e.printStackTrace();
+      return new Result(true, clazz.getSimpleName().toLowerCase(), "delete", null, e.toString(), e.getStackTrace());
+    }
   }
 
   public List<E> select() {
