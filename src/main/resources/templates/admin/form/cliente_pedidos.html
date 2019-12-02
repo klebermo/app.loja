@@ -1,17 +1,18 @@
 <th:block th:fragment="copy">
 <div class="container" id="container">
-  <input type="hidden" id="id" th:value="${command.id}"/>
+  <input type="hidden" id="id" th:value="${command.id}">
+  <button type="button" class="btn btn-danger" id="pedidos" onclick="close_tab(this)">Fechar</button>
   <div class="row">
     <div class="col-3">
-      <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+      <div class="nav flex-column nav-pills" id="my_pedidos-tab" role="tablist" aria-orientation="vertical">
         <a class="nav-link active" id="novo-tab" data-toggle="pill" href="#novo" role="tab" aria-controls="novo" aria-selected="true">Novo pedido</a>
-        <a th:each="pedido : ${command.pedidos}" class="nav-link" th:id="${'order-'+pedido.id+'-tab'}" data-toggle="pill" th:href="${'order-'+pedido.id}" role="tab" th:attr="aria-controls=${'order-'+pedido.id}" aria-selected="false" th:text="${#dates.format(pedido.dataCompra, 'dd/MMM/yyyy')}"></a>
+        <a th:each="pedido : ${command.pedidos}" class="nav-link" th:id="${'order-'+pedido.id+'-tab'}" data-toggle="pill" th:href="${'#order-'+pedido.id}" role="tab" th:attr="aria-controls=${'order-'+pedido.id}" aria-selected="false" th:text="${#dates.format(pedido.dataCompra, 'dd/MMM/yyyy')}"></a>
       </div>
     </div>
     <div class="col-9">
-      <div class="tab-content" id="v-pills-tabContent">
+      <div class="tab-content" id="my_pedidos">
         <div class="tab-pane fade show active" id="novo" role="tabpanel" aria-labelledby="novo-tab">
-          <form class="form" id="form_pedido">
+          <form class="form" id="form_pedido" method="post" th:action="@{/pedido/insert}">
             <div class="form-group">
               <label for="transactionId">transactionId</label>
               <input type="text" name="transactionId" class="form-control">
@@ -26,31 +27,30 @@
               <label for="dataCompra">dataCompra</label>
               <input type="date" name="dataCompra" class="form-control">
             </div>
-
-            <button type="button" class="btn btn-dark" th:attr="data-cliente=${command.id}, data-url=@{/cliente/add_pedido}" onclick="add_pedido(this);">Ok</button>
-            <button type="button" class="btn btn-danger" id="pedidos" onclick="close_tab(this)">Fechar</button>
           </form>
+
+          <button type="button" class="btn btn-dark" id="novo_pedido" th:attr="data-cliente=${command.id}, data-url=@{/cliente/insert_pedido}, data-update=@{/cliente/update_pedido}, data-delete=@{/cliente/delete_pedido}" onclick="insert_pedido(this);">
+            <i class="fas fa-check-circle"></i> cadastrar
+          </button>
         </div>
         <div th:each="pedido : ${command.pedidos}" class="tab-pane fade" th:id="${'order-'+pedido.id}" role="tabpanel" th:attr="aria-labelledby=${'order-'+pedido.id+'-tab'}">
-          <form class="form" th:id="${'form_pedido_'+pedido.id}" th:action="@{/pedido/update}" method="post">
+          <form class="form" th:id="${'form_pedido_'+pedido.id}">
             <input type="hidden" name="id" th:value="${pedido.id}">
 
             <div class="form-group">
               <label for="transactionId">transactionId</label>
-              <input type="text" name="transactionId" th:value="${command.transactionId}" class="form-control">
+              <input type="text" name="transactionId" th:value="${pedido.transactionId}" class="form-control">
             </div>
 
             <div class="form-group">
               <label for="metodoPagamento">metodoPagamento</label>
-              <input type="text" name="metodoPagamento" th:value="${command.metodoPagamento}" class="form-control">
+              <input type="text" name="metodoPagamento" th:value="${pedido.metodoPagamento}" class="form-control">
             </div>
 
             <div class="form-group">
               <label for="dataCompra">dataCompra</label>
-              <input type="date" name="dataCompra" th:value="${command.dataCompra}" class="form-control">
+              <input type="date" name="dataCompra" th:value="${pedido.dataCompra}" class="form-control">
             </div>
-
-            <button type="button" class="btn btn-dark" onclick="update_pedido();">Ok</button>
 
             <div class="alert alert-success alert-dismissible fade show" id="ok" role="alert" style="display: none;">
               Pedido atualizado com sucesso!
@@ -66,6 +66,13 @@
               </button>
             </div>
           </form>
+
+          <button type="button" class="btn btn-dark" th:attr="data-url=@{/cliente/update_pedido}, data-cliente=${command.id}, data-pedido=${pedido.id}" onclick="update_pedido(this);">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button type="button" class="btn btn-dark" th:attr="data-url=@{/cliente/delete_pedido}, data-cliente=${command.id}, data-pedido=${pedido.id}" onclick="delete_pedido(this);">
+            <i class="fas fa-trash"></i>
+          </button>
         </div>
       </div>
     </div>

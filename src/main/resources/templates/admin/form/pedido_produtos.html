@@ -1,6 +1,7 @@
 <th:block th:fragment="copy">
 <div class="container" id="container">
-  <input type="hidden" id="id" th:value="${command.id}"/>
+  <input type="hidden" id="id" th:value="${command.id}">
+
   <div class="row">
     <div class="col-5">
       <div class="form-group">
@@ -12,13 +13,13 @@
     </div>
     <div class="col-2">
       <p>
-        <button type="button" class="btn btn-dark" id="right" onclick="add_produto();">
+        <button type="button" class="btn btn-dark" id="right" th:attr="data-url=@{/pedido/insert_produto}" onclick="insert_produto(this)">
           <i class="fas fa-chevron-right"></i>
         </button>
       </p>
 
       <p>
-        <button type="button" class="btn btn-dark" id="left" onclick="remove_produto();">
+        <button type="button" class="btn btn-dark" id="left" th:attr="data-url=@{/pedido/delete_produto}" onclick="delete_produto(this)">
           <i class="fas fa-chevron-left"></i>
         </button>
       </p>
