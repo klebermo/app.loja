@@ -6,10 +6,10 @@
   </p>
 
   <th>#</th>
-  <th class="col">nome</th>
-  <th class="col">resumo</th>
-  <th class="col">preco</th>
-  <th class="col">categoria</th>
+  <th class="col" scope="col">nome</th>
+  <th class="col" scope="col">resumo</th>
+  <th class="col" scope="col">preco</th>
+  <th class="col" scope="col">categoria</th>
   <th>
     <div class="btn-group" id="buttons" role="group" aria-label="comandos" style="display: none;">
       <button sec:authorize="hasPermission(#user, 'atualiza_produto')" type="button" class="btn btn-secondary" id="update" th:attr="data-url=@{/produto/update}" onclick="open_tab(this)">

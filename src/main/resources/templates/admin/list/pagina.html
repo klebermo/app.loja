@@ -6,8 +6,8 @@
   </p>
 
   <th>#</th>
-  <th class="col">titulo</th>
-  <th class="col">parent</th>
+  <th class="col" scope="col">titulo</th>
+  <th class="col" scope="col">parent</th>
   <th>
     <div class="btn-group" id="buttons" role="group" aria-label="comandos" style="display: none;">
       <button sec:authorize="hasPermission(#user, 'atualiza_pagina')" type="button" class="btn btn-secondary" id="update" th:attr="data-url=@{/pagina/update}" onclick="open_tab(this)">
