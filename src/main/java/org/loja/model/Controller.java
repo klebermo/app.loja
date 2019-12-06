@@ -27,9 +27,10 @@ public abstract class Controller<E> {
     this.clazz = clazz;
   }
 
-  @RequestMapping("/")
+  @RequestMapping(value="/", method=RequestMethod.GET)
   @PreAuthorize("hasPermission(#user, 'consulta_'+#this.this.name)")
-  public String index(Model model) {
+  public String index(Model model, @RequestParam(value="pagina", required=false, defaultValue="1") Integer pagina) {
+    model.addAttribute("pagina", pagina);
     return "admin/index";
   }
 
@@ -81,16 +82,17 @@ public abstract class Controller<E> {
     return mapper.writeValueAsString(serv.delete(object));
   }
 
-  @RequestMapping("/list.json")
+  @RequestMapping(value="/list.json", method=RequestMethod.GET)
   @ResponseBody
-  public String list() throws JsonProcessingException {
+  public String list(@RequestParam(value="pagina") Integer pagina, @RequestParam(value="itemsPorPagina") Integer itemsPorPagina) throws JsonProcessingException {
     ObjectMapper mapper = new ObjectMapper();
-    return mapper.writeValueAsString(serv.select());
+    return mapper.writeValueAsString(serv.select(pagina, itemsPorPagina));
   }
 
-  @ModelAttribute("lista")
-  public List lista() {
-    return serv.select();
+  @RequestMapping(value="/size", method=RequestMethod.GET)
+  @ResponseBody
+  public Integer size() {
+    return this.serv.size();
   }
 
   @ModelAttribute("classe")
