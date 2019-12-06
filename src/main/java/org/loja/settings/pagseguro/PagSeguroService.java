@@ -30,7 +30,7 @@ public class PagSeguroService extends org.loja.settings.Service<PagSeguro> {
   }
 
   public String checkout(Integer cliente_id) {
-    Cliente cliente = clienteDao.findBy("id", cliente_id);
+    Cliente cliente = (Cliente) clienteDao.findBy("id", cliente_id);
     map.put("cliente_id", cliente.getId().toString());
 
     String email = ((PagSeguro) this.dao.get()).getEmail();
@@ -56,7 +56,7 @@ public class PagSeguroService extends org.loja.settings.Service<PagSeguro> {
 
   public String create_order(String transaction_id) throws MessagingException {
     Integer cliente_id = Integer.valueOf(map.get("cliente_id"));
-    Cliente cliente = this.clienteDao.findBy("id", cliente_id);
+    Cliente cliente = (Cliente) this.clienteDao.findBy("id", cliente_id);
     return "/order/" + this.create_order(cliente, this.clazz.getSimpleName(), transaction_id);
   }
 }

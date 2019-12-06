@@ -32,7 +32,7 @@ public class MercadoPagoService extends org.loja.settings.Service<MercadoPago> {
   }
 
   public String create_order(Integer cliente_id, String transaction_id) throws MessagingException {
-    Cliente cliente = this.clienteDao.findBy("id", cliente_id);
+    Cliente cliente = (Cliente) this.clienteDao.findBy("id", cliente_id);
     return "/order/" + create_order(cliente, clazz.getSimpleName(), transaction_id);
   }
 

@@ -40,7 +40,7 @@ public class PaypalService extends org.loja.settings.Service<Paypal> {
   }
 
   public String checkout(Integer cliente_id, String payerId, String guid) throws PayPalRESTException, MessagingException {
-    Cliente cliente = clienteDao.findBy("id", cliente_id);
+    Cliente cliente = (Cliente) clienteDao.findBy("id", cliente_id);
     Payment createdPayment = null;
 
     Paypal paypal = (Paypal) this.dao.get();
