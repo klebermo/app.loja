@@ -26,7 +26,33 @@ public abstract class Service<E> {
   }
 
   public List<E> select() {
-    return dao.select();
+    return this.dao.select();
+  }
+
+  public List<E> select(Integer pagina, Integer itemPorPagina) {
+    List lista = dao.select();
+    Integer max = lista.size();
+    Integer total_paginas = 0;
+
+    if(max > itemPorPagina)
+      total_paginas = Math.round(max / itemPorPagina);
+    else
+      total_paginas = 1;
+
+    if(pagina > total_paginas)
+      pagina = total_paginas;
+
+    Integer start = (pagina - 1) * itemPorPagina;
+    Integer end = start + (itemPorPagina - 1);
+
+    if(end > max)
+      end = max;
+
+    return lista.subList(start, end);
+  }
+
+  public Integer size() {
+    return dao.select().size();
   }
 
   public E findBy(String key, Object value) {
