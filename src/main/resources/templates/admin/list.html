@@ -36,6 +36,27 @@
 
     <div class="tab-content" id="tab-content">
       <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+              <div class="list-group list-group-horizontal-sm" id="itemPorPagina">
+                <a href="#" class="list-group-item list-group-item-action active" data-item="10" onclick="setItemsPorPagina(10);">10</a>
+                <a href="#" class="list-group-item list-group-item-action" data-item="20" onclick="setItemsPorPagina(20);">20</a>
+                <a href="#" class="list-group-item list-group-item-action" data-item="30" onclick="setItemsPorPagina(30);">30</a>
+                <a href="#" class="list-group-item list-group-item-action" data-item="40" onclick="setItemsPorPagina(40);">40</a>
+              </div>
+            </div>
+
+            <div class="col-sm"></div>
+
+            <div class="col-sm">
+              <div class="form-group">
+                <input type="text" class="form-control" id="pesquisa" placeholder="Pesquisa..."/>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <table class="table" id="table" th:attr="data-json=@{/__${target}__/list.json}">
           <thead>
             <tr id="table-header">
@@ -66,6 +87,10 @@
           </thead>
           <tbody id="table-body"></tbody>
         </table>
+
+        <nav aria-label="Paginas">
+          <ul class="pagination" id="pagination" th:attr="data-size=@{/__${target}__/size}, data-pagina=${pagina}"></ul>
+        </nav>
       </div>
 
       <div class="tab-pane" id="insert-pane" role="tabpanel" aria-labelledby="insert-tab"></div>
