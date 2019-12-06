@@ -9,7 +9,7 @@ public class TextoEditor extends PropertyEditorSupport {
       Integer id = Integer.parseInt(text);
       TextoService serv = new TextoService();
       org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(serv);
-      Texto texto = serv.findBy("id", id);
+      Texto texto = (Texto) serv.findBy("id", id);
       setValue(texto);
     } else {
       setValue(null);

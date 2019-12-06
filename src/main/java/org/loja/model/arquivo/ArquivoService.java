@@ -58,7 +58,7 @@ public class ArquivoService extends org.loja.model.Service<Arquivo> {
   }
 
   public void remove(Integer id) throws IOException {
-    Arquivo arquivo = this.dao.findBy("id", id);
+    Arquivo arquivo = (Arquivo) this.dao.findBy("id", id);
 
     File file = new File(arquivo.getFileName());
     if(file.delete())

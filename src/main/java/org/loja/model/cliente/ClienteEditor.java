@@ -9,7 +9,7 @@ public class ClienteEditor extends PropertyEditorSupport {
       Integer id = Integer.parseInt(text);
       ClienteService serv = new ClienteService();
       org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(serv);
-      Cliente cliente = serv.findBy("id", id);
+      Cliente cliente = (Cliente) serv.findBy("id", id);
       setValue(cliente);
     } else {
       setValue(null);

@@ -26,14 +26,14 @@ public class ClienteService extends org.loja.model.Service<Cliente> {
   }
 
   public Integer cart_size(Integer cliente_id) {
-    Cliente cliente = this.dao.findBy("id", cliente_id);
+    Cliente cliente = (Cliente) (Cliente) this.dao.findBy("id", cliente_id);
     if(cliente.getCesta() == null || cliente.getCesta().getProdutos() == null)
       return 0;
     return cliente.getCesta().getProdutos().size();
   }
 
   public Float cart_total(Integer cliente_id) {
-    Cliente cliente = this.dao.findBy("id", cliente_id);
+    Cliente cliente = (Cliente) this.dao.findBy("id", cliente_id);
     if(cliente.getCesta() == null || cliente.getCesta().getProdutos() == null)
       return 0.f;
     Float total = 0.f;
@@ -43,7 +43,7 @@ public class ClienteService extends org.loja.model.Service<Cliente> {
   }
 
   public void add_to_cart(Integer cliente_id, Integer produto_id) {
-    Cliente cliente = this.dao.findBy("id", cliente_id);
+    Cliente cliente = (Cliente) this.dao.findBy("id", cliente_id);
     if(cliente.getCesta() == null) {
       Cesta cesta = new Cesta();
       cestaDao.insert(cesta);
@@ -61,7 +61,7 @@ public class ClienteService extends org.loja.model.Service<Cliente> {
   }
 
   public void remove_from_cart(Integer cliente_id, Integer produto_id) {
-    Cliente cliente = this.dao.findBy("id", cliente_id);
+    Cliente cliente = (Cliente) this.dao.findBy("id", cliente_id);
     Cesta cesta = cliente.getCesta();
     for(Produto produto : cesta.getProdutos()) {
       if(produto.getId() == produto_id) {

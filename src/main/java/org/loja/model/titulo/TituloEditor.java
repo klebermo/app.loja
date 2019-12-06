@@ -9,7 +9,7 @@ public class TituloEditor extends PropertyEditorSupport {
       Integer id = Integer.parseInt(text);
       TituloService serv = new TituloService();
       org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(serv);
-      Titulo titulo = serv.findBy("id", id);
+      Titulo titulo = (Titulo) serv.findBy("id", id);
       setValue(titulo);
     } else {
       setValue(null);

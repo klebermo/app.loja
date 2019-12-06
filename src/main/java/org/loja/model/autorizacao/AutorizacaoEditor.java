@@ -9,7 +9,7 @@ public class AutorizacaoEditor extends PropertyEditorSupport {
       Integer id = Integer.parseInt(text);
       AutorizacaoService serv = new AutorizacaoService();
       org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(serv);
-      Autorizacao autorizacao = serv.findBy("id", id);
+      Autorizacao autorizacao = (Autorizacao) serv.findBy("id", id);
       setValue(autorizacao);
     } else {
       setValue(null);

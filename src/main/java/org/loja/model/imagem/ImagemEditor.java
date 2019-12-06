@@ -9,7 +9,7 @@ public class ImagemEditor extends PropertyEditorSupport {
       Integer id = Integer.parseInt(text);
       ImagemService serv = new ImagemService();
       org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(serv);
-      Imagem imagem = serv.findBy("id", id);
+      Imagem imagem = (Imagem) serv.findBy("id", id);
       setValue(imagem);
     } else {
       setValue(null);

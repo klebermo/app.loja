@@ -9,7 +9,7 @@ public class ArquivoEditor extends PropertyEditorSupport {
       Integer id = Integer.parseInt(text);
       ArquivoService serv = new ArquivoService();
       org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(serv);
-      Arquivo arquivo = serv.findBy("id", id);
+      Arquivo arquivo = (Arquivo) serv.findBy("id", id);
       setValue(arquivo);
     } else {
       setValue(null);

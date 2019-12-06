@@ -43,7 +43,7 @@ public class ImagemService extends org.loja.model.Service<Imagem> {
   }
 
   public byte[] download(Integer id) throws IOException {
-    Imagem imagem = this.dao.findBy("id", id);
+    Imagem imagem = (Imagem) this.dao.findBy("id", id);
 
     File arquivo = new File(imagem.getFileName());
 		InputStream in = new FileInputStream(arquivo);
@@ -52,7 +52,7 @@ public class ImagemService extends org.loja.model.Service<Imagem> {
   }
 
   public void remove(Integer id) throws IOException {
-    Imagem imagem = this.dao.findBy("id", id);
+    Imagem imagem = (Imagem) this.dao.findBy("id", id);
 
     File arquivo = new File(imagem.getFileName());
     if(arquivo.delete())

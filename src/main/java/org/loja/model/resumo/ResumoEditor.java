@@ -9,7 +9,7 @@ public class ResumoEditor extends PropertyEditorSupport {
       Integer id = Integer.parseInt(text);
       ResumoService serv = new ResumoService();
       org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(serv);
-      Resumo resumo = serv.findBy("id", id);
+      Resumo resumo = (Resumo) serv.findBy("id", id);
       setValue(resumo);
     } else {
       setValue(null);

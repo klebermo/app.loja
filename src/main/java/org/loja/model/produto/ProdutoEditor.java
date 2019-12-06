@@ -9,7 +9,7 @@ public class ProdutoEditor extends PropertyEditorSupport {
       Integer id = Integer.parseInt(text);
       ProdutoService serv = new ProdutoService();
       org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(serv);
-      Produto produto = serv.findBy("id", id);
+      Produto produto = (Produto) serv.findBy("id", id);
       setValue(produto);
     } else {
       setValue(null);

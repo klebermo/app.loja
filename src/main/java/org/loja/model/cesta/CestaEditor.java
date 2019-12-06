@@ -9,7 +9,7 @@ public class CestaEditor extends PropertyEditorSupport {
       Integer id = Integer.parseInt(text);
       CestaService serv = new CestaService();
       org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(serv);
-      Cesta cesta = serv.findBy("id", id);
+      Cesta cesta = (Cesta) serv.findBy("id", id);
       setValue(cesta);
     } else {
       setValue(null);

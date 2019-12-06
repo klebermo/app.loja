@@ -9,7 +9,7 @@ public class PaginaEditor extends PropertyEditorSupport {
       Integer id = Integer.parseInt(text);
       PaginaService serv = new PaginaService();
       org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(serv);
-      Pagina pagina = serv.findBy("id", id);
+      Pagina pagina = (Pagina) serv.findBy("id", id);
       setValue(pagina);
     } else {
       setValue(null);

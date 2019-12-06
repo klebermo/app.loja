@@ -9,7 +9,7 @@ public class PedidoEditor extends PropertyEditorSupport {
       Integer id = Integer.parseInt(text);
       PedidoService serv = new PedidoService();
       org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(serv);
-      Pedido pedido = serv.findBy("id", id);
+      Pedido pedido = (Pedido) serv.findBy("id", id);
       setValue(pedido);
     } else {
       setValue(null);

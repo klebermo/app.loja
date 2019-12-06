@@ -9,7 +9,7 @@ public class UsuarioEditor extends PropertyEditorSupport {
       Integer id = Integer.parseInt(text);
       UsuarioService serv = new UsuarioService();
       org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(serv);
-      Usuario usuario = serv.findBy("id", id);
+      Usuario usuario = (Usuario) serv.findBy("id", id);
       setValue(usuario);
     } else {
       setValue(null);

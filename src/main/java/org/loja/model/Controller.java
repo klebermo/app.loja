@@ -89,6 +89,20 @@ public abstract class Controller<E> {
     return mapper.writeValueAsString(serv.select(pagina, itemsPorPagina));
   }
 
+  @RequestMapping(value="/findBy.json", method=RequestMethod.GET)
+  @ResponseBody
+  public String findBy(@RequestParam(value="key") String key, @RequestParam(value="value") Object value) throws JsonProcessingException {
+    ObjectMapper mapper = new ObjectMapper();
+    return mapper.writeValueAsString(serv.searchBy(key, value));
+  }
+
+  @RequestMapping(value="/search.json", method=RequestMethod.GET)
+  @ResponseBody
+  public String findBy(@RequestParam(value="keyword") String keyword) throws JsonProcessingException {
+    ObjectMapper mapper = new ObjectMapper();
+    return mapper.writeValueAsString(serv.searchBy(keyword));
+  }
+
   @RequestMapping(value="/size", method=RequestMethod.GET)
   @ResponseBody
   public Integer size() {

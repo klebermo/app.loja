@@ -77,10 +77,27 @@ public abstract class Dao<E> {
     List<E> lista = entityManager.createQuery("SELECT a FROM "+clazz.getSimpleName()+" a WHERE a."+key+" = :value").setParameter("value", value).getResultList();
     entityManager.getTransaction().commit();
     entityManager.close();
-
-    if(!lista.isEmpty())
-      return (E) lista.get(0);
-    else
+    if(lista == null)
       return null;
+    else
+      return lista.get(0);
+  }
+
+  public List searchBy(String keyword) {
+    EntityManager entityManager = getEntityManager();
+    entityManager.getTransaction().begin();
+    List<E> lista = entityManager.createQuery("SELECT a FROM "+clazz.getSimpleName()+" a").setParameter("value", keyword).getResultList();
+    entityManager.getTransaction().commit();
+    entityManager.close();
+    return lista;
+  }
+
+  public List searchBy(String key, Object value) {
+    EntityManager entityManager = getEntityManager();
+    entityManager.getTransaction().begin();
+    List<E> lista = entityManager.createQuery("SELECT a FROM "+clazz.getSimpleName()+" a WHERE a."+key+" = :value").setParameter("value", value).getResultList();
+    entityManager.getTransaction().commit();
+    entityManager.close();
+    return lista;
   }
 }

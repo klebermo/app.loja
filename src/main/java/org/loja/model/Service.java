@@ -29,15 +29,14 @@ public abstract class Service<E> {
     return this.dao.select();
   }
 
-  public List<E> select(Integer pagina, Integer itemPorPagina) {
-    List lista = dao.select();
-    Integer max = lista.size();
-    Integer total_paginas = 0;
+  public E findBy(String key, Object value) {
+    return this.dao.findBy(key, value);
+  }
 
-    if(max > itemPorPagina)
-      total_paginas = Math.round(max / itemPorPagina);
-    else
-      total_paginas = 1;
+  public List<E> select(Integer pagina, Integer itemPorPagina) {
+    List lista = this.dao.select();
+    Integer max = lista.size();
+    Integer total_paginas = new Double(Math.ceil(max / itemPorPagina)).intValue() + 1;
 
     if(pagina > total_paginas)
       pagina = total_paginas;
@@ -55,8 +54,12 @@ public abstract class Service<E> {
     return dao.select().size();
   }
 
-  public E findBy(String key, Object value) {
-    return dao.findBy(key, value);
+  public List searchBy(String key, Object value) {
+    return this.dao.searchBy(key, value);
+  }
+
+  public List searchBy(String keyword) {
+    return this.dao.searchBy(keyword);
   }
 
   public E newObject() throws InstantiationException, IllegalAccessException {
