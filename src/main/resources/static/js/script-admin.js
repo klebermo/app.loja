@@ -19,25 +19,22 @@ function setItemsPorPagina(value) {
 }
 
 function getPagina() {
-  var pagination = document.getElementById("pagination")
-  var pagina = pagination.querySelector(".active");
-  if(pagina)
-    return pagina.innerText;
-  else
-    return 1;
+  var pagination = document.getElementById("pagination");
+  return pagination.dataset.pagina;
 }
 
 function setPagina(value) {
   var current = getPagina();
+  var pagination = document.getElementById('pagination');
+  var page_items = pagination.querySelectorAll('.page-item');
   if(value !== current) {
-    var pagination = document.getElementById('pagination');
-    var page_items = pagination.querySelectorAll('page-item');
     for(var i=0; i<page_items.length; i++)
       if(page_items[i].classList.contains('active'))
         page_items[i].classList.remove('active');
     for(var i=0; i<page_items.length; i++)
-      if(page_items[i].querySelector('page-link').innerText == value)
+      if(page_items[i].querySelector('.page-link').innerText == value)
         page_items[i].classList.add('active');
+    pagination.setAttribute('data-pagina', value);
   }
   clear_content();
   load_content();
@@ -122,7 +119,7 @@ function load_pagination() {
     if (this.readyState == 4 && this.status == 200) {
       var size = this.responseText;
 
-      var pagina = page_item.dataset.pagina;
+      var pagina = getPagina();
       var porPagina = getItemPorPagina();
       var total = Math.ceil(size / porPagina);
 
@@ -132,6 +129,7 @@ function load_pagination() {
       a_previous.classList.add('page-link');
       a_previous.setAttribute('href', '#');
       if(pagina == 1) {
+        previous.classList.add('disabled');
         a_previous.setAttribute('tabindex', '-1');
         a_previous.setAttribute('aria-disabled', 'true');
       }
@@ -162,6 +160,7 @@ function load_pagination() {
       a_next.classList.add('page-link');
       a_next.setAttribute('href', '#');
       if(pagina == total) {
+        next.classList.add('disabled');
         a_next.setAttribute('tabindex', '-1');
         a_next.setAttribute('aria-disabled', 'true');
       }
