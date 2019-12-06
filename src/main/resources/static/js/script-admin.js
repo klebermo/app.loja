@@ -1,3 +1,180 @@
+function getItemPorPagina() {
+  var porPagina = document.getElementById("itemPorPagina");
+  return porPagina.querySelector(".active").innerText;
+}
+
+function setItemsPorPagina(value) {
+  var current = getItemPorPagina();
+  if(value !== current) {
+    var list = document.getElementById('itemPorPagina');
+    for(var i=0; i<list.children.length; i++)
+      if(list.children[i].classList.contains('active'))
+        list.children[i].classList.remove('active');
+    for(var i=0; i<list.children.length; i++)
+      if(list.children[i].innerText == value)
+        list.children[i].classList.add('active');
+  }
+  clear_content();
+  load_content();
+}
+
+function getPagina() {
+  var pagination = document.getElementById("pagination")
+  var pagina = pagination.querySelector(".active");
+  if(pagina)
+    return pagina.innerText;
+  else
+    return 1;
+}
+
+function setPagina(value) {
+  var current = getPagina();
+  if(value !== current) {
+    var pagination = document.getElementById('pagination');
+    var page_items = pagination.querySelectorAll('page-item');
+    for(var i=0; i<page_items.length; i++)
+      if(page_items[i].classList.contains('active'))
+        page_items[i].classList.remove('active');
+    for(var i=0; i<page_items.length; i++)
+      if(page_items[i].querySelector('page-link').innerText == value)
+        page_items[i].classList.add('active');
+  }
+  clear_content();
+  load_content();
+}
+
+function getPrevious() {
+  var current = getPagina();
+  setPagina(current - 1);
+}
+
+function getNext() {
+  var current = getPagina();
+  setPagina(current + 1);
+}
+
+function add_row(data) {
+  var tr = document.createElement("tr");
+  document.getElementById("table-body").appendChild(tr);
+  return tr;
+}
+
+function read_object(data) {
+  if(data == null) {
+    return "...";
+  } else {
+    for(var z in data) {
+      if(data[z] == null)
+        return "...";
+
+      var object = data[z];
+      if(object['idioma']) {
+        var lang = navigator.language;
+        var idioma = object['idioma'].substring(0, 5);
+        if(lang === idioma) return object['conteudo'];
+      }
+
+      if(z == 'username')
+        return data['firstName'] + ' ' + data['lastName'];
+    }
+  }
+  return data;
+}
+
+function add_col(row, data) {
+  var td = document.createElement("td");
+  if(typeof data === 'object') {
+    td.textContent = read_object(data);
+  } else {
+    td.textContent = data;
+  }
+  row.appendChild(td);
+}
+
+function add_col_first(row, data) {
+  var td = document.createElement("th");
+  td.setAttribute('scope', 'row');
+  td.textContent = data['id'];
+  row.appendChild(td);
+}
+
+function add_col_last(row, data) {
+  var td = document.createElement("td");
+  var btn = document.getElementById('buttons').cloneNode(true);
+  for (var i = 0; i < btn.children.length; i++)
+    if(btn.children[i].hasAttribute('data-url'))
+      btn.children[i].setAttribute('data-id', data['id']);
+  btn.removeAttribute('style');
+  td.appendChild(btn);
+  row.appendChild(td);
+}
+
+function clear_content() {
+  document.getElementById('table-body').innerHTML = '';
+  document.getElementById('pagination').innerHTML = '';
+}
+
+function load_pagination() {
+  var page_item = document.getElementById('pagination');
+
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var size = this.responseText;
+
+      var pagina = page_item.dataset.pagina;
+      var porPagina = getItemPorPagina();
+      var total = Math.ceil(size / porPagina);
+
+      var previous = document.createElement('li');
+      previous.classList.add('page-item');
+      var a_previous = document.createElement('a');
+      a_previous.classList.add('page-link');
+      a_previous.setAttribute('href', '#');
+      if(pagina == 1) {
+        a_previous.setAttribute('tabindex', '-1');
+        a_previous.setAttribute('aria-disabled', 'true');
+      }
+      a_previous.setAttribute('onclick', 'getPrevious();');
+      a_previous.innerText = 'Previous';
+      previous.appendChild(a_previous);
+      page_item.appendChild(previous);
+
+      for(var i=0; i<total; i++) {
+        var li = document.createElement('li');
+        li.classList.add('page-item');
+        if(pagina == i+1)
+          li.classList.add('active');
+
+        var a = document.createElement('a');
+        a.classList.add('page-link');
+        a.setAttribute('href', '#');
+        a.setAttribute('onclick', 'setPagina('+(i+1)+')');
+        a.innerText = i+1;
+
+        li.appendChild(a);
+        page_item.appendChild(li);
+      }
+
+      var next = document.createElement('li');
+      next.classList.add('page-item');
+      var a_next = document.createElement('a');
+      a_next.classList.add('page-link');
+      a_next.setAttribute('href', '#');
+      if(pagina == total) {
+        a_next.setAttribute('tabindex', '-1');
+        a_next.setAttribute('aria-disabled', 'true');
+      }
+      a_next.setAttribute('onclick', 'getPrevious();');
+      a_next.innerText = 'Next';
+      next.appendChild(a_next);
+      page_item.appendChild(next);
+    }
+  };
+  xmlhttp.open("GET", page_item.dataset.size, true);
+  xmlhttp.send();
+}
+
 function load_content() {
   var table = document.getElementById("table");
 
@@ -15,39 +192,23 @@ function load_content() {
             columns.push(foo.children[i].textContent);
 
         for(var x in myObj) {
-          var tr = document.createElement("tr");
-
-          var td1 = document.createElement("td");
           var data = myObj[x];
-          var id = data['id'];
-          td1.textContent = id;
-          tr.appendChild(td1);
-
+          var row = add_row(data);
+          add_col_first(row, x);
           for(var y in columns) {
-            var td = document.createElement("td");
-            var data = myObj[x];
-            var str = data[columns[y]];
-            td.textContent = str;
-            tr.appendChild(td);
+            var col = columns[y];
+            var data1 = data[col];
+            add_col(row, data1);
           }
-
-          var td2 = document.createElement("td");
-          var btn = document.getElementById('buttons').cloneNode(true);
-          for (var i = 0; i < btn.children.length; i++)
-            if(btn.children[i].hasAttribute('data-url'))
-              btn.children[i].setAttribute('data-id', id);
-          btn.removeAttribute('style');
-          td2.appendChild(btn);
-          tr.appendChild(td2);
-
-          document.getElementById("table-body").appendChild(tr);
+          add_col_last(row, data);
         }
       }
     };
-
-    xmlhttp.open("GET", json, true);
+    var url = json + '?pagina=' + getPagina() + '&itemsPorPagina=' + getItemPorPagina();
+    xmlhttp.open("GET", url, true);
     xmlhttp.send();
   }
+  load_pagination();
 }
 
 function open_tab(e) {
@@ -114,6 +275,7 @@ function close_tab(e) {
     $('#home-tab').tab('show');
 
     document.getElementById('table-body').innerHTML = '';
+    clear_content();
     load_content();
 
     var tab_pane = document.getElementById(target + '-pane-' + id);
@@ -125,6 +287,7 @@ function close_tab(e) {
     $('#home-tab').tab('show');
 
     document.getElementById('table-body').innerHTML = '';
+    clear_content();
     load_content();
 
     var tab_pane = document.getElementById(target + '-pane');
