@@ -74,30 +74,21 @@ public abstract class Dao<E> {
   public E findBy(String key, Object value) {
     EntityManager entityManager = getEntityManager();
     entityManager.getTransaction().begin();
-    List<E> lista = entityManager.createQuery("SELECT a FROM "+clazz.getSimpleName()+" a WHERE a."+key+" = :value").setParameter("value", value).getResultList();
+    List result = entityManager.createQuery("SELECT a FROM "+clazz.getSimpleName()+" a WHERE a."+key+" = :value").setParameter("value", value).getResultList();
     entityManager.getTransaction().commit();
     entityManager.close();
-    if(lista == null)
+    if(result.isEmpty())
       return null;
     else
-      return lista.get(0);
+      return (E) result.get(0);
   }
 
-  public List searchBy(String keyword) {
+  public List<E> search(String key, Object value) {
     EntityManager entityManager = getEntityManager();
     entityManager.getTransaction().begin();
-    List<E> lista = entityManager.createQuery("SELECT a FROM "+clazz.getSimpleName()+" a").setParameter("value", keyword).getResultList();
+    List result = entityManager.createQuery("SELECT a FROM "+clazz.getSimpleName()+" a WHERE a."+key+" LIKE '"+value+"%'").getResultList();
     entityManager.getTransaction().commit();
     entityManager.close();
-    return lista;
-  }
-
-  public List searchBy(String key, Object value) {
-    EntityManager entityManager = getEntityManager();
-    entityManager.getTransaction().begin();
-    List<E> lista = entityManager.createQuery("SELECT a FROM "+clazz.getSimpleName()+" a WHERE a."+key+" = :value").setParameter("value", value).getResultList();
-    entityManager.getTransaction().commit();
-    entityManager.close();
-    return lista;
+    return result;
   }
 }
