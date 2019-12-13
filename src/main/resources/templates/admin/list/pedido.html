@@ -6,9 +6,9 @@
   </p>
 
   <th>#</th>
-  <th class="col" scope="col">transactionId</th>
-  <th class="col" scope="col">metodoPagamento</th>
-  <th class="col" scope="col">dataCompra</th>
+  <th class="col search" scope="col">transactionId</th>
+  <th class="col search" scope="col">metodoPagamento</th>
+  <th class="col search" scope="col">dataCompra</th>
   <th>
     <div class="btn-group" id="buttons" role="group" aria-label="comandos" style="display: none;">
       <button sec:authorize="hasPermission(#user, 'atualiza_pedido')" type="button" class="btn btn-secondary" id="update" th:attr="data-url=@{/pedido/update}" onclick="open_tab(this)">
