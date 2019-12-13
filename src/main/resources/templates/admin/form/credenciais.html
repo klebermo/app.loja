@@ -4,6 +4,7 @@
       <input type="hidden" id="id" value=""/>
       <caption>
         <button type="button" style="float: right;" class="btn btn-dark" id="credencial" onclick="close_tab(this);">
+          <input type="hidden" id="id" th:value="${command.id}"/>
           <i class="fas fa-window-close"></i> Fechar
         </button>
       </caption>
