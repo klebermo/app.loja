@@ -51,7 +51,7 @@
 
             <div class="col-sm">
               <div class="form-group">
-                <input type="text" class="form-control" id="pesquisa" placeholder="Pesquisa..."/>
+                <input type="text" class="form-control" th:attr="data-search=@{/__${target}__/search.json}" placeholder="Pesquisar..." onkeypress="search(this);"/>
               </div>
             </div>
           </div>
@@ -86,6 +86,7 @@
             </tr>
           </thead>
           <tbody id="table-body"></tbody>
+          <tbody id="table-search"></tbody>
         </table>
 
         <nav aria-label="Paginas">
