@@ -1,3 +1,22 @@
+function search(e) {
+  var value = e.value;
+  var url = e.dataset.search;
+
+  var keys = document.getElementById('table-header').querySelectorAll('.search');
+  for (var i = 0; i < keys.length; i++) {
+    var text = keys[i].innerText;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log('search for \"'+text+'\" = \"'+value+'\"');
+      }
+    };
+    var search_url = url + '?key=' + text + '&value=' + value + '&pagina=' + getPagina() + '&itemsPorPagina=' + getItemPorPagina();
+    xmlhttp.open("GET", search_url, true);
+    xmlhttp.send();
+  }
+}
+
 function getItemPorPagina() {
   var porPagina = document.getElementById("itemPorPagina");
   return porPagina.querySelector(".active").innerText;
@@ -114,64 +133,66 @@ function clear_content() {
 function load_pagination() {
   var page_item = document.getElementById('pagination');
 
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var size = this.responseText;
+  if(page_item) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var size = this.responseText;
 
-      var pagina = getPagina();
-      var porPagina = getItemPorPagina();
-      var total = Math.ceil(size / porPagina);
+        var pagina = getPagina();
+        var porPagina = getItemPorPagina();
+        var total = Math.ceil(size / porPagina);
 
-      var previous = document.createElement('li');
-      previous.classList.add('page-item');
-      var a_previous = document.createElement('a');
-      a_previous.classList.add('page-link');
-      a_previous.setAttribute('href', '#');
-      if(pagina == 1) {
-        previous.classList.add('disabled');
-        a_previous.setAttribute('tabindex', '-1');
-        a_previous.setAttribute('aria-disabled', 'true');
+        var previous = document.createElement('li');
+        previous.classList.add('page-item');
+        var a_previous = document.createElement('a');
+        a_previous.classList.add('page-link');
+        a_previous.setAttribute('href', '#');
+        if(pagina == 1) {
+          previous.classList.add('disabled');
+          a_previous.setAttribute('tabindex', '-1');
+          a_previous.setAttribute('aria-disabled', 'true');
+        }
+        a_previous.setAttribute('onclick', 'getPrevious();');
+        a_previous.innerText = 'Previous';
+        previous.appendChild(a_previous);
+        page_item.appendChild(previous);
+
+        for(var i=0; i<total; i++) {
+          var li = document.createElement('li');
+          li.classList.add('page-item');
+          if(pagina == i+1)
+            li.classList.add('active');
+
+          var a = document.createElement('a');
+          a.classList.add('page-link');
+          a.setAttribute('href', '#');
+          a.setAttribute('onclick', 'setPagina('+(i+1)+')');
+          a.innerText = i+1;
+
+          li.appendChild(a);
+          page_item.appendChild(li);
+        }
+
+        var next = document.createElement('li');
+        next.classList.add('page-item');
+        var a_next = document.createElement('a');
+        a_next.classList.add('page-link');
+        a_next.setAttribute('href', '#');
+        if(pagina == total) {
+          next.classList.add('disabled');
+          a_next.setAttribute('tabindex', '-1');
+          a_next.setAttribute('aria-disabled', 'true');
+        }
+        a_next.setAttribute('onclick', 'getPrevious();');
+        a_next.innerText = 'Next';
+        next.appendChild(a_next);
+        page_item.appendChild(next);
       }
-      a_previous.setAttribute('onclick', 'getPrevious();');
-      a_previous.innerText = 'Previous';
-      previous.appendChild(a_previous);
-      page_item.appendChild(previous);
-
-      for(var i=0; i<total; i++) {
-        var li = document.createElement('li');
-        li.classList.add('page-item');
-        if(pagina == i+1)
-          li.classList.add('active');
-
-        var a = document.createElement('a');
-        a.classList.add('page-link');
-        a.setAttribute('href', '#');
-        a.setAttribute('onclick', 'setPagina('+(i+1)+')');
-        a.innerText = i+1;
-
-        li.appendChild(a);
-        page_item.appendChild(li);
-      }
-
-      var next = document.createElement('li');
-      next.classList.add('page-item');
-      var a_next = document.createElement('a');
-      a_next.classList.add('page-link');
-      a_next.setAttribute('href', '#');
-      if(pagina == total) {
-        next.classList.add('disabled');
-        a_next.setAttribute('tabindex', '-1');
-        a_next.setAttribute('aria-disabled', 'true');
-      }
-      a_next.setAttribute('onclick', 'getPrevious();');
-      a_next.innerText = 'Next';
-      next.appendChild(a_next);
-      page_item.appendChild(next);
-    }
-  };
-  xmlhttp.open("GET", page_item.dataset.size, true);
-  xmlhttp.send();
+    };
+    xmlhttp.open("GET", page_item.dataset.size, true);
+    xmlhttp.send();
+  }
 }
 
 function load_content() {
