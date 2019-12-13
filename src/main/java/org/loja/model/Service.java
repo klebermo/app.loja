@@ -2,6 +2,7 @@ package org.loja.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
+import java.util.ArrayList;
 
 public abstract class Service<E> {
   protected Class<E> clazz;
@@ -50,16 +51,21 @@ public abstract class Service<E> {
     return lista.subList(start, end);
   }
 
-  public Integer size() {
-    return dao.select().size();
-  }
+  public List<E> search(String key, Object value, Integer pagina, Integer itemPorPagina) {
+    List<E> lista = this.dao.search(key, value);
+    Integer max = lista.size();
+    Integer total_paginas = new Double(Math.ceil(max / itemPorPagina)).intValue() + 1;
 
-  public List searchBy(String key, Object value) {
-    return this.dao.searchBy(key, value);
-  }
+    if(pagina > total_paginas)
+      pagina = total_paginas;
 
-  public List searchBy(String keyword) {
-    return this.dao.searchBy(keyword);
+    Integer start = (pagina - 1) * itemPorPagina;
+    Integer end = start + (itemPorPagina - 1);
+
+    if(end > max)
+      end = max;
+
+    return lista.subList(start, end);
   }
 
   public E newObject() throws InstantiationException, IllegalAccessException {
