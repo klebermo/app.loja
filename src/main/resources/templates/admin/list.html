@@ -51,13 +51,13 @@
 
             <div class="col-sm">
               <div class="form-group">
-                <input type="text" class="form-control" th:attr="data-search=@{/__${target}__/search.json}" placeholder="Pesquisar..." onkeypress="search(this);"/>
+                <input type="text" class="form-control" placeholder="Pesquisar..." onkeypress="search(this);"/>
               </div>
             </div>
           </div>
         </div>
 
-        <table class="table" id="table" th:attr="data-json=@{/__${target}__/list.json}">
+        <table class="table">
           <thead>
             <tr id="table-header">
               <th:block th:if="${#strings.equals(target, 'categoria')}">
@@ -85,8 +85,8 @@
               </th:block>
             </tr>
           </thead>
-          <tbody id="table-body"></tbody>
-          <tbody id="table-search"></tbody>
+          <tbody id="table-body" th:attr="data-json=@{/__${target}__/list.json}"></tbody>
+          <tbody id="table-search" style="display: none;" th:attr="data-json=@{/__${target}__/search.json}"></tbody>
         </table>
 
         <nav aria-label="Paginas">
