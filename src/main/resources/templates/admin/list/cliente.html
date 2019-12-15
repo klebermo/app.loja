@@ -6,9 +6,9 @@
   </p>
 
   <th>#</th>
-  <th class="col search" scope="col">usuario</th>
-  <th class="col" scope="col">cesta</th>
-  <th class="col" scope="col">pedidos</th>
+  <th class="search" scope="col">usuario</th>
+  <th scope="col">cesta</th>
+  <th scope="col">pedidos</th>
   <th>
     <div class="btn-group" id="buttons" role="group" aria-label="comandos" style="display: none;">
       <button sec:authorize="hasPermission(#user, 'atualiza_cliente')" type="button" class="btn btn-secondary" id="update" th:attr="data-url=@{/cliente/update}" onclick="open_tab(this)">

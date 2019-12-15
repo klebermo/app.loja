@@ -6,12 +6,12 @@
   </p>
 
   <th>#</th>
-  <th class="col search" scope="col">username</th>
-  <th class="col" scope="col">firstName</th>
-  <th class="col" scope="col">lastName</th>
-  <th class="col search" scope="col">email</th>
-  <th class="col" scope="col">enabled</th>
-  <th class="col" scope="col">locked</th>
+  <th class="search" scope="col">username</th>
+  <th scope="col">firstName</th>
+  <th scope="col">lastName</th>
+  <th class="search" scope="col">email</th>
+  <th scope="col">enabled</th>
+  <th scope="col">locked</th>
   <th>
     <div class="btn-group" id="buttons" role="group" aria-label="comandos" style="display: none;">
       <button sec:authorize="hasPermission(#user, 'atualiza_usuario')" type="button" class="btn btn-secondary" id="update" th:attr="data-url=@{/usuario/update}" onclick="open_tab(this)">
