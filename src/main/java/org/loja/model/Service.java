@@ -51,7 +51,7 @@ public abstract class Service<E> {
     return lista.subList(start, end);
   }
 
-  public List<E> search(String key, Object value, Integer pagina, Integer itemPorPagina) {
+  public List<E> search(String key, Object value, Integer pagina, Integer itemPorPagina) throws NoSuchFieldException {
     List<E> lista = this.dao.search(key, value);
     Integer max = lista.size();
     Integer total_paginas = new Double(Math.ceil(max / itemPorPagina)).intValue() + 1;
