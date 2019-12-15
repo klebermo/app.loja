@@ -1,6 +1,6 @@
 function search(e) {
   var value = e.value;
-  var url = e.dataset.search;
+  var url = document.getElementById('table-search').dataset.json;
 
   var keys = document.getElementById('table-header').querySelectorAll('.search');
   for (var i = 0; i < keys.length; i++) {
@@ -9,6 +9,21 @@ function search(e) {
     xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         console.log('search for \"'+text+'\" = \"'+value+'\"');
+        if(value.length > 0) {
+          var body = document.getElementById('table-body');
+          body.setAttribute('style', 'display: none;');
+          var search = document.getElementById('table-search');
+          search.removeAttribute('style');
+          clear_content();
+          load_content(text, value);
+        } else {
+          var search = document.getElementById('table-search');
+          search.setAttribute('style', 'display: none;');
+          var body = document.getElementById('table-body');
+          body.removeAttribute('style');
+          clear_content();
+          load_content();
+        }
       }
     };
     var search_url = url + '?key=' + text + '&value=' + value + '&pagina=' + getPagina() + '&itemsPorPagina=' + getItemPorPagina();
@@ -126,6 +141,7 @@ function add_col_last(row, data) {
 }
 
 function clear_content() {
+  document.getElementById('table-search').innerHTML = '';
   document.getElementById('table-body').innerHTML = '';
   document.getElementById('pagination').innerHTML = '';
 }
@@ -195,8 +211,12 @@ function load_pagination() {
   }
 }
 
-function load_content() {
-  var table = document.getElementById("table");
+function load_content(key, value) {
+  var table;
+  if(document.getElementById("table-body").style.display === 'none')
+    table = document.getElementById("table-search");
+  else
+    table = document.getElementById("table-body");
 
   if(table) {
     var json = table.dataset.json;
@@ -208,13 +228,13 @@ function load_content() {
         var columns = [];
         var foo = document.getElementById('table-header');
         for (var i = 0; i < foo.children.length; i++)
-          if(foo.children[i].hasAttribute('class'))
+          if(foo.children[i].hasAttribute('scope'))
             columns.push(foo.children[i].textContent);
 
         for(var x in myObj) {
           var data = myObj[x];
           var row = add_row(data);
-          add_col_first(row, x);
+          add_col_first(row, data);
           for(var y in columns) {
             var col = columns[y];
             var data1 = data[col];
@@ -222,9 +242,18 @@ function load_content() {
           }
           add_col_last(row, data);
         }
+
+        var foo = document.getElementById('table-header');
+        for (var i = 0; i < foo.children.length; i++)
+          if(!foo.children[i].hasAttribute('scope'))
+            foo.children[i].scope = 'col';
       }
     };
-    var url = json + '?pagina=' + getPagina() + '&itemsPorPagina=' + getItemPorPagina();
+    var url;
+    if(typeof key === 'undefined' && typeof value === 'undefined')
+      url = json + '?pagina=' + getPagina() + '&itemsPorPagina=' + getItemPorPagina();
+    else
+      url = json + '?key=' + key + '&value=' + value + '&pagina=' + getPagina() + '&itemsPorPagina=' + getItemPorPagina();
     xmlhttp.open("GET", url, true);
     xmlhttp.send();
   }
