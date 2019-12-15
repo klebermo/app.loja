@@ -5,6 +5,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.ArrayList;
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 
 public abstract class Dao<E> {
   @Autowired
@@ -83,10 +85,33 @@ public abstract class Dao<E> {
       return (E) result.get(0);
   }
 
-  public List<E> search(String key, Object value) {
+  public List<E> search(String key, Object value) throws NoSuchFieldException {
     EntityManager entityManager = getEntityManager();
     entityManager.getTransaction().begin();
-    List result = entityManager.createQuery("SELECT a FROM "+clazz.getSimpleName()+" a WHERE a."+key+" LIKE '"+value+"%'").getResultList();
+
+    List result;
+    Field field = clazz.getDeclaredField(key);
+
+    ParameterizedType listType = (ParameterizedType) field.getGenericType();
+    Class<?> classElement = (Class<?>) listType.getActualTypeArguments()[0];
+    String nome = classElement.getSimpleName();
+
+    Field field2[] = classElement.getDeclaredFields();
+    String attr = field2[field2.length - 1].getName();
+
+    if(field != null) {
+      if(field2 != null) {
+        System.out.println("SELECT a FROM "+nome+" a WHERE a."+attr+" LIKE '"+value+"%'");
+        result = entityManager.createQuery("SELECT a FROM "+nome+" a WHERE a."+attr+" LIKE '"+value+"%'").getResultList();
+      } else {
+        System.out.println("SELECT a FROM "+clazz.getSimpleName()+" a WHERE a."+key+" LIKE '"+value+"%'");
+        result = entityManager.createQuery("SELECT a FROM "+clazz.getSimpleName()+" a WHERE a."+key+" LIKE '"+value+"%'").getResultList();
+      }
+    } else {
+      System.out.println("SELECT a FROM "+clazz.getSimpleName()+" a WHERE a."+key+" LIKE '"+value+"%'");
+      result = entityManager.createQuery("SELECT a FROM "+clazz.getSimpleName()+" a WHERE a."+key+" LIKE '"+value+"%'").getResultList();
+    }
+
     entityManager.getTransaction().commit();
     entityManager.close();
     return result;
