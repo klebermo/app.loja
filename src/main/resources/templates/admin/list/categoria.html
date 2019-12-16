@@ -6,7 +6,7 @@
   </p>
 
   <th>#</th>
-  <th class="search" scope="col">nome</th>
+  <th scope="col">nome</th>
   <th>
     <div class="btn-group" id="buttons" role="group" aria-label="comandos" style="display: none;">
       <button sec:authorize="hasPermission(#user, 'atualiza_categoria')" type="button" class="btn btn-secondary" id="update" th:attr="data-url=@{/categoria/update}" onclick="open_tab(this)">
