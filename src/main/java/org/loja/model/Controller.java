@@ -91,15 +91,9 @@ public abstract class Controller<E> {
 
   @RequestMapping(value="/search.json", method=RequestMethod.GET)
   @ResponseBody
-  public String search(@RequestParam(value="key") String key, @RequestParam(value="value") Object value, @RequestParam(value="pagina") Integer pagina, @RequestParam(value="itemsPorPagina") Integer itemsPorPagina) throws NoSuchFieldException, JsonProcessingException {
+  public String search(@RequestParam(value="keyword") String keyword, @RequestParam(value="pagina") Integer pagina, @RequestParam(value="itemsPorPagina") Integer itemsPorPagina) throws NoSuchFieldException, JsonProcessingException {
     ObjectMapper mapper = new ObjectMapper();
-    return mapper.writeValueAsString(serv.search(key, value, pagina, itemsPorPagina));
-  }
-
-  @RequestMapping(value="/size", method=RequestMethod.GET)
-  @ResponseBody
-  public Integer size() {
-    return this.serv.select().size();
+    return mapper.writeValueAsString(serv.search(keyword, pagina, itemsPorPagina));
   }
 
   @ModelAttribute("classe")
