@@ -1,36 +1,4 @@
-function search(e) {
-  var value = e.value;
-  var url = document.getElementById('table-search').dataset.json;
-
-  var keys = document.getElementById('table-header').querySelectorAll('.search');
-  for (var i = 0; i < keys.length; i++) {
-    var text = keys[i].innerText;
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        console.log('search for \"'+text+'\" = \"'+value+'\"');
-        if(value.length > 0) {
-          var body = document.getElementById('table-body');
-          body.setAttribute('style', 'display: none;');
-          var search = document.getElementById('table-search');
-          search.removeAttribute('style');
-          clear_content();
-          load_content(text, value);
-        } else {
-          var search = document.getElementById('table-search');
-          search.setAttribute('style', 'display: none;');
-          var body = document.getElementById('table-body');
-          body.removeAttribute('style');
-          clear_content();
-          load_content();
-        }
-      }
-    };
-    var search_url = url + '?key=' + text + '&value=' + value + '&pagina=' + getPagina() + '&itemsPorPagina=' + getItemPorPagina();
-    xmlhttp.open("GET", search_url, true);
-    xmlhttp.send();
-  }
-}
+var size = 0;
 
 function getItemPorPagina() {
   var porPagina = document.getElementById("itemPorPagina");
@@ -150,73 +118,106 @@ function load_pagination() {
   var page_item = document.getElementById('pagination');
 
   if(page_item) {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        var size = this.responseText;
+    var pagina = getPagina();
+    var porPagina = getItemPorPagina();
+    var total = Math.ceil(size / porPagina);
 
-        var pagina = getPagina();
-        var porPagina = getItemPorPagina();
-        var total = Math.ceil(size / porPagina);
+    var previous = document.createElement('li');
+    previous.classList.add('page-item');
+    var a_previous = document.createElement('a');
+    a_previous.classList.add('page-link');
+    a_previous.setAttribute('href', '#');
+    if(pagina == 1) {
+      previous.classList.add('disabled');
+      a_previous.setAttribute('tabindex', '-1');
+      a_previous.setAttribute('aria-disabled', 'true');
+    }
+    a_previous.setAttribute('onclick', 'getPrevious();');
+    a_previous.innerText = 'Previous';
+    previous.appendChild(a_previous);
+    page_item.appendChild(previous);
 
-        var previous = document.createElement('li');
-        previous.classList.add('page-item');
-        var a_previous = document.createElement('a');
-        a_previous.classList.add('page-link');
-        a_previous.setAttribute('href', '#');
-        if(pagina == 1) {
-          previous.classList.add('disabled');
-          a_previous.setAttribute('tabindex', '-1');
-          a_previous.setAttribute('aria-disabled', 'true');
-        }
-        a_previous.setAttribute('onclick', 'getPrevious();');
-        a_previous.innerText = 'Previous';
-        previous.appendChild(a_previous);
-        page_item.appendChild(previous);
+    for(var i=0; i<total; i++) {
+      var li = document.createElement('li');
+      li.classList.add('page-item');
+      if(pagina == i+1)
+        li.classList.add('active');
 
-        for(var i=0; i<total; i++) {
-          var li = document.createElement('li');
-          li.classList.add('page-item');
-          if(pagina == i+1)
-            li.classList.add('active');
+      var a = document.createElement('a');
+      a.classList.add('page-link');
+      a.setAttribute('href', '#');
+      a.setAttribute('onclick', 'setPagina('+(i+1)+')');
+      a.innerText = i+1;
 
-          var a = document.createElement('a');
-          a.classList.add('page-link');
-          a.setAttribute('href', '#');
-          a.setAttribute('onclick', 'setPagina('+(i+1)+')');
-          a.innerText = i+1;
+      li.appendChild(a);
+      page_item.appendChild(li);
+    }
 
-          li.appendChild(a);
-          page_item.appendChild(li);
-        }
-
-        var next = document.createElement('li');
-        next.classList.add('page-item');
-        var a_next = document.createElement('a');
-        a_next.classList.add('page-link');
-        a_next.setAttribute('href', '#');
-        if(pagina == total) {
-          next.classList.add('disabled');
-          a_next.setAttribute('tabindex', '-1');
-          a_next.setAttribute('aria-disabled', 'true');
-        }
-        a_next.setAttribute('onclick', 'getPrevious();');
-        a_next.innerText = 'Next';
-        next.appendChild(a_next);
-        page_item.appendChild(next);
-      }
-    };
-    xmlhttp.open("GET", page_item.dataset.size, true);
-    xmlhttp.send();
+    var next = document.createElement('li');
+    next.classList.add('page-item');
+    var a_next = document.createElement('a');
+    a_next.classList.add('page-link');
+    a_next.setAttribute('href', '#');
+    if(pagina == total) {
+      next.classList.add('disabled');
+      a_next.setAttribute('tabindex', '-1');
+      a_next.setAttribute('aria-disabled', 'true');
+    }
+    a_next.setAttribute('onclick', 'getPrevious();');
+    a_next.innerText = 'Next';
+    next.appendChild(a_next);
+    page_item.appendChild(next);
   }
 }
 
-function load_content(key, value) {
-  var table;
-  if(document.getElementById("table-body").style.display === 'none')
-    table = document.getElementById("table-search");
-  else
-    table = document.getElementById("table-body");
+function search(e) {
+  var value = e.value;
+  var table = document.getElementById('table-search');
+  var url = table.dataset.json;
+
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      if(value.length > 0) {
+        table.innerHTML = '';
+        var myObj = JSON.parse(this.responseText);
+
+        var columns = [];
+        var foo = document.getElementById('table-header');
+        for (var i = 0; i < foo.children.length; i++)
+          if(foo.children[i].hasAttribute('scope'))
+            columns.push(foo.children[i].textContent);
+
+        var counter = 0;
+        for(var x in myObj) {
+          counter++;
+          var data = myObj[x];
+          var row = add_row(data);
+          add_col_first(row, data);
+          for(var y in columns) {
+            var col = columns[y];
+            var data1 = data[col];
+            add_col(row, data1);
+          }
+          add_col_last(row, data);
+          table.appendChild(row);
+        }
+        document.getElementById('table-body').style.display = 'none';
+        document.getElementById('table-search').removeAttribute('style');
+        size = counter;
+      } else {
+        document.getElementById('table-search').style.display = 'none';
+        document.getElementById('table-body').removeAttribute('style');
+      }
+    }
+  };
+  var search_url = url + '?keyword=' + value + '&pagina=' + getPagina() + '&itemsPorPagina=' + getItemPorPagina();
+  xmlhttp.open("GET", search_url, true);
+  xmlhttp.send();
+}
+
+function load_content() {
+  var table = document.getElementById("table-body");
 
   if(table) {
     var json = table.dataset.json;
@@ -231,7 +232,9 @@ function load_content(key, value) {
           if(foo.children[i].hasAttribute('scope'))
             columns.push(foo.children[i].textContent);
 
+        var counter = 0;
         for(var x in myObj) {
+          counter++;
           var data = myObj[x];
           var row = add_row(data);
           add_col_first(row, data);
@@ -241,19 +244,12 @@ function load_content(key, value) {
             add_col(row, data1);
           }
           add_col_last(row, data);
+          table.appendChild(row);
         }
-
-        var foo = document.getElementById('table-header');
-        for (var i = 0; i < foo.children.length; i++)
-          if(!foo.children[i].hasAttribute('scope'))
-            foo.children[i].scope = 'col';
+        size = counter;
       }
     };
-    var url;
-    if(typeof key === 'undefined' && typeof value === 'undefined')
-      url = json + '?pagina=' + getPagina() + '&itemsPorPagina=' + getItemPorPagina();
-    else
-      url = json + '?key=' + key + '&value=' + value + '&pagina=' + getPagina() + '&itemsPorPagina=' + getItemPorPagina();
+    var url = json + '?pagina=' + getPagina() + '&itemsPorPagina=' + getItemPorPagina();
     xmlhttp.open("GET", url, true);
     xmlhttp.send();
   }
