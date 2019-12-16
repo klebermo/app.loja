@@ -89,13 +89,15 @@ public abstract class Dao<E> {
     String sql = "SELECT a FROM "+clazz.getSimpleName()+" a";
     Field f = clazz.getDeclaredFields()[1];
     if(f.getType().getSuperclass() == org.loja.model.Model.class) {
-      //
+      sql = sql + " INNER JOIN a."+f.getName()+" as b WHERE b."+f.getType().getDeclaredFields()[1].getName()+" LIKE '%"+keyword+"%'";
     } else if(f.getType() == List.class) {
-      //
+      ParameterizedType listType = (ParameterizedType) f.getGenericType();
+      Class<?> classElement = (Class<?>) listType.getActualTypeArguments()[0];
+      sql = sql + " INNER JOIN a."+f.getName()+" as b WHERE b."+classElement.getDeclaredFields()[2].getName()+" LIKE '%"+keyword+"%'";
     } else if(f.getType() == String.class) {
       sql = sql + " WHERE "+f.getName().toLowerCase()+" LIKE '%"+keyword+"%'";
     } else {
-      //
+      sql = sql + " WHERE "+f.getName().toLowerCase()+" = '"+keyword+"'";
     }
     System.out.println("sql: "+sql);
 
