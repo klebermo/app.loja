@@ -51,7 +51,7 @@
 
             <div class="col-sm">
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Pesquisar..." onkeypress="search(this);"/>
+                <input type="text" class="form-control" placeholder="Pesquisar..." onchange="search(this);"/>
               </div>
             </div>
           </div>
@@ -85,12 +85,14 @@
               </th:block>
             </tr>
           </thead>
+
           <tbody id="table-body" th:attr="data-json=@{/__${target}__/list.json}"></tbody>
+
           <tbody id="table-search" style="display: none;" th:attr="data-json=@{/__${target}__/search.json}"></tbody>
         </table>
 
         <nav aria-label="Paginas">
-          <ul class="pagination" id="pagination" th:attr="data-size=@{/__${target}__/size}, data-pagina=${pagina}"></ul>
+          <ul class="pagination" id="pagination" th:attr="data-pagina=${pagina}"></ul>
         </nav>
       </div>
 
