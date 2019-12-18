@@ -73,8 +73,4 @@ public class HomeService {
       }
     }
   }
-
-  public Usuario usuario(Integer id) {
-    return usuarioDao.findBy("id", id);
-  }
 }
