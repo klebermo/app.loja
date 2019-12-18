@@ -10,6 +10,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.FetchType;
+import javax.persistence.CascadeType;
 import org.loja.model.usuario.Usuario;
 import org.loja.forum.forum.Forum;
 
@@ -31,7 +32,7 @@ public class Topic extends org.loja.model.Model {
   @OneToOne(fetch = FetchType.EAGER)
   private Usuario autor;
 
-  @OneToOne(fetch = FetchType.EAGER)
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private Topic resposta;
 
   @ManyToOne(fetch = FetchType.EAGER)
