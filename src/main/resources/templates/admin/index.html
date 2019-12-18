@@ -6,7 +6,7 @@
   <div class="row">
     <div th:replace="admin/sidebar :: copy"></div>
 
-    <main class="col-md-9 ml-sm-auto col-lg-10 px-4" id="main" th:if="${classe == null and setting == null}">
+    <main class="col-md-9 ml-sm-auto col-lg-10 px-4" id="main" th:if="${classe == null and setting == null and messages != null}">
     </main>
 
     <main class="col-md-9 ml-sm-auto col-lg-10 px-4" id="main" th:if="${classe != null}">
@@ -15,6 +15,10 @@
 
     <main class="col-md-9 ml-sm-auto col-lg-10 px-4" id="main" th:if="${setting != null}">
       <div th:replace="admin/settings :: copy"></div>
+    </main>
+
+    <main class="col-md-9 ml-sm-auto col-lg-10 px-4" id="main" th:if="${messages != null}">
+      <div th:replace="admin/messages :: copy"></div>
     </main>
   </div>
 </div>

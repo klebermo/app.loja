@@ -17,7 +17,7 @@
               <h4>
                 <a class="nav-link" th:href="@{/messages}">
                   <i class="fas fa-envelope"></i>
-                  <span class="badge badge-secondary" id="messages" style="display: none;">0</span>
+                  <span class="badge badge-secondary" id="messages" th:attr="data-url=@{/topic/unread}">0</span>
                 </a>
               </h4>
             </td>
