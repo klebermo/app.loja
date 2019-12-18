@@ -726,3 +726,127 @@ function move_left() {
             }
         }
 }
+
+function show_messages() {
+  var message = document.getElementById('messages');
+  var url = message.dataset.url;
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url, true);
+  xhr.onreadystatechange = function()  {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      var value = xhr.responseText;
+      message.innerText = value;
+    }
+  };
+  xhr.send();
+}
+
+function open_message(e) {
+  var id = e.dataset.id;
+  document.getElementById('message-'+id).style.display = 'block';
+}
+
+function close_message(e) {
+  var id = e.dataset.id;
+  var form = document.getElementById('form_resposta');
+
+  if(form.style.display === 'none') {
+    document.getElementById('message-'+id).style.display = 'none';
+  } else {
+    form.style.display = 'none';
+  }
+}
+
+function open_resposta(e) {
+  var id = e.dataset.id;
+  document.getElementById('resposta-'+id).style.display = 'block';
+}
+
+function close_resposta(e) {
+  var id = e.dataset.id;
+  document.getElementById('resposta-'+id).style.display = 'none';
+}
+
+function formatDate(date) {
+  var monthNames = [
+    "January", "February", "March",
+    "April", "May", "June", "July",
+    "August", "September", "October",
+    "November", "December"
+  ];
+
+  var day = date.getDate();
+  var monthIndex = date.getMonth();
+  var year = date.getFullYear();
+
+  return day + ' ' + monthNames[monthIndex] + ' ' + year;
+}
+
+function responder(e) {
+  var id = e.dataset.id;
+  var form = document.getElementById('form_resposta');
+  var form_resposta = document.getElementById('form');
+  var url = form_resposta.action;
+  var url_add = e.dataset.add;
+
+  if(form.style.display === 'none') {
+    var textareas = form.querySelectorAll('.summernote');
+    for(var i=0; i<textareas.length; i++)
+      $(textareas[i]).summernote({height: 300});
+    form.style.display = 'block';
+  } else {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.onreadystatechange = function()  {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        var resposta_id = xhr.responseText;
+
+        var xhr2 = new XMLHttpRequest();
+        xhr2.open("POST", url_add, true);
+        xhr2.onreadystatechange = function()  {
+          if (xhr2.readyState == 4 && xhr.status == 200) {
+            var resposta = document.createElement('div');
+            resposta.setAttribute('class', 'jumbotron');
+            resposta.setAttribute('id', 'resposta-'+id);
+
+            var link = document.createElement('a');
+            link.setAttribute('href', '#');
+            link.setAttribute('onclick', 'close_resposta(this);');
+
+            var title = document.createElement('h1');
+            title.setAttribute('class', 'display-4');
+            title.innerText = form_resposta.querySelector('#titulo').value;
+            link.appendChild(title);
+
+            var p1 = document.createElement('p');
+            p1.setAttribute('class', 'lead');
+            p1.innerText = form_resposta.querySelector('#descricao').value;
+
+            var hr = document.createElement('hr');
+
+            var p2 = document.createElement('p');
+            var autor = '';
+            var dataPublicacao = formatDate(new Date(form_resposta.querySelector('#dataPublicacao').value));
+            p2.innerHTML = "Enviado em <b>"+autor+"</b> por <b>"+dataPublicacao+"</b>";
+
+            resposta.appendChild(link);
+            resposta.appendChild(title);
+            resposta.appendChild(p1);
+            resposta.appendChild(hr);
+            resposta.appendChild(p2);
+
+            form.style.display = 'none';
+            $(e.parentElement).insertAfter(resposta);
+          }
+        };
+        var formData = new FormData();
+        formData.append('topic', id);
+        formData.append('resposta', resposta_id);
+        xhr2.send(formData);
+      }
+    };
+    var formData = new FormData(form_resposta);
+    xhr.send(formData);
+  }
+}

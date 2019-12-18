@@ -139,10 +139,11 @@ function save_topic(element) {
 
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url);
-  xhr.onload = function(event) {
-    event.preventDefault();
-    var result = this.responseText;
-    if(result == "") {
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      console.log('responseText: '+this.responseText);
+      console.log('responseType: '+this.responseType);
+      var result = this.responseText;
       document.getElementById("ok").style.display = 'block';
       $('#novo_topico').modal('hide');
       document.location.reload();
