@@ -14,6 +14,8 @@ import org.loja.model.pedido.Pedido;
 import org.loja.model.cliente.ClienteService;
 import org.loja.model.cliente.Cliente;
 import org.loja.model.usuario.Usuario;
+import org.loja.model.usuario.UsuarioService;
+import org.loja.forum.topic.TopicService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,6 +48,12 @@ public class HomeController {
 
     @Autowired
     private ClienteService cliente;
+
+    @Autowired
+    private UsuarioService usuario;
+
+    @Autowired
+    private TopicService topico;
 
     @RequestMapping("/")
     public String index(Model model) {
@@ -112,6 +120,12 @@ public class HomeController {
       return "index";
     }
 
+    @RequestMapping("/messages")
+    public String messages(Model model) {
+      model.addAttribute("messages", topico.select());
+      return "admin/index";
+    }
+
     @RequestMapping(value = "/register", method=RequestMethod.GET)
     public String formRegister(Model model) {
       model.addAttribute("command", new Usuario());
@@ -139,7 +153,7 @@ public class HomeController {
     @RequestMapping(value = "/credenciais", method=RequestMethod.GET)
     @PreAuthorize("hasPermission(#user, 'consulta_credencial'")
     public String formCredenciais(Model model, @RequestParam("id") Integer id) {
-      model.addAttribute("command", home.usuario(id));
+      model.addAttribute("command", usuario.findBy("id", id));
       return "admin/form/credenciais";
     }
 
