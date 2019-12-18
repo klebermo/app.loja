@@ -30,7 +30,7 @@
   <div class="jumbotron">
     <p class="lead" th:utext="${topic.descricao}"></p>
     <hr class="my-4">
-    <p>Publicado em <i th:text="${#dates.format(topic.dataPublicacao, 'dd/MMM/yyyy HH:mm')}"></i> por <i th:text="${topic.autor}"></i></p>
+    <p>Publicado em <i th:text="${#dates.format(topic.dataPublicacao, 'dd/MMM/yyyy')}"></i> por <i th:text="${topic.autor}"></i></p>
   </div>
 
   <div th:if="${topic.resposta}" class="alert alert-light" role="alert">
@@ -41,7 +41,7 @@
     <h3 class="display-4" th:text="${topic.resposta.titulo}"></h3>
     <p class="lead" th:utext="${topic.resposta.descricao}"></p>
     <hr class="my-4">
-    <p>Publicado em <i th:text="${#dates.format(topic.resposta.dataPublicacao, 'dd/MMM/yyyy HH:mm')}"></i> por <i th:text="${topic.resposta.autor}"></i></p>
+    <p>Publicado em <i th:text="${#dates.format(topic.resposta.dataPublicacao, 'dd/MMM/yyyy')}"></i> por <i th:text="${topic.resposta.autor}"></i></p>
   </div>
 
   <div th:unless="${topic.resposta}" class="alert alert-light" role="alert">
