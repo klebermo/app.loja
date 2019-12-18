@@ -1,6 +1,7 @@
 package org.loja.forum;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 
 public abstract class Service<E extends org.loja.model.Model> {
   private Class<E> clazz;
@@ -22,5 +23,9 @@ public abstract class Service<E extends org.loja.model.Model> {
 
   public E getData(Integer item_id) {
     return this.dao.findBy("id", item_id);
+  }
+
+  public List select() {
+    return this.dao.select();
   }
 }
