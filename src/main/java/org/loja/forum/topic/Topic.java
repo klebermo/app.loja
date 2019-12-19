@@ -10,9 +10,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.FetchType;
-import javax.persistence.CascadeType;
 import org.loja.model.usuario.Usuario;
 import org.loja.forum.forum.Forum;
+import org.loja.forum.resposta.Resposta;
 
 @Entity
 public class Topic extends org.loja.model.Model {
@@ -32,8 +32,8 @@ public class Topic extends org.loja.model.Model {
   @OneToOne(fetch = FetchType.EAGER)
   private Usuario autor;
 
-  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  private Topic resposta;
+  @OneToOne(fetch = FetchType.EAGER)
+  private Resposta resposta;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "fk_forum")
@@ -80,11 +80,11 @@ public class Topic extends org.loja.model.Model {
     this.autor = autor;
   }
 
-  public Topic getResposta() {
+  public Resposta getResposta() {
     return resposta;
   }
 
-  public void setResposta(Topic resposta) {
+  public void setResposta(Resposta resposta) {
     this.resposta = resposta;
   }
 
