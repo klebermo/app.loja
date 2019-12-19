@@ -33,6 +33,9 @@ public abstract class Service<E> {
   @Autowired
   protected ProdutoDao produtoDao;
 
+  @Autowired
+  private MailSender mailSender;
+
   public Service(Class<E> clazz) {
     this.clazz = clazz;
   }
