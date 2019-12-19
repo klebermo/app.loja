@@ -816,19 +816,19 @@ function responder(e) {
 
             var title = document.createElement('h1');
             title.setAttribute('class', 'display-4');
-            title.innerText = form_resposta.querySelector('#titulo').value;
+            title.innerHTML = form_resposta.querySelector('#titulo').value;
             link.appendChild(title);
 
             var p1 = document.createElement('p');
             p1.setAttribute('class', 'lead');
-            p1.innerText = form_resposta.querySelector('#descricao').value;
+            p1.innerHTML = form_resposta.querySelector('#descricao').value;
 
             var hr = document.createElement('hr');
 
             var p2 = document.createElement('p');
-            var autor = '';
+            var autor = document.getElementById('usuario').innerText;
             var dataPublicacao = formatDate(new Date(form_resposta.querySelector('#dataPublicacao').value));
-            p2.innerHTML = "Enviado em <b>"+autor+"</b> por <b>"+dataPublicacao+"</b>";
+            p2.innerHTML = "Enviado em <b>"+dataPublicacao+"</b> por <b>"+autor+"</b>";
 
             resposta.appendChild(link);
             resposta.appendChild(title);
@@ -837,7 +837,7 @@ function responder(e) {
             resposta.appendChild(p2);
 
             form.style.display = 'none';
-            $(e.parentElement).insertAfter(resposta);
+            e.parentElement.appendChild(resposta);
           }
         };
         var formData = new FormData();
