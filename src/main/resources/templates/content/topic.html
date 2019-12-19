@@ -38,10 +38,10 @@
   </div>
 
   <div th:if="${topic.resposta}" class="jumbotron">
-    <h3 class="display-4" th:text="${topic.resposta.titulo}"></h3>
+    <h3 class="display-4" th:utext="${topic.resposta.titulo}"></h3>
     <p class="lead" th:utext="${topic.resposta.descricao}"></p>
     <hr class="my-4">
-    <p>Publicado em <i th:text="${#dates.format(topic.resposta.dataPublicacao, 'dd/MMM/yyyy')}"></i> por <i th:text="${topic.resposta.autor}"></i></p>
+    <p>Publicado em <i th:text="${#dates.format(topic.resposta.dataPublicacao, 'dd/MMM/yyyy')}"></i> por <i th:text="${geral.desenvolvedor}"></i></p>
   </div>
 
   <div th:unless="${topic.resposta}" class="alert alert-light" role="alert">
