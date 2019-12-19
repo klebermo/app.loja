@@ -66,6 +66,7 @@ public abstract class Controller<E extends org.loja.model.Model> {
   public void initBinder(WebDataBinder binder) {
     binder.registerCustomEditor(java.util.Date.class, new org.loja.model.usuario.DateEditor());
     binder.registerCustomEditor(org.loja.forum.forum.Forum.class, new org.loja.forum.forum.ForumEditor());
+    binder.registerCustomEditor(org.loja.forum.resposta.Resposta.class, new org.loja.forum.resposta.RespostaEditor());
     binder.registerCustomEditor(org.loja.forum.topic.Topic.class, new org.loja.forum.topic.TopicEditor());
   }
 }
