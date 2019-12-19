@@ -46,10 +46,10 @@ public class HomeService {
     if(usuario != null)
       if(token == null) {
         token = UUID.randomUUID().toString();
-        mailSender.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Recuperação de senha", "...");
+        //mailSender.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Recuperação de senha", "...");
         return "/recoverPassword?email="+email+"&token="+token;
       } else {
-        mailSender.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Nova senha", "...");
+        //mailSender.send_mail(usuario.getEmail(), usuario.getFirstName(), usuario.getLastName(), "Nova senha", "...");
         return "/login";
       }
     else
