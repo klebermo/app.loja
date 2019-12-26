@@ -356,25 +356,12 @@ function submit() {
   };
 
   xhr.onreadystatechange = function() {
+    var result = JSON.parse(this.responseText);
     if (this.readyState == 4 && this.status == 200) {
-      var json = JSON.parse(this.responseText);
-      if(json['erro']) {
-        form.querySelector('#error').querySelector('#texto').innerText = json['message'];
-        form.querySelector('#error').style.display = 'block';
-      } else {
-        switch(json['action']) {
-          case 'insert':
-          form.querySelector('#ok').querySelector('#texto').innerText = 'o cadastro de '+json['entity']+' foi efetivado com sucesso!';
-          break;
-          case 'update':
-          form.querySelector('#ok').querySelector('#texto').innerText = 'a atualizacão de '+json['entity']+' foi efetivada com sucesso!';
-          break;
-          case 'delete':
-          form.querySelector('#ok').querySelector('#texto').innerText = 'a remoção de '+json['entity']+' foi efetivada com sucesso!';
-          break;
-        }
-        form.querySelector('#ok').style.display = 'block';
-      }
+      form.querySelector('#ok').style.display = 'block';
+    } else {
+      form.querySelector('#error').querySelector(".texto").innerText = result;
+      form.querySelector('#error').style.display = 'block';
     }
   };
 
@@ -697,6 +684,7 @@ function move_right() {
             m2len = m2.length;
             var option = new Option(m1.options[i].text);
             option.value = m1.options[i].value;
+            option.selected = true;
             m2.options[m2len]= option;
         }
     }
