@@ -14,15 +14,15 @@ public abstract class Service<E> {
     this.clazz = clazz;
   }
 
-  public Result insert(E object) {
+  public E insert(E object) {
     return dao.insert(object);
   }
 
-  public Result update(E object) {
+  public E update(E object) {
     return dao.update(object);
   }
 
-  public Result delete(E object) {
+  public E delete(E object) {
     return dao.delete(object);
   }
 
