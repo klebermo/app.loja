@@ -80,7 +80,7 @@ public abstract class Service<E> {
     return dao.get();
   }
 
-  public void set(E object) {
-    dao.set(object);
+  public E set(E object) {
+    return dao.set(object);
   }
 }

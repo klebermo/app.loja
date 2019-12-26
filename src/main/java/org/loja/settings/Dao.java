@@ -79,7 +79,7 @@ public abstract class Dao<E> {
 		return object;
 	}
 
-	public void set(E object) {
+	public E set(E object) {
 		try {
 			if(Files.exists(file))
 				delete();
@@ -91,6 +91,7 @@ public abstract class Dao<E> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return object;
 	}
 
 	public void delete() {
