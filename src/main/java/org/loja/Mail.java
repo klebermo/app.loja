@@ -9,7 +9,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.loja.settings.email.Email;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.StringTemplateResolver;
 import java.util.Collections;
