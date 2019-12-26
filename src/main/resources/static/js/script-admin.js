@@ -356,11 +356,17 @@ function submit() {
   };
 
   xhr.onreadystatechange = function() {
-    var result = JSON.parse(this.responseText);
     if (this.readyState == 4 && this.status == 200) {
       form.querySelector('#ok').style.display = 'block';
-    } else {
-      form.querySelector('#error').querySelector(".texto").innerText = result;
+    }
+
+    if (this.readyState == 4 && this.status / 100 == 4) {
+      form.querySelector('#error').querySelector('.texto').innerText = xhr.statusText;
+      form.querySelector('#error').style.display = 'block';
+    }
+
+    if (this.readyState == 4 && this.status / 100 == 5) {
+      form.querySelector('#error').querySelector('.texto').innerText = xhr.statusText;
       form.querySelector('#error').style.display = 'block';
     }
   };
@@ -584,17 +590,25 @@ function update_pedido(e) {
   var url = e.dataset.url;
   var pedido = e.dataset.pedido;
   var cliente = e.dataset.cliente;
+  var form = document.getElementById('form_pedido_'+pedido);
 
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
   xhr.onreadystatechange = function()  {
     if (xhr.readyState == 4 && xhr.status == 200) {
-      var json = JSON.parse(xhr.responseText);
-      var form = document.getElementById('form_pedido_'+pedido);
-      if(json['erro'])
-        form.querySelector('#error').style.display = 'block';
-      else
+      if (this.readyState == 4 && this.status == 200) {
         form.querySelector('#ok').style.display = 'block';
+      }
+
+      if (this.readyState == 4 && this.status / 100 == 4) {
+        form.querySelector('#error').querySelector('.texto').innerText = xhr.statusText;
+        form.querySelector('#error').style.display = 'block';
+      }
+
+      if (this.readyState == 4 && this.status / 100 == 5) {
+        form.querySelector('#error').querySelector('.texto').innerText = xhr.statusText;
+        form.querySelector('#error').style.display = 'block';
+      }
     }
   };
   var formData = new FormData();
@@ -612,17 +626,23 @@ function delete_pedido(e) {
   xhr.open("POST", url, true);
   xhr.onreadystatechange = function()  {
     if (xhr.readyState == 4 && xhr.status == 200) {
-      var json = JSON.parse(xhr.responseText);
-
-      if(json['erro']) {
-        //
-      } else {
+      if (this.readyState == 4 && this.status == 200) {
         var parent_tab = document.getElementById('my_pedidos-tab');
         var parent = document.getElementById('my_pedidos');
         parent_tab.removeChild(parent_tab.querySelector('#order-'+pedido+'-tab'));
         parent.removeChild(parent.querySelector('#order-'+pedido));
         var tab = parent_tab.querySelector('#novo');
         $(tab).tab('show');
+      }
+
+      if (this.readyState == 4 && this.status / 100 == 4) {
+        form.querySelector('#error').querySelector('.texto').innerText = xhr.statusText;
+        form.querySelector('#error').style.display = 'block';
+      }
+
+      if (this.readyState == 4 && this.status / 100 == 5) {
+        form.querySelector('#error').querySelector('.texto').innerText = xhr.statusText;
+        form.querySelector('#error').style.display = 'block';
       }
     }
   };
@@ -640,13 +660,11 @@ function insert_produto(e) {
   var url = e.dataset.url;
 
   for (var i = 0; i < produtos.length; i = i + 1) {
-      console.log('produto: ' + produtos.options[i].value);
       var xhr = new XMLHttpRequest();
       xhr.open("POST", url, true);
       xhr.onreadystatechange = function()  {
         if (xhr.readyState == 4 && xhr.status == 200) {
           var json = JSON.parse(xhr.responseText);
-          console.log('json: '+json);
         }
       };
       var produto = produtos.options[i].value;
