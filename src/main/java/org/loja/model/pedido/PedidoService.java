@@ -15,7 +15,7 @@ public class PedidoService extends org.loja.model.Service<Pedido> {
     super(Pedido.class);
   }
 
-  public org.loja.model.Result insert_produto(Integer pedido_id, Integer produto_id) {
+  public Pedido insert_produto(Integer pedido_id, Integer produto_id) {
     Pedido pedido = this.dao.findBy("id", pedido_id);
     Produto produto = produtoDao.findBy("id", produto_id);
     if(pedido.getProdutos() == null)
@@ -24,7 +24,7 @@ public class PedidoService extends org.loja.model.Service<Pedido> {
     return this.dao.update(pedido);
   }
 
-  public org.loja.model.Result delete_produto(Integer pedido_id, Integer produto_id) {
+  public Pedido delete_produto(Integer pedido_id, Integer produto_id) {
     Pedido pedido = this.dao.findBy("id", pedido_id);
     Produto produto = produtoDao.findBy("id", produto_id);
     pedido.getProdutos().remove(produto);
