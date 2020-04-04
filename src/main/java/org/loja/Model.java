@@ -41,6 +41,8 @@ import org.loja.settings.pagseguro.PagSeguroService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import com.mercadopago.resources.Preference;
 import com.mercadopago.exceptions.MPException;
+import org.loja.forum.topic.TopicService;
+import org.loja.forum.topic.Topic;
 
 @ControllerAdvice
 public class Model {
@@ -79,6 +81,9 @@ public class Model {
 
   @Autowired
   private MercadoPagoService mercadoPago;
+
+  @Autowired
+  private TopicService topico;
 
   @Autowired
   private PagSeguroService pagSeguro;
@@ -176,6 +181,15 @@ public class Model {
     String line;
     while ((line = br.readLine()) != null)
       lista.add(line);
+    return lista;
+  }
+
+  @ModelAttribute("unread")
+  public List<Topic> unread() {
+    List<Topic> lista = topico.all();
+    for(Topic t : lista)
+      if(t.getResposta() != null)
+        lista.remove(t);
     return lista;
   }
 }
