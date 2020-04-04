@@ -8,7 +8,7 @@ import javax.persistence.Column;
 import java.util.Date;
 
 @Entity
-public class Resposta extends org.loja.model.Model {
+public class Resposta extends org.loja.forum.Model {
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
