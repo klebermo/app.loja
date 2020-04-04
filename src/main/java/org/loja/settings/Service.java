@@ -1,7 +1,6 @@
 package org.loja.settings;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.loja.model.cliente.ClienteDao;
 import org.loja.model.cliente.Cliente;
 import org.loja.model.cesta.CestaDao;
@@ -10,10 +9,7 @@ import org.loja.model.pedido.PedidoDao;
 import org.loja.model.pedido.Pedido;
 import org.loja.model.produto.ProdutoDao;
 import org.loja.model.produto.Produto;
-import org.loja.MailSender;
-
 import java.util.ArrayList;
-import javax.mail.MessagingException;
 
 public abstract class Service<E> {
   protected Class<E> clazz;
@@ -33,19 +29,16 @@ public abstract class Service<E> {
   @Autowired
   protected ProdutoDao produtoDao;
 
-  @Autowired
-  private MailSender mailSender;
-
   public Service(Class<E> clazz) {
     this.clazz = clazz;
   }
 
-  public String create_order(Integer cliente_id, String transaction_id) throws MessagingException {
+  public String create_order(Integer cliente_id, String transaction_id) {
     Cliente cliente = (Cliente) clienteDao.findBy("id", cliente_id);
     return "/order/" + create_order(cliente, clazz.getSimpleName(), transaction_id);
   }
 
-  public Integer create_order(Cliente cliente, String metodoPagamento, String transaction_id) throws MessagingException {
+  public Integer create_order(Cliente cliente, String metodoPagamento, String transaction_id) {
     Pedido pedido = new Pedido();
     pedido.setProdutos(new ArrayList<Produto>());
 
@@ -70,8 +63,6 @@ public abstract class Service<E> {
       cliente.getPedidos().add(pedido);
       clienteDao.update(cliente);
     }
-
-    //mailSender.send_mail(cliente.getEmail(), cliente.getFirstName(), cliente.getLastName(), "Destalhes do pedido", "...");
 
     return pedido.getId();
   }
