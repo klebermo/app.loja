@@ -16,7 +16,6 @@ import org.loja.model.produto.Produto;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
-import javax.mail.MessagingException;
 
 @Service
 public class MercadoPagoService extends org.loja.settings.Service<MercadoPago> {
@@ -27,11 +26,11 @@ public class MercadoPagoService extends org.loja.settings.Service<MercadoPago> {
     super(MercadoPago.class);
   }
 
-  public String checkout(Integer cliente_id) throws MessagingException {
+  public String checkout(Integer cliente_id) {
     return create_order(cliente_id, UUID.randomUUID().toString());
   }
 
-  public String create_order(Integer cliente_id, String transaction_id) throws MessagingException {
+  public String create_order(Integer cliente_id, String transaction_id) {
     Cliente cliente = (Cliente) this.clienteDao.findBy("id", cliente_id);
     return "/order/" + create_order(cliente, clazz.getSimpleName(), transaction_id);
   }
