@@ -133,23 +133,26 @@ function remove_from_cart(btn) {
   xhr.send(formData);
 }
 
-function save_topic(element) {
-  var formData = new FormData(document.getElementById("form"));
-  var url = document.getElementById("form").action;
+function new_topic(e) {
+  var url = e.dataset.url;
+
+  var titulo = document.getElementById("titulo");
+  var descricao = document.getElementById("descricao");
+  var dataPublicacao = document.getElementById("dataPublicacao");
+  var autor = document.getElementById("autor");
 
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url);
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
-      console.log('responseText: '+this.responseText);
-      console.log('responseType: '+this.responseType);
-      var result = this.responseText;
-      document.getElementById("ok").style.display = 'block';
-      $('#novo_topico').modal('hide');
       document.location.reload();
-    } else {
-      document.getElementById("error").style.display = 'block';
     }
   };
+
+  var formData = FormData();
+  formData.append("titulo", titulo);
+  formData.append("descricao", descricao);
+  formData.append("dataPublicacao", dataPublicacao);
+  formData.append("autor", autor);
   xhr.send(formData);
 }
