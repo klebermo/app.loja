@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
-import javax.mail.MessagingException;
 
 @Service
 public class PaypalService extends org.loja.settings.Service<Paypal> {
@@ -39,7 +38,7 @@ public class PaypalService extends org.loja.settings.Service<Paypal> {
     super(Paypal.class);
   }
 
-  public String checkout(Integer cliente_id, String payerId, String guid) throws PayPalRESTException, MessagingException {
+  public String checkout(Integer cliente_id, String payerId, String guid) throws PayPalRESTException {
     Cliente cliente = (Cliente) clienteDao.findBy("id", cliente_id);
     Payment createdPayment = null;
 
