@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import javax.mail.MessagingException;
 
 @Controller
 @RequestMapping("pagseguro")
@@ -23,7 +22,7 @@ public class PagSeguroController extends org.loja.settings.Controller<PagSeguro>
   }
 
   @RequestMapping(value = "/process_order", method=RequestMethod.GET)
-  public String process_order(@RequestParam("transaction_id") String transaction_id) throws MessagingException {
+  public String process_order(@RequestParam("transaction_id") String transaction_id) {
     return "redirect:"+this.serv.create_order(transaction_id);
   }
 }
