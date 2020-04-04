@@ -1,6 +1,8 @@
 <th:block th:fragment="copy">
   <div class="container">
-    <div class="alert alert-dark" role="alert" th:text="${categoria.nome}"></div>
+    <div class="alert alert-dark" role="alert">
+      <span th:each="t : ${categoria.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${t.conteudo}"></span>
+    </div>
     <div class="container">
       <div class="row">
         <div class="col" th:each="produto : ${produtos}" th:if="${categoria.id == produto.categoria.id}">
@@ -9,8 +11,8 @@
             <img th:unless="${produto.icone}" src="#" width="64px" height="64px"/>
             <div class="card-body">
               <h5 class="card-title" th:text="${produto.nome}"></h5>
-              <p class="card-text" th:text="${produto.resumo}"></p>
-              <a th:href="@{/p/__${produto.nome}__}" class="btn btn-primary">Detalhes</a>
+              <p class="card-text" th:each="t : ${produto.resumo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:utext="${t.conteudo}"></p>
+              <a th:href="@{/produto/__${produto.nome}__}" class="btn btn-primary">Detalhes</a>
             </div>
           </div>
         </div>

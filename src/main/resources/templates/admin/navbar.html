@@ -1,41 +1,31 @@
 <th:block th:fragment="copy">
-  <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-    <a th:if="${geral.logo}" class="navbar-brand col-sm-3 col-md-2 mr-0" th:href="@{/}">
-      <img th:src="@{/imagem/download/__${geral.logo.id}__}" th:alt="${geral.titulo}">
-      <span th:text="${geral.titulo}"></span>
-    </a>
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" th:href="@{/}" th:text="${geral.titulo}"></a>
 
-    <a th:unless="${geral.logo}" class="navbar-brand col-sm-3 col-md-2 mr-0" th:href="@{/}" th:text="${geral.titulo}"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+    <div class="collapse navbar-collapse pl-3" id="navbar">
+      <ul class="navbar-nav mr-auto"></ul>
 
-    <ul class="navbar-nav px-3">
-      <li class="nav-item text-nowrap">
-        <table>
-          <tr>
-            <td>
-              <h4>
-                <a class="nav-link" th:href="@{/messages}">
-                  <i class="fas fa-envelope"></i>
-                  <span class="badge badge-secondary" id="messages" th:attr="data-url=@{/topic/unread}">0</span>
-                </a>
-              </h4>
-            </td>
-            <th>
-              <h4>
-                <a class="nav-link" id="usuario" href="#" th:text="${usuario}"></a>
-              </h4>
-            </th>
-            <th>
-              <h4>
-                <a class="nav-link" th:href="@{/logout}">
-                  <i class="fas fa-sign-out-alt"></i>
-                </a>
-              </h4>
-            </th>
-          </tr>
-        </table>
-      </li>
-    </ul>
+      <ul class="navbar-nav justify-content-end">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/messages}">
+            <i class="far fa-envelope"></i> <span class="badge badge-secondary" id="message_count" th:text="${#lists.size(unread)}"></span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#" th:text="${usuario}"></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/logout}">
+            <i class="fas fa-sign-out-alt"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
   </nav>
 </th:block>

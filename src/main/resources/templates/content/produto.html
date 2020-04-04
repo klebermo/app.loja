@@ -26,7 +26,7 @@
 
       <div class="col-3">
         <p>
-          <a sec:authorize="isAuthenticated()" th:href="@{/forum/view/__${produto.forum.id}__}" class="btn btn-dark">Forum <br/> <small>Suporte técnico</small></a>
+          <a sec:authorize="isAuthenticated()" th:href="@{/forum/view?item=__${produto.forum.id}__}" class="btn btn-dark">Forum <br/> <small>Suporte técnico</small></a>
         </p>
 
         <p>
