@@ -9,13 +9,5 @@ public abstract class Model extends Object {
     return this.toString().equals(other.toString());
   }
 
-  /*@Override
-  public int hashCode() {
-      int hash = 7;
-      hash = 31 * hash + (int) getId();
-      hash = 31 * hash + (toString() == null ? 0 : toString().hashCode());
-      return hash;
-  }*/
-
   public abstract String toString();
 }
