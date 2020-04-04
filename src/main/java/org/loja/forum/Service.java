@@ -3,11 +3,11 @@ package org.loja.forum;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
-public abstract class Service<E extends org.loja.model.Model> {
-  private Class<E> clazz;
-
+public abstract class Service<E extends org.loja.forum.Model> {
   @Autowired
-  protected org.loja.model.Dao<E> dao;
+  protected org.loja.forum.Dao<E> dao;
+
+  private Class<E> clazz;
 
   public Service(Class<E> clazz) {
     this.clazz = clazz;
@@ -21,11 +21,19 @@ public abstract class Service<E extends org.loja.model.Model> {
     this.clazz = clazz;
   }
 
-  public E getData(Integer item_id) {
-    return this.dao.findBy("id", item_id);
+  public List<E> all() {
+    return this.dao.all();
   }
 
-  public List select() {
-    return this.dao.select();
+  public E get(Integer id) {
+    return this.dao.get(id);
+  }
+
+  public void set(E object) {
+    this.dao.set(object);
+  }
+
+  public E newObject() throws InstantiationException, IllegalAccessException {
+    return clazz.newInstance();
   }
 }
