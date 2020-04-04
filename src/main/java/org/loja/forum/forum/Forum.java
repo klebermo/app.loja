@@ -15,7 +15,7 @@ import org.loja.model.produto.Produto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Forum extends org.loja.model.Model {
+public class Forum extends org.loja.forum.Model {
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
