@@ -15,7 +15,7 @@ import org.loja.forum.forum.Forum;
 import org.loja.forum.resposta.Resposta;
 
 @Entity
-public class Topic extends org.loja.model.Model {
+public class Topic extends org.loja.forum.Model {
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
