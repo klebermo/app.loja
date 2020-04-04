@@ -6,19 +6,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
-@RequestMapping("pedido")
+@RequestMapping("order")
 public class PedidoController extends org.loja.model.Controller<Pedido> {
+  public PedidoController() {
+    super(Pedido.class);
+  }
+
   @Autowired
   private PedidoService serv;
 
-  public PedidoController() {
-    super(Pedido.class);
+  @RequestMapping("/all")
+  public String pedidos(Model model) {
+    model.addAttribute("orders", "orders");
+    return "index";
+  }
+
+  @RequestMapping("/{order}")
+  public String pedidos(Model model, @PathVariable("order") Integer order_id) {
+    model.addAttribute("order", this.serv.findBy("id", order_id));
+    return "index";
   }
 
   @RequestMapping(value = "/insert_produto", method=RequestMethod.POST)
