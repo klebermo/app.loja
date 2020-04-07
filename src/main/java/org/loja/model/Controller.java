@@ -119,7 +119,11 @@ public abstract class Controller<E> {
     binder.registerCustomEditor(org.loja.model.produto.Produto.class, new org.loja.model.produto.ProdutoEditor());
     binder.registerCustomEditor(org.loja.model.pagina.Pagina.class, new org.loja.model.pagina.PaginaEditor());
     binder.registerCustomEditor(org.loja.model.usuario.Usuario.class, new org.loja.model.usuario.UsuarioEditor());
-    binder.registerCustomEditor(org.loja.forum.forum.Forum.class, new org.loja.model.produto.ForumEditor());
+    binder.registerCustomEditor(org.loja.model.forum.Forum.class, new org.loja.model.forum.ForumEditor());
+    binder.registerCustomEditor(org.loja.model.topic.Topic.class, new org.loja.model.topic.TopicEditor());
+    binder.registerCustomEditor(org.loja.model.resposta.Resposta.class, new org.loja.model.resposta.RespostaEditor());
+    binder.registerCustomEditor(org.loja.model.maquina.Maquina.class, new org.loja.model.maquina.MaquinaEditor());
+    binder.registerCustomEditor(org.loja.model.registro.Registro.class, new org.loja.model.registro.RegistroEditor());
     binder.registerCustomEditor(java.util.Date.class, new org.loja.model.usuario.DateEditor());
     binder.registerCustomEditor(java.lang.Float.class, new org.loja.model.produto.FloatEditor());
   }
