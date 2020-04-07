@@ -21,7 +21,7 @@ import java.util.Set;
 import java.util.List;
 import java.util.HashSet;
 import java.util.ArrayList;
-import org.loja.forum.forum.Forum;
+import org.loja.model.forum.Forum;
 
 @Entity
 public class Produto extends Model {
