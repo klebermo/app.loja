@@ -41,8 +41,8 @@ import org.loja.settings.pagseguro.PagSeguroService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import com.mercadopago.resources.Preference;
 import com.mercadopago.exceptions.MPException;
-import org.loja.forum.topic.TopicService;
-import org.loja.forum.topic.Topic;
+import org.loja.model.topic.TopicService;
+import org.loja.model.topic.Topic;
 
 @ControllerAdvice
 public class Model {
@@ -186,7 +186,7 @@ public class Model {
 
   @ModelAttribute("unread")
   public List<Topic> unread() {
-    List<Topic> lista = topico.all();
+    List<Topic> lista = topico.select();
     for(Topic t : lista)
       if(t.getResposta() != null)
         lista.remove(t);
