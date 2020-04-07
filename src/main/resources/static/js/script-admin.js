@@ -735,13 +735,19 @@ function move_left() {
 
 function view_message(e) {
   var id = e.dataset.message;
-  var div = document.getElementById('message-'+id);
+  var div_view_message = document.getElementById('view_message_'+id);
+  var div_resposta_message = document.getElementById('resposta_message_'+id);
+  if(div_resposta_message.style.display === 'block')
+    div_resposta_message.style.display = 'none';
   div.style.display = 'block';
 }
 
 function responder_message(e) {
   var id = e.dataset.message;
-  var div = document.getElementById('resposta-message-'+id);
+  var div_view_message = document.getElementById('view_message_'+id);
+  var div_resposta_message = document.getElementById('resposta_message_'+id);
+  if(div_view_message.style.display === 'block')
+    div_view_message.style.display = 'none';
   div.style.display = 'block';
 }
 
@@ -757,7 +763,8 @@ function submit_resposta(e) {
   xhr.open("POST", url, true);
   xhr.onreadystatechange = function()  {
     if (xhr.readyState == 4 && xhr.status == 200) {
-      var json = JSON.parse(xhr.responseText);
+      var div_resposta_message = document.getElementById('resposta_message_'+id);
+      div_resposta_message.style.display = 'none';
     }
   };
   var formData = new FormData(form);
