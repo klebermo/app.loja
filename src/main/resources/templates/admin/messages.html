@@ -1,34 +1,40 @@
 <th:block th:fragment="copy">
-  <th:block th:each="t : ${unread}">
-    <div class="alert alert-light" role="alert">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-2">
-            Publicado por <strong th:text="${t.autor}"></strong> em <strong th:text="${#dates.format(t.dataPublicacao, 'dd/MMM/yyyy HH:mm')}"></strong>
-          </div>
-          <div class="col-sm-8">
-            <i th:text="${t.titulo}"></i>
-          </div>
-          <div class="col-sm-2">
-            <a class="btn btn-dark" href="#" th:attr="data-message=${t.id}" onclick="view_message(this);">Ver</a>
-          </div>
+  <div th:each="item : ${unread}" class="alert alert-light" th:id="${'message-'+item.id}" role="alert">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8">
+          <span th:text="${item.titulo}"></span>
+        </div>
+        <div class="col-sm-2">
+          <span th:text="${item.autor}"></span>
+        </div>
+        <div class="col-sm-2">
+          <button type="button" th:attr="data-target=${item.id}" onclick="view_message(this)" class="btn btn-dark">Visualizar</button> <button type="button" th:attr="data-target=${item.id}" onclick="responder_message(this)" class="btn btn-dark">Responder</button>
         </div>
       </div>
-    </div>
 
-    <div class="jumbotron" th:id="${'message-' + t.id}" style="display: none;">
-      <h1 class="display-4" th:text="${t.titulo}"></h1>
-      <p class="lead" th:text="${t.descricao}"></p>
-      <hr class="my-4">
-      <a class="btn btn-primary btn-lg" href="#" role="button" th:attr="data-message=${t.id}" onclick="responder_message(this);">Responder</a>
-    </div>
+      <div class="row" th:id="${'view_message_' + item.id}">
+        <p class="lead" th:text="${item.descricao}"></p>
+        <p class="lead" th:text="${'Publicado em ' + #dates.format(topic.resposta.dataPublicacao, 'dd/MMM/yyyy HH:mm') + ' por ' + topic.resposta.autor}"></p>
+      </div>
 
-    <div class="jumbotron" th:id="${'resposta-message-' + t.id}" style="display: none;">
-      <input type="hidden" name="titulo" th:value="${t.titulo}">
-      <textarea name="descricao" rows="8" cols="80" class="sumernote"></textarea>
-      <input type="hidden" name="dataPublicacao" th:value="${#dates.createNow()}">
-      <hr class="my-4">
-      <a class="btn btn-primary btn-lg" href="#" role="button" th:attr="data-message=${t.id}, data-url=@{/message/set}" onclick="submit_resposta(this);">Responder</a>
+      <div class="row" th:id="${'resposta_message_' + item.id}">
+        <form class="form" action="#" method="post">
+          <div class="form-group">
+            <label>Titulo</label>
+            <input type="text" class="form-control" name="titulo">
+          </div>
+
+          <div class="form-group">
+            <label>Descrição</label>
+            <textarea class="summernote" name="descricao">
+          </div>
+
+          <input type="hidden" name="dataPublicacao" th:value="${#dates.createNow()}">
+        </form>
+
+        <button type="button" th:attr="data-url=@{/resposta/insert}, data-id=${item.id}" onclick="submit_resposta(this)" class="btn btn-dark">Enviar</button>
+      </div>
     </div>
-  </th:block>
+  </div>
 </th:block>

@@ -1,25 +1,25 @@
 <th:block th:fragment="copy">
   <div class="media">
-    <svg class="bd-placeholder-img align-self-start mr-3" width="64" height="64" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 64x64"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Forum</text></svg>
+    <svg class="bd-placeholder-img mr-3" width="64" height="64" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 64x64"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Fórum</text></svg>
     <div class="media-body">
-      <h5 class="mt-0"> Forum - <i th:each="p : ${produtos}" th:if="${#strings.equals(p.forum, forum)}" th:text="${p.nome}"></i> </h5>
-      <p> <a th:each="p : ${produtos}" th:if="${#strings.equals(p.forum, forum)}" class="btn btn-link" th:href="@{/produto/__${p.nome}__}">Voltar</a> </p>
+      <th:block th:each="produto : ${produtos}" th:if="${produto.forum.id == forum.id}">
+        <h5 class="mt-0">Suporte ao produto <span th:text="${produto.nome}"></span></h5>
+        <a th:href="@{/topic/new?forum=__${forum.id}__}" class="btn btn-dark">Novo tópico</a> <a th:href="@{/produto/__${produto.nome}__}" class="btn btn-primary">Voltar</a>
+      </th:block>
     </div>
   </div>
 
-  <a class="btn btn-dark" th:href="@{/topic/new?item=__${forum.id}__}">Novo tópico</a>
-
-  <div th:each="t : ${forum.topicos}" th:class="${t.resposta}? 'alert alert-dark' : 'alert alert-light'" role="alert">
+  <div th:each="item : ${forum.topicos}" class="alert alert-light" role="alert">
     <div class="container">
       <div class="row">
-        <div class="col-sm-2">
-          Publicado por <strong th:text="${t.autor}"></strong> em <strong th:text="${#dates.format(t.dataPublicacao, 'dd/MMM/yyyy HH:mm')}"></strong>
-        </div>
         <div class="col-sm-8">
-          <i th:text="${t.titulo}"></i>
+          <span th:text="${item.titulo}"></span>
         </div>
         <div class="col-sm-2">
-          <a class="btn btn-dark" th:href="@{/topic/view?item=__${t.id}__}">Ver</a>
+          <span th:text="${item.autor}"></span>
+        </div>
+        <div class="col-sm-2">
+          <a th:href="@{/topic/view?id=__${item.id}__}">Visualizar</a>
         </div>
       </div>
     </div>

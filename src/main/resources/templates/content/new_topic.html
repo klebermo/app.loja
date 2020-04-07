@@ -1,0 +1,29 @@
+<th:block th:fragment="copy">
+  <form class="form" id="form" th:action="@{/topic/insert}" method="post">
+    <div class="media">
+      <svg class="bd-placeholder-img mr-3" width="64" height="64" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 64x64"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Tópico</text></svg>
+      <div class="media-body">
+        <th:block th:each="produto : ${produtos}" th:if="${produto['forum'].id == forum_id}">
+          <div class="row">
+            <div class="col-sm-10">
+              <h5 class="mt-0"><input type="text" name="titulo" class="form-control"></h5>
+            </div>
+            <div class="col-sm-2">
+              <a th:href="@{/forum/view?id=__${forum_id}__}" class="btn btn-primary">Voltar</a>
+            </div>
+          </div>
+        </th:block>
+      </div>
+    </div>
+
+    <div class="jumbotron">
+      <p class="lead"><textarea name="descricao" class="summernote"></textarea></p>
+      <input type="hidden" name="dataPublicacao" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
+      <input type="hidden" name="autor" th:value="${usuario.id}">
+      <input type="hidden" name="resposta" value="">
+      <input type="hidden" name="forum" th:value="${forum_id}">
+      <hr class="my-4">
+      <button type="button" th:attr="data-destination=@{/forum/view?id=__${forum_id}__}" onclick="submit_topic(this);" class="btn btn-dark">Enviar</button>
+    </div>
+  </form>
+</th:block>
