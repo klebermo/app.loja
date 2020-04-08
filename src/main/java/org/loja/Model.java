@@ -186,10 +186,13 @@ public class Model {
 
   @ModelAttribute("unread")
   public List<Topic> unread() {
+    List<Topic> result = new ArrayList<Topic>();
+
     List<Topic> lista = topico.select();
     for(Topic t : lista)
-      if(t.getResposta() != null)
-        lista.remove(t);
-    return lista;
+      if(t.getResposta() == null)
+        result.add(t);
+
+    return result;
   }
 }
