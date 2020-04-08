@@ -20,7 +20,6 @@
       <p class="lead"><textarea name="descricao" class="summernote"></textarea></p>
       <input type="hidden" name="dataPublicacao" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
       <input type="hidden" name="autor" th:value="${usuario.id}">
-      <input type="hidden" name="resposta" value="">
       <input type="hidden" name="forum" th:value="${forum_id}">
       <hr class="my-4">
       <button type="button" th:attr="data-destination=@{/forum/view?id=__${forum_id}__}" onclick="submit_topic(this);" class="btn btn-dark">Enviar</button>

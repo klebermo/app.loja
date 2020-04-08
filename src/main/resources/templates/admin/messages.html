@@ -1,5 +1,9 @@
 <th:block th:fragment="copy">
-  <div th:each="item : ${unread}" class="alert alert-light" th:id="${'message-'+item.id}" role="alert">
+  <h4>Messagens</h4>
+
+  <hr>
+
+  <div th:each="item : ${unread}" class="alert alert-secondary" th:id="${'message-'+item.id}" role="alert">
     <div class="container">
       <div class="row">
         <div class="col-sm-8">
@@ -9,31 +13,37 @@
           <span th:text="${item.autor}"></span>
         </div>
         <div class="col-sm-2">
-          <button type="button" th:attr="data-target=${item.id}" onclick="view_message(this)" class="btn btn-dark">Visualizar</button> <button type="button" th:attr="data-target=${item.id}" onclick="responder_message(this)" class="btn btn-dark">Responder</button>
+          <table>
+            <tr>
+              <td> <button type="button" th:attr="data-target=${item.id}" onclick="view_message(this)" class="btn btn-dark">Visualizar</button> </td>
+              <td> <button type="button" th:attr="data-target=${item.id}" onclick="responder_message(this)" class="btn btn-dark">Responder</button> </td>
+            </tr>
+          </table>
         </div>
       </div>
 
-      <div class="row" th:id="${'view_message_' + item.id}">
-        <p class="lead" th:text="${item.descricao}"></p>
-        <p class="lead" th:text="${'Publicado em ' + #dates.format(topic.resposta.dataPublicacao, 'dd/MMM/yyyy HH:mm') + ' por ' + topic.resposta.autor}"></p>
+      <div class="row jumbotron" th:id="${'view_message_' + item.id}" style="display: none;">
+        <p class="lead" th:utext="${item.descricao}"></p>
+        <hr/>
+        <p class="lead" th:text="${'Publicado em ' + #dates.format(item.dataPublicacao, 'dd/MMM/yyyy HH:mm') + ' por ' + item.autor}"></p>
       </div>
 
-      <div class="row" th:id="${'resposta_message_' + item.id}">
+      <div class="row jumbotron" th:id="${'resposta_message_' + item.id}" style="display: none;">
         <form class="form" action="#" method="post">
           <div class="form-group">
             <label>Titulo</label>
-            <input type="text" class="form-control" name="titulo">
+            <input type="text" class="form-control" name="titulo"/>
           </div>
 
           <div class="form-group">
             <label>Descrição</label>
-            <textarea class="summernote" name="descricao">
+            <textarea class="summernote" name="descricao"></textarea>
           </div>
 
-          <input type="hidden" name="dataPublicacao" th:value="${#dates.createNow()}">
+          <input type="hidden" name="dataPublicacao" th:value="${#dates.createNow()}"/>
         </form>
 
-        <button type="button" th:attr="data-url=@{/resposta/insert}, data-id=${item.id}" onclick="submit_resposta(this)" class="btn btn-dark">Enviar</button>
+        <button type="button" th:attr="data-url=@{/topic/add_resposta}, data-target=${item.id}" onclick="submit_resposta(this)" class="btn btn-dark">Enviar</button>
       </div>
     </div>
   </div>

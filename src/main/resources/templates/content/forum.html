@@ -9,7 +9,7 @@
     </div>
   </div>
 
-  <div th:each="item : ${forum.topicos}" class="alert alert-light" role="alert">
+  <div th:each="item : ${forum.topicos}" class="alert alert-secondary" role="alert">
     <div class="container">
       <div class="row">
         <div class="col-sm-8">
@@ -19,7 +19,7 @@
           <span th:text="${item.autor}"></span>
         </div>
         <div class="col-sm-2">
-          <a th:href="@{/topic/view?id=__${item.id}__}">Visualizar</a>
+          <a class="btn btn-dark" th:href="@{/topic/view?id=__${item.id}__}">Visualizar</a>
         </div>
       </div>
     </div>

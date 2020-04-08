@@ -2,20 +2,21 @@
   <div class="media">
     <svg class="bd-placeholder-img mr-3" width="64" height="64" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 64x64"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Tópico</text></svg>
     <div class="media-body">
-      <th:block th:each="produto : ${produtos}" th:if="${produto.forum.id == forum.id}">
-        <h5 class="mt-0" th:text="${topic.titulo}"></h5>
+      <th:block th:each="produto : ${produtos}" th:if="${produto.forum.id == topic.forum.id}">
+        <h5 class="mt-0" th:utext="${topic.titulo}"></h5>
         <a th:href="@{/forum/view?id=__${topic.forum.id}__}" class="btn btn-primary">Voltar</a>
       </th:block>
     </div>
   </div>
 
   <div class="jumbotron">
-    <p class="lead" th:text="${topic.descricao}"></p>
+    <p class="lead" th:utext="${topic.descricao}"></p>
     <hr class="my-4">
     <p th:text="${'Publicado em ' + #dates.format(topic.dataPublicacao, 'dd/MMM/yyyy HH:mm') + ' por ' + topic.autor}"></p>
-    <hr>
+    <hr class="my-4">
     <th:block th:if="${topic.resposta}">
-      <p class="lead" th:text="${topic.resposta.descricao}"></p>
+    <h1 class="display-4">Resposta</h1>
+      <p class="lead" th:utext="${topic.resposta.descricao}"></p>
       <p class="lead" th:text="${'Publicado em ' + #dates.format(topic.resposta.dataPublicacao, 'dd/MMM/yyyy HH:mm') + ' por ' + topic.resposta.autor}"></p>
     </th:block>
   </div>
