@@ -734,30 +734,46 @@ function move_left() {
 }
 
 function view_message(e) {
-  var id = e.dataset.message;
+  var id = e.dataset.target;
   var div_view_message = document.getElementById('view_message_'+id);
   var div_resposta_message = document.getElementById('resposta_message_'+id);
+
   if(div_resposta_message.style.display === 'block')
     div_resposta_message.style.display = 'none';
-  div.style.display = 'block';
+
+  if(div_view_message.style.display === 'none') {
+    div_view_message.style.display = 'block';
+    e.innerText = 'Fechar';
+  } else {
+    div_view_message.style.display = 'none';
+    e.innerText = 'Visualizar';
+  }
 }
 
 function responder_message(e) {
-  var id = e.dataset.message;
+  var id = e.dataset.target;
   var div_view_message = document.getElementById('view_message_'+id);
   var div_resposta_message = document.getElementById('resposta_message_'+id);
+
   if(div_view_message.style.display === 'block')
     div_view_message.style.display = 'none';
-  div.style.display = 'block';
+
+  if(div_resposta_message.style.display == 'none') {
+    div_resposta_message.style.display = 'block';
+    e.innerText = 'Fechar';
+  } else {
+    div_resposta_message.style.display = 'none';
+    e.innerText = 'Responder';
+  }
 }
 
 function submit_resposta(e) {
-  var id = e.dataset.message;
+  var id = e.dataset.target;
   var url = e.dataset.url;
 
-  var titulo = e.parentElement.querySelector('input[name="titulo"]');
-  var descricao = e.parentElement.querySelector('textarea').innerText;
-  var dataPublicacao = e.parentElement.querySelector('input[name="dataPublicacao"]');
+  var titulo = e.parentElement.querySelector('input[name="titulo"]').value;
+  var descricao = e.parentElement.querySelector('textarea').value;
+  var dataPublicacao = e.parentElement.querySelector('input[name="dataPublicacao"]').value;
 
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
@@ -765,9 +781,16 @@ function submit_resposta(e) {
     if (xhr.readyState == 4 && xhr.status == 200) {
       var div_resposta_message = document.getElementById('resposta_message_'+id);
       div_resposta_message.style.display = 'none';
+
+      var message_count = document.getElementById('message_count');
+      message_count.innerText = message_count.innerText - 1;
+
+      var div_message = document.getElementById('message-'+id);
+      div_message.remove();
     }
   };
-  var formData = new FormData(form);
+  var formData = new FormData();
+  formData.append('topic', id);
   formData.append('titulo', titulo);
   formData.append('descricao', descricao);
   formData.append('dataPublicacao', dataPublicacao);
