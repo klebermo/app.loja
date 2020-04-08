@@ -137,12 +137,11 @@ function submit_topic(e) {
   var url = document.getElementById("form").action;
   var url_destino = e.dataset.destination;
 
-  var titulo = e.parentElement.querySelector('input[name="titulo"]');
-  var descricao = e.parentElement.querySelector('textarea').innerText;
-  var dataPublicacao = e.parentElement.querySelector('input[name="dataPublicacao"]');
-  var autor = e.parentElement.querySelector('input[name="autor"]');
-  var resposta = e.parentElement.querySelector('input[name="resposta"]');
-  var forum = e.parentElement.querySelector('input[name="forum"]');
+  var titulo = document.querySelector('input[name="titulo"]').value;
+  var descricao = document.querySelector('textarea').value;
+  var dataPublicacao = document.querySelector('input[name="dataPublicacao"]').value;
+  var autor = document.querySelector('input[name="autor"]').value;
+  var forum = document.querySelector('input[name="forum"]').value;
 
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
@@ -151,12 +150,11 @@ function submit_topic(e) {
       document.location.href =  url_destino;
     }
   };
-  var formData = new FormData(form);
+  var formData = new FormData();
   formData.append('titulo', titulo);
   formData.append('descricao', descricao);
   formData.append('dataPublicacao', dataPublicacao);
   formData.append('autor', autor);
-  formData.append('resposta', resposta);
   formData.append('forum', forum);
   xhr.send(formData);
 }
