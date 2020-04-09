@@ -3,6 +3,7 @@ package org.loja.model.registro;
 import javax.persistence.Entity;
 import org.loja.model.Model;
 import javax.persistence.Id;
+import javax.persistence.Column;
 import javax.persistence.OneToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +17,9 @@ public class Registro extends Model{
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
+
+  @Column
+  private String token;
 
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private Produto produto;
@@ -33,9 +37,10 @@ public class Registro extends Model{
 	/**
 	* Default Registro constructor
 	*/
-	public Registro(Integer id, Produto produto, Maquina maquina) {
+	public Registro(Integer id, String token, Produto produto, Maquina maquina) {
 		super();
 		this.id = id;
+		this.token = token;
 		this.produto = produto;
 		this.maquina = maquina;
 	}
@@ -54,6 +59,22 @@ public class Registro extends Model{
 	*/
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	/**
+	* Returns value of token
+	* @return
+	*/
+	public String getToken() {
+		return token;
+	}
+
+	/**
+	* Sets new value of token
+	* @param
+	*/
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	/**
@@ -94,6 +115,6 @@ public class Registro extends Model{
 	*/
 	@Override
 	public String toString() {
-		return "Registro [id=" + id + ", produto=" + produto + ", maquina=" + maquina + "]";
+		return "Registro [id=" + id + ", token=" + token + ", produto=" + produto + ", maquina=" + maquina + "]";
 	}
 }
