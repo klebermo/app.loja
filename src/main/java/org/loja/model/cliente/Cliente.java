@@ -15,6 +15,8 @@ import org.loja.model.usuario.Usuario;
 import org.loja.model.cesta.Cesta;
 import org.loja.model.pedido.Pedido;
 import java.util.List;
+import java.util.ArrayList;
+import org.loja.model.produto.Produto;
 
 @Entity
 public class Cliente extends Model implements Serializable {
@@ -70,5 +72,15 @@ public class Cliente extends Model implements Serializable {
   @Override
   public String toString() {
     return usuario.toString();
+  }
+
+  public List<Produto> produtosComprados() {
+    List<Produto> result = new ArrayList<Produto>();
+
+    for(Pedido pedido : pedidos) {
+      result.addAll(pedido.getProdutos());
+    }
+
+    return result;
   }
 }
