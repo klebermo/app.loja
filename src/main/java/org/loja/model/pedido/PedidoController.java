@@ -49,7 +49,7 @@ public class PedidoController extends org.loja.model.Controller<Pedido> {
   }
 
   @RequestMapping(value = "/produtos", method=RequestMethod.GET)
-  @PreAuthorize("hasPermission(#user, 'consulta_produto'")
+  @PreAuthorize("hasPermission(#user, 'consulta_produto')")
   public String formProdutos(Model model, @RequestParam("id") Integer id) {
     model.addAttribute("command", this.serv.findBy("id", id));
     return "admin/form/pedido_produtos";
