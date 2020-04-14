@@ -1,4 +1,4 @@
-package org.store.security;
+package org.loja.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
