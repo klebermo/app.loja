@@ -33,7 +33,7 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   }
 
   @RequestMapping(value = "/credenciais", method=RequestMethod.GET)
-  @PreAuthorize("hasPermission(#user, 'consulta_credencial'")
+  @PreAuthorize("hasPermission(#user, 'consulta_credencial')")
   public String formCredenciais(Model model, @RequestParam("id") Integer id) {
     model.addAttribute("command", this.serv.findBy("id", id));
     return "admin/form/credenciais";
