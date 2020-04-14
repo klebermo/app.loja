@@ -67,7 +67,7 @@ public class ClienteController extends org.loja.model.Controller<Cliente> {
   }
 
   @RequestMapping(value = "/pedidos", method=RequestMethod.GET)
-  @PreAuthorize("hasPermission(#user, 'consulta_pedido'")
+  @PreAuthorize("hasPermission(#user, 'consulta_pedido')")
   public String formPedidos(Model model, @RequestParam("id") Integer id) {
     model.addAttribute("command", this.serv.findBy("id", id));
     return "admin/form/cliente_pedidos";
