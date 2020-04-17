@@ -13,7 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
-@RequestMapping("order")
+@RequestMapping("pedido")
 public class PedidoController extends org.loja.model.Controller<Pedido> {
   public PedidoController() {
     super(Pedido.class);
