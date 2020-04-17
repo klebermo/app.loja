@@ -1,6 +1,7 @@
 package org.loja;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -8,6 +9,9 @@ import org.springframework.ui.Model;
 
 @Controller
 public class Home {
+    @Autowited
+    private Install install;
+
     @RequestMapping("/")
     public String index(Model model) {
       model.addAttribute("index", "index");
@@ -18,6 +22,14 @@ public class Home {
     public String login(Model model) {
       model.addAttribute("login", "login");
       return "login";
+    }
+
+    @RequestMapping("/install")
+    public String install() {
+      if(install.estaInstalado())
+        return "install";
+      else
+        return "redirect:/";
     }
 
     @RequestMapping("/admin")
