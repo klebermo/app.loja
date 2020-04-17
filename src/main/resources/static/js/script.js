@@ -101,11 +101,13 @@ function add_to_cart(btn) {
   var cliente = btn.dataset.cliente;
   var produto = btn.dataset.produto;
   var url = btn.dataset.url;
+  var url_cart = btn.dataset.cesta;
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
       update_cart();
+      document.location.href =  url_cart;
     }
   };
   var formData = new FormData();

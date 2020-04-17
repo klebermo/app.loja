@@ -424,6 +424,25 @@ function image_upload(file_input) {
               file_input.parentElement.append(img);
             }
 
+            if(name === 'logo') {
+              document.getElementById("empty_image").style.display = 'none';
+
+              var input = document.createElement("input");
+              input.setAttribute("type", "hidden");
+              input.setAttribute("name", name);
+              input.setAttribute("value", id);
+
+              var img = document.createElement("img");
+              img.setAttribute("class", "thumbnail");
+              img.setAttribute("id", "single_image");
+              img.setAttribute('src', path + '/' + id);
+              img.setAttribute('width', '120');
+              img.setAttribute('height', '240');
+
+              file_input.parentElement.append(input);
+              file_input.parentElement.append(img);
+            }
+
             if(name === 'thumbnails') {
               var input = document.createElement("input");
               input.setAttribute("type", "hidden");
