@@ -16,6 +16,7 @@
         <th scope="col"></th>
       </tr>
     </thead>
+
     <tbody th:if="${cliente.cesta}">
       <tr th:each="p,stat : ${cliente.cesta.produtos}" th:id="${'produto_' + p.id}">
         <td scope="row" th:text="${stat.count}"></td>
@@ -37,6 +38,7 @@
         </td>
       </tr>
     </tbody>
+    
     <tfoot>
       <tr>
         <td></td>

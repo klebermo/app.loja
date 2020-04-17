@@ -13,4 +13,12 @@
     <label for="email">E-mail</label>
     <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="E-mail">
   </div>
+
+  <div class="form-group">
+    <a href="#" class="d-block mb-4 h-100" data-target="logo" onclick="select(this);">
+      <img th:if="${command.logo}" class="thumbnail" id="single_image" th:src="@{/imagem/download/__${command.logo.id}__}" width="120" height="240"/>
+      <img th:unless="${command.logo}" class="thumbnail" id="empty_image" th:src="@{/img/add.png}" width="120" height="240"/>
+      <input type="file" accept="image/jpeg" class="image-uploader" id="logo" style="display: none;" th:attr="data-target=${'logo'}, data-url=@{/imagem/upload}, data-path=@{/imagem/download}" onchange="image_upload(this);"/>
+    </a>
+  </div>
 </th:block>

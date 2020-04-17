@@ -30,7 +30,7 @@
         </p>
 
         <p>
-          <button sec:authorize="isAuthenticated()" type="button" class="btn btn-dark" onclick="add_to_cart(this)" th:attr="data-cliente=${cliente.id}, data-produto=${produto.id}, data-url=@{/cliente/add_to_cart}">Comprar <br/> <small>Vers&atilde;o Pro</small></button>
+          <button sec:authorize="isAuthenticated()" type="button" class="btn btn-dark" onclick="add_to_cart(this)" th:attr="data-cliente=${cliente.id}, data-produto=${produto.id}, data-url=@{/cliente/add_to_cart}, data-cart=@{/cart}">Comprar <br/> <small>Vers&atilde;o Pro</small></button>
         </p>
 
         <div class="dropdown">

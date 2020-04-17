@@ -1,12 +1,5 @@
 <th:block th:fragment="copy">
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-  <a th:if="${geral.logo}" class="navbar-brand" href="#">
-    <img th:src="@{/imagem/download/__${geral.logo.id}__}" th:alt="${geral.titulo}">
-    <span th:text="${geral.titulo}"></span>
-  </a>
-
-  <a th:unless="${geral.logo}" class="navbar-brand" th:href="@{/}" th:text="${geral.titulo}"></a>
-
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -41,7 +34,7 @@
       </li>
 
       <li class="nav-item" sec:authorize="isAuthenticated()">
-        <a class="nav-link" th:href="@{/order/all}">
+        <a class="nav-link" th:href="@{/pedido/all}">
           <i class="fas fa-receipt"></i>
         </a>
       </li>
