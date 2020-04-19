@@ -436,8 +436,8 @@ function image_upload(file_input) {
               img.setAttribute("class", "thumbnail");
               img.setAttribute("id", "single_image");
               img.setAttribute('src', path + '/' + id);
-              img.setAttribute('width', '120');
-              img.setAttribute('height', '240');
+              img.setAttribute('width', '180px');
+              img.setAttribute('height', '360px');
 
               file_input.parentElement.append(input);
               file_input.parentElement.append(img);
