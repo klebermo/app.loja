@@ -5,7 +5,20 @@ body {
   padding: 3rem 1.5rem;
   text-align: justify;
 }
+.navbar {
+  z-index: 0;
+}
+.list-group {
+  margin-top: -128px;
+  width: 180px;
+}
 li.list-group-item {
+  padding: 0;
+}
+.media img {
+  padding: 0;
+}
+.bd-placeholder-img {
   padding: 0;
 }
 .alert {
@@ -13,7 +26,9 @@ li.list-group-item {
 }
 .alert img {
   position: absolute;
+  top: -7px;
 }
 .alert svg {
   position: absolute;
+  top: -7px;
 }
