@@ -16,13 +16,19 @@ public class Home {
 
     @RequestMapping("/")
     public String index(Model model) {
+      model.addAttribute("index", "index");
+      return "index";
+    }
+
+    /*@RequestMapping("/")
+    public String index(Model model) {
       if(install.estaInstalado()) {
         model.addAttribute("index", "index");
         return "index";
       } else {
         return "redirect:/install";
       }
-    }
+    }*/
 
     @RequestMapping("/login")
     public String login(Model model) {
