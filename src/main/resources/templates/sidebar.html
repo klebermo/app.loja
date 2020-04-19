@@ -1,14 +1,16 @@
 <th:block th:fragment="copy">
 <div class="list-group">
-  <li class="list-group-item">
-    <div class="media logo">
-      <img th:if="${geral.logo}" th:src="@{/imagem/download/__${geral.logo.id}__}" width="180px" height="360px" class="mr-3" th:alt="${geral.titulo}">
-      <svg th:unless="${geral.logo}" class="bd-placeholder-img mr-3" width="180" height="380" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 64x64">
-        <title>Placeholder</title>
-        <rect width="100%" height="100%" fill="#868e96"></rect>
-        <text x="50%" y="50%" fill="#dee2e6" dy=".3em" th:text="${geral.titulo}"></text>
-      </svg>
-    </div>
+  <li class="list-group-item" th:href="@{/}">
+    <a th:href="@{/}">
+      <div class="media">
+        <img th:if="${geral.logo}" th:src="@{/imagem/download/__${geral.logo.id}__}" width="180px" height="360px" th:alt="${geral.titulo}">
+        <svg th:unless="${geral.logo}" class="bd-placeholder-img" width="180px" height="360px" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 64x64">
+          <title>Placeholder</title>
+          <rect width="100%" height="100%" fill="#868e96"></rect>
+          <text x="50%" y="50%" fill="#dee2e6" dy=".3em" th:text="${geral.titulo}"></text>
+        </svg>
+      </div>
+    </a>
   </li>
 
   <th:block th:if="${categoria == null and produto == null and pagina == null}">
