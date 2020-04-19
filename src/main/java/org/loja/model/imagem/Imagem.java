@@ -2,13 +2,16 @@ package org.loja.model.imagem;
 
 import org.loja.model.Model;
 import javax.persistence.Entity;
+import java.io.Serializable;
 import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 @Entity
-public class Imagem extends Model {
+public class Imagem extends Model implements Serializable {
+  private static final long serialVersionUID = 1L;
+
   @Id
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
