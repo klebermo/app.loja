@@ -5,3 +5,15 @@ body {
   padding: 3rem 1.5rem;
   text-align: justify;
 }
+li.list-group-item {
+  padding: 0;
+}
+.alert {
+  height: 50px;
+}
+.alert img {
+  position: absolute;
+}
+.alert svg {
+  position: absolute;
+}
