@@ -3,15 +3,30 @@
 <div th:replace="navbar :: copy"></div>
 
 <div class="container">
-  <form class="form-signin" id="form" method="post" th:action="@{/recoverPassword}">
+  <form class="form-signin" id="form" method="post" th:action="@{/usuario/recoverPassword}">
     <h1 class="h3 mb-3 font-weight-normal">
       <i class="fas fa-sign-in-alt"></i> Recuperer senha
+      <small>Informe seu e-mail para que uma nova senha seja enviada para você.</small>
     </h1>
 
     <label for="email" class="sr-only">E-mail</label>
     <input type="email" name="email" id="email" class="form-control" placeholder="E-mail" required>
 
-    <button type="submit" class="btn btn-lg btn-primary btn-block">Enviar</button>
+    <button type="button" class="btn btn-lg btn-primary btn-block" onclick="recover()">Recuperar</button>
+
+    <div class="alert alert-success alert-dismissible fade show" id="ok" role="alert" style="display: none;">
+      <strong>Sucesso!</strong> Senha enviada! Consulte seu e-mail e <a th:href="@{/login}">Clique aqui</a> para fazer login agora.
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade show" id="error" role="alert" style="display: none;">
+      <strong>Erro!</strong> Ocorreu um erro ao tentar enviar su nova senha! Tavez você não esteja cadastrado? <a th:href="@{/usuario/register}">Clique aqui</a> para se cadastrar agora.
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
   </form>
 </div>
 
