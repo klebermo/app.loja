@@ -11,7 +11,7 @@ import org.loja.model.registro.MakeRegistro;
 @EnableWebSocket
 public class Socket implements WebSocketConfigurer {
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(new CheckRegistro(), "/check_registration");
-    registry.addHandler(new MakeRegistro(), "/register_product");
+		registry.addHandler(new CheckRegistro(), "/check_registration").setAllowedOrigins("*");
+    registry.addHandler(new MakeRegistro(), "/register_product").setAllowedOrigins("*");
 	}
 }
