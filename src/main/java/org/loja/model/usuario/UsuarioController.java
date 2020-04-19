@@ -22,6 +22,7 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
 
   @RequestMapping(value = "/register", method=RequestMethod.GET)
   public String formRegister(Model model) {
+    model.addAttribute("register", "register");
     model.addAttribute("command", new Usuario());
     return "register";
   }
@@ -30,6 +31,18 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   @ResponseBody
   public void doRegister(@ModelAttribute("command") Usuario object) throws Exception {
     this.serv.register(object);
+  }
+
+  @RequestMapping(value = "/recoverPassword", method=RequestMethod.GET)
+  public String formRecover(Model model) {
+    model.addAttribute("recover", "recover");
+    return "recover";
+  }
+
+  @RequestMapping(value = "/recoverPassword", method=RequestMethod.POST)
+  @ResponseBody
+  public void doRecover(@RequestParam("email") String email) throws Exception {
+    this.serv.recoverPassword(email);
   }
 
   @RequestMapping(value = "/credenciais", method=RequestMethod.GET)

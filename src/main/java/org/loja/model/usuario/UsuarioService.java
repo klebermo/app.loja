@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.loja.model.credencial.Credencial;
 import org.loja.model.credencial.CredencialDao;
 import java.util.ArrayList;
+import java.util.UUID;
 
 @Service
 public class UsuarioService extends org.loja.model.Service<Usuario> {
@@ -25,6 +26,11 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     Credencial credencial = credencialDao.findBy("nome", "web");
     novo.getCredenciais().add(credencial);
     usuarioDao.insert(novo);
+  }
+
+  public void recoverPassword(String email) {
+    double x = Math.random();
+    String newPassword = String.valueOf(x).substring(0,4);
   }
 
   public void toggle_credencial(Integer usuario_id, Integer credencial_id) {
