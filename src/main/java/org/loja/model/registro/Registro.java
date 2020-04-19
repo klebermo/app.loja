@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.FetchType;
 import javax.persistence.CascadeType;
+import org.loja.model.usuario.Usuario;
 import org.loja.model.produto.Produto;
 import org.loja.model.maquina.Maquina;
 
@@ -20,6 +21,9 @@ public class Registro extends Model{
 
   @Column
   private String token;
+
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  private Usuario usuario;
 
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private Produto produto;
@@ -37,10 +41,11 @@ public class Registro extends Model{
 	/**
 	* Default Registro constructor
 	*/
-	public Registro(Integer id, String token, Produto produto, Maquina maquina) {
+	public Registro(Integer id, String token, Usuario usuario, Produto produto, Maquina maquina) {
 		super();
 		this.id = id;
 		this.token = token;
+		this.usuario = usuario;
 		this.produto = produto;
 		this.maquina = maquina;
 	}
@@ -75,6 +80,22 @@ public class Registro extends Model{
 	*/
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	/**
+	* Returns value of usuario
+	* @return
+	*/
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	/**
+	* Sets new value of usuario
+	* @param
+	*/
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	/**
@@ -115,6 +136,6 @@ public class Registro extends Model{
 	*/
 	@Override
 	public String toString() {
-		return "Registro [id=" + id + ", token=" + token + ", produto=" + produto + ", maquina=" + maquina + "]";
+		return "Registro [id=" + id + ", token=" + token + ", usuario=" + usuario + ", produto=" + produto + ", maquina=" + maquina + "]";
 	}
 }
