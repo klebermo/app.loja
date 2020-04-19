@@ -15,6 +15,23 @@ function register() {
   xhr.send(formData);
 }
 
+function recover() {
+  var formData = new FormData(document.getElementById("form"));
+  var url = document.getElementById("form").action;
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url);
+  xhr.onload = function(event) {
+    event.preventDefault();
+    var result = this.responseText;
+    if(result == "")
+      document.getElementById("ok").style.display = 'block';
+    else
+      document.getElementById("error").style.display = 'block';
+  };
+  xhr.send(formData);
+}
+
 function update_cart() {
   var cart_size = document.getElementById('cart_size');
   var cart_status = document.getElementById('cart_status');
