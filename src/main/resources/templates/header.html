@@ -14,12 +14,16 @@
       <title th:each="t : ${pagina.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:text="${geral.titulo + ' | ' + t.conteudo}"></title>
     </th:block>
 
-    <link rel='stylesheet' th:href='@{/webjars/bootstrap/css/bootstrap.min.css}'>
-    <link rel='stylesheet' th:href='@{/webjars/summernote/summernote.css}'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote.min.css" rel="stylesheet">
 
-    <link th:unless="${login}" rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link th:if="${login == null and install == null}" rel="stylesheet" th:href="@{/css/style.css}"/>
 
     <link th:if="${login}" rel="stylesheet" th:href="@{/css/style-signin.css}"/>
+
+    <!-- Font Icon -->
+    <link th:if="${install}" rel="stylesheet" th:href="@{/fonts/themify-icons/themify-icons.css}">
+    <link th:if="${install}" rel="stylesheet" th:href="@{/css/style-install.css}"/>
   </head>
   <body onload="update_cart(this);">
 </th:block>

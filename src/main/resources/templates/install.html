@@ -1,10 +1,46 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Instalação</title>
-  </head>
-  <body>
+<div th:replace="header :: copy"></div>
 
-  </body>
-</html>
+<div th:replace="navbar :: copy"></div>
+
+<form role="form" class="form" id="form" th:action="@{install}" method="post">
+
+  <h1>Instalação</h1>
+
+  <!-- One "tab" for each step in the form: -->
+  <div class="tab">Server:
+   <p><input placeholder="Server..." oninput="this.className = 'server'"></p>
+   <p><input placeholder="Username..." oninput="this.className = 'user'"></p>
+   <p><input placeholder="Password..." oninput="this.className = 'pass'"></p>
+  </div>
+
+  <div class="tab">Admin:
+   <p><input placeholder="Username..." oninput="this.className = 'admin_user'"></p>
+   <p><input placeholder="Password..." oninput="this.className = 'admin_pass'"></p>
+  </div>
+
+  <div class="tab">Conclusão:
+    <div class="jumbotron">
+      <h1 class="display-4">Instalação concluida com sucesso!</h1>
+      <p class="lead">Todas as informações necessárias para conclur a instalação foram coletadas.</p>
+      <hr class="my-4">
+      <p>Clique em concluir para salvar os dados e começar a usar o sistema.</p>
+    </div>
+  </div>
+
+  <div style="overflow:auto;">
+   <div style="float:right;">
+     <button type="button" id="prevBtn" onclick="nextPrev(-1)">Anterior</button>
+     <button type="button" id="nextBtn" onclick="nextPrev(1)">Próximo</button>
+   </div>
+  </div>
+
+  <!-- Circles which indicates the steps of the form: -->
+  <div style="text-align:center;margin-top:40px;">
+   <span class="step"></span>
+   <span class="step"></span>
+   <span class="step"></span>
+  </div>
+
+</form>
+
+<div th:replace="footer :: copy"></div>
