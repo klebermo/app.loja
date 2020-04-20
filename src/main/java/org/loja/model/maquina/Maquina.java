@@ -15,19 +15,25 @@ public class Maquina extends Model {
   private Integer id;
 
   @Column
-  private String cpu;
+  private String hostName;
 
   @Column
-  private String placaMae;
+  private String uniqueId;
 
   @Column
-  private Integer ram;
+  private String ram;
 
   @Column
-  private String placaVideo;
+  private String productName;
 
   @Column
-  private Integer armazenamento;
+  private String kernelType;
+
+  @Column
+  private String kernelVersion;
+
+  @Column
+  private String cpuArch;
 
 	/**
 	* Default empty Maquina constructor
@@ -39,14 +45,16 @@ public class Maquina extends Model {
 	/**
 	* Default Maquina constructor
 	*/
-	public Maquina(Integer id, String cpu, String placaMae, Integer ram, String placaVideo, Integer armazenamento) {
+	public Maquina(Integer id, String hostName, String uniqueId, String ram, String productName, String kernelType, String kernelVersion, String cpuArch) {
 		super();
 		this.id = id;
-		this.cpu = cpu;
-		this.placaMae = placaMae;
+		this.hostName = hostName;
+		this.uniqueId = uniqueId;
 		this.ram = ram;
-		this.placaVideo = placaVideo;
-		this.armazenamento = armazenamento;
+		this.productName = productName;
+		this.kernelType = kernelType;
+		this.kernelVersion = kernelVersion;
+		this.cpuArch = cpuArch;
 	}
 
 	/**
@@ -66,42 +74,42 @@ public class Maquina extends Model {
 	}
 
 	/**
-	* Returns value of cpu
+	* Returns value of hostName
 	* @return
 	*/
-	public String getCpu() {
-		return cpu;
+	public String getHostName() {
+		return hostName;
 	}
 
 	/**
-	* Sets new value of cpu
+	* Sets new value of hostName
 	* @param
 	*/
-	public void setCpu(String cpu) {
-		this.cpu = cpu;
+	public void setHostName(String hostName) {
+		this.hostName = hostName;
 	}
 
 	/**
-	* Returns value of placaMae
+	* Returns value of uniqueId
 	* @return
 	*/
-	public String getPlacaMae() {
-		return placaMae;
+	public String getUniqueId() {
+		return uniqueId;
 	}
 
 	/**
-	* Sets new value of placaMae
+	* Sets new value of uniqueId
 	* @param
 	*/
-	public void setPlacaMae(String placaMae) {
-		this.placaMae = placaMae;
+	public void setUniqueId(String uniqueId) {
+		this.uniqueId = uniqueId;
 	}
 
 	/**
 	* Returns value of ram
 	* @return
 	*/
-	public Integer getRam() {
+	public String getRam() {
 		return ram;
 	}
 
@@ -109,40 +117,72 @@ public class Maquina extends Model {
 	* Sets new value of ram
 	* @param
 	*/
-	public void setRam(Integer ram) {
+	public void setRam(String ram) {
 		this.ram = ram;
 	}
 
 	/**
-	* Returns value of placaVideo
+	* Returns value of productName
 	* @return
 	*/
-	public String getPlacaVideo() {
-		return placaVideo;
+	public String getProductName() {
+		return productName;
 	}
 
 	/**
-	* Sets new value of placaVideo
+	* Sets new value of productName
 	* @param
 	*/
-	public void setPlacaVideo(String placaVideo) {
-		this.placaVideo = placaVideo;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
 	/**
-	* Returns value of armazenamento
+	* Returns value of kernelType
 	* @return
 	*/
-	public Integer getArmazenamento() {
-		return armazenamento;
+	public String getKernelType() {
+		return kernelType;
 	}
 
 	/**
-	* Sets new value of armazenamento
+	* Sets new value of kernelType
 	* @param
 	*/
-	public void setArmazenamento(Integer armazenamento) {
-		this.armazenamento = armazenamento;
+	public void setKernelType(String kernelType) {
+		this.kernelType = kernelType;
+	}
+
+	/**
+	* Returns value of kernelVersion
+	* @return
+	*/
+	public String getKernelVersion() {
+		return kernelVersion;
+	}
+
+	/**
+	* Sets new value of kernelVersion
+	* @param
+	*/
+	public void setKernelVersion(String kernelVersion) {
+		this.kernelVersion = kernelVersion;
+	}
+
+	/**
+	* Returns value of cpuArch
+	* @return
+	*/
+	public String getCpuArch() {
+		return cpuArch;
+	}
+
+	/**
+	* Sets new value of cpuArch
+	* @param
+	*/
+	public void setCpuArch(String cpuArch) {
+		this.cpuArch = cpuArch;
 	}
 
 	/**
@@ -151,6 +191,6 @@ public class Maquina extends Model {
 	*/
 	@Override
 	public String toString() {
-		return "Maquina [id=" + id + ", cpu=" + cpu + ", placaMae=" + placaMae + ", ram=" + ram + ", placaVideo=" + placaVideo + ", armazenamento=" + armazenamento + "]";
+		return "Maquina [id=" + id + ", hostName=" + hostName + ", uniqueId=" + uniqueId + ", ram=" + ram + ", productName=" + productName + ", kernelType=" + kernelType + ", kernelVersion=" + kernelVersion + ", cpuArch=" + cpuArch + "]";
 	}
 }
