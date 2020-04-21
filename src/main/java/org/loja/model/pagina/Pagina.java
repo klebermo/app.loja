@@ -12,6 +12,7 @@ import java.util.List;
 import javax.persistence.FetchType;
 import javax.persistence.CascadeType;
 import javax.persistence.OrderColumn;
+import javax.persistence.OrderColumn;
 import org.loja.model.titulo.Titulo;
 import org.loja.model.texto.Texto;
 
