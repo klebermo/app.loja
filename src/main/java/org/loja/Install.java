@@ -22,10 +22,20 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.ResultSet;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.spi.MetadataImplementor;
+import java.util.EnumSet;
+import org.hibernate.tool.schema.TargetType;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Properties;
+import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
+import org.springframework.core.type.filter.AnnotationTypeFilter;
+import org.springframework.beans.factory.config.BeanDefinition;
+import javax.persistence.Entity;
 
 @Service
 public class Install {
@@ -44,6 +54,14 @@ public class Install {
   String dir_name = new File("").getAbsolutePath();
 
   String file_name = dir_name + File.separator + "application.properties";
+
+  String driverClassName = "org.postgresql.Driver";
+
+  String dialect = "org.hibernate.dialect.PostgreSQLDialect";
+
+  String url_prefix = "jdbc:postgresql://";
+
+  String url_suffix = "appdata";
 
   public Boolean estaInstalado() {
     Path dir, file;
@@ -97,16 +115,16 @@ public class Install {
     try {
       FileOutputStream outputStream = new FileOutputStream(file_name);
 
-      String str = "spring.datasource.driverClassName=org.postgresql.Driver\n";
-      str = str + "spring.datasource.url=jdbc:postgresql://"+server+"/appdata\n";
+      String str = "spring.datasource.driverClassName="+driverClassName+"\n";
+      str = str + "spring.datasource.url="+url_prefix+server+"/"+url_suffix+"\n";
       str = str + "spring.datasource.username="+user+"\n";
       str = str + "spring.datasource.password="+pass+"\n";
-      str = str + "spring.datasource.continue-on-error=true";
+      //str = str + "spring.datasource.continue-on-error=true\n";
 
-      str = str + "spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect\n";
-      str = str + "spring.jpa.dialect=org.hibernate.dialect.PostgreSQLDialect\n";
+      str = str + "spring.jpa.database-platform="+dialect+"\n";
+      str = str + "spring.jpa.dialect="+dialect+"\n";
       str = str + "spring.jpa.show-sql=false\n";
-      str = str + "spring.jpa.generate-ddl=false\n";
+      //str = str + "spring.jpa.generate-ddl=false\n";
 
       byte[] strToBytes = str.getBytes();
       outputStream.write(strToBytes);
@@ -117,11 +135,11 @@ public class Install {
   }
 
   public void criarBanco(String server, String user, String pass) throws Exception {
-    Class.forName("org.postgresql.Driver");
-    String url = "jdbc:postgresql://"+server+"/postgres";
+    Class.forName(driverClassName);
+    String url = url_prefix+server+"/postgres";
 		Connection conn = DriverManager.getConnection(url, user, pass);
 		Statement stmt = conn.createStatement();
-    ResultSet rs = stmt.executeQuery("SELECT count(*) FROM pg_catalog.pg_database WHERE datname = 'appdata'");
+    ResultSet rs = stmt.executeQuery("SELECT count(*) FROM pg_catalog.pg_database WHERE datname = '"+url_suffix+"'");
     rs.next();
 		int counter  = rs.getInt(1);
     if(counter > 0) {
@@ -129,7 +147,7 @@ public class Install {
 			stmt.close();
 			conn.close();
     } else {
-      stmt.executeUpdate("CREATE DATABASE appdata WITH OWNER "+user);
+      stmt.executeUpdate("CREATE DATABASE "+url_suffix+" WITH OWNER "+user);
       rs.close();
 			stmt.close();
 			conn.close();
@@ -137,19 +155,36 @@ public class Install {
   }
 
   public void criarTabelas(String server, String user, String pass) throws Exception {
-    Configuration config = new Configuration();
+    Connection conn = DriverManager.getConnection(url_prefix+server+"/"+url_suffix, user, pass);
+    StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
+    .applySetting("hibernate.hbm2ddl.auto", "create")
+    .applySetting("hibernate.dialect", dialect)
+    .applySetting("hibernate.id.new_generator_mappings", "true")
+    .applySetting("javax.persistence.schema-generation-connection", conn)
+    .build();
 
-    Properties props = new Properties();
-    FileInputStream inputStream = new FileInputStream( file_name );
-    props.load(inputStream);
-    inputStream.close();
-    config.setProperties(props);
+    MetadataSources sources = new MetadataSources(standardRegistry);
+    for(Class<?> entity : lista_entidades())
+      sources.addAnnotatedClass(entity);
 
-    Connection conn = DriverManager.getConnection(server, user, pass);
-    SchemaExport schema = new SchemaExport();
-    //
+    MetadataImplementor metadata = (MetadataImplementor) sources.getMetadataBuilder().build();
+
+    SchemaExport export = new SchemaExport();
+    export.create(EnumSet.of(TargetType.DATABASE), metadata);
     conn.close();
   }
+
+  private List<Class<?>> lista_entidades() throws Exception {
+      List<Class<?>> lista = new ArrayList<Class<?>>();
+
+      ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
+      scanner.addIncludeFilter(new AnnotationTypeFilter(Entity.class));
+      for (BeanDefinition bd : scanner.findCandidateComponents("org.loja.model"))
+        lista.add(Class.forName(bd.getBeanClassName()));
+
+      System.out.println("lista: "+lista);
+      return lista;
+    }
 
   public void preencherDadosIniciais(String server, String user, String pass) {
     String [] credenciais = {"usuario", "categoria", "produto", "credencial", "autorizacao", "imagem", "arquivo", "pedido", "pagina", "cliente"};
@@ -199,8 +234,11 @@ public class Install {
     novo.getCredenciais().add( credencialDao.findBy("nome", "pagina") );
     novo.getCredenciais().add( credencialDao.findBy("nome", "cliente") );
     usuarioDao.insert(novo);
+
     Cliente novo_cliente = new Cliente();
-    novo_cliente.setUsuario(novo);
     clienteDao.insert(novo_cliente);
+
+    novo_cliente.setUsuario(novo);
+    clienteDao.update(novo_cliente);
   }
 }
