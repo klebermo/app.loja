@@ -17,6 +17,14 @@ public class Autorizacao extends Model implements GrantedAuthority {
   @Column
   private String nome;
 
+  public Autorizacao() {
+    setNome(null);
+  }
+
+  public Autorizacao(String nome) {
+    setNome(nome);
+  }
+
   @Override
   public Integer getId() {
     return id;
