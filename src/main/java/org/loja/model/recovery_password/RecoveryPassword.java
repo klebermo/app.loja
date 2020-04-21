@@ -17,7 +17,7 @@ public class RecoveryPassword extends Model {
   @Column
   private String token;
 
-  @Column
+  @Column(name="data_pedido")
   private Date dataPedido;
 
 	/**
