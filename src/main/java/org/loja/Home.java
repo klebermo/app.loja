@@ -16,19 +16,13 @@ public class Home {
 
     @RequestMapping("/")
     public String index(Model model) {
-      model.addAttribute("index", "index");
-      return "index";
-    }
-
-    /*@RequestMapping("/")
-    public String index(Model model) {
       if(install.estaInstalado()) {
         model.addAttribute("index", "index");
         return "index";
       } else {
         return "redirect:/install";
       }
-    }*/
+    }
 
     @RequestMapping("/login")
     public String login(Model model) {
@@ -43,8 +37,8 @@ public class Home {
     }
 
     @RequestMapping(value="/install", method=RequestMethod.POST)
-    public String install(@RequestParam("server") String server, @RequestParam("user") String user, @RequestParam("pass") String pass, @RequestParam("admin_user") String admin_user, @RequestParam("admin_pass") String admin_pass) {
-      install.processaInstalacao(server, user, pass, admin_user, admin_pass);
+    public String install(@RequestParam("server") String server, @RequestParam("user") String user, @RequestParam("pass") String pass, @RequestParam("admin_user") String admin_user, @RequestParam("admin_pass") String admin_pass, @RequestParam("admin_nome") String admin_nome, @RequestParam("admin_sobrenome") String admin_sobrenome, @RequestParam("admin_email") String admin_email) throws Exception {
+      install.processaInstalacao(server, user, pass, admin_user, admin_pass, admin_nome, admin_sobrenome, admin_email);
       return "redirect:/";
     }
 
