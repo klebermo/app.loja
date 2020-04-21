@@ -11,7 +11,7 @@ public class CestaController extends org.loja.model.Controller<Cesta> {
     super(Cesta.class);
   }
 
-  @RequestMapping("/")
+  @RequestMapping("/index")
   public String cesta(Model model) {
     model.addAttribute("cart", "cart");
     return "index";
