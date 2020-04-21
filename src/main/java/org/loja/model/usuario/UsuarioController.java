@@ -33,18 +33,6 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
     this.serv.register(object);
   }
 
-  @RequestMapping(value = "/recoverPassword", method=RequestMethod.GET)
-  public String formRecover(Model model) {
-    model.addAttribute("recover", "recover");
-    return "recover";
-  }
-
-  @RequestMapping(value = "/recoverPassword", method=RequestMethod.POST)
-  @ResponseBody
-  public void doRecover(@RequestParam("email") String email) throws Exception {
-    this.serv.recoverPassword(email);
-  }
-
   @RequestMapping(value = "/credenciais", method=RequestMethod.GET)
   @PreAuthorize("hasPermission(#user, 'consulta_credencial')")
   public String formCredenciais(Model model, @RequestParam("id") Integer id) {

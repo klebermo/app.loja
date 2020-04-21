@@ -12,7 +12,9 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import java.util.List;
+import java.util.Set;
 import org.loja.model.credencial.Credencial;
+import org.loja.model.recovery_password.RecoveryPassword;
 import java.util.Date;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.core.GrantedAuthority;
@@ -50,6 +52,10 @@ public class Usuario extends Model implements UserDetails {
 
   @Column
   private Boolean locked;
+
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name="usuario_recovery", joinColumns={@JoinColumn(name="usuario_id")}, inverseJoinColumns={@JoinColumn(name="recovery_id")})
+  private Set<RecoveryPassword> recoveryPassword;
 
   @Override
   public Integer getId() {
@@ -139,6 +145,14 @@ public class Usuario extends Model implements UserDetails {
     if(locked == null)
       this.locked = false;
     this.locked = locked;
+  }
+
+  public Set<RecoveryPassword> getRecoveryPassword() {
+    return recoveryPassword;
+  }
+
+  public void setRecoveryPassword(Set<RecoveryPassword> recoveryPassword) {
+    this.recoveryPassword = recoveryPassword;
   }
 
   @Override

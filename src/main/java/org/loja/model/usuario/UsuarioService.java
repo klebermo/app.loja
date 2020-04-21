@@ -28,11 +28,6 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     usuarioDao.insert(novo);
   }
 
-  public void recoverPassword(String email) {
-    double x = Math.random();
-    String newPassword = String.valueOf(x).substring(0,4);
-  }
-
   public void toggle_credencial(Integer usuario_id, Integer credencial_id) {
     Usuario usuario = usuarioDao.findBy("id", usuario_id);
     Credencial credencial = credencialDao.findBy("id", credencial_id);
