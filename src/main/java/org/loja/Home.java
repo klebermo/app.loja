@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
@@ -37,9 +38,9 @@ public class Home {
     }
 
     @RequestMapping(value="/install", method=RequestMethod.POST)
-    public String install(@RequestParam("server") String server, @RequestParam("user") String user, @RequestParam("pass") String pass, @RequestParam("admin_user") String admin_user, @RequestParam("admin_pass") String admin_pass, @RequestParam("admin_nome") String admin_nome, @RequestParam("admin_sobrenome") String admin_sobrenome, @RequestParam("admin_email") String admin_email) throws Exception {
+    @ResponseBody
+    public void install(@RequestParam("server") String server, @RequestParam("user") String user, @RequestParam("pass") String pass, @RequestParam("admin_user") String admin_user, @RequestParam("admin_pass") String admin_pass, @RequestParam("admin_nome") String admin_nome, @RequestParam("admin_sobrenome") String admin_sobrenome, @RequestParam("admin_email") String admin_email) throws Exception {
       install.processaInstalacao(server, user, pass, admin_user, admin_pass, admin_nome, admin_sobrenome, admin_email);
-      return "redirect:/";
     }
 
     @RequestMapping("/admin")
