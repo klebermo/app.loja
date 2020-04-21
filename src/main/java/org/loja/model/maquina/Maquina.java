@@ -14,25 +14,25 @@ public class Maquina extends Model {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
 
-  @Column
+  @Column(name="host_name")
   private String hostName;
 
-  @Column
+  @Column(name="unique_id")
   private String uniqueId;
 
   @Column
   private String ram;
 
-  @Column
+  @Column(name="product_name")
   private String productName;
 
-  @Column
+  @Column(name="kernel_type")
   private String kernelType;
 
-  @Column
+  @Column(name="kernel_version")
   private String kernelVersion;
 
-  @Column
+  @Column(name="cpu_arch")
   private String cpuArch;
 
 	/**
