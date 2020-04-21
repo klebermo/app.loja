@@ -28,13 +28,13 @@ public class Pedido extends Model {
   @OrderColumn
   private List<Produto> produtos;
 
-  @Column
+  @Column(name="data_compra")
   private Date dataCompra;
 
-  @Column
+  @Column(name="metodo_pagamento")
   private String metodoPagamento;
 
-  @Column
+  @Column(name="transaction_id")
   private String transactionId;
 
   @Override
