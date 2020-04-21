@@ -44,7 +44,7 @@ public class Usuario extends Model implements UserDetails {
   @JoinTable(name="usuario_credenciais", joinColumns={@JoinColumn(name="usuario_id")}, inverseJoinColumns={@JoinColumn(name="credencial_id")})
   private List<Credencial> credenciais;
 
-  @Column
+  @Column(name="data_expiracao")
   private Date dataExpiracao;
 
   @Column
