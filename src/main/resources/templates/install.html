@@ -2,29 +2,29 @@
 
 <div th:replace="navbar :: copy"></div>
 
-<form role="form" class="form" id="form" th:action="@{install}" method="post">
+<form role="form" class="form" id="form" th:attr="data-destino=@{/}" th:action="@{/install}" method="post">
 
   <h1>Instalação</h1>
 
   <!-- One "tab" for each step in the form: -->
   <div class="tab">Server:
-   <p><input placeholder="Server..." oninput="this.className = 'server'"></p>
-   <p><input placeholder="Username..." oninput="this.className = 'user'"></p>
-   <p><input placeholder="Password..." oninput="this.className = 'pass'"></p>
+   <p><input type="text" name="server" class="form-control" placeholder="Server..."></p>
+   <p><input type="text" name="user" class="form-control" placeholder="Username..."></p>
+   <p><input type="text" name="pass" class="form-control" placeholder="Password..."></p>
   </div>
 
   <div class="tab">Admin:
-   <p><input placeholder="Username..." oninput="this.className = 'admin_user'"></p>
-   <p><input placeholder="Password..." oninput="this.className = 'admin_pass'"></p>
-   <p><input placeholder="Nome..." oninput="this.className = 'admin_nome'"></p>
-   <p><input placeholder="Sobrenome..." oninput="this.className = 'admin_sobrnome'"></p>
-   <p><input placeholder="E-mail..." oninput="this.className = 'admin_email'"></p>
+   <p><input type="text" name="admin_user" class="form-control" placeholder="Username..."></p>
+   <p><input type="text" name="admin_pass" class="form-control" placeholder="Password..."></p>
+   <p><input type="text" name="admin_nome" class="form-control" placeholder="Nome..."></p>
+   <p><input type="text" name="admin_sobrenome" class="form-control" placeholder="Sobrenome..."></p>
+   <p><input type="text" name="admin_email" class="form-control" placeholder="E-mail..."></p>
   </div>
 
   <div class="tab">Conclusão:
     <div class="jumbotron">
       <h1 class="display-4">Instalação concluida com sucesso!</h1>
-      <p class="lead">Todas as informações necessárias para conclur a instalação foram coletadas.</p>
+      <p class="lead">Todas as informações necessárias para concluir a instalação foram coletadas.</p>
       <hr class="my-4">
       <p>Clique em concluir para salvar os dados e começar a usar o sistema.</p>
     </div>
