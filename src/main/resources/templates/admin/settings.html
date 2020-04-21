@@ -9,12 +9,12 @@
         <th:block th:replace="admin/settings/geral :: copy"></th:block>
       </th:block>
 
-      <th:block th:if="${#strings.equals(target, 'idiomas')}">
-        <th:block th:replace="admin/settings/idiomas :: copy"></th:block>
+      <th:block th:if="${#strings.equals(target, 'mail')}">
+        <th:block th:replace="admin/settings/mail :: copy"></th:block>
       </th:block>
 
-      <th:block th:if="${#strings.equals(target, 'email')}">
-        <th:block th:replace="admin/settings/email :: copy"></th:block>
+      <th:block th:if="${#strings.equals(target, 'idiomas')}">
+        <th:block th:replace="admin/settings/idiomas :: copy"></th:block>
       </th:block>
 
       <th:block th:if="${#strings.equals(target, 'paypal')}">
