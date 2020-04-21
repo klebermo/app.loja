@@ -21,41 +21,38 @@ import org.loja.model.maquina.MaquinaService;
 
 @Component
 public class MakeRegistro extends TextWebSocketHandler {
-  @Autowired
-  private RegistroService registroServ;
-
-  @Autowired
-  private UsuarioService usuarioServ;
-
-  @Autowired
-  private ProdutoService produtoServ;
-
-  @Autowired
-  private MaquinaService maquinaServ;
-
 	List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws InterruptedException, IOException {
-		Registro value = new Gson().fromJson(message.getPayload(), Registro.class);
+		RegistroWrapper value = new Gson().fromJson(message.getPayload(), RegistroWrapper.class);
 
-    String email_usuario = value.getUsuario().getEmail();
+    String email_usuario = value.getRegistro().getUsuario().getEmail();
+    UsuarioService usuarioServ = new UsuarioService();
+    org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(usuarioServ);
     Usuario usuario = usuarioServ.findBy("email", email_usuario);
-    value.setUsuario(usuario);
+    value.getRegistro().setUsuario(usuario);
 
-    String nome_produto = value.getProduto().getNome();
+    String nome_produto = value.getRegistro().getProduto().getNome();
+    ProdutoService produtoServ = new ProdutoService();
+    org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(produtoServ);
     Produto produto = produtoServ.findBy("nome", nome_produto);
-    value.setProduto(produto);
+    value.getRegistro().setProduto(produto);
 
-    Maquina maquina = value.getMaquina();
+    Maquina maquina = value.getRegistro().getMaquina();
+    MaquinaService maquinaServ = new MaquinaService();
+    org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(maquinaServ);
     maquinaServ.insert(maquina);
-    value.setMaquina(maquina);
+    value.getRegistro().setMaquina(maquina);
 
     String token = UUID.randomUUID().toString().replaceAll("-", "");
-    value.setToken(token);
+    value.getRegistro().setToken(token);
 
-    registroServ.insert(value);
-    String result = new Gson().toJson(value);
+    RegistroService registroServ = new RegistroService();
+    org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(registroServ);
+    registroServ.insert(value.getRegistro());
+
+    String result = new Gson().toJson(value.getRegistro());
 		session.sendMessage(new TextMessage(result));
 	}
 
