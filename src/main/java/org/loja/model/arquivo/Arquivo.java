@@ -16,7 +16,7 @@ public class Arquivo extends Model implements Serializable {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
 
-  @Column
+  @Column(name="file_name")
   private String fileName;
 
   @Column
