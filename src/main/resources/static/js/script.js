@@ -118,7 +118,7 @@ function add_to_cart(btn) {
   var cliente = btn.dataset.cliente;
   var produto = btn.dataset.produto;
   var url = btn.dataset.url;
-  var url_cart = btn.dataset.cesta;
+  var url_cart = btn.dataset.cart;
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
   xhr.onreadystatechange = function() {
