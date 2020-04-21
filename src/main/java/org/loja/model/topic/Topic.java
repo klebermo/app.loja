@@ -26,7 +26,7 @@ public class Topic extends org.loja.model.Model {
   @Column(length=2097152)
   private String descricao;
 
-  @Column
+  @Column(name="data_publicacao")
   private Date dataPublicacao;
 
   @OneToOne(fetch = FetchType.EAGER)
