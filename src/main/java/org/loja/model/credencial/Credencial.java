@@ -15,6 +15,7 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.ArrayList;
 
 @Entity
 public class Credencial extends Model {
@@ -28,6 +29,16 @@ public class Credencial extends Model {
   @OneToMany(fetch = FetchType.EAGER)
   @Fetch(FetchMode.SELECT)
   private List<Autorizacao> autorizacoes;
+
+  public Credencial() {
+    setNome(null);
+    setAutorizacoes(new ArrayList<Autorizacao>());
+  }
+
+  public Credencial(String nome) {
+    setNome(nome);
+    setAutorizacoes(new ArrayList<Autorizacao>());
+  }
 
   @Override
   public Integer getId() {
