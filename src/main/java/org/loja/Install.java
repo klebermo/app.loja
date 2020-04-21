@@ -119,12 +119,11 @@ public class Install {
       str = str + "spring.datasource.url="+url_prefix+server+"/"+url_suffix+"\n";
       str = str + "spring.datasource.username="+user+"\n";
       str = str + "spring.datasource.password="+pass+"\n";
-      //str = str + "spring.datasource.continue-on-error=true\n";
 
       str = str + "spring.jpa.database-platform="+dialect+"\n";
       str = str + "spring.jpa.dialect="+dialect+"\n";
       str = str + "spring.jpa.show-sql=false\n";
-      //str = str + "spring.jpa.generate-ddl=false\n";
+      str = str + "spring.jpa.hibernate.ddl-auto=validate";
 
       byte[] strToBytes = str.getBytes();
       outputStream.write(strToBytes);
