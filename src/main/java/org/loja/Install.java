@@ -39,18 +39,6 @@ import javax.persistence.Entity;
 
 @Service
 public class Install {
-  @Autowired
-  private UsuarioDao usuarioDao;
-
-  @Autowired
-  private ClienteDao clienteDao;
-
-  @Autowired
-  private CredencialDao credencialDao;
-
-  @Autowired
-  private AutorizacaoDao autorizacaoDao;
-
   String dir_name = new File("").getAbsolutePath();
 
   String file_name = dir_name + File.separator + "application.properties";
@@ -186,6 +174,12 @@ public class Install {
     }
 
   public void preencherDadosIniciais(String server, String user, String pass) {
+    CredencialDao credencialDao = new CredencialDao();
+    org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(credencialDao);
+
+    AutorizacaoDao autorizacaoDao = new AutorizacaoDao();
+    org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(autorizacaoDao);
+
     String [] credenciais = {"usuario", "categoria", "produto", "credencial", "autorizacao", "imagem", "arquivo", "pedido", "pagina", "cliente"};
     for(int i=0; i<credenciais.length; i++) {
       Credencial c = new Credencial(credenciais[i]);
@@ -198,6 +192,7 @@ public class Install {
       }
       credencialDao.update(c);
     }
+
     credencialDao.insert(new Credencial("admin"));
     autorizacaoDao.insert(new Autorizacao("admin"));
     Credencial c1 = credencialDao.findBy("nome", "admin");
@@ -212,6 +207,15 @@ public class Install {
   }
 
   public void criarUsuario(String user, String pass, String nome, String sobrenome, String email) {
+    UsuarioDao usuarioDao = new UsuarioDao();
+    org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(usuarioDao);
+
+    CredencialDao credencialDao = new CredencialDao();
+    org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(credencialDao);
+
+    ClienteDao clienteDao = new ClienteDao();
+    org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteDao);
+
     Usuario novo = new Usuario();
     novo.setUsername(user);
     novo.setPassword(pass);
