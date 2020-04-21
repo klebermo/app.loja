@@ -8,7 +8,6 @@ import javax.persistence.Column;
 import java.util.Date;
 import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
-import javax.persistence.JoinColumn;
 import javax.persistence.FetchType;
 import org.loja.model.usuario.Usuario;
 import org.loja.model.forum.Forum;
@@ -36,7 +35,6 @@ public class Topic extends org.loja.model.Model {
   private Resposta resposta;
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "fk_forum")
   private Forum forum;
 
   @Override
