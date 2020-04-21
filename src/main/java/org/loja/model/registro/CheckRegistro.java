@@ -20,35 +20,32 @@ import org.loja.model.produto.ProdutoService;
 
 @Component
 public class CheckRegistro extends TextWebSocketHandler {
-  @Autowired
-  private RegistroService registroServ;
-
-  @Autowired
-  private UsuarioService usuarioServ;
-
-  @Autowired
-  private ProdutoService produtoServ;
-
-  @Autowired
-  private ClienteService clienteServ;
-
 	List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws InterruptedException, IOException {
-    Registro value = new Gson().fromJson(message.getPayload(), Registro.class);
+    RegistroWrapper value = new Gson().fromJson(message.getPayload(), RegistroWrapper.class);
 
-    String email_usuario = value.getUsuario().getEmail();
+    String email_usuario = value.getRegistro().getUsuario().getEmail();
+    UsuarioService usuarioServ = new UsuarioService();
+    org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(usuarioServ);
     Usuario usuario = usuarioServ.findBy("email", email_usuario);
 
-    String nome_produto = value.getProduto().getNome();
+    String nome_produto = value.getRegistro().getProduto().getNome();
+    ProdutoService produtoServ = new ProdutoService();
+    org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(produtoServ);
     Produto produto = produtoServ.findBy("nome", nome_produto);
 
+    ClienteService clienteServ = new ClienteService();
+    org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
     Cliente cliente = clienteServ.findBy("usuario", usuario);
-    if(cliente.produtosComprados().contains(produto))
-      value = registroServ.findBy("produto", produto);
+    if(cliente != null && cliente.produtosComprados() != null && cliente.produtosComprados().contains(produto)) {
+      RegistroService registroServ = new RegistroService();
+      org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(registroServ);
+      value.setRegistro(registroServ.findBy("produto", produto));
+    }
 
-    String result = new Gson().toJson(value);
+    String result = new Gson().toJson(value.getRegistro());
 		session.sendMessage(new TextMessage(result));
 	}
 
