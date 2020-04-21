@@ -31,10 +31,10 @@ public class Usuario extends Model implements UserDetails {
   @Column
   private String password;
 
-  @Column
+  @Column(name="first_name")
   private String firstName;
 
-  @Column
+  @Column(name="last_name")
   private String lastName;
 
   @Column
