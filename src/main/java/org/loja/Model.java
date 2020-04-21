@@ -2,6 +2,7 @@ package org.loja;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.ArrayList;
 import org.springframework.core.io.Resource;
@@ -24,7 +25,6 @@ import org.loja.settings.idiomas.Idiomas;
 import org.loja.settings.paypal.Paypal;
 import org.loja.settings.mercadopago.MercadoPago;
 import org.loja.settings.pagseguro.PagSeguro;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.loja.model.categoria.CategoriaService;
 import org.loja.model.produto.ProdutoService;
 import org.loja.model.pagina.PaginaService;
