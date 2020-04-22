@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
+import java.util.List;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("usuario")
@@ -37,6 +39,8 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   @PreAuthorize("hasPermission(#user, 'consulta_credencial')")
   public String formCredenciais(Model model, @RequestParam("id") Integer id) {
     model.addAttribute("command", this.serv.findBy("id", id));
+    model.addAttribute("credenciais", credenciais());
+    model.addAttribute("autorizacoes", autorizacoes());
     return "admin/form/credenciais";
   }
 
@@ -44,5 +48,29 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   @ResponseBody
   public void toggle_credencial(@RequestParam("usuario_id") Integer usuario_id, @RequestParam("credencial_id") Integer credencial_id) {
     this.serv.toggle_credencial(usuario_id, credencial_id);
+  }
+
+  public List<org.loja.model.credencial.Credencial> credenciais() {
+    List result;
+    try {
+      org.loja.model.credencial.CredencialService credencialServ = new org.loja.model.credencial.CredencialService();
+      org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(credencialServ);
+      result = credencialServ.select();
+    } catch (Exception e) {
+      result = new ArrayList<org.loja.model.credencial.Credencial>();
+    }
+    return result;
+  }
+
+  public List<org.loja.model.autorizacao.Autorizacao> autorizacoes() {
+    List result;
+    try {
+      org.loja.model.autorizacao.AutorizacaoService autorizacaoServ = new org.loja.model.autorizacao.AutorizacaoService();
+      org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(autorizacaoServ);
+      result = autorizacaoServ.select();
+    } catch (Exception e) {
+      result = new ArrayList<org.loja.model.autorizacao.Autorizacao>();
+    }
+    return result;
   }
 }
