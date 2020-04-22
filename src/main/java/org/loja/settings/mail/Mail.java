@@ -3,7 +3,7 @@ package org.loja.settings.mail;
 public class Mail extends org.loja.settings.Model {
   private String host;
 
-  private String port;
+  private Integer port;
 
   private String username;
 
@@ -15,7 +15,7 @@ public class Mail extends org.loja.settings.Model {
 	public Mail() {
 		super();
     this.host = "...";
-    this.port = "...";
+    this.port = 0;
     this.username = "...";
     this.password = "...";
 	}
@@ -23,7 +23,7 @@ public class Mail extends org.loja.settings.Model {
 	/**
 	* Default Mail constructor
 	*/
-	public Mail(String host, String port, String username, String password) {
+	public Mail(String host, Integer port, String username, String password) {
 		super();
 		this.host = host;
 		this.port = port;
@@ -51,7 +51,7 @@ public class Mail extends org.loja.settings.Model {
 	* Returns value of port
 	* @return
 	*/
-	public String getPort() {
+	public Integer getPort() {
 		return port;
 	}
 
@@ -59,7 +59,7 @@ public class Mail extends org.loja.settings.Model {
 	* Sets new value of port
 	* @param
 	*/
-	public void setPort(String port) {
+	public void setPort(Integer port) {
 		this.port = port;
 	}
 
