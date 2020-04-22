@@ -32,7 +32,7 @@
         <div class="form-group">
           <select th:field="*{listaDeIdiomas}" multiple="multiple" size="15" class="form-control" id="selectRight">
             <th:block th:if="${command.listaDeIdiomas}">
-              <option th:each="option : ${lista_de_idiomas}" th:if="${#lists.contains(command.listaDeIdiomas, option)}" th:value="${option}" th:text="${option}"><option>
+              <option th:each="option : ${lista_de_idiomas}" th:if="${#lists.contains(command.listaDeIdiomas, option)}" th:value="${option}" th:text="${option}"></option>
             </th:block>
           </select>
         </div>

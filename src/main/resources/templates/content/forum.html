@@ -4,10 +4,15 @@
     <div class="media-body">
       <th:block th:each="produto : ${produtos}" th:if="${produto.forum.id == forum.id}">
         <h5 class="mt-0">Suporte ao produto <u th:text="${produto.nome}"></u></h5>
-        <th:block th:if="${#lists.contains(cliente.produtosComprados(), produto)}">
-          <a th:href="@{/topic/new?forum=__${forum.id}__}" class="btn btn-dark">Novo tópico</a> <a th:href="@{/produto/__${produto.nome}__}" class="btn btn-primary">Voltar</a>
+        <th:block sec:authorize="isAuthenticated()">
+          <th:block th:if="${#lists.contains(cliente.produtosComprados(), produto)}">
+            <a th:href="@{/topic/new?forum=__${forum.id}__}" class="btn btn-dark">Novo tópico</a> <a th:href="@{/produto/__${produto.nome}__}" class="btn btn-primary">Voltar</a>
+          </th:block>
+          <th:block th:unless="${#lists.contains(cliente.produtosComprados(), produto)}">
+            <span>Criação de novos tópicos exclusivo para usuário da versão Pro deste produto</span> <a th:href="@{/produto/__${produto.nome}__}" class="btn btn-primary">Voltar</a>
+          </th:block>
         </th:block>
-        <th:block th:unless="${#lists.contains(cliente.produtosComprados(), produto)}">
+        <th:block sec:authorize="isAnonymous()">
           <span>Criação de novos tópicos exclusivo para usuário da versão Pro deste produto</span> <a th:href="@{/produto/__${produto.nome}__}" class="btn btn-primary">Voltar</a>
         </th:block>
       </th:block>
