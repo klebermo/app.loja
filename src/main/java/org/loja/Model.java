@@ -2,132 +2,51 @@ package org.loja;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.loja.model.cliente.Cliente;
+import org.loja.model.cliente.ClienteService;
+import org.loja.model.usuario.Usuario;
+import org.loja.model.usuario.UsuarioService;
 import java.util.List;
 import java.util.ArrayList;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ClassPathResource;
-import java.io.InputStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import org.loja.model.categoria.Categoria;
-import org.loja.model.produto.Produto;
-import org.loja.model.pagina.Pagina;
-import org.loja.model.pedido.Pedido;
-import org.loja.model.cliente.Cliente;
-import org.loja.model.usuario.Usuario;
-import org.loja.model.credencial.Credencial;
-import org.loja.model.autorizacao.Autorizacao;
-import org.loja.settings.geral.Geral;
-import org.loja.settings.idiomas.Idiomas;
-import org.loja.settings.paypal.Paypal;
-import org.loja.settings.mercadopago.MercadoPago;
-import org.loja.settings.pagseguro.PagSeguro;
-import org.loja.model.categoria.CategoriaService;
-import org.loja.model.produto.ProdutoService;
-import org.loja.model.pagina.PaginaService;
-import org.loja.model.pedido.PedidoService;
-import org.loja.model.cliente.ClienteService;
-import org.loja.model.usuario.UsuarioService;
-import org.loja.model.credencial.CredencialService;
-import org.loja.model.autorizacao.AutorizacaoService;
-import org.loja.settings.geral.GeralService;
-import org.loja.settings.idiomas.IdiomasService;
-import org.loja.settings.paypal.PaypalService;
-import org.loja.settings.mercadopago.MercadoPagoService;
-import org.loja.settings.pagseguro.PagSeguroService;
-import org.springframework.security.core.context.SecurityContextHolder;
-import com.mercadopago.resources.Preference;
-import com.mercadopago.exceptions.MPException;
-import org.loja.model.topic.TopicService;
-import org.loja.model.topic.Topic;
 
 @ControllerAdvice
 public class Model {
-  @Autowired
-  private CategoriaService categoria;
-
-  @Autowired
-  private ProdutoService produto;
-
-  @Autowired
-  private PaginaService pagina;
-
-  @Autowired
-  private PedidoService pedido;
-
-  @Autowired
-  private ClienteService cliente;
-
-  @Autowired
-  private UsuarioService usuario;
-
-  @Autowired
-  private CredencialService credencial;
-
-  @Autowired
-  private AutorizacaoService autorizacao;
-
-  @Autowired
-  private GeralService geral;
-
-  @Autowired
-  private IdiomasService idiomas;
-
-  @Autowired
-  private PaypalService paypal;
-
-  @Autowired
-  private MercadoPagoService mercadoPago;
-
-  @Autowired
-  private TopicService topico;
-
-  @Autowired
-  private PagSeguroService pagSeguro;
-
   @ModelAttribute("categorias")
-  public List<Categoria> categorias() {
+  public List<org.loja.model.categoria.Categoria> categorias() {
     List result;
     try {
-      result = categoria.select();
+      org.loja.model.categoria.CategoriaService categoriaServ = new org.loja.model.categoria.CategoriaService();
+      AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(categoriaServ);
+      result = categoriaServ.select();
     } catch (Exception e) {
-      result = new ArrayList<Categoria>();
+      result = new ArrayList<org.loja.model.categoria.Categoria>();
     }
     return result;
   }
 
   @ModelAttribute("produtos")
-  public List<Produto> produtos() {
+  public List<org.loja.model.produto.Produto> produtos() {
     List result;
     try {
-      result = produto.select();
+      org.loja.model.produto.ProdutoService produtoServ = new org.loja.model.produto.ProdutoService();
+      AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(produtoServ);
+      result = produtoServ.select();
     } catch (Exception e) {
-      result = new ArrayList<Produto>();
+      result = new ArrayList<org.loja.model.produto.Produto>();
     }
     return result;
   }
 
   @ModelAttribute("paginas")
-  public List<Pagina> paginas() {
+  public List<org.loja.model.pagina.Pagina> paginas() {
     List result;
     try {
-      result = pagina.select();
+      org.loja.model.pagina.PaginaService paginaServ = new org.loja.model.pagina.PaginaService();
+      AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(paginaServ);
+      result = paginaServ.select();
     } catch (Exception e) {
-      result = new ArrayList<Pagina>();
-    }
-    return result;
-  }
-
-  @ModelAttribute("pedidos")
-  public List<Pedido> pedidos() {
-    List result;
-    try {
-      result = pedido.select();
-    } catch (Exception e) {
-      result = new ArrayList<Pedido>();
+      result = new ArrayList<org.loja.model.pagina.Pagina>();
     }
     return result;
   }
@@ -136,7 +55,9 @@ public class Model {
   public Cliente cliente() {
     Cliente result;
     try {
-      result = cliente.findBy("usuario", usuario());
+      ClienteService clienteServ = new ClienteService();
+      AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
+      result = clienteServ.findBy("usuario", usuario());
     } catch (Exception e) {
       result = new Cliente();
     }
@@ -147,118 +68,50 @@ public class Model {
   public Usuario usuario() {
     Usuario result;
     try {
-      result = usuario.findBy("username", SecurityContextHolder.getContext().getAuthentication().getName());
+      UsuarioService usuarioServ = new UsuarioService();
+      AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(usuarioServ);
+      result = usuarioServ.findBy("username", SecurityContextHolder.getContext().getAuthentication().getName());
     } catch (Exception e) {
       result = new Usuario();
     }
     return result;
   }
 
-  @ModelAttribute("clientes")
-  public List<Cliente> clientes() {
-    List result;
-    try {
-      result = cliente.select();
-    } catch (Exception e) {
-      result = new ArrayList<Cliente>();
-    }
-    return result;
-  }
-
-  @ModelAttribute("usuarios")
-  public List<Usuario> usuarios() {
-    List result;
-    try {
-      result = usuario.select();
-    } catch (Exception e) {
-      result = new ArrayList<Usuario>();
-    }
-    return result;
-  }
-
-  @ModelAttribute("credenciais")
-  public List<Credencial> credenciais() {
-    List result;
-    try {
-      result = credencial.select();
-    } catch (Exception e) {
-      result = new ArrayList<Credencial>();
-    }
-    return result;
-  }
-
-  @ModelAttribute("autorizacoes")
-  public List<Autorizacao> autorizacoes() {
-    List result;
-    try {
-      result = autorizacao.select();
-    } catch (Exception e) {
-      result = new ArrayList<Autorizacao>();
-    }
-    return result;
-  }
-
   @ModelAttribute("geral")
-  public Geral geral() {
-    return geral.get();
+  public org.loja.settings.geral.Geral geral() {
+    org.loja.settings.geral.Geral result;
+    try {
+      org.loja.settings.geral.GeralService geralServ = new org.loja.settings.geral.GeralService();
+      AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(geralServ);
+      result = geralServ.get();
+    } catch (Exception e) {
+      result = new org.loja.settings.geral.Geral();
+    }
+    return result;
   }
 
-  @ModelAttribute("idiomas")
-  public Idiomas idiomas() {
-    return idiomas.get();
-  }
-
-  @ModelAttribute("paypal")
-  public Paypal paypal() {
-    return paypal.get();
-  }
-
-  @ModelAttribute("mercadoPago")
-  public MercadoPago mercadoPago() {
-    return mercadoPago.get();
-  }
-
-  @ModelAttribute("mercadoPagoPreference")
-  public Preference mercadoPagoPreference() throws MPException {
-    Cliente u = cliente();
-    if(u!= null && u.getCesta() != null && !u.getCesta().getProdutos().isEmpty())
-      return mercadoPago.preference(u);
-    else
-      return null;
-  }
-
-  @ModelAttribute("pagSeguro")
-  public PagSeguro pagSeguro() {
-    return pagSeguro.get();
+  @ModelAttribute("idiomas_selecionados")
+  public List<String> idiomas_selecionados() {
+    org.loja.settings.idiomas.Idiomas result;
+    try {
+      org.loja.settings.idiomas.IdiomasService idiomasServ = new org.loja.settings.idiomas.IdiomasService();
+      AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(idiomasServ);
+      result = idiomasServ.get();
+    } catch (Exception e) {
+      result = new org.loja.settings.idiomas.Idiomas();
+    }
+    return result.getListaDeIdiomas();
   }
 
   @ModelAttribute("lista_de_idiomas")
-  public List<String> lista_de_idiomas() throws IOException, UnsupportedEncodingException {
+  public List<String> lista_de_idiomas() throws Exception {
     List<String> lista = new ArrayList<String>();
-    Resource resource = new ClassPathResource("idiomas.list");
-    InputStream input = resource.getInputStream();
-    BufferedReader br = new BufferedReader(new InputStreamReader(input, "UTF-8"));
+    org.springframework.core.io.Resource resource = new org.springframework.core.io.ClassPathResource("idiomas.list");
+    java.io.InputStream input = resource.getInputStream();
+    java.io.BufferedReader br = new java.io.BufferedReader(new java.io.InputStreamReader(input, "UTF-8"));
     String line;
     while ((line = br.readLine()) != null)
       lista.add(line);
     return lista;
-  }
-
-  @ModelAttribute("unread")
-  public List<Topic> unread() {
-    List<Topic> result = new ArrayList<Topic>();
-
-    List<Topic> lista;
-    try {
-      lista = topico.select();
-    } catch (Exception e) {
-      lista = new ArrayList<Topic>();
-    }
-
-    for(Topic t : lista)
-      if(t.getResposta() == null)
-        result.add(t);
-
-    return result;
   }
 }
