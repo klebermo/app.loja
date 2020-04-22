@@ -90,52 +90,112 @@ public class Model {
 
   @ModelAttribute("categorias")
   public List<Categoria> categorias() {
-    return categoria.select();
+    List result;
+    try {
+      result = categoria.select();
+    } catch (Exception e) {
+      result = new ArrayList<Categoria>();
+    }
+    return result;
   }
 
   @ModelAttribute("produtos")
   public List<Produto> produtos() {
-    return produto.select();
+    List result;
+    try {
+      result = produto.select();
+    } catch (Exception e) {
+      result = new ArrayList<Produto>();
+    }
+    return result;
   }
 
   @ModelAttribute("paginas")
   public List<Pagina> paginas() {
-    return pagina.select();
+    List result;
+    try {
+      result = pagina.select();
+    } catch (Exception e) {
+      result = new ArrayList<Pagina>();
+    }
+    return result;
   }
 
   @ModelAttribute("pedidos")
   public List<Pedido> pedidos() {
-    return pedido.select();
+    List result;
+    try {
+      result = pedido.select();
+    } catch (Exception e) {
+      result = new ArrayList<Pedido>();
+    }
+    return result;
   }
 
   @ModelAttribute("cliente")
   public Cliente cliente() {
-    return cliente.findBy("usuario", usuario());
+    Cliente result;
+    try {
+      result = cliente.findBy("usuario", usuario());
+    } catch (Exception e) {
+      result = new Cliente();
+    }
+    return result;
   }
 
   @ModelAttribute("usuario")
   public Usuario usuario() {
-    return usuario.findBy("username", SecurityContextHolder.getContext().getAuthentication().getName());
+    Usuario result;
+    try {
+      result = usuario.findBy("username", SecurityContextHolder.getContext().getAuthentication().getName());
+    } catch (Exception e) {
+      result = new Usuario();
+    }
+    return result;
   }
 
   @ModelAttribute("clientes")
   public List<Cliente> clientes() {
-    return cliente.select();
+    List result;
+    try {
+      result = cliente.select();
+    } catch (Exception e) {
+      result = new ArrayList<Cliente>();
+    }
+    return result;
   }
 
   @ModelAttribute("usuarios")
   public List<Usuario> usuarios() {
-    return usuario.select();
+    List result;
+    try {
+      result = usuario.select();
+    } catch (Exception e) {
+      result = new ArrayList<Usuario>();
+    }
+    return result;
   }
 
   @ModelAttribute("credenciais")
   public List<Credencial> credenciais() {
-    return credencial.select();
+    List result;
+    try {
+      result = credencial.select();
+    } catch (Exception e) {
+      result = new ArrayList<Credencial>();
+    }
+    return result;
   }
 
   @ModelAttribute("autorizacoes")
   public List<Autorizacao> autorizacoes() {
-    return autorizacao.select();
+    List result;
+    try {
+      result = autorizacao.select();
+    } catch (Exception e) {
+      result = new ArrayList<Autorizacao>();
+    }
+    return result;
   }
 
   @ModelAttribute("geral")
@@ -188,7 +248,13 @@ public class Model {
   public List<Topic> unread() {
     List<Topic> result = new ArrayList<Topic>();
 
-    List<Topic> lista = topico.select();
+    List<Topic> lista;
+    try {
+      lista = topico.select();
+    } catch (Exception e) {
+      lista = new ArrayList<Topic>();
+    }
+
     for(Topic t : lista)
       if(t.getResposta() == null)
         result.add(t);
