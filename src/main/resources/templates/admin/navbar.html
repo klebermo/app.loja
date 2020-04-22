@@ -12,7 +12,7 @@
       <ul class="navbar-nav justify-content-end">
         <li class="nav-item">
           <a class="nav-link" th:href="@{/messages}">
-            <i class="far fa-envelope"></i> <span class="badge badge-secondary" id="message_count" th:text="${#lists.size(unread)}"></span>
+            <i class="far fa-envelope"></i> <span class="badge badge-secondary" th:attr="data-url=@{/message_count}" id="message_count"></span>
           </a>
         </li>
 

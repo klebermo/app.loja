@@ -3,13 +3,13 @@
     <div class="row">
       <div class="col-9">
         <ul class="nav nav-tabs" id="resumo_e_descricao" role="tablist">
-          <li th:each="idioma,stat : ${idiomas.listaDeIdiomas}" class="nav-item">
+          <li th:each="idioma,stat : ${idiomas_selecionados}" class="nav-item">
             <a th:class="${stat.index == 0}? 'nav-link active' : 'nav-link'" th:id="${#strings.substringBefore(idioma,',') + '-tab'}" data-toggle="tab" th:href="${'#' + #strings.substringBefore(idioma,',')}" role="tab" th:attr="aria-controls=${#strings.substringBefore(idioma,',')}" aria-selected="true" th:text="${#strings.substringBefore(idioma,' ')}"></a>
           </li>
         </ul>
 
         <div class="tab-content">
-          <div th:each="idioma,stat : ${idiomas.listaDeIdiomas}" th:class="${stat.index == 0}? 'tab-pane active' : 'tab-pane'" th:id="${#strings.substringBefore(idioma,',')}" role="tabpanel" th:attr="aria-labelledby=${#strings.substringBefore(idioma,',') + '-tab'}">
+          <div th:each="idioma,stat : ${idiomas_selecionados}" th:class="${stat.index == 0}? 'tab-pane active' : 'tab-pane'" th:id="${#strings.substringBefore(idioma,',')}" role="tabpanel" th:attr="aria-labelledby=${#strings.substringBefore(idioma,',') + '-tab'}">
             <div class="form-group">
               <label for="titulo">Titulo</label>
               <input type="hidden" th:name="${'titulo[' + stat.index + '].id'}" th:each="value : ${command.titulo}" th:if="${#strings.equals(value.idioma, idioma)}" th:value="${value.id}"/>

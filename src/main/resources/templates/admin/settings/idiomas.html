@@ -4,15 +4,16 @@
       <div class="col-5">
         <div class="form-group">
           <select multiple="multiple" size="15" class="form-control" id="selectLeft">
-            <th:block th:if="${idiomas.listaDeIdiomas}">
-              <option th:each="option : ${lista_de_idiomas}" th:unless="${#lists.contains(idiomas.listaDeIdiomas, option)}" th:value="${option}" th:text="${option}"><option>
+            <th:block th:if="${command.listaDeIdiomas}">
+              <option th:each="option : ${lista_de_idiomas}" th:unless="${#lists.contains(command.listaDeIdiomas, option)}" th:value="${option}" th:text="${option}"><option>
             </th:block>
-            <th:block th:unless="${idiomas.listaDeIdiomas}">
+            <th:block th:unless="${command.listaDeIdiomas}">
               <option th:each="option : ${lista_de_idiomas}" th:value="${option}" th:text="${option}"><option>
             </th:block>
           </select>
         </div>
       </div>
+
       <div class="col-2">
         <p>
           <button type="button" class="btn btn-dark" id="right" onclick="move_right();">
@@ -26,11 +27,12 @@
           </button>
         </p>
       </div>
+
       <div class="col-5">
         <div class="form-group">
           <select th:field="*{listaDeIdiomas}" multiple="multiple" size="15" class="form-control" id="selectRight">
-            <th:block th:if="${idiomas.listaDeIdiomas}">
-              <option th:each="option : ${lista_de_idiomas}" th:if="${#lists.contains(idiomas.listaDeIdiomas, option)}" th:value="${option}" th:text="${option}"><option>
+            <th:block th:if="${command.listaDeIdiomas}">
+              <option th:each="option : ${lista_de_idiomas}" th:if="${#lists.contains(command.listaDeIdiomas, option)}" th:value="${option}" th:text="${option}"><option>
             </th:block>
           </select>
         </div>
