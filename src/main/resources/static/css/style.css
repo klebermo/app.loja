@@ -8,7 +8,11 @@ body {
 .navbar {
   z-index: 0;
 }
+.navbar-nav {
+  margin-left: 240px;
+}
 .list-group {
+  position: fixed;
   margin-top: -128px;
   width: 180px;
 }
