@@ -53,7 +53,30 @@ public class Home {
     @RequestMapping("/messages")
     @PreAuthorize("hasPermission(#user, 'admin')")
     public String messages(Model model) {
+      java.util.List<org.loja.model.topic.Topic> result = new java.util.ArrayList<org.loja.model.topic.Topic>();
+
+      org.loja.model.topic.TopicService topicServ = new org.loja.model.topic.TopicService();
+      AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(topicServ);
+      java.util.List<org.loja.model.topic.Topic> lista = topicServ.select();
+
+      for(org.loja.model.topic.Topic t : lista)
+        if(t.getResposta() == null)
+          result.add(t);
+
       model.addAttribute("messages", "messages");
+      model.addAttribute("unread", result);
       return "admin/index";
+    }
+
+    @RequestMapping("/message_count")
+    @ResponseBody
+    public Integer message_count() {
+      java.util.List<org.loja.model.topic.Topic> result = new java.util.ArrayList<org.loja.model.topic.Topic>();
+
+      org.loja.model.topic.TopicService topicServ = new org.loja.model.topic.TopicService();
+      AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(topicServ);
+      java.util.List<org.loja.model.topic.Topic> lista = topicServ.select();
+
+      return lista.size();
     }
 }
