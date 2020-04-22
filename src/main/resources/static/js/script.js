@@ -124,7 +124,7 @@ function add_to_cart(btn) {
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
       update_cart();
-      document.location.href =  url_cart;
+      document.location.href =  url_cart + '?cliente=' + cliente;
     }
   };
   var formData = new FormData();
