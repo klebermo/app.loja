@@ -146,7 +146,6 @@ public class Install {
     StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
     .applySetting("hibernate.hbm2ddl.auto", "create")
     .applySetting("hibernate.dialect", dialect)
-    .applySetting("hibernate.id.new_generator_mappings", "true")
     .applySetting("javax.persistence.schema-generation-connection", conn)
     .build();
 
