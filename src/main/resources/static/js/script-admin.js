@@ -1,5 +1,20 @@
 var size = 0;
 
+function load_message_count() {
+  var message_count = document.getElementById("message_count");
+  var url = message_count.dataset.url;
+
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("GET", url, true);
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var count = this.responseText;
+      message_count.innerText = count;
+    }
+  }
+  xmlhttp.send();
+}
+
 function getItemPorPagina() {
   var porPagina = document.getElementById("itemPorPagina");
   return porPagina.querySelector(".active").innerText;
