@@ -2,6 +2,7 @@ package org.loja.model.cesta;
 
 import org.loja.model.Model;
 import java.util.List;
+import java.util.ArrayList;
 import org.loja.model.produto.Produto;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -23,6 +24,23 @@ public class Cesta extends Model {
   @JoinTable(name="cesta_produtos", joinColumns={@JoinColumn(name="cesta_id")}, inverseJoinColumns={@JoinColumn(name="produto_id")})
   @OrderColumn
   private List<Produto> produtos;
+
+  /**
+	* Default empty Cesta constructor
+	*/
+	public Cesta() {
+		super();
+    setProdutos(new ArrayList<Produto>());
+	}
+
+	/**
+	* Default Cesta constructor
+	*/
+	public Cesta(Integer id, List<Produto> produtos) {
+		super();
+		this.id = id;
+		this.produtos = produtos;
+	}
 
   @Override
   public Integer getId() {
