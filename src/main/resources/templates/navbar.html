@@ -24,7 +24,7 @@
         <a class="nav-link" th:href="@{/usuario/register}">Cadastro</a>
       </li>
 
-      <li class="nav-item" sec:authorize="isAuthenticated()">
+      <li class="nav-item">
         <a class="nav-link" th:href="@{/cart/index?cliente=__${cliente.id}__}" th:if=" ${usuario}">
           <table>
             <tr>
