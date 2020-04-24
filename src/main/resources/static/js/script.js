@@ -41,7 +41,6 @@ function update_cart() {
 
   var promise1 = new Promise(function(resolve, reject) {
     if(cart_size !== null) {
-      var cliente = cart_size.dataset.cliente;
       var url = cart_size.dataset.url;
 
       var xhr = new XMLHttpRequest();
@@ -52,14 +51,12 @@ function update_cart() {
         }
       };
       var formData = new FormData();
-      formData.append("cliente", cliente);
       xhr.send(formData);
     }
   });
 
   var promise2 = new Promise(function(resolve, reject) {
     if(cart_total !== null) {
-      var cliente = cart_total.dataset.cliente;
       var url = cart_total.dataset.url;
 
       var xhr = new XMLHttpRequest();
@@ -70,7 +67,6 @@ function update_cart() {
         }
       };
       var formData = new FormData();
-      formData.append("cliente", cliente);
       xhr.send(formData);
     }
   });
