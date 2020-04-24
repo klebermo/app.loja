@@ -134,7 +134,6 @@ function add_to_cart(btn) {
 }
 
 function remove_from_cart(btn) {
-  var cliente = btn.dataset.cliente;
   var produto = btn.dataset.produto;
   var url = btn.dataset.url;
 
@@ -149,7 +148,6 @@ function remove_from_cart(btn) {
   };
 
   var formData = new FormData();
-  formData.append('cliente', cliente);
   formData.append('produto', produto);
   xhr.send(formData);
 }
