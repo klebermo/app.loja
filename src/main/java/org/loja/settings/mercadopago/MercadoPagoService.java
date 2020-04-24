@@ -2,37 +2,49 @@ package org.loja.settings.mercadopago;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.loja.model.cliente.Cliente;
+import org.loja.model.cliente.ClienteDao;
+import org.loja.model.cesta.Cesta;
+import org.loja.model.cesta.CestaDao;
+import org.loja.model.pedido.Pedido;
+import org.loja.model.pedido.PedidoDao;
+import org.loja.model.titulo.Titulo;
+import org.loja.model.produto.Produto;
 import com.mercadopago.resources.Preference;
+import com.mercadopago.resources.Preference.AutoReturn;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.exceptions.MPConfException;
 import com.mercadopago.resources.datastructures.preference.Payer;
 import com.mercadopago.resources.datastructures.preference.Item;
 import com.mercadopago.resources.datastructures.preference.BackUrls;
-
-import org.loja.model.titulo.Titulo;
-import org.loja.model.cliente.Cliente;
-import org.loja.model.produto.Produto;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 @Service
 public class MercadoPagoService extends org.loja.settings.Service<MercadoPago> {
   @Autowired
+  private ClienteDao clienteDao;
+
+  @Autowired
+  private CestaDao cestaDao;
+
+  @Autowired
+  private PedidoDao pedidoDao;
+
+  @Autowired
   private HttpServletRequest httpServletRequest;
+
+  private Map<String, String> map = new HashMap<String, String>();
 
   public MercadoPagoService() {
     super(MercadoPago.class);
   }
 
   public String checkout(Integer cliente_id) {
-    return create_order(cliente_id, UUID.randomUUID().toString());
-  }
-
-  public String create_order(Integer cliente_id, String transaction_id) {
-    Cliente cliente = (Cliente) this.clienteDao.findBy("id", cliente_id);
-    return "/order/" + create_order(cliente, clazz.getSimpleName(), transaction_id);
+    return create_order(UUID.randomUUID().toString().replaceAll("-", ""));
   }
 
   public Preference preference(Cliente cliente) throws  MPException, MPConfException {
@@ -44,6 +56,10 @@ public class MercadoPagoService extends org.loja.settings.Service<MercadoPago> {
     Payer payer = new Payer();
     payer.setEmail(cliente.getUsuario().getEmail());
     preference.setPayer(payer);
+    preference.setAutoReturn(AutoReturn.approved);
+
+    BackUrls backUrls = new BackUrls("https://localhost:8080/process_order", "http://localhost:8080/process_order", "http://localhost:8080/cart");
+    preference.setBackUrls(backUrls);
 
     if(cliente.getCesta() != null)
       for(Produto p : cliente.getCesta().getProdutos()) {
@@ -55,7 +71,38 @@ public class MercadoPagoService extends org.loja.settings.Service<MercadoPago> {
       }
 
     preference.save();
+    map.put("cliente_id", cliente.getId().toString());
 
     return preference;
+  }
+
+  public String create_order(String transaction_id) {
+    Integer cliente_id = Integer.valueOf(map.get("cliente_id"));
+    Cliente cliente = clienteDao.findBy("id", cliente_id);
+
+    Pedido pedido = new Pedido();
+    pedidoDao.insert(pedido);
+
+    pedido.setProdutos(new ArrayList<Produto>());
+    Cesta cesta = cliente.getCesta();
+    pedido.getProdutos().addAll(cesta.getProdutos());
+    cesta.getProdutos().clear();
+    cestaDao.update(cesta);
+
+    pedido.setDataCompra(new java.util.Date());
+    pedido.setMetodoPagamento(clazz.getSimpleName());
+    pedido.setTransactionId(transaction_id);
+    pedidoDao.update(pedido);
+
+    if(cliente.getPedidos() == null) {
+      cliente.setPedidos(new ArrayList<Pedido>());
+      cliente.getPedidos().add(pedido);
+      clienteDao.update(cliente);
+    } else {
+      cliente.getPedidos().add(pedido);
+      clienteDao.update(cliente);
+    }
+
+    return "/pedido/" + pedido.getId().toString();
   }
 }

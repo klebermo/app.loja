@@ -23,6 +23,6 @@ public class MercadoPagoController extends org.loja.settings.Controller<MercadoP
 
   @RequestMapping(value = "/process_order", method=RequestMethod.GET)
   public String process_order(@RequestParam("cliente_id") Integer cliente_id, @RequestParam("transaction_id") String transaction_id) {
-    return "redirect:"+this.serv.create_order(cliente_id, transaction_id);
+    return "redirect:"+this.serv.create_order(transaction_id);
   }
 }
