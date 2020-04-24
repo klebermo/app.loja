@@ -54,16 +54,13 @@ public class Model {
   @ModelAttribute("cliente")
   public Cliente cliente() {
     Cliente result;
-    try {
+    Usuario u = usuario();
+    if(u == null) {
+      result = new Cliente();
+    } else {
       ClienteService clienteServ = new ClienteService();
       AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
       result = clienteServ.findBy("usuario", usuario());
-    } catch (Exception e) {
-      result = new Cliente();
-      result.setId(-1);
-      result.setUsuario(new Usuario());
-      result.setCesta(new org.loja.model.cesta.Cesta());
-      result.setPedidos(new ArrayList<org.loja.model.pedido.Pedido>());
     }
     return result;
   }
@@ -71,12 +68,13 @@ public class Model {
   @ModelAttribute("usuario")
   public Usuario usuario() {
     Usuario result;
-    try {
+    String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    if(username == null) {
+      result = new Usuario();
+    } else {
       UsuarioService usuarioServ = new UsuarioService();
       AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(usuarioServ);
-      result = usuarioServ.findBy("username", SecurityContextHolder.getContext().getAuthentication().getName());
-    } catch (Exception e) {
-      result = new Usuario();
+      result = usuarioServ.findBy("username", username);
     }
     return result;
   }
