@@ -23,13 +23,8 @@ public class Registro extends Model{
   private String token;
 
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  private Usuario usuario;
-
-  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  private Produto produto;
-
-  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   private Maquina maquina;
+
 
 	/**
 	* Default empty Registro constructor
@@ -41,12 +36,10 @@ public class Registro extends Model{
 	/**
 	* Default Registro constructor
 	*/
-	public Registro(Integer id, String token, Usuario usuario, Produto produto, Maquina maquina) {
+	public Registro(Integer id, String token, Maquina maquina) {
 		super();
 		this.id = id;
 		this.token = token;
-		this.usuario = usuario;
-		this.produto = produto;
 		this.maquina = maquina;
 	}
 
@@ -83,38 +76,6 @@ public class Registro extends Model{
 	}
 
 	/**
-	* Returns value of usuario
-	* @return
-	*/
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	/**
-	* Sets new value of usuario
-	* @param
-	*/
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	/**
-	* Returns value of produto
-	* @return
-	*/
-	public Produto getProduto() {
-		return produto;
-	}
-
-	/**
-	* Sets new value of produto
-	* @param
-	*/
-	public void setProduto(Produto produto) {
-		this.produto = produto;
-	}
-
-	/**
 	* Returns value of maquina
 	* @return
 	*/
@@ -136,6 +97,6 @@ public class Registro extends Model{
 	*/
 	@Override
 	public String toString() {
-		return "Registro [id=" + id + ", token=" + token + ", usuario=" + usuario + ", produto=" + produto + ", maquina=" + maquina + "]";
+		return "Registro [id=" + id + ", token=" + token + ", maquina=" + maquina + "]";
 	}
 }
