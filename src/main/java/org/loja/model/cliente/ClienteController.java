@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,26 +24,26 @@ public class ClienteController extends org.loja.model.Controller<Cliente> {
 
   @RequestMapping(value = "/cart_size", method=RequestMethod.POST)
   @ResponseBody
-  public Integer cart_size(@RequestParam("cliente") Integer cliente_id) {
-    return this.serv.cart_size(cliente_id);
+  public Integer cart_size(@ModelAttribute("cliente") Cliente cliente) {
+    return this.serv.cart_size(cliente);
   }
 
   @RequestMapping(value = "/cart_total", method=RequestMethod.POST)
   @ResponseBody
-  public Float cart_total(@RequestParam("cliente") Integer cliente_id) {
-    return this.serv.cart_total(cliente_id);
+  public Float cart_total(@ModelAttribute("cliente") Cliente cliente) {
+    return this.serv.cart_total(cliente);
   }
 
   @RequestMapping(value = "/add_to_cart", method=RequestMethod.POST)
   @ResponseBody
-  public void add_to_cart(@RequestParam("cliente") Integer cliente_id, @RequestParam("produto") Integer produto_id) {
-    this.serv.add_to_cart(cliente_id, produto_id);
+  public void add_to_cart(@ModelAttribute("cliente") Cliente cliente, @RequestParam("produto") Integer produto_id) {
+    this.serv.add_to_cart(cliente, produto_id);
   }
 
   @RequestMapping(value = "/remove_from_cart", method=RequestMethod.POST)
   @ResponseBody
-  public void remove_from_cart(@RequestParam("cliente") Integer cliente_id, @RequestParam("produto") Integer produto_id) {
-    this.serv.remove_from_cart(cliente_id, produto_id);
+  public void remove_from_cart(@ModelAttribute("cliente") Cliente cliente, @RequestParam("produto") Integer produto_id) {
+    this.serv.remove_from_cart(cliente, produto_id);
   }
 
   @RequestMapping(value = "/insert_pedido", method=RequestMethod.POST)

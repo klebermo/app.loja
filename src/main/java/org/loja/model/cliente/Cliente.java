@@ -36,6 +36,27 @@ public class Cliente extends Model implements Serializable {
   @OrderColumn
   private List<Pedido> pedidos;
 
+  /**
+	* Default empty Cliente constructor
+	*/
+	public Cliente() {
+		super();
+    this.usuario = new Usuario();
+    this.cesta = new Cesta();
+    this.pedidos = new ArrayList<Pedido>();
+	}
+
+	/**
+	* Default Cliente constructor
+	*/
+	public Cliente(Integer id, Usuario usuario, Cesta cesta, List<Pedido> pedidos) {
+		super();
+		this.id = id;
+		this.usuario = usuario;
+		this.cesta = cesta;
+		this.pedidos = pedidos;
+	}
+
   @Override
   public Integer getId() {
     return id;
