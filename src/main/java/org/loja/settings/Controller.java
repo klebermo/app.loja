@@ -8,10 +8,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.List;
-import java.util.ArrayList;
 
 public abstract class Controller<E> {
   @Autowired
@@ -31,9 +27,8 @@ public abstract class Controller<E> {
 
   @RequestMapping(value = "/set", method=RequestMethod.POST)
   @ResponseBody
-  public String set(@Valid E object, BindingResult result) throws JsonProcessingException {
-    ObjectMapper mapper = new ObjectMapper();
-    return mapper.writeValueAsString(serv.set(object));
+  public void set(@Valid E object, BindingResult result) {
+    serv.set(object);
   }
 
   @ModelAttribute("setting")
