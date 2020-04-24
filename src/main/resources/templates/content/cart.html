@@ -32,7 +32,7 @@
         </td>
         <td th:text="${#numbers.formatCurrency(p.preco)}"></td>
         <td>
-          <button type="button" class="btn btn-dark" th:attr="data-cliente=${cliente.id}, data-produto=${p.id}, data-url=@{/cliente/remove_from_cart}" onclick="remove_from_cart(this)">
+          <button type="button" class="btn btn-dark" th:attr="data-produto=${p.id}, data-url=@{/cliente/remove_from_cart}" onclick="remove_from_cart(this)">
             <i class="fas fa-trash"></i>
           </button>
         </td>
@@ -48,38 +48,50 @@
         </td>
       </tr>
 
-      <tr>
-        <td></td>
-        <td></td>
-        <td>
-          <form th:action="@{/paypal/checkout}" method="GET">
-            <input type="hidden" name="cliente_id" th:value="${cliente.id}"/>
-            <button type="submit" class="btn btn-primary">Finalizar compra com PayPal</button>
-          </form>
-        </td>
-      </tr>
+      <th:block sec:authorize="isAnonymous()">
+        <tr>
+          <td></td>
+          <td></td>
+          <td>
+            <a class="btn btn-primary" th:href="@{/login}">Faça login para finalizar compra</a>
+          </td>
+        </tr>
+      </th:block>
 
-      <tr>
-        <td></td>
-        <td></td>
-        <td>
-          <form th:action="@{/mercadopago/checkout}" method="POST">
-            <input type="hidden" name="cliente_id" th:value="${cliente.id}"/>
-            <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js" th:attr="data-preference-id=${mercadoPagoPreference}" data-button-label="Finalizar compra com MercadoPago"></script>
-          </form>
-        </td>
-      </tr>
+      <th:block sec:authorize="isAuthenticated()">
+        <tr>
+          <td></td>
+          <td></td>
+          <td>
+            <form th:action="@{/paypal/checkout}" method="GET">
+              <input type="hidden" name="cliente_id" th:value="${cliente.id}"/>
+              <button type="submit" class="btn btn-primary">Finalizar compra com PayPal</button>
+            </form>
+          </td>
+        </tr>
 
-      <tr>
-        <td></td>
-        <td></td>
-        <td>
-          <form th:action="@{/pagseguro/checkout}" method="POST">
-            <input type="hidden" name="cliente_id" th:value="${cliente.id}"/>
-            <button type="submit" class="btn btn-primary">Finalizar compra com PagSeguro</button>
-          </form>
-        </td>
-      </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>
+            <form th:action="@{/mercadopago/checkout}" method="POST">
+              <input type="hidden" name="cliente_id" th:value="${cliente.id}"/>
+              <script src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js" th:attr="data-preference-id=${mercadoPagoPreference}" data-button-label="Finalizar compra com MercadoPago"></script>
+            </form>
+          </td>
+        </tr>
+
+        <tr>
+          <td></td>
+          <td></td>
+          <td>
+            <form th:action="@{/pagseguro/checkout}" method="POST">
+              <input type="hidden" name="cliente_id" th:value="${cliente.id}"/>
+              <button type="submit" class="btn btn-primary">Finalizar compra com PagSeguro</button>
+            </form>
+          </td>
+        </tr>
+      </th:block>
     </tfoot>
   </table>
 </th:block>
