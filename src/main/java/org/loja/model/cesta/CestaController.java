@@ -15,22 +15,22 @@ public class CestaController extends org.loja.model.Controller<Cesta> {
   }
 
   @RequestMapping("/index")
-  public String cesta(Model model, @RequestParam("cliente") Integer client_id) throws Exception {
+  public String cesta(Model model, @RequestParam(value="cliente", required=false) Integer cliente_id) throws Exception {
+    model.addAttribute("cart", "cart");
+
     org.loja.model.cliente.Cliente result;
-    try {
+    if(cliente_id != null) {
       org.loja.model.cliente.ClienteService clienteServ = new org.loja.model.cliente.ClienteService();
       org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
-      result = clienteServ.findBy("id", client_id);
-    } catch (Exception e) {
-      result = new org.loja.model.cliente.Cliente();
+      result = clienteServ.findBy("id", cliente_id);
+
+      org.loja.settings.mercadopago.MercadoPagoService mercadoPagoServ = new org.loja.settings.mercadopago.MercadoPagoService();
+      org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(mercadoPagoServ);
+      com.mercadopago.resources.Preference mercadoPagoPreference = mercadoPagoServ.preference(result);
+
+      model.addAttribute("mercadoPagoPreference", mercadoPagoPreference);
     }
 
-    org.loja.settings.mercadopago.MercadoPagoService mercadoPagoServ = new org.loja.settings.mercadopago.MercadoPagoService();
-    org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(mercadoPagoServ);
-    com.mercadopago.resources.Preference mercadoPagoPreference = mercadoPagoServ.preference(result);
-
-    model.addAttribute("cart", "cart");
-    model.addAttribute("mercadoPagoPreference", mercadoPagoPreference);
     return "index";
   }
 }
