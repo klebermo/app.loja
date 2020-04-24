@@ -101,11 +101,11 @@ function update_cart() {
             document.getElementById('table').style.display = 'none';
             break;
           case '1':
-            cart_status.innerHTML = size + ' produto adicionado na cesta, com valor ' + currency;
+            cart_status.innerHTML = size + ' produto adicionado na cesta; valor total ' + currency;
             document.getElementById('table').style.display = 'block';
             break;
           default:
-            cart_status.innerHTML = size + ' produtos adicionados na cesta, com valor ' + currency;
+            cart_status.innerHTML = size + ' produtos adicionados na cesta; valor total ' + currency;
             document.getElementById('table').style.display = 'block';
             break;
         }
@@ -115,20 +115,20 @@ function update_cart() {
 }
 
 function add_to_cart(btn) {
-  var cliente = btn.dataset.cliente;
   var produto = btn.dataset.produto;
   var url = btn.dataset.url;
   var url_cart = btn.dataset.cart;
+
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
       update_cart();
-      document.location.href =  url_cart + '?cliente=' + cliente;
+      document.location.href =  url_cart
     }
   };
+
   var formData = new FormData();
-  formData.append('cliente', cliente);
   formData.append('produto', produto);
   xhr.send(formData);
 }
@@ -137,6 +137,7 @@ function remove_from_cart(btn) {
   var cliente = btn.dataset.cliente;
   var produto = btn.dataset.produto;
   var url = btn.dataset.url;
+
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
   xhr.onreadystatechange = function() {
@@ -146,6 +147,7 @@ function remove_from_cart(btn) {
       update_cart();
     }
   };
+
   var formData = new FormData();
   formData.append('cliente', cliente);
   formData.append('produto', produto);
