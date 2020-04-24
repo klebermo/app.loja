@@ -17,7 +17,7 @@ public class PaypalController extends org.loja.settings.Controller<Paypal> {
     super(Paypal.class);
   }
 
-  @RequestMapping(value = "/checkout", method=RequestMethod.POST)
+  @RequestMapping(value = "/checkout", method=RequestMethod.GET)
   public String checkout(@RequestParam("cliente_id") Integer cliente_id, @RequestParam(value="PayerID", required=false) String payerId, @RequestParam(value="guid", required=false) String guid) throws PayPalRESTException {
     return "redirect:"+this.serv.checkout(cliente_id, payerId, guid);
   }

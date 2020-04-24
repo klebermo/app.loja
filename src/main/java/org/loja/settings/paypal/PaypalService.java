@@ -2,7 +2,6 @@ package org.loja.settings.paypal;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.paypal.base.rest.PayPalRESTException;
 import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Details;
@@ -15,11 +14,13 @@ import com.paypal.api.payments.PaymentExecution;
 import com.paypal.api.payments.RedirectUrls;
 import com.paypal.api.payments.Transaction;
 import com.paypal.base.rest.APIContext;
-
-import org.loja.model.cliente.ClienteDao;
 import org.loja.model.cliente.Cliente;
+import org.loja.model.cliente.ClienteDao;
+import org.loja.model.cesta.Cesta;
+import org.loja.model.cesta.CestaDao;
+import org.loja.model.pedido.Pedido;
+import org.loja.model.pedido.PedidoDao;
 import org.loja.model.produto.Produto;
-
 import java.util.Iterator;
 import java.util.UUID;
 import java.util.List;
@@ -32,6 +33,12 @@ public class PaypalService extends org.loja.settings.Service<Paypal> {
   @Autowired
   private ClienteDao clienteDao;
 
+  @Autowired
+  private CestaDao cestaDao;
+
+  @Autowired
+  private PedidoDao pedidoDao;
+
   private Map<String, String> map = new HashMap<String, String>();
 
   public PaypalService() {
@@ -40,6 +47,8 @@ public class PaypalService extends org.loja.settings.Service<Paypal> {
 
   public String checkout(Integer cliente_id, String payerId, String guid) throws PayPalRESTException {
     Cliente cliente = (Cliente) clienteDao.findBy("id", cliente_id);
+    map.put("cliente_id", cliente.getId().toString());
+
     Payment createdPayment = null;
 
     Paypal paypal = (Paypal) this.dao.get();
@@ -55,7 +64,7 @@ public class PaypalService extends org.loja.settings.Service<Paypal> {
 			  paymentExecution.setPayerId(payerId);
         createdPayment = payment.execute(apiContext, paymentExecution);
       }
-      return this.create_order(cliente.getId(), createdPayment.getId());
+      return this.create_order(createdPayment.getId());
     } else {
       Float total = 0.f;
       for(Produto produto : cliente.getCesta().getProdutos())
@@ -96,7 +105,7 @@ public class PaypalService extends org.loja.settings.Service<Paypal> {
       RedirectUrls redirectUrls = new RedirectUrls();
       guid = UUID.randomUUID().toString().replaceAll("-", "");
       redirectUrls.setCancelUrl("http://localhost:8080/cart");
-      redirectUrls.setReturnUrl("http://localhost:8080/cliente/checkout_paypal?cliente_id="+cliente.getId().toString()+"&guid="+guid);
+      redirectUrls.setReturnUrl("http://localhost:8080/paypal/checkout?cliente_id="+cliente.getId().toString()+"&guid="+guid);
       payment.setRedirectUrls(redirectUrls);
 
       createdPayment = payment.create(apiContext);
@@ -111,5 +120,35 @@ public class PaypalService extends org.loja.settings.Service<Paypal> {
       map.put(guid, createdPayment.getId());
       return url;
     }
+  }
+
+  public String create_order(String transaction_id) {
+    Integer cliente_id = Integer.valueOf(map.get("cliente_id"));
+    Cliente cliente = (Cliente) clienteDao.findBy("id", cliente_id);
+
+    Pedido pedido = new Pedido();
+    pedidoDao.insert(pedido);
+
+    pedido.setProdutos(new ArrayList<Produto>());
+    Cesta cesta = cliente.getCesta();
+    pedido.getProdutos().addAll(cesta.getProdutos());
+    cesta.getProdutos().clear();
+    cestaDao.update(cesta);
+
+    pedido.setDataCompra(new java.util.Date());
+    pedido.setMetodoPagamento(clazz.getSimpleName());
+    pedido.setTransactionId(transaction_id);
+    pedidoDao.update(pedido);
+
+    if(cliente.getPedidos() == null) {
+      cliente.setPedidos(new ArrayList<Pedido>());
+      cliente.getPedidos().add(pedido);
+      clienteDao.update(cliente);
+    } else {
+      cliente.getPedidos().add(pedido);
+      clienteDao.update(cliente);
+    }
+
+    return "/pedido/" + pedido.getId().toString();
   }
 }
