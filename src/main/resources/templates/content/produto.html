@@ -30,8 +30,7 @@
         </p>
 
         <p>
-          <button sec:authorize="isAuthenticated()" type="button" class="btn btn-dark" onclick="add_to_cart(this)" th:attr="data-cliente=${cliente.id}, data-produto=${produto.id}, data-url=@{/cliente/add_to_cart}, data-cart=@{/cart/index}">Comprar <br/> <small>Vers&atilde;o Pro</small></button>
-          <a sec:authorize="isAnonymous()" class="btn btn-dark" th:href="@{/login}">Comprar <br/> <small>Vers&atilde;o Pro</small></a>
+          <button type="button" class="btn btn-dark" onclick="add_to_cart(this)" th:attr="data-cliente=${cliente.id}, data-produto=${produto.id}, data-url=@{/cliente/add_to_cart}, data-cart=@{/cart/index}">Comprar <br/> <small>Vers&atilde;o Pro</small></button>
         </p>
 
         <div class="dropdown">
