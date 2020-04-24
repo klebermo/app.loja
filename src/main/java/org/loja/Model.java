@@ -1,6 +1,7 @@
 package org.loja;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.loja.model.cliente.Cliente;
@@ -9,9 +10,15 @@ import org.loja.model.usuario.Usuario;
 import org.loja.model.usuario.UsuarioService;
 import java.util.List;
 import java.util.ArrayList;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Cookie;
+import org.springframework.web.bind.annotation.CookieValue;
 
 @ControllerAdvice
 public class Model {
+  @Autowired
+  private HttpServletResponse response;
+
   @ModelAttribute("categorias")
   public List<org.loja.model.categoria.Categoria> categorias() {
     List result;
@@ -51,20 +58,6 @@ public class Model {
     return result;
   }
 
-  @ModelAttribute("cliente")
-  public Cliente cliente() {
-    Cliente result;
-    Usuario u = usuario();
-    if(u == null) {
-      result = new Cliente();
-    } else {
-      ClienteService clienteServ = new ClienteService();
-      AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
-      result = clienteServ.findBy("usuario", usuario());
-    }
-    return result;
-  }
-
   @ModelAttribute("usuario")
   public Usuario usuario() {
     Usuario result;
@@ -75,6 +68,27 @@ public class Model {
       UsuarioService usuarioServ = new UsuarioService();
       AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(usuarioServ);
       result = usuarioServ.findBy("username", username);
+    }
+    return result;
+  }
+
+  @ModelAttribute("cliente")
+  public Cliente cliente(@CookieValue(value = "cliente", defaultValue = "") String cookie_cliente) {
+    ClienteService clienteServ = new ClienteService();
+    AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
+
+    Cliente result = new Cliente();
+    if(cookie_cliente.equals("")) {
+      Usuario usuario = usuario();
+      if(usuario == null) {
+        clienteServ.insert(result);
+      } else {
+        result = clienteServ.findBy("usuario", usuario());
+      }
+      Cookie cookie = new Cookie("cliente", result.getId().toString());
+      response.addCookie(cookie);
+    } else {
+      result = clienteServ.findBy("id", Integer.valueOf(cookie_cliente));
     }
     return result;
   }
