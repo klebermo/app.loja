@@ -7,6 +7,8 @@ import org.loja.model.credencial.CredencialDao;
 import java.util.ArrayList;
 import java.util.UUID;
 import org.loja.model.cliente.Cliente;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Cookie;
 
 @Service
 public class UsuarioService extends org.loja.model.Service<Usuario> {
@@ -20,6 +22,9 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
   @Autowired
   private CredencialDao credencialDao;
 
+  @Autowired
+  private HttpServletResponse response;
+
   public void register(Usuario novo, Cliente cliente) throws Exception {
     novo.setEnabled(true);
     novo.setLocked(false);
@@ -28,18 +33,14 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     novo.getCredenciais().add(credencial);
     usuarioDao.insert(novo);
 
-    if(cliente == null) {
-      org.loja.model.cliente.ClienteService clienteServ = new org.loja.model.cliente.ClienteService();
-      org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
-      clienteServ.insert(cliente);
-      cliente.setUsuario(novo);
-      clienteServ.update(cliente);
-    } else {
-      org.loja.model.cliente.ClienteService clienteServ = new org.loja.model.cliente.ClienteService();
-      org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
-      cliente.setUsuario(novo);
-      clienteServ.update(cliente);
-    }
+    org.loja.model.cliente.ClienteService clienteServ = new org.loja.model.cliente.ClienteService();
+    org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
+    cliente.setUsuario(novo);
+    clienteServ.update(cliente);
+    
+    Cookie cookie = new Cookie("cliente", null);
+    cookie.setMaxAge(0);
+    response.addCookie(cookie);
   }
 
   public void toggle_credencial(Integer usuario_id, Integer credencial_id) {
