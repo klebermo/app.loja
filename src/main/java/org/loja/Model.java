@@ -60,6 +60,10 @@ public class Model {
       result = clienteServ.findBy("usuario", usuario());
     } catch (Exception e) {
       result = new Cliente();
+      result.setId(-1);
+      result.setUsuario(new Usuario());
+      result.setCesta(new org.loja.model.cesta.Cesta());
+      result.setPedidos(new ArrayList<org.loja.model.pedido.Pedido>());
     }
     return result;
   }
