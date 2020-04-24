@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import java.util.List;
 import java.util.ArrayList;
+import org.loja.model.cliente.Cliente;
 
 @Controller
 @RequestMapping("usuario")
@@ -31,8 +32,8 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
 
   @RequestMapping(value = "/register", method=RequestMethod.POST)
   @ResponseBody
-  public void doRegister(@ModelAttribute("command") Usuario object) throws Exception {
-    this.serv.register(object);
+  public void doRegister(@ModelAttribute("command") Usuario object, @ModelAttribute("cliente") Cliente cliente) throws Exception {
+    this.serv.register(object, cliente);
   }
 
   @RequestMapping(value = "/credenciais", method=RequestMethod.GET)

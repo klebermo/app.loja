@@ -11,7 +11,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 import org.loja.model.credencial.Credencial;
 import org.loja.model.recovery_password.RecoveryPassword;
@@ -56,6 +58,41 @@ public class Usuario extends Model implements UserDetails {
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name="usuario_recovery", joinColumns={@JoinColumn(name="usuario_id")}, inverseJoinColumns={@JoinColumn(name="recovery_id")})
   private Set<RecoveryPassword> recoveryPassword;
+
+  /**
+	* Default empty Usuario constructor
+	*/
+	public Usuario() {
+		super();
+    setUsername("...");
+		setPassword("...");
+		setFirstName("...");
+		setLastName("...");
+		setEmail("...");
+		this.credenciais = new ArrayList<Credencial>();
+		setDataExpiracao(new Date());
+		setEnabled(true);
+		setLocked(false);
+		this.recoveryPassword = new HashSet<RecoveryPassword>();
+	}
+
+	/**
+	* Default Usuario constructor
+	*/
+	public Usuario(Integer id, String username, String password, String firstName, String lastName, String email, List<Credencial> credenciais, Date dataExpiracao, Boolean enabled, Boolean locked, Set<RecoveryPassword> recoveryPassword) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.credenciais = credenciais;
+		this.dataExpiracao = dataExpiracao;
+		this.enabled = enabled;
+		this.locked = locked;
+		this.recoveryPassword = recoveryPassword;
+	}
 
   @Override
   public Integer getId() {
