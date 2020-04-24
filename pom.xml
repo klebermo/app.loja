@@ -8,7 +8,6 @@
   <name>loja.app</name>
 
   <properties>
-    <java.version>12</java.version>
     <hibernate.version>5.4.2.Final</hibernate.version>
   </properties>
 
