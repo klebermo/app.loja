@@ -88,7 +88,11 @@ public class Model {
       Cookie cookie = new Cookie("cliente", result.getId().toString());
       response.addCookie(cookie);
     } else {
-      result = clienteServ.findBy("id", Integer.valueOf(cookie_cliente));
+      Usuario usuario = usuario();
+      if(usuario == null)
+        result = clienteServ.findBy("id", Integer.valueOf(cookie_cliente));
+      else
+        result = clienteServ.findBy("usuario", usuario);
     }
     return result;
   }
