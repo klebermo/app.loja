@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import org.apache.commons.io.IOUtils;
-import java.io.IOException;
 import java.util.UUID;
 import java.util.Base64;
 import org.springframework.http.HttpEntity;
@@ -22,7 +21,7 @@ public class ArquivoService extends org.loja.model.Service<Arquivo> {
     super(Arquivo.class);
   }
 
-  public Integer upload(String name, String bytes, String type) throws IOException {
+  public Integer upload(String name, String bytes, String type) throws Exception {
     String file_name = file_path + File.separator + name;
 
     File file = new File(file_name);
@@ -42,7 +41,7 @@ public class ArquivoService extends org.loja.model.Service<Arquivo> {
     return arquivo.getId();
   }
 
-  public HttpEntity<byte[]> download(Integer arquivo_id) throws IOException {
+  public HttpEntity<byte[]> download(Integer arquivo_id) throws Exception {
     Arquivo arquivo = this.dao.findBy("id", arquivo_id);
 
     File file = new File(arquivo.getFileName());
@@ -57,7 +56,23 @@ public class ArquivoService extends org.loja.model.Service<Arquivo> {
     return new HttpEntity<byte[]>(documentBody, header);
   }
 
-  public void remove(Integer id) throws IOException {
+  public void edit(Integer id, String bytes) throws Exception {
+    Arquivo arquivo = (Arquivo) this.dao.findBy("id", id);
+    arquivo.setFileName(file_path + File.separator + arquivo.getFileName() + String.valueOf(arquivo.getVersion()));
+    arquivo.setVersion(arquivo.getVersion() + 1);
+    this.dao.update(arquivo);
+
+    File file = new File(arquivo.getFileName());
+		if(!file.exists())
+			if(file.getParentFile().mkdirs())
+				file.createNewFile();
+
+    FileOutputStream out = new FileOutputStream(file);
+    byte[] bytes_final = bytes.split(",")[1].getBytes();
+    out.write(Base64.getDecoder().decode(bytes_final));
+  }
+
+  public void remove(Integer id) throws Exception {
     Arquivo arquivo = (Arquivo) this.dao.findBy("id", id);
 
     File file = new File(arquivo.getFileName());
