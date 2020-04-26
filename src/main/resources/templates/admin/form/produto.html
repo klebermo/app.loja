@@ -82,6 +82,7 @@
             </div>
           </div>
         </div>
+
         <div class="col-3">
           <div class="row text-center text-lg-left">
             <div class="row text-center text-lg-left">
@@ -95,6 +96,7 @@
             </div>
           </div>
         </div>
+
         <div class="col-3">
           <div class="row text-center text-lg-left">
             <div class="row text-center text-lg-left">
@@ -108,6 +110,7 @@
             </div>
           </div>
         </div>
+
         <div class="col-3">
           <div class="row text-center text-lg-left">
             <div class="row text-center text-lg-left">
@@ -116,6 +119,20 @@
                   <input th:each="arq : ${command.versaoGratuita}" th:if="${string.equals(arq.type, 'deb')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
                   <img th:style="${command.icone}? '' : 'filter: grayscale(100%);'" class="thumbnail" id="versaoGratuita_deb" th:src="@{/img/deb.png}" width="64" height="64"/>
                   <input type="file" accept=".deb" class="file-uploader" id="input_versaoGratuita_deb" style="display: none;" th:attr="data-target=${'versaoGratuita'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-3">
+          <div class="row text-center text-lg-left">
+            <div class="row text-center text-lg-left">
+              <div class="col-lg-3 col-md-4 col-6">
+                <a href="#" class="d-block mb-4 h-100" data-target="input_versaoGratuita_war" onclick="select(this);">
+                  <input th:each="arq : ${command.versaoGratuita}" th:if="${string.equals(arq.type, 'war')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
+                  <img th:style="${command.icone}? '' : 'filter: grayscale(100%);'" class="thumbnail" id="versaoGratuita_war" th:src="@{/img/war.png}" width="64" height="64"/>
+                  <input type="file" accept=".war" class="file-uploader" id="input_versaoGratuita_war" style="display: none;" th:attr="data-target=${'versaoGratuita'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
                 </a>
               </div>
             </div>
@@ -142,6 +159,7 @@
             </div>
           </div>
         </div>
+
         <div class="col-3">
           <div class="row text-center text-lg-left">
             <div class="row text-center text-lg-left">
@@ -155,6 +173,7 @@
             </div>
           </div>
         </div>
+
         <div class="col-3">
           <div class="row text-center text-lg-left">
             <div class="row text-center text-lg-left">
@@ -168,6 +187,7 @@
             </div>
           </div>
         </div>
+
         <div class="col-3">
           <div class="row text-center text-lg-left">
             <div class="row text-center text-lg-left">
@@ -176,6 +196,20 @@
                   <input th:each="arq : ${command.versaoPaga}" th:if="${string.equals(arq.type, 'deb')}" type="hidden" th:field="*{versaoPaga}" th:value="${arq.id}"/>
                   <img th:style="${command.icone}? '' : 'filter: grayscale(100%);'" class="thumbnail" id="versaoPaga_deb" th:src="@{/img/deb.png}" width="64" height="64"/>
                   <input type="file" accept=".deb" class="file-uploader" id="input_versaoPaga_deb" style="display: none;" th:attr="data-target=${'versaoPaga'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-3">
+          <div class="row text-center text-lg-left">
+            <div class="row text-center text-lg-left">
+              <div class="col-lg-3 col-md-4 col-6">
+                <a href="#" class="d-block mb-4 h-100" data-target="input_versaoPaga_war" onclick="select(this);">
+                  <input th:each="arq : ${command.versaoPaga}" th:if="${string.equals(arq.type, 'war')}" type="hidden" th:field="*{versaoPaga}" th:value="${arq.id}"/>
+                  <img th:style="${command.icone}? '' : 'filter: grayscale(100%);'" class="thumbnail" id="versaoPaga_war" th:src="@{/img/war.png}" width="64" height="64"/>
+                  <input type="file" accept=".war" class="file-uploader" id="input_versaoPaga_war" style="display: none;" th:attr="data-target=${'versaoPaga'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
                 </a>
               </div>
             </div>
