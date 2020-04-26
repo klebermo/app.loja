@@ -69,74 +69,107 @@
 
   <div class="container">
     <h4>Versão Gratuita</h4>
-    <div class="container">
-      <div class="row">
-        <div class="col-3">
-          <div class="row text-center text-lg-left">
-            <div class="col-lg-3 col-md-4 col-6">
-              <a href="#" class="d-block mb-4 h-100" data-target="input_versaoGratuita_exe" onclick="select(this);">
-                <input th:each="arq : ${command.versaoGratuita}" th:if="${string.equals(arq.type, 'exe')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
-                <img th:style="${command.icone}? '' : 'filter: grayscale(100%);'" class="thumbnail" id="versaoGratuita_exe" th:src="@{/img/exe.png}" width="64" height="64"/>
-                <input type="file" accept=".exe" class="file-uploader" id="input_versaoGratuita_exe" style="display: none;" th:attr="data-target=${'versaoGratuita'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
-              </a>
-            </div>
-          </div>
-        </div>
+    <div class="row">
+      <div class="col-2">
+        <a href="#" class="d-block mb-4 h-100 thumbnail-container" data-target="input_versaoGratuita_exe" onclick="select(this);">
+          <input th:each="arq : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'exe')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}">
 
-        <div class="col-3">
-          <div class="row text-center text-lg-left">
-            <div class="row text-center text-lg-left">
-              <div class="col-lg-3 col-md-4 col-6">
-                <a href="#" class="d-block mb-4 h-100" data-target="input_versaoGratuita_dmg" onclick="select(this);">
-                  <input th:each="arq : ${command.versaoGratuita}" th:if="${string.equals(arq.type, 'dmg')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
-                  <img th:style="${command.icone}? '' : 'filter: grayscale(100%);'" class="thumbnail" id="versaoGratuita_dmg" th:src="@{/img/dmg.png}" width="64" height="64"/>
-                  <input type="file" accept=".dmg" class="file-uploader" id="input_versaoGratuita_dmg" style="display: none;" th:attr="data-target=${'versaoGratuita'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
-                </a>
-              </div>
-            </div>
+          <div th:each="arq : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'exe')}" class="btn-group btn-group-sm thumbnail-content" role="group" aria-label="actions">
+            <button type="button" class="btn btn-secondary" th:attr="data-target=${'versaoGratuita_exe'}, data-id=${arq.id}, data-upload=@{/arquivo/edit}, data-download=@{/arquivo/download}" onclick="edit_arquivo(this);">
+              <i class="far fa-edit"></i>
+            </button>
+            <button type="button" class="btn btn-secondary" th:attr="data-target=${'versaoGratuita_exe'}, data-id=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(this);">
+              <i class="far fa-trash-alt"></i>
+            </button>
           </div>
-        </div>
 
-        <div class="col-3">
-          <div class="row text-center text-lg-left">
-            <div class="row text-center text-lg-left">
-              <div class="col-lg-3 col-md-4 col-6">
-                <a href="#" class="d-block mb-4 h-100" data-target="input_versaoGratuita_rpm" onclick="select(this);">
-                  <input th:each="arq : ${command.versaoGratuita}" th:if="${string.equals(arq.type, 'rpm')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
-                  <img th:style="${command.icone}? '' : 'filter: grayscale(100%);'" class="thumbnail" id="versaoGratuita_rpm" th:src="@{/img/rpm.png}" width="64" height="64"/>
-                  <input type="file" accept=".rpm" class="file-uploader" id="input_versaoGratuita_rpm" style="display: none;" th:attr="data-target=${'versaoGratuita'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+          <img style="filter: grayscale(100%)" onload="select_uploaded(this);" class="thumbnail" id="versaoGratuita_exe" th:src="@{/img/exe.png}" width="64" height="64"/>
 
-        <div class="col-3">
-          <div class="row text-center text-lg-left">
-            <div class="row text-center text-lg-left">
-              <div class="col-lg-3 col-md-4 col-6">
-                <a href="#" class="d-block mb-4 h-100" data-target="input_versaoGratuita_deb" onclick="select(this);">
-                  <input th:each="arq : ${command.versaoGratuita}" th:if="${string.equals(arq.type, 'deb')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
-                  <img th:style="${command.icone}? '' : 'filter: grayscale(100%);'" class="thumbnail" id="versaoGratuita_deb" th:src="@{/img/deb.png}" width="64" height="64"/>
-                  <input type="file" accept=".deb" class="file-uploader" id="input_versaoGratuita_deb" style="display: none;" th:attr="data-target=${'versaoGratuita'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+          <input type="file" accept=".exe" class="file-uploader" id="input_versaoGratuita_exe" style="display: none;" th:attr="data-target=${'versaoGratuita'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
+        </a>
+      </div>
 
-        <div class="col-3">
-          <div class="row text-center text-lg-left">
-            <div class="row text-center text-lg-left">
-              <div class="col-lg-3 col-md-4 col-6">
-                <a href="#" class="d-block mb-4 h-100" data-target="input_versaoGratuita_war" onclick="select(this);">
-                  <input th:each="arq : ${command.versaoGratuita}" th:if="${string.equals(arq.type, 'war')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
-                  <img th:style="${command.icone}? '' : 'filter: grayscale(100%);'" class="thumbnail" id="versaoGratuita_war" th:src="@{/img/war.png}" width="64" height="64"/>
-                  <input type="file" accept=".war" class="file-uploader" id="input_versaoGratuita_war" style="display: none;" th:attr="data-target=${'versaoGratuita'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
-                </a>
-              </div>
+      <div class="col-2">
+        <div class="row text-center text-lg-left">
+          <a href="#" class="d-block mb-4 h-100 thumbnail-container" data-target="input_versaoGratuita_dmg" onclick="select(this);">
+            <input th:each="arq : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'dmg')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
+
+            <div th:each="arq : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'dmg')}" class="btn-group btn-group-sm thumbnail-content" role="group" aria-label="actions">
+              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_dmg'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(this);">
+                <i class="far fa-edit"></i>
+              </button>
+              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_dmg'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(this);">
+                <i class="far fa-trash-alt"></i>
+              </button>
             </div>
-          </div>
+
+            <img style="filter: grayscale(100%)" onload="select_uploaded(this);" class="thumbnail" id="versaoGratuita_dmg" th:src="@{/img/dmg.png}" width="64" height="64"/>
+
+            <input type="file" accept=".dmg" class="file-uploader" id="input_versaoGratuita_dmg" style="display: none;" th:attr="data-target=${'versaoGratuita'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-2">
+        <div class="row text-center text-lg-left">
+          <a href="#" class="d-block mb-4 h-100 thumbnail-container" data-target="input_versaoGratuita_rpm" onclick="select(this);">
+            <input th:each="arq : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'rpm')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
+
+            <div th:each="arq : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'rpm')}" class="btn-group btn-group-sm thumbnail-content" role="group" aria-label="actions">
+              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_rpm'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(this);">
+                <i class="far fa-edit"></i>
+              </button>
+              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_rpm'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(this);">
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </div>
+
+            <img style="filter: grayscale(100%)" onload="select_uploaded(this);" class="thumbnail" id="versaoGratuita_rpm" th:src="@{/img/rpm.png}" width="64" height="64"/>
+
+            <input type="file" accept=".rpm" class="file-uploader" id="input_versaoGratuita_rpm" style="display: none;" th:attr="data-target=${'versaoGratuita'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-2">
+        <div class="row text-center text-lg-left">
+          <a href="#" class="d-block mb-4 h-100 thumbnail-container" data-target="input_versaoGratuita_deb" onclick="select(this);">
+            <input th:each="arq : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'deb')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
+
+            <div th:each="arq : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'deb')}" class="btn-group btn-group-sm thumbnail-content" role="group" aria-label="actions">
+              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_deb'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(this);">
+                <i class="far fa-edit"></i>
+              </button>
+              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_deb'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(this);">
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </div>
+
+            <img style="filter: grayscale(100%)" onload="select_uploaded(this);" class="thumbnail" id="versaoGratuita_deb" th:src="@{/img/deb.png}" width="64" height="64"/>
+
+            <input type="file" accept=".deb" class="file-uploader" id="input_versaoGratuita_deb" style="display: none;" th:attr="data-target=${'versaoGratuita'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-2">
+        <div class="row text-center text-lg-left">
+          <a href="#" class="d-block mb-4 h-100 thumbnail-container" data-target="input_versaoGratuita_war" onclick="select(this);">
+            <input th:each="arq : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'war')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
+
+            <div th:each="arq : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'war')}" class="btn-group btn-group-sm thumbnail-content" role="group" aria-label="actions">
+              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_war'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(this);">
+                <i class="far fa-edit"></i>
+              </button>
+              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_war'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(this);">
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </div>
+
+            <img style="filter: grayscale(100%)" onload="select_uploaded(this);" class="thumbnail" id="versaoGratuita_war" th:src="@{/img/war.png}" width="64" height="64"/>
+
+            <input type="file" accept=".war" class="file-uploader" id="input_versaoGratuita_war" style="display: none;" th:attr="data-target=${'versaoGratuita'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
+          </a>
         </div>
       </div>
     </div>
@@ -144,77 +177,100 @@
 
   <div class="container">
     <h4>Versão Paga</h4>
-    <div class="container">
-      <div class="row">
-        <div class="col-3">
-          <div class="row text-center text-lg-left">
-            <div class="row text-center text-lg-left">
-              <div class="col-lg-3 col-md-4 col-6">
-                <a href="#" class="d-block mb-4 h-100" data-target="input_versaoPaga_exe" onclick="select(this);">
-                  <input th:each="arq : ${command.versaoPaga}" th:if="${string.equals(arq.type, 'exe')}" type="hidden" th:field="*{versaoPaga}" th:value="${arq.id}"/>
-                  <img th:style="${command.icone}? '' : 'filter: grayscale(100%);'" class="thumbnail" id="versaoPaga_exe" th:src="@{/img/exe.png}" width="64" height="64"/>
-                  <input type="file" accept=".exe" class="file-uploader" id="input_versaoPaga_exe" style="display: none;" th:attr="data-target=${'versaoPaga'}, data-url=@{/arquivo/upload}, data-path=@{/imagem/download}" onchange="file_upload(this);"/>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="row">
+      <div class="col-2">
+        <a href="#" class="d-block mb-4 h-100 thumbnail-container" data-target="input_versaoPaga_exe" onclick="select(this);">
+          <input th:each="arq : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'exe')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
 
-        <div class="col-3">
-          <div class="row text-center text-lg-left">
-            <div class="row text-center text-lg-left">
-              <div class="col-lg-3 col-md-4 col-6">
-                <a href="#" class="d-block mb-4 h-100" data-target="input_versaoPaga_dmg" onclick="select(this);">
-                  <input th:each="arq : ${command.versaoPaga}" th:if="${string.equals(arq.type, 'dmg')}" type="hidden" th:field="*{versaoPaga}" th:value="${arq.id}"/>
-                  <img th:style="${command.icone}? '' : 'filter: grayscale(100%);'" class="thumbnail" id="versaoPaga_dmg" th:src="@{/img/dmg.png}" width="64" height="64"/>
-                  <input type="file" accept=".dmg" class="file-uploader" id="input_versaoPaga_dmg" style="display: none;" th:attr="data-target=${'versaoPaga'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
-                </a>
-              </div>
-            </div>
+          <div th:each="arq : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'exe')}" class="btn-group btn-group-sm thumbnail-content" role="group" aria-label="actions">
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_exe'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(this);">
+              <i class="far fa-edit"></i>
+            </button>
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_exe'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(this);">
+              <i class="far fa-trash-alt"></i>
+            </button>
           </div>
-        </div>
 
-        <div class="col-3">
-          <div class="row text-center text-lg-left">
-            <div class="row text-center text-lg-left">
-              <div class="col-lg-3 col-md-4 col-6">
-                <a href="#" class="d-block mb-4 h-100" data-target="input_versaoPaga_rpm" onclick="select(this);">
-                  <input th:each="arq : ${command.versaoPaga}" th:if="${string.equals(arq.type, 'rpm')}" type="hidden" th:field="*{versaoPaga}" th:value="${arq.id}"/>
-                  <img th:style="${command.icone}? '' : 'filter: grayscale(100%);'" class="thumbnail" id="versaoPaga_rpm" th:src="@{/img/rpm.png}" width="64" height="64"/>
-                  <input type="file" accept=".rpm" class="file-uploader" id="input_versaoPaga_rpm" style="display: none;" th:attr="data-target=${'versaoPaga'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+          <img style="filter: grayscale(100%)" onload="select_uploaded(this);" class="thumbnail" id="versaoPaga_exe" th:src="@{/img/exe.png}" width="64" height="64"/>
 
-        <div class="col-3">
-          <div class="row text-center text-lg-left">
-            <div class="row text-center text-lg-left">
-              <div class="col-lg-3 col-md-4 col-6">
-                <a href="#" class="d-block mb-4 h-100" data-target="input_versaoPaga_deb" onclick="select(this);">
-                  <input th:each="arq : ${command.versaoPaga}" th:if="${string.equals(arq.type, 'deb')}" type="hidden" th:field="*{versaoPaga}" th:value="${arq.id}"/>
-                  <img th:style="${command.icone}? '' : 'filter: grayscale(100%);'" class="thumbnail" id="versaoPaga_deb" th:src="@{/img/deb.png}" width="64" height="64"/>
-                  <input type="file" accept=".deb" class="file-uploader" id="input_versaoPaga_deb" style="display: none;" th:attr="data-target=${'versaoPaga'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+          <input type="file" accept=".exe" class="file-uploader" id="input_versaoPaga_exe" style="display: none;" th:attr="data-target=${'versaoPaga'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
+        </a>
+      </div>
 
-        <div class="col-3">
-          <div class="row text-center text-lg-left">
-            <div class="row text-center text-lg-left">
-              <div class="col-lg-3 col-md-4 col-6">
-                <a href="#" class="d-block mb-4 h-100" data-target="input_versaoPaga_war" onclick="select(this);">
-                  <input th:each="arq : ${command.versaoPaga}" th:if="${string.equals(arq.type, 'war')}" type="hidden" th:field="*{versaoPaga}" th:value="${arq.id}"/>
-                  <img th:style="${command.icone}? '' : 'filter: grayscale(100%);'" class="thumbnail" id="versaoPaga_war" th:src="@{/img/war.png}" width="64" height="64"/>
-                  <input type="file" accept=".war" class="file-uploader" id="input_versaoPaga_war" style="display: none;" th:attr="data-target=${'versaoPaga'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
-                </a>
-              </div>
-            </div>
+      <div class="col-2">
+        <a href="#" class="d-block mb-4 h-100 thumbnail-container" data-target="input_versaoPaga_dmg" onclick="select(this);">
+          <input th:each="arq : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'dmg')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
+
+          <div th:each="arq : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'dmg')}" class="btn-group btn-group-sm thumbnail-content" role="group" aria-label="actions">
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_dmg'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(this);">
+              <i class="far fa-edit"></i>
+            </button>
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_dmg'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(this);">
+              <i class="far fa-trash-alt"></i>
+            </button>
           </div>
-        </div>
+
+          <img style="filter: grayscale(100%)" onload="select_uploaded(this);" class="thumbnail" id="versaoPaga_dmg" th:src="@{/img/dmg.png}" width="64" height="64"/>
+
+          <input type="file" accept=".dmg" class="file-uploader" id="input_versaoPaga_dmg" style="display: none;" th:attr="data-target=${'versaoPaga'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
+        </a>
+      </div>
+
+      <div class="col-2">
+        <a href="#" class="d-block mb-4 h-100 thumbnail-container" data-target="input_versaoPaga_rpm" onclick="select(this);">
+          <input th:each="arq : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'rpm')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
+
+          <div th:each="arq : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'rpm')}" class="btn-group btn-group-sm thumbnail-content" role="group" aria-label="actions">
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_rpm'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(this);">
+              <i class="far fa-edit"></i>
+            </button>
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_rpm'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(this);">
+              <i class="far fa-trash-alt"></i>
+            </button>
+          </div>
+
+          <img style="filter: grayscale(100%)" onload="select_uploaded(this);" class="thumbnail" id="versaoPaga_rpm" th:src="@{/img/rpm.png}" width="64" height="64"/>
+
+          <input type="file" accept=".rpm" class="file-uploader" id="input_versaoPaga_rpm" style="display: none;" th:attr="data-target=${'versaoPaga'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
+        </a>
+      </div>
+
+      <div class="col-2">
+        <a href="#" class="d-block mb-4 h-100 thumbnail-container" data-target="input_versaoPaga_deb" onclick="select(this);">
+          <input th:each="arq : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'deb')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
+
+          <div th:each="arq : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'deb')}" class="btn-group btn-group-sm thumbnail-content" role="group" aria-label="actions">
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_deb'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(this);">
+              <i class="far fa-edit"></i>
+            </button>
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_deb'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(this);">
+              <i class="far fa-trash-alt"></i>
+            </button>
+          </div>
+
+          <img style="filter: grayscale(100%)" onload="select_uploaded(this);" class="thumbnail" id="versaoPaga_deb" th:src="@{/img/deb.png}" width="64" height="64"/>
+
+          <input type="file" accept=".deb" class="file-uploader" id="input_versaoPaga_deb" style="display: none;" th:attr="data-target=${'versaoPaga'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
+        </a>
+      </div>
+
+      <div class="col-2">
+        <a href="#" class="d-block mb-4 h-100 thumbnail-container" data-target="input_versaoPaga_war" onclick="select(this);">
+          <input th:each="arq : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'war')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
+
+          <div th:each="arq : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'war')}" class="btn-group btn-group-sm thumbnail-content" role="group" aria-label="actions">
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_war'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(this);">
+              <i class="far fa-edit"></i>
+            </button>
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_war'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(this);">
+              <i class="far fa-trash-alt"></i>
+            </button>
+          </div>
+
+          <img style="filter: grayscale(100%)" onload="select_uploaded(this);" class="thumbnail" id="versaoPaga_war" th:src="@{/img/war.png}" width="64" height="64"/>
+
+          <input type="file" accept=".war" class="file-uploader" id="input_versaoPaga_war" style="display: none;" th:attr="data-target=${'versaoPaga'}, data-url=@{/arquivo/upload}, data-path=@{/arquivo/download}" onchange="file_upload(this);"/>
+        </a>
       </div>
     </div>
   </div>
