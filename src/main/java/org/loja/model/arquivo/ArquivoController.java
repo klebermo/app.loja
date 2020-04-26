@@ -22,18 +22,24 @@ public class ArquivoController extends org.loja.model.Controller<Arquivo> {
 
   @RequestMapping(value="upload", method=RequestMethod.POST)
   @ResponseBody
-  public Integer upload(@RequestParam("name") String name, @RequestParam("bytes") String arquivo, @RequestParam("type") String type) throws IOException {
+  public Integer upload(@RequestParam("name") String name, @RequestParam("bytes") String arquivo, @RequestParam("type") String type) throws Exception {
     return this.serv.upload(name, arquivo, type);
   }
 
   @RequestMapping("download/{id}")
-  public HttpEntity<byte[]> download(@PathVariable("id") Integer arquivo_id) throws IOException {
+  public HttpEntity<byte[]> download(@PathVariable("id") Integer arquivo_id) throws Exception {
     return this.serv.download(arquivo_id);
+  }
+
+  @RequestMapping("edit/{id}")
+  @ResponseBody
+  public void edit(@PathVariable("id") Integer id, @RequestParam("bytes") String arquivo) throws Exception {
+    this.serv.edit(id, arquivo);
   }
 
   @RequestMapping("remove/{id}")
   @ResponseBody
-  public void remove(@RequestParam("id") Integer id) throws IOException {
+  public void remove(@PathVariable("id") Integer id) throws Exception {
     this.serv.remove(id);
   }
 }
