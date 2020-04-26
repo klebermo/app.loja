@@ -22,14 +22,21 @@ public class CheckUpdate extends TextWebSocketHandler {
     org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(produtoServ);
     Produto current = produtoServ.findBy("nome", value.getProduto().getNome());
 
-    Arquivo [] value_arquivo = (Arquivo []) value.getProduto().getVersaoPaga().toArray();
-    Arquivo[] current_arquivo = (Arquivo []) current.getVersaoPaga().toArray();
+    Arquivo [] value_arquivo;
+    Arquivo[] current_arquivo;
+    if(value.getProduto().getVersaoPaga() != null) {
+       value_arquivo = (Arquivo []) value.getProduto().getVersaoPaga().toArray();
+       current_arquivo = (Arquivo []) current.getVersaoPaga().toArray();
+    } else {
+      value_arquivo = (Arquivo []) value.getProduto().getVersaoGratuita().toArray();
+      current_arquivo = (Arquivo []) current.getVersaoGratuita().toArray();
+    }
 
     if(value_arquivo[0].getVersion() < current_arquivo[0].getVersion()) {
-      String result = "true";
+      String result = new Gson().toJson(current_arquivo);
       session.sendMessage(new TextMessage(result));
     } else {
-      String result = "false";
+      String result = new Gson().toJson(value_arquivo);
       session.sendMessage(new TextMessage(result));
     }
   }
