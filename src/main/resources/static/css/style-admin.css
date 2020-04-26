@@ -56,6 +56,23 @@ body {
   text-transform: uppercase;
 }
 
+.thumbnail-container {
+  position: relative;
+  margin: 0 auto; /* Center it */
+  z-index: 1;
+}
+
+.thumbnail-container:hover .thumbnail-content {
+  display: block;
+}
+
+.thumbnail-container .thumbnail-content {
+  position: absolute;
+  bottom: 0;
+  display: none;
+  z-index: 2;
+}
+
 /*
  * Content
  */
