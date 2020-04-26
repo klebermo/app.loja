@@ -61,14 +61,23 @@ public class MercadoPagoService extends org.loja.settings.Service<MercadoPago> {
     BackUrls backUrls = new BackUrls("https://localhost:8080/process_order", "http://localhost:8080/process_order", "http://localhost:8080/cart");
     preference.setBackUrls(backUrls);
 
-    if(cliente.getCesta() != null)
-      for(Produto p : cliente.getCesta().getProdutos()) {
+    if(cliente.getCesta() != null) {
+      if(cliente.getCesta().getProdutos().isEmpty()) {
         Item item = new Item();
-        item.setTitle(p.getNome())
+        item.setTitle("...")
             .setQuantity(1)
-            .setUnitPrice(p.getPreco());
+            .setUnitPrice(1.f);
         preference.appendItem(item);
+      } else {
+        for(Produto p : cliente.getCesta().getProdutos()) {
+          Item item = new Item();
+          item.setTitle(p.getNome())
+              .setQuantity(1)
+              .setUnitPrice(p.getPreco());
+          preference.appendItem(item);
+        }
       }
+    }
 
     preference.save();
     map.put("cliente_id", cliente.getId().toString());
