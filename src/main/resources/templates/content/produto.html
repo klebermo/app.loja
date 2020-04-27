@@ -33,7 +33,7 @@
           <button type="button" class="btn btn-dark" onclick="add_to_cart(this)" th:attr="data-produto=${produto.id}, data-url=@{/cliente/add_to_cart}, data-cart=@{/cart/index}">Comprar <br/> <small>Vers&atilde;o Pro</small></button>
         </p>
 
-        <div class="dropdown" th:if="${#lists.isEmpty(produto.versaoGratuita)}">
+        <div class="dropdown">
           <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Baixar <br/> <small>Vers&atilde;o Lite</small>
           </button>
