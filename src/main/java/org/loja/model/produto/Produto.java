@@ -48,6 +48,7 @@ public class Produto extends Model {
   private Imagem icone;
 
   @OneToMany(fetch = FetchType.EAGER)
+  @OrderColumn
   private List<Imagem> thumbnails;
 
   @OneToMany(fetch = FetchType.EAGER)
