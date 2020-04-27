@@ -29,15 +29,17 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     novo.setEnabled(true);
     novo.setLocked(false);
     novo.setCredenciais(new ArrayList<Credencial>());
-    Credencial credencial = credencialDao.findBy("nome", "web");
-    novo.getCredenciais().add(credencial);
+    Credencial c1 = credencialDao.findBy("nome", "web");
+    Credencial c2 = credencialDao.findBy("nome", "topic");
+    novo.getCredenciais().add(c1);
+    novo.getCredenciais().add(c2);
     usuarioDao.insert(novo);
 
     org.loja.model.cliente.ClienteService clienteServ = new org.loja.model.cliente.ClienteService();
     org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
     cliente.setUsuario(novo);
     clienteServ.update(cliente);
-    
+
     Cookie cookie = new Cookie("cliente", null);
     cookie.setMaxAge(0);
     response.addCookie(cookie);
