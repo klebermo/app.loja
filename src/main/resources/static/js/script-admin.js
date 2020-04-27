@@ -536,37 +536,62 @@ function file_upload(file_input) {
   }
 }
 
-function edit_arquivo(e) {
-  var id = e.dataset.id;
-  var target = e.dataset.target;
-  var upload = e.dataset.upload;
-  var download = e.dataset.download;
+function edit_arquivo(evt,elem) {
+  evt.preventDefault();
+  evt.stopPropagation();
+  evt.stopImmediatePropagation();
+
+  var type = elem.dataset.type;
+  var target = elem.dataset.target;
+  var upload = elem.dataset.upload;
+  var download = elem.dataset.download;
 
   var input = document.createElement("input");
   input.type = "file";
-  input.dataset.target = "input_" + target;
+  input.dataset.target = "input_" + type;
   input.dataset.url = upload;
   input.dataset.path = download;
 
   input.click();
-  file_upload(input);
+  var file = input.files[0];
+  let file_name = name + '_' + file.name;
+  let ext = file.name.split('.').pop();
 
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", url + "/" + id, true);
+  xhr.open("POST", upload + "/" + target, true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
-      var div = document.getElementById(target);
+      var id = xhr.responseText;
+
+      var new_input = elem.parentElement.querySelector("input[type=hidden]");
+      new_input.setAttribute("value", id);
+
+      var div = elem.parentElement.querySelector('#' + type);
       div.querySelector("img").style.border = '1';
       div.querySelector("img").style.borderColor = 'red';
     }
   };
-  xhr.send();
+
+  var reader  = new FileReader();
+  reader.onloadend = function() {
+    var bytes = reader.result;
+    var formData = new FormData();
+    formData.append('name', file_name);
+    formData.append('bytes', bytes);
+    formData.append('type', ext);
+    xhr.send(formData);
+  }
+  reader.readAsDataURL(file);
 }
 
-function delete_arquivo(e) {
-  var type = e.dataset.type;
-  var target = e.dataset.target;
-  var url = e.dataset.url;
+function delete_arquivo(evt,elem) {
+  evt.preventDefault();
+  evt.stopPropagation();
+  evt.stopImmediatePropagation();
+
+  var type = elem.dataset.type;
+  var target = elem.dataset.target;
+  var url = elem.dataset.url;
 
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url + "/" + target, true);
@@ -583,7 +608,7 @@ function delete_arquivo(e) {
 function select_uploaded(e) {
   var id = e.id;
   var token = id.split("_");
-  var input = e.parentElement.querySelector('input[name=' + token[0] + ']');
+  var input = e.parentElement.querySelector('input[type=hidden]');
   if(input != null)
     e.removeAttribute('style');
 }
