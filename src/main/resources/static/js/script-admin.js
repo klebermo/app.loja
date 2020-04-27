@@ -547,48 +547,46 @@ function edit_arquivo(evt,elem) {
   var download = elem.dataset.download;
 
   var input = document.createElement("input");
-  input.type = "file";
-  input.dataset.target = "input_" + type;
-  input.dataset.url = upload;
-  input.dataset.path = download;
+  input.type="file";
+  input.addEventListener("change", function(evt) {
+    var file = input.files[0];
+    let name = file.name.split('.')[0] + '_' + (type=='versaoPaga'? 'pro' : 'lite');
+    let ext = file.name.split('.').pop();
 
-  input.click();
-  var file = input.files[0];
-  let name = file.name.split('.')[0] + '_' + (type=='versaoPaga'? 'pro' : 'lite');
-  let ext = file.name.split('.').pop();
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", upload + "/" + target, true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        var id = xhr.responseText;
 
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", upload + "/" + target, true);
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-      var id = xhr.responseText;
+        var parent = elem.parentElement;
 
-      var parent = elem.parentElement;
+        var new_input = parent.parentElement.querySelector("input[type=hidden]");
+        if(new_input != null)
+          new_input.setAttribute("value", id);
 
-      var new_input = parent.parentElement.querySelector("input[type=hidden]");
-      if(new_input != null)
-        new_input.setAttribute("value", id);
-
-      var img = parent.parentElement.querySelector('#' + type);
-      if(img !=  null) {
-        img.style.border = '1';
-        img.style.borderColor = 'red';
+        var img = parent.parentElement.querySelector('#' + type);
+        if(img !=  null) {
+          img.style.border = '1';
+          img.style.borderColor = 'red';
+        }
       }
+    };
+
+    var reader  = new FileReader();
+    reader.onloadend = function() {
+      var bytes = reader.result;
+
+      var formData = new FormData();
+      formData.append('id', target);
+      formData.append('name', name);
+      formData.append('type', ext);
+      formData.append('bytes', bytes);
+      xhr.send(formData);
     }
-  };
-
-  var reader  = new FileReader();
-  reader.onloadend = function() {
-    var bytes = reader.result;
-
-    var formData = new FormData();
-    formData.append('id', target);
-    formData.append('name', name);
-    formData.append('type', ext);
-    formData.append('bytes', bytes);
-    xhr.send(formData);
-  }
-  reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
+  });
+  input.click();
 }
 
 function delete_arquivo(evt,elem) {
