@@ -17,9 +17,7 @@ import org.loja.model.categoria.Categoria;
 import javax.persistence.Column;
 import org.loja.model.imagem.Imagem;
 import org.loja.model.arquivo.Arquivo;
-import java.util.Set;
 import java.util.List;
-import java.util.HashSet;
 import java.util.ArrayList;
 import org.loja.model.forum.Forum;
 
@@ -50,13 +48,15 @@ public class Produto extends Model {
   private Imagem icone;
 
   @OneToMany(fetch = FetchType.EAGER)
-  private Set<Imagem> thumbnails;
+  private List<Imagem> thumbnails;
 
   @OneToMany(fetch = FetchType.EAGER)
-  private Set<Arquivo> versaoGratuita;
+  @OrderColumn
+  private List<Arquivo> versaoGratuita;
 
   @OneToMany(fetch = FetchType.EAGER)
-  private Set<Arquivo> versaoPaga;
+  @OrderColumn
+  private List<Arquivo> versaoPaga;
 
   @OneToOne(fetch = FetchType.EAGER)
   private Forum forum;
@@ -118,27 +118,27 @@ public class Produto extends Model {
     this.icone = icone;
   }
 
-  public Set<Imagem> getThumbnails() {
+  public List<Imagem> getThumbnails() {
     return thumbnails;
   }
 
-  public void setThumbnails(Set<Imagem> thumbnails) {
+  public void setThumbnails(List<Imagem> thumbnails) {
     this.thumbnails = thumbnails;
   }
 
-  public Set<Arquivo> getVersaoGratuita() {
+  public List<Arquivo> getVersaoGratuita() {
     return versaoGratuita;
   }
 
-  public void setVersaoGratuita(Set<Arquivo> versaoGratuita) {
+  public void setVersaoGratuita(List<Arquivo> versaoGratuita) {
     this.versaoGratuita = versaoGratuita;
   }
 
-  public Set<Arquivo> getVersaoPaga() {
+  public List<Arquivo> getVersaoPaga() {
     return versaoPaga;
   }
 
-  public void setVersaoPaga(Set<Arquivo> versaoPaga) {
+  public void setVersaoPaga(List<Arquivo> versaoPaga) {
     this.versaoPaga = versaoPaga;
   }
 
