@@ -72,13 +72,13 @@
     <div class="row">
       <div class="col-2">
         <a href="#" class="d-block mb-4 h-100 thumbnail-container" data-target="input_versaoGratuita_exe" onclick="select(this);">
-          <input th:each="arq : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'exe')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}">
+          <input th:each="arq,stat : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'exe')}" type="hidden" th:name="${'versaoGratuita[' + stat.index + ']'}" th:value="${arq.id}"/>
 
           <div th:each="arq : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'exe')}" class="btn-group btn-group-sm thumbnail-content" role="group" aria-label="actions">
-            <button type="button" class="btn btn-secondary" th:attr="data-target=${'versaoGratuita_exe'}, data-id=${arq.id}, data-upload=@{/arquivo/edit}, data-download=@{/arquivo/download}" onclick="edit_arquivo(this);">
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_exe'}, data-target=${arq.id}, data-upload=@{/arquivo/edit}, data-download=@{/arquivo/download}" onclick="edit_arquivo(event,this);">
               <i class="far fa-edit"></i>
             </button>
-            <button type="button" class="btn btn-secondary" th:attr="data-target=${'versaoGratuita_exe'}, data-id=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(this);">
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_exe'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(event,this);">
               <i class="far fa-trash-alt"></i>
             </button>
           </div>
@@ -92,13 +92,13 @@
       <div class="col-2">
         <div class="row text-center text-lg-left">
           <a href="#" class="d-block mb-4 h-100 thumbnail-container" data-target="input_versaoGratuita_dmg" onclick="select(this);">
-            <input th:each="arq : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'dmg')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
+            <input th:each="arq,stat : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'dmg')}" type="hidden" th:name="${'versaoGratuita[' + stat.index + ']'}" th:value="${arq.id}"/>
 
             <div th:each="arq : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'dmg')}" class="btn-group btn-group-sm thumbnail-content" role="group" aria-label="actions">
-              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_dmg'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(this);">
+              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_dmg'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(event,this);">
                 <i class="far fa-edit"></i>
               </button>
-              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_dmg'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(this);">
+              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_dmg'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(event,this);">
                 <i class="far fa-trash-alt"></i>
               </button>
             </div>
@@ -113,13 +113,13 @@
       <div class="col-2">
         <div class="row text-center text-lg-left">
           <a href="#" class="d-block mb-4 h-100 thumbnail-container" data-target="input_versaoGratuita_rpm" onclick="select(this);">
-            <input th:each="arq : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'rpm')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
+            <input th:each="arq,stat : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'rpm')}" type="hidden" th:name="${'versaoGratuita[' + stat.index + ']'}" th:value="${arq.id}"/>
 
             <div th:each="arq : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'rpm')}" class="btn-group btn-group-sm thumbnail-content" role="group" aria-label="actions">
-              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_rpm'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(this);">
+              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_rpm'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(event,this);">
                 <i class="far fa-edit"></i>
               </button>
-              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_rpm'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(this);">
+              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_rpm'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(event,this);">
                 <i class="far fa-trash-alt"></i>
               </button>
             </div>
@@ -134,13 +134,13 @@
       <div class="col-2">
         <div class="row text-center text-lg-left">
           <a href="#" class="d-block mb-4 h-100 thumbnail-container" data-target="input_versaoGratuita_deb" onclick="select(this);">
-            <input th:each="arq : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'deb')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
+            <input th:each="arq,stat : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'deb')}" type="hidden" th:name="${'versaoGratuita[' + stat.index + ']'}" th:value="${arq.id}"/>
 
             <div th:each="arq : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'deb')}" class="btn-group btn-group-sm thumbnail-content" role="group" aria-label="actions">
-              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_deb'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(this);">
+              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_deb'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(event,this);">
                 <i class="far fa-edit"></i>
               </button>
-              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_deb'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(this);">
+              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_deb'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(event,this);">
                 <i class="far fa-trash-alt"></i>
               </button>
             </div>
@@ -155,13 +155,13 @@
       <div class="col-2">
         <div class="row text-center text-lg-left">
           <a href="#" class="d-block mb-4 h-100 thumbnail-container" data-target="input_versaoGratuita_war" onclick="select(this);">
-            <input th:each="arq : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'war')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
+            <input th:each="arq,stat : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'war')}" type="hidden" th:name="${'versaoGratuita[' + stat.index + ']'}" th:value="${arq.id}"/>
 
             <div th:each="arq : ${command.versaoGratuita}" th:if="${#strings.equals(arq.type, 'war')}" class="btn-group btn-group-sm thumbnail-content" role="group" aria-label="actions">
-              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_war'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(this);">
+              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_war'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(event,this);">
                 <i class="far fa-edit"></i>
               </button>
-              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_war'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(this);">
+              <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoGratuita_war'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(event,this);">
                 <i class="far fa-trash-alt"></i>
               </button>
             </div>
@@ -180,13 +180,13 @@
     <div class="row">
       <div class="col-2">
         <a href="#" class="d-block mb-4 h-100 thumbnail-container" data-target="input_versaoPaga_exe" onclick="select(this);">
-          <input th:each="arq : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'exe')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
+          <input th:each="arq,stat : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'exe')}" type="hidden" th:name="${'versaoGratuita[' + stat.index + ']'}" th:value="${arq.id}"/>
 
           <div th:each="arq : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'exe')}" class="btn-group btn-group-sm thumbnail-content" role="group" aria-label="actions">
-            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_exe'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(this);">
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_exe'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(event,this);">
               <i class="far fa-edit"></i>
             </button>
-            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_exe'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(this);">
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_exe'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(event,this);">
               <i class="far fa-trash-alt"></i>
             </button>
           </div>
@@ -199,13 +199,13 @@
 
       <div class="col-2">
         <a href="#" class="d-block mb-4 h-100 thumbnail-container" data-target="input_versaoPaga_dmg" onclick="select(this);">
-          <input th:each="arq : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'dmg')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
+          <input th:each="arq,stat : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'dmg')}" type="hidden" th:name="${'versaoGratuita[' + stat.index + ']'}" th:value="${arq.id}"/>
 
           <div th:each="arq : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'dmg')}" class="btn-group btn-group-sm thumbnail-content" role="group" aria-label="actions">
-            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_dmg'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(this);">
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_dmg'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(event,this);">
               <i class="far fa-edit"></i>
             </button>
-            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_dmg'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(this);">
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_dmg'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(event,this);">
               <i class="far fa-trash-alt"></i>
             </button>
           </div>
@@ -218,13 +218,13 @@
 
       <div class="col-2">
         <a href="#" class="d-block mb-4 h-100 thumbnail-container" data-target="input_versaoPaga_rpm" onclick="select(this);">
-          <input th:each="arq : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'rpm')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
+          <input th:each="arq,stat : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'rpm')}" type="hidden" th:name="${'versaoGratuita[' + stat.index + ']'}" th:value="${arq.id}"/>
 
           <div th:each="arq : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'rpm')}" class="btn-group btn-group-sm thumbnail-content" role="group" aria-label="actions">
-            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_rpm'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(this);">
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_rpm'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(event,this);">
               <i class="far fa-edit"></i>
             </button>
-            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_rpm'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(this);">
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_rpm'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(event,this);">
               <i class="far fa-trash-alt"></i>
             </button>
           </div>
@@ -237,13 +237,13 @@
 
       <div class="col-2">
         <a href="#" class="d-block mb-4 h-100 thumbnail-container" data-target="input_versaoPaga_deb" onclick="select(this);">
-          <input th:each="arq : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'deb')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
+          <input th:each="arq,stat : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'deb')}" type="hidden" th:name="${'versaoGratuita[' + stat.index + ']'}" th:value="${arq.id}"/>
 
           <div th:each="arq : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'deb')}" class="btn-group btn-group-sm thumbnail-content" role="group" aria-label="actions">
-            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_deb'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(this);">
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_deb'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(event,this);">
               <i class="far fa-edit"></i>
             </button>
-            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_deb'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(this);">
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_deb'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(event,this);">
               <i class="far fa-trash-alt"></i>
             </button>
           </div>
@@ -256,13 +256,13 @@
 
       <div class="col-2">
         <a href="#" class="d-block mb-4 h-100 thumbnail-container" data-target="input_versaoPaga_war" onclick="select(this);">
-          <input th:each="arq : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'war')}" type="hidden" th:field="*{versaoGratuita}" th:value="${arq.id}"/>
+          <input th:each="arq,stat : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'war')}" type="hidden" th:name="${'versaoGratuita[' + stat.index + ']'}" th:value="${arq.id}"/>
 
           <div th:each="arq : ${command.versaoPaga}" th:if="${#strings.equals(arq.type, 'war')}" class="btn-group btn-group-sm thumbnail-content" role="group" aria-label="actions">
-            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_war'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(this);">
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_war'}, data-target=${arq.id}, data-url=@{/arquivo/edit}" onclick="edit_arquivo(event,this);">
               <i class="far fa-edit"></i>
             </button>
-            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_war'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(this);">
+            <button type="button" class="btn btn-secondary" th:attr="data-type=${'versaoPaga_war'}, data-target=${arq.id}, data-url=@{/arquivo/remove}" onclick="delete_arquivo(event,this);">
               <i class="far fa-trash-alt"></i>
             </button>
           </div>
