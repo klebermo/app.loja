@@ -58,8 +58,8 @@ public class ArquivoService extends org.loja.model.Service<Arquivo> {
 
   public void edit(Integer id, String bytes) throws Exception {
     Arquivo arquivo = (Arquivo) this.dao.findBy("id", id);
-    arquivo.setFileName(file_path + File.separator + arquivo.getFileName() + String.valueOf(arquivo.getVersion()));
     arquivo.setVersion(arquivo.getVersion() + 1);
+    arquivo.setFileName("v" + arquivo.getVersion().toString() + "_" + arquivo.getFileName());
     this.dao.update(arquivo);
 
     File file = new File(arquivo.getFileName());
