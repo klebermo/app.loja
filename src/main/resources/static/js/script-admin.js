@@ -506,7 +506,7 @@ function file_upload(file_input) {
 
   for(var i = 0; i<file_input.files.length; i++) {
     var file = file_input.files[i];
-    let file_name = name + '_' + file.name;
+    let file_name = file.name.split('.')[0] + '_' + (name=='versaoPaga'? 'pro' : 'lite');
     let ext = file.name.split('.').pop();
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
@@ -554,7 +554,7 @@ function edit_arquivo(evt,elem) {
 
   input.click();
   var file = input.files[0];
-  let file_name = name + '_' + file.name;
+  let name = file.name.split('.')[0] + '_' + (type=='versaoPaga'? 'pro' : 'lite');
   let ext = file.name.split('.').pop();
 
   var xhr = new XMLHttpRequest();
@@ -563,22 +563,29 @@ function edit_arquivo(evt,elem) {
     if (xhr.readyState == 4 && xhr.status == 200) {
       var id = xhr.responseText;
 
-      var new_input = elem.parentElement.querySelector("input[type=hidden]");
-      new_input.setAttribute("value", id);
+      var parent = elem.parentElement;
 
-      var div = elem.parentElement.querySelector('#' + type);
-      div.querySelector("img").style.border = '1';
-      div.querySelector("img").style.borderColor = 'red';
+      var new_input = parent.parentElement.querySelector("input[type=hidden]");
+      if(new_input != null)
+        new_input.setAttribute("value", id);
+
+      var img = parent.parentElement.querySelector('#' + type);
+      if(img !=  null) {
+        img.style.border = '1';
+        img.style.borderColor = 'red';
+      }
     }
   };
 
   var reader  = new FileReader();
   reader.onloadend = function() {
     var bytes = reader.result;
+
     var formData = new FormData();
-    formData.append('name', file_name);
-    formData.append('bytes', bytes);
+    formData.append('id', target);
+    formData.append('name', name);
     formData.append('type', ext);
+    formData.append('bytes', bytes);
     xhr.send(formData);
   }
   reader.readAsDataURL(file);

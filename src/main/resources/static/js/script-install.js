@@ -48,18 +48,15 @@ function fixStepIndicator(n) {
 }
 
 function submit_install() {
-  console.log('install');
   var form = document.getElementById("form");
 
   var xhr = new XMLHttpRequest();
   xhr.open("POST", form.action, true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
-      console.log('go to index');
       document.location.href =  form.dataset.destino;
     }
   };
 
-  console.log('send data');
   xhr.send(new FormData(form));
 }
