@@ -122,6 +122,6 @@ public class Arquivo extends Model implements Serializable {
 	*/
 	@Override
 	public String toString() {
-		return "Arquivo [id=" + id + ", fileName=" + fileName + ", type=" + type + ", version=" + version + "]";
+		return getId().toString();
 	}
 }
