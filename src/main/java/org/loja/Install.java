@@ -179,7 +179,7 @@ public class Install {
     AutorizacaoDao autorizacaoDao = new AutorizacaoDao();
     org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(autorizacaoDao);
 
-    String [] credenciais = {"usuario", "categoria", "produto", "credencial", "autorizacao", "imagem", "arquivo", "pedido", "pagina", "cliente"};
+    String [] credenciais = {"usuario", "categoria", "produto", "credencial", "autorizacao", "imagem", "arquivo", "pedido", "pagina", "cliente", "forum", "topic"};
     for(int i=0; i<credenciais.length; i++) {
       Credencial c = new Credencial(credenciais[i]);
       credencialDao.insert(c);
@@ -235,6 +235,8 @@ public class Install {
     novo.getCredenciais().add( credencialDao.findBy("nome", "pedido") );
     novo.getCredenciais().add( credencialDao.findBy("nome", "pagina") );
     novo.getCredenciais().add( credencialDao.findBy("nome", "cliente") );
+    novo.getCredenciais().add( credencialDao.findBy("nome", "forum") );
+    novo.getCredenciais().add( credencialDao.findBy("nome", "topic") );
     usuarioDao.insert(novo);
 
     Cliente novo_cliente = new Cliente();
