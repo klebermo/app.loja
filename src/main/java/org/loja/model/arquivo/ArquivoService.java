@@ -22,7 +22,7 @@ public class ArquivoService extends org.loja.model.Service<Arquivo> {
   }
 
   public Integer upload(String name, String bytes, String type) throws Exception {
-    String file_name = file_path + File.separator + name;
+    String file_name = file_path + File.separator + name + "_v1." + type;
 
     File file = new File(file_name);
 		if(!file.exists())
@@ -56,10 +56,10 @@ public class ArquivoService extends org.loja.model.Service<Arquivo> {
     return new HttpEntity<byte[]>(documentBody, header);
   }
 
-  public void edit(Integer id, String bytes) throws Exception {
+  public void edit(Integer id, String name, String bytes, String type) throws Exception {
     Arquivo arquivo = (Arquivo) this.dao.findBy("id", id);
     arquivo.setVersion(arquivo.getVersion() + 1);
-    arquivo.setFileName("v" + arquivo.getVersion().toString() + "_" + arquivo.getFileName());
+    arquivo.setFileName(file_path + File.separator + name + "_v" + arquivo.getVersion().toString() + "." + type);
     this.dao.update(arquivo);
 
     File file = new File(arquivo.getFileName());

@@ -33,8 +33,8 @@ public class ArquivoController extends org.loja.model.Controller<Arquivo> {
 
   @RequestMapping("edit/{id}")
   @ResponseBody
-  public void edit(@PathVariable("id") Integer id, @RequestParam("bytes") String arquivo) throws Exception {
-    this.serv.edit(id, arquivo);
+  public void edit(@PathVariable("id") Integer id, @RequestParam("name") String name, @RequestParam("bytes") String arquivo, @RequestParam("type") String type) throws Exception {
+    this.serv.edit(id, name, arquivo, type);
   }
 
   @RequestMapping("remove/{id}")
