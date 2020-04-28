@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import org.loja.MailSender;
 
 @Service
 public class PaypalService extends org.loja.settings.Service<Paypal> {
@@ -38,6 +39,9 @@ public class PaypalService extends org.loja.settings.Service<Paypal> {
 
   @Autowired
   private PedidoDao pedidoDao;
+
+  @Autowired
+  private MailSender mailSender;
 
   private Map<String, String> map = new HashMap<String, String>();
 
@@ -149,6 +153,8 @@ public class PaypalService extends org.loja.settings.Service<Paypal> {
       clienteDao.update(cliente);
     }
 
-    return "/pedido/" + pedido.getId().toString();
+    String returnUrl = "/pedido/" + pedido.getId().toString();
+    mailSender.sendMessage("kleber-mota@uol.com.br", cliente.getUsuario().getEmail(), "Confirmação de pedido", "Seu pedido foi finalizado com sucesso. Você pode agora baixar os sistemas que comprou, acessando: http://localhost:8080"+returnUrl);
+    return returnUrl;
   }
 }
