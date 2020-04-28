@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
+import org.loja.MailSender;
 
 @Service
 public class PagSeguroService extends org.loja.settings.Service<PagSeguro> {
@@ -32,6 +33,9 @@ public class PagSeguroService extends org.loja.settings.Service<PagSeguro> {
 
   @Autowired
   private PedidoDao pedidoDao;
+
+  @Autowired
+  private MailSender mailSender;
 
   private Map<String, String> map = new HashMap<String, String>();
 
@@ -91,6 +95,8 @@ public class PagSeguroService extends org.loja.settings.Service<PagSeguro> {
       clienteDao.update(cliente);
     }
 
-    return "/pedido/" + pedido.getId().toString();
+    String returnUrl = "/pedido/" + pedido.getId().toString();
+    mailSender.sendMessage("kleber-mota@uol.com.br", cliente.getUsuario().getEmail(), "Confirmação de pedido", "Seu pedido foi finalizado com sucesso. Você pode agora baixar os sistemas que comprou, acessando: http://localhost:8080"+returnUrl);
+    return returnUrl;
   }
 }
