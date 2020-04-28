@@ -21,7 +21,7 @@ public class RecoveryPasswordService extends org.loja.model.Service<RecoveryPass
   @Autowired
   private UsuarioDao usuarioDao;
 
-  public void recoverPassword(String email) throws Exception {
+  public void recoverPassword(String email) {
     Usuario usuario = usuarioDao.findBy("email", email);
     String token = UUID.randomUUID().toString().replaceAll("-", "");
 
@@ -36,7 +36,11 @@ public class RecoveryPasswordService extends org.loja.model.Service<RecoveryPass
     usuario.getRecoveryPassword().add(recoveryPassword);
     usuarioDao.update(usuario);
 
-    mailSender.sendMessage("kleber-mota@uol.com.br", usuario.getEmail(), "Alteração de senha", "Para confirmar a alteração de sua senha, acesse o link a seguir: http://localhost:8080/recover/password?token="+token);
+    try {
+      mailSender.sendMessage("kleber-mota@uol.com.br", usuario.getEmail(), "Alteração de senha", "Para confirmar a alteração de sua senha, acesse o link a seguir: http://localhost:8080/recover/password?token="+token);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   public void changePassword(String token, String senha) throws Exception {
