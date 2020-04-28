@@ -43,8 +43,16 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
 
     org.loja.model.cliente.ClienteService clienteServ = new org.loja.model.cliente.ClienteService();
     org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
-    cliente.setUsuario(novo);
-    clienteServ.update(cliente);
+    if(cliente.getId() == -1) {
+      Cliente novo_cliente = new Cliente();
+      clienteServ.insert(novo_cliente);
+      novo_cliente.setUsuario(novo);
+      novo_cliente.setCesta(cliente.getCesta());
+      clienteServ.update(novo_cliente);
+    } else {
+      cliente.setUsuario(novo);
+      clienteServ.update(cliente);
+    }
 
     Cookie cookie = new Cookie("cliente", null);
     cookie.setMaxAge(0);
