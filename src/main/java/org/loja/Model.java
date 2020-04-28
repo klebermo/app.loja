@@ -81,15 +81,18 @@ public class Model {
     Usuario usuario = usuario();
     if(cookie_cliente.equals("")) {
       if(usuario == null)
-        clienteServ.insert(result);
+        result.setId(-1);
       else
         result = clienteServ.findBy("usuario", usuario);
       Cookie cookie = new Cookie("cliente", result.getId().toString());
       response.addCookie(cookie);
     } else {
-      if(usuario == null)
-        result = clienteServ.findBy("id", Integer.valueOf(cookie_cliente));
-      else
+      if(usuario == null) {
+        if(Integer.valueOf(cookie_cliente) == -1)
+          result.setId(-1);
+        else
+          result = clienteServ.findBy("id", Integer.valueOf(cookie_cliente));
+      } else
         result = clienteServ.findBy("usuario", usuario);
     }
     return result;
