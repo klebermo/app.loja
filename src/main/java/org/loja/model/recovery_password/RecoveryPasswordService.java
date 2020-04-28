@@ -37,7 +37,7 @@ public class RecoveryPasswordService extends org.loja.model.Service<RecoveryPass
     usuarioDao.update(usuario);
 
     try {
-      mailSender.sendMessage("kleber-mota@uol.com.br", usuario.getEmail(), "Alteração de senha", "Para confirmar a alteração de sua senha, acesse o link a seguir: http://localhost:8080/recover/password?token="+token);
+      mailSender.sendHTMLMessage("kleber-mota@uol.com.br", novo.getEmail(), "Alteração de senha", "email/recover", new String(token), new java.util.Locale("pt", "br"));
     } catch (Exception e) {
       e.printStackTrace();
     }
