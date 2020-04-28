@@ -78,17 +78,15 @@ public class Model {
     AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
 
     Cliente result = new Cliente();
+    Usuario usuario = usuario();
     if(cookie_cliente.equals("")) {
-      Usuario usuario = usuario();
-      if(usuario == null) {
+      if(usuario == null)
         clienteServ.insert(result);
-      } else {
-        result = clienteServ.findBy("usuario", usuario());
-      }
+      else
+        result = clienteServ.findBy("usuario", usuario);
       Cookie cookie = new Cookie("cliente", result.getId().toString());
       response.addCookie(cookie);
     } else {
-      Usuario usuario = usuario();
       if(usuario == null)
         result = clienteServ.findBy("id", Integer.valueOf(cookie_cliente));
       else
