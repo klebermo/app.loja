@@ -10,8 +10,10 @@ import org.loja.model.titulo.Titulo;
 import org.loja.model.resumo.Resumo;
 import org.loja.model.texto.Texto;
 import javax.persistence.OneToOne;
-import javax.persistence.FetchType;
-import javax.persistence.CascadeType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import javax.persistence.OrderColumn;
 import org.loja.model.categoria.Categoria;
 import javax.persistence.Column;
@@ -30,36 +32,45 @@ public class Produto extends Model {
   @Column
   private String nome;
 
-  @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+  @OneToMany(fetch = javax.persistence.FetchType.EAGER, cascade = javax.persistence.CascadeType.ALL)
   @OrderColumn
   private List<Resumo> resumo;
 
-  @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+  @OneToMany(fetch = javax.persistence.FetchType.EAGER, cascade = javax.persistence.CascadeType.ALL)
   @OrderColumn
   private List<Texto> descricao;
 
-  @OneToOne(fetch = FetchType.EAGER)
+  @OneToOne
+  @Fetch(FetchMode.JOIN)
   private Categoria categoria;
 
   @Column
   private Float preco;
 
-  @OneToOne(fetch = FetchType.EAGER)
+  @OneToOne
+  @Fetch(FetchMode.JOIN)
   private Imagem icone;
 
-  @OneToMany(fetch = FetchType.EAGER)
+  @OneToMany
+  @Fetch(FetchMode.JOIN)
+  @Cascade(CascadeType.SAVE_UPDATE)
   @OrderColumn
   private List<Imagem> thumbnails;
 
-  @OneToMany(fetch = FetchType.EAGER)
+  @OneToMany
+  @Fetch(FetchMode.JOIN)
+  @Cascade(CascadeType.SAVE_UPDATE)
   @OrderColumn
   private List<Arquivo> versaoGratuita;
 
-  @OneToMany(fetch = FetchType.EAGER)
+  @OneToMany
+  @Fetch(FetchMode.JOIN)
+  @Cascade(CascadeType.SAVE_UPDATE)
   @OrderColumn
   private List<Arquivo> versaoPaga;
 
-  @OneToOne(fetch = FetchType.EAGER)
+  @OneToOne
+  @Fetch(FetchMode.JOIN)
   private Forum forum;
 
   @Override
