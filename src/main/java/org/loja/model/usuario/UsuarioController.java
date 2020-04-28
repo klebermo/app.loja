@@ -51,6 +51,7 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
     this.serv.toggle_credencial(usuario_id, credencial_id);
   }
 
+  @ModelAttribute("credenciais")
   public List<org.loja.model.credencial.Credencial> credenciais() {
     List result;
     try {
@@ -63,6 +64,7 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
     return result;
   }
 
+  @ModelAttribute("autorizacoes")
   public List<org.loja.model.autorizacao.Autorizacao> autorizacoes() {
     List result;
     try {
