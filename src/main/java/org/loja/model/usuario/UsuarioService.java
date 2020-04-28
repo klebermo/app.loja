@@ -29,7 +29,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
   @Autowired
   private MailSender mailSender;
 
-  public void register(Usuario novo, Cliente cliente) throws Exception {
+  public void register(Usuario novo, Cliente cliente) {
     novo.setEnabled(true);
     novo.setLocked(false);
     usuarioDao.insert(novo);
@@ -43,22 +43,33 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
 
     org.loja.model.cliente.ClienteService clienteServ = new org.loja.model.cliente.ClienteService();
     org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
-    if(cliente.getId() == -1) {
+    if(cliente != null) {
+      if(cliente.getId() == -1) {
+        Cliente novo_cliente = new Cliente();
+        clienteServ.insert(novo_cliente);
+        novo_cliente.setUsuario(novo);
+        novo_cliente.setCesta(cliente.getCesta());
+        clienteServ.update(novo_cliente);
+      } else {
+        cliente.setUsuario(novo);
+        clienteServ.update(cliente);
+      }
+    } else {
       Cliente novo_cliente = new Cliente();
       clienteServ.insert(novo_cliente);
       novo_cliente.setUsuario(novo);
-      novo_cliente.setCesta(cliente.getCesta());
       clienteServ.update(novo_cliente);
-    } else {
-      cliente.setUsuario(novo);
-      clienteServ.update(cliente);
     }
 
     Cookie cookie = new Cookie("cliente", null);
     cookie.setMaxAge(0);
     response.addCookie(cookie);
 
-    mailSender.sendMessage("kleber-mota@uol.com.br", novo.getEmail(), "Cadastro efetuado", "Seu cadastro no site foi efetuado com sucesso. Para efetuar login e finalizar suas compras, acesse: http://localhost:8080/");
+    try {
+      mailSender.sendMessage("kleber-mota@uol.com.br", novo.getEmail(), "Cadastro efetuado", "Seu cadastro no site foi efetuado com sucesso. Para efetuar login e finalizar suas compras, acesse: http://localhost:8080/");
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   public void toggle_credencial(Integer usuario_id, Integer credencial_id) {

@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.ManyToMany;
 import javax.persistence.FetchType;
-import javax.persistence.CascadeType;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ public class Usuario extends Model implements UserDetails {
   @Column
   private String email;
 
-  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name="usuario_credenciais", joinColumns={@JoinColumn(name="usuario_id")}, inverseJoinColumns={@JoinColumn(name="credencial_id")})
   private List<Credencial> credenciais;
 
@@ -56,7 +55,7 @@ public class Usuario extends Model implements UserDetails {
   @Column
   private Boolean locked;
 
-  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name="usuario_recovery", joinColumns={@JoinColumn(name="usuario_id")}, inverseJoinColumns={@JoinColumn(name="recovery_id")})
   private Set<RecoveryPassword> recoveryPassword;
 
