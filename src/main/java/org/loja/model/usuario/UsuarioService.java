@@ -66,7 +66,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     response.addCookie(cookie);
 
     try {
-      mailSender.sendMessage("kleber-mota@uol.com.br", novo.getEmail(), "Cadastro efetuado", "Seu cadastro no site foi efetuado com sucesso. Para efetuar login e finalizar suas compras, acesse: http://localhost:8080/");
+      mailSender.sendHTMLMessage("kleber-mota@uol.com.br", novo.getEmail(), "Cadastro efetuado", "email/register", novo, new java.util.Locale("pt", "br"));
     } catch (Exception e) {
       e.printStackTrace();
     }
