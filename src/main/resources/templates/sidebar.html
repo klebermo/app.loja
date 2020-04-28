@@ -20,8 +20,8 @@
   </th:block>
 
   <th:block th:if="${pagina}">
-    <th:block th:each="p : ${categorias}">
-      <a th:each="t : ${p.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/pagina/__${t.conteudo}__}" th:text="${t.conteudo}" class="list-group-item list-group-item-action"></a>
+    <th:block th:each="p : ${paginas}" th:if="${#strings.equals(p.parent, pagina)}">
+      <a th:each="t : ${p.titulo}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/pagina/__${t.conteudo}__}" th:text="${t.conteudo}" class="list-group-item list-group-item-action"></a>
     </th:block>
   </th:block>
 
