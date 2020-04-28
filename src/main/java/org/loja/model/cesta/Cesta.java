@@ -12,6 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.FetchType;
+import javax.persistence.CascadeType;
 import javax.persistence.OrderColumn;
 
 @Entity
@@ -20,7 +21,7 @@ public class Cesta extends Model {
   @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Integer id;
 
-  @ManyToMany(fetch = FetchType.EAGER)
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinTable(name="cesta_produtos", joinColumns={@JoinColumn(name="cesta_id")}, inverseJoinColumns={@JoinColumn(name="produto_id")})
   @OrderColumn
   private List<Produto> produtos;
