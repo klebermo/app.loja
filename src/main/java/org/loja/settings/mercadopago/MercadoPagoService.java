@@ -118,7 +118,7 @@ public class MercadoPagoService extends org.loja.settings.Service<MercadoPago> {
 
     String returnUrl = "/pedido/" + pedido.getId().toString();
     try {
-      mailSender.sendMessage("kleber-mota@uol.com.br", cliente.getUsuario().getEmail(), "Confirmação de pedido", "Seu pedido foi finalizado com sucesso. Você pode agora baixar os sistemas que comprou, acessando: http://localhost:8080"+returnUrl);
+      mailSender.sendHTMLMessage("kleber-mota@uol.com.br", novo.getEmail(), "Confirmação de pedido realizado", "email/order", pedido, new java.util.Locale("pt", "br"));
     } catch (Exception e) {
       e.printStackTrace();
     }
