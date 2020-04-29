@@ -18,6 +18,8 @@ public class MailSender {
   @Autowired
   private TemplateEngine templateEngine;
 
+  final String from = "kleber-mota@uol.com.br";
+
   public void sendMessage(String from, String to, String subject, String text) {
       SimpleMailMessage message = new SimpleMailMessage();
       message.setFrom(from);
@@ -27,7 +29,7 @@ public class MailSender {
       emailSender.send(message);
   }
 
-  public void sendHTMLMessage(final String from, final String to, final String subject, final String template, final Object object, final Locale locale) throws Exception {
+  public void sendHTMLMessage(final String to, final String subject, final String template, final Object object, final Locale locale) throws Exception {
       final Context ctx = new Context(locale);
       ctx.setVariable("object", object);
 
