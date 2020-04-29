@@ -6,7 +6,8 @@
   <div class="row">
     <div th:replace="admin/sidebar :: copy"></div>
 
-    <main class="col-md-9 ml-sm-auto col-lg-10 px-4" id="main" th:if="${classe == null and setting == null and messages != null}">
+    <main class="col-md-9 ml-sm-auto col-lg-10 px-4" id="main" th:if="${classe == null and setting == null and messages == null}">
+      <div th:replace="admin/home :: copy"></div>
     </main>
 
     <main class="col-md-9 ml-sm-auto col-lg-10 px-4" id="main" th:if="${classe != null}">
