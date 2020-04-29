@@ -912,3 +912,33 @@ function submit_resposta(e) {
   formData.append('dataPublicacao', dataPublicacao);
   xhr.send(formData);
 }
+
+function fill_produtos(e) {
+  var target = e.dataset.target;
+  var url = e.dataset.url;
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", url, true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      var json = JSON.parse(xhr.responseText);
+      for(var x in json) {
+        var produtos = document.getElementById("#" + target);
+        for(var option in produtos.options())
+          option.remove();
+
+        var data = json[x];
+
+        if(data.categoria == e.value) {
+          var child = document.createElement("option");
+          child.setAttribute("value", data.id);
+          child.innerText(data.nome);
+        }
+
+        produtos.appendChild(child);
+      }
+    }
+  };
+
+  xhr.send();
+}
