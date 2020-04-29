@@ -1,0 +1,111 @@
+<th:block th:fragment="copy">
+  <div class="container" id="container">
+    <h4>Inicio</h4>
+
+    <hr/>
+
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">Pro</h4>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title pricing-card-title">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm">
+                Categoria:
+                <select class="form-control" id="cat_pro" th:attr="data-target=${'prod_pro'}, data-url=@{/produto/list}" onchange="fill_produtos(this);">
+                  <option value="">Todas</option>
+                  <option th:each="option : ${categorias}" th:value="${option.id}">
+                    <span th:each="t : ${option.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/categoria/__${t.conteudo}__}" th:text="${t.conteudo}"></span>
+                  </option>
+                </select>
+              </div>
+              <div class="col-sm">
+                Produto:
+                <select class="form-control" id="prod_pro">
+                  <option value="">Todos</option>
+                </select>
+              </div>
+              <div class="col-sm">
+                Periodo: <input type="date" class="form-control"> a <input type="date" class="form-control">
+              </div>
+            </div>
+          </div>
+        </h5>
+        <ul class="list-group list-group-horizontal">
+          <li class="list-group-item"></li>
+          <li class="list-group-item">
+            <canvas id="canvas" width="640" height="480"></canvas>
+          </li>
+          <li class="list-group-item">
+            <ul class="list-group">
+              <li class="list-group-item">Cras justo odio</li>
+              <li class="list-group-item">Dapibus ac facilisis in</li>
+              <li class="list-group-item">Morbi leo risus</li>
+              <li class="list-group-item">Porta ac consectetur ac</li>
+              <li class="list-group-item">Vestibulum at eros</li>
+              <li class="list-group-item">Cras justo odio</li>
+              <li class="list-group-item">Dapibus ac facilisis in</li>
+              <li class="list-group-item">Morbi leo risus</li>
+              <li class="list-group-item">Porta ac consectetur ac</li>
+              <li class="list-group-item">Vestibulum at eros</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">Lite</h4>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title pricing-card-title">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm">
+                Categoria:
+                <select class="form-control" id="cat_lite" th:attr="data-target=${'prod_lite'}, data-url=@{/produto/listBy}" onchange="fill_produtos(this);">
+                  <option value="">Todas</option>
+                  <option th:each="option : ${categorias}" th:value="${option.id}">
+                    <span th:each="t : ${option.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/categoria/__${t.conteudo}__}" th:text="${t.conteudo}"></span>
+                  </option>
+                </select>
+              </div>
+              <div class="col-sm">
+                Produto:
+                <select class="form-control" id="prod_lite">
+                  <option value="">Todos</option>
+                </select>
+              </div>
+              <div class="col-sm">
+                Periodo: <input type="date" class="form-control"> a <input type="date" class="form-control">
+              </div>
+            </div>
+          </div>
+        </h5>
+        <ul class="list-group list-group-horizontal">
+          <li class="list-group-item"></li>
+          <li class="list-group-item">
+            <canvas id="canvas" width="640" height="480"></canvas>
+          </li>
+          <li class="list-group-item">
+            <ul class="list-group">
+              <li class="list-group-item">Cras justo odio</li>
+              <li class="list-group-item">Dapibus ac facilisis in</li>
+              <li class="list-group-item">Morbi leo risus</li>
+              <li class="list-group-item">Porta ac consectetur ac</li>
+              <li class="list-group-item">Vestibulum at eros</li>
+              <li class="list-group-item">Cras justo odio</li>
+              <li class="list-group-item">Dapibus ac facilisis in</li>
+              <li class="list-group-item">Morbi leo risus</li>
+              <li class="list-group-item">Porta ac consectetur ac</li>
+              <li class="list-group-item">Vestibulum at eros</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</th:block>
