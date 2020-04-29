@@ -155,7 +155,7 @@ public class PaypalService extends org.loja.settings.Service<Paypal> {
 
     String returnUrl = "/pedido/" + pedido.getId().toString();
     try {
-      mailSender.sendHTMLMessage("kleber-mota@uol.com.br", novo.getEmail(), "Confirmação de pedido realizado", "email/order", pedido, new java.util.Locale("pt", "br"));
+      mailSender.sendHTMLMessage(cliente.getUsuario().getEmail(), "Confirmação de pedido realizado", "email/order", pedido, new java.util.Locale("pt", "br"));
     } catch (Exception e) {
       e.printStackTrace();
     }
