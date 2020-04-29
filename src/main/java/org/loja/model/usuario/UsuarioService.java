@@ -66,7 +66,7 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     response.addCookie(cookie);
 
     try {
-      mailSender.sendHTMLMessage("kleber-mota@uol.com.br", novo.getEmail(), "Cadastro efetuado", "email/register", novo, new java.util.Locale("pt", "br"));
+      mailSender.sendHTMLMessage(novo.getEmail(), "Cadastro efetuado", "email/register", novo, new java.util.Locale("pt", "br"));
     } catch (Exception e) {
       e.printStackTrace();
     }
