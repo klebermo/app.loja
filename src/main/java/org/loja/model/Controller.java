@@ -96,6 +96,13 @@ public abstract class Controller<E> {
     return mapper.writeValueAsString(serv.search(keyword, pagina, itemsPorPagina));
   }
 
+  @RequestMapping(value="/listBy.json", method=RequestMethod.GET)
+  @ResponseBody
+  public String list() throws JsonProcessingException {
+    ObjectMapper mapper = new ObjectMapper();
+    return mapper.writeValueAsString(serv.select());
+  }
+
   @ModelAttribute("classe")
   public Class<E> getClazz() {
     return clazz;
