@@ -923,19 +923,25 @@ function fill_produtos(e) {
     if (xhr.readyState == 4 && xhr.status == 200) {
       var json = JSON.parse(xhr.responseText);
       for(var x in json) {
-        var produtos = document.getElementById("#" + target);
-        for(var option in produtos.options())
-          option.remove();
+        var all = document.getElementById(target).querySelector("#all");
+        document.getElementById(target).innerHTML = '';
+        document.getElementById(target).appendChild(all);
 
         var data = json[x];
 
-        if(data.categoria == e.value) {
+        if(e.value == '*') {
           var child = document.createElement("option");
-          child.setAttribute("value", data.id);
-          child.innerText(data.nome);
+          child.setAttribute("value", data['id']);
+          child.innerText = data['nome'];
+          document.getElementById(target).appendChild(child);
+        } else {
+          if(data['categoria'].id == e.value) {
+            var child = document.createElement("option");
+            child.setAttribute("value", data['id']);
+            child.innerText = data['nome'];
+            document.getElementById(target).appendChild(child);
+          }
         }
-
-        produtos.appendChild(child);
       }
     }
   };
