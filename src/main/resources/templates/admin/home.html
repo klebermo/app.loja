@@ -14,8 +14,8 @@
             <div class="row">
               <div class="col-sm">
                 Categoria:
-                <select class="form-control" id="cat_pro" th:attr="data-target=${'prod_pro'}, data-url=@{/produto/list}" onchange="fill_produtos(this);">
-                  <option value="">Todas</option>
+                <select class="form-control" id="cat_pro" data-target="prodpro" th:attr="data-url=@{/produto/listBy.json}" onchange="fill_produtos(this);">
+                  <option value="*">Todas</option>
                   <option th:each="option : ${categorias}" th:value="${option.id}">
                     <span th:each="t : ${option.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/categoria/__${t.conteudo}__}" th:text="${t.conteudo}"></span>
                   </option>
@@ -23,8 +23,9 @@
               </div>
               <div class="col-sm">
                 Produto:
-                <select class="form-control" id="prod_pro">
-                  <option value="">Todos</option>
+                <select class="form-control" id="prodpro">
+                  <option id="all" value="*">Todos</option>
+                  <option th:each="option : ${produtos}" th:value="${option.id}" th:text="${option.nome}"></option>
                 </select>
               </div>
               <div class="col-sm">
@@ -66,8 +67,8 @@
             <div class="row">
               <div class="col-sm">
                 Categoria:
-                <select class="form-control" id="cat_lite" th:attr="data-target=${'prod_lite'}, data-url=@{/produto/listBy}" onchange="fill_produtos(this);">
-                  <option value="">Todas</option>
+                <select class="form-control" id="cat_lite" data-target="prodlite" th:attr="data-url=@{/produto/listBy.json}" onchange="fill_produtos(this);">
+                  <option value="*">Todas</option>
                   <option th:each="option : ${categorias}" th:value="${option.id}">
                     <span th:each="t : ${option.nome}" th:if="${#strings.equals(#strings.substringBefore(t.idioma,','), #strings.replace(#locale,'_','-'))}" th:href="@{/categoria/__${t.conteudo}__}" th:text="${t.conteudo}"></span>
                   </option>
@@ -75,8 +76,9 @@
               </div>
               <div class="col-sm">
                 Produto:
-                <select class="form-control" id="prod_lite">
-                  <option value="">Todos</option>
+                <select class="form-control" id="prodlite">
+                  <option id="all" value="*">Todos</option>
+                  <option th:each="option : ${produtos}" th:value="${option.id}" th:text="${option.nome}"></option>
                 </select>
               </div>
               <div class="col-sm">
