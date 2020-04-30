@@ -27,6 +27,7 @@ public class Model {
       AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(categoriaServ);
       result = categoriaServ.select();
     } catch (Exception e) {
+      e.printStackTrace();
       result = new ArrayList<org.loja.model.categoria.Categoria>();
     }
     return result;
@@ -40,6 +41,7 @@ public class Model {
       AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(produtoServ);
       result = produtoServ.select();
     } catch (Exception e) {
+      e.printStackTrace();
       result = new ArrayList<org.loja.model.produto.Produto>();
     }
     return result;
@@ -53,6 +55,7 @@ public class Model {
       AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(paginaServ);
       result = paginaServ.select();
     } catch (Exception e) {
+      e.printStackTrace();
       result = new ArrayList<org.loja.model.pagina.Pagina>();
     }
     return result;
