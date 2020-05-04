@@ -6,14 +6,16 @@
 
     <div class="card mb-4 shadow-sm">
       <div class="card-header">
-        <h4 class="my-0 font-weight-normal">Pro</h4>
-      </div>
-      <div class="card-body">
-        <h5 class="card-title pricing-card-title">
-          <div class="container">
+        <h4 class="my-0 font-weight-normal">
+          <span class="badge badge-secondary">Pro</span>
+
+          <small>
             <div class="row">
-              <div class="col-sm">
+              <div class="col-2">
                 Categoria:
+              </div>
+
+              <div class="col-2">
                 <select class="form-control" id="cat_pro" data-target="prodpro" th:attr="data-url=@{/produto/listBy.json}" onchange="fill_produtos(this);">
                   <option value="*">Todas</option>
                   <option th:each="option : ${categorias}" th:value="${option.id}">
@@ -21,45 +23,42 @@
                   </option>
                 </select>
               </div>
-              <div class="col-sm">
+
+              <div class="col-2">
                 Produto:
+              </div>
+
+              <div class="col-2">
                 <select class="form-control" id="prodpro">
                   <option id="all" value="*">Todos</option>
                   <option th:each="option : ${produtos}" th:value="${option.id}" th:text="${option.nome}"></option>
                 </select>
               </div>
-              <div class="col-sm">
-                Periodo: <input type="date" class="form-control"> a <input type="date" class="form-control">
+
+              <div class="col-2">
+                Periodo:
+              </div>
+
+              <div class="col-1">
+                <input type="date" class="form-control" id="pro_data_inicial"/>
+              </div>
+
+              <div class="col-1">
+                <input type="date" class="form-control" id="pro_data_final"/>
               </div>
             </div>
-          </div>
-        </h5>
-        <ul class="list-group list-group-horizontal">
-          <li class="list-group-item"></li>
-          <li class="list-group-item">
-            <canvas id="canvas" width="640" height="480"></canvas>
-          </li>
-          <li class="list-group-item">
-            <ul class="list-group">
-              <li class="list-group-item">Cras justo odio</li>
-              <li class="list-group-item">Dapibus ac facilisis in</li>
-              <li class="list-group-item">Morbi leo risus</li>
-              <li class="list-group-item">Porta ac consectetur ac</li>
-              <li class="list-group-item">Vestibulum at eros</li>
-              <li class="list-group-item">Cras justo odio</li>
-              <li class="list-group-item">Dapibus ac facilisis in</li>
-              <li class="list-group-item">Morbi leo risus</li>
-              <li class="list-group-item">Porta ac consectetur ac</li>
-              <li class="list-group-item">Vestibulum at eros</li>
-            </ul>
-          </li>
-        </ul>
+          </small>
+        </h4>
+      </div>
+
+      <div class="card-body">
+        <canvas id="canvas_pro" width="640" height="480"></canvas>
       </div>
     </div>
 
     <div class="card mb-4 shadow-sm">
       <div class="card-header">
-        <h4 class="my-0 font-weight-normal">Compras</h4>
+        <h4 class="my-0 font-weight-normal">Acessos / Compras - Versão Pro</h4>
       </div>
       <div class="card-body">
         <canvas id="map_compras" width="640" height="480"></canvas>
@@ -68,14 +67,16 @@
 
     <div class="card mb-4 shadow-sm">
       <div class="card-header">
-        <h4 class="my-0 font-weight-normal">Lite</h4>
-      </div>
-      <div class="card-body">
-        <h5 class="card-title pricing-card-title">
-          <div class="container">
+        <h4 class="my-0 font-weight-normal">
+          <span class="badge badge-secondary">Lite</span>
+
+          <small>
             <div class="row">
-              <div class="col-sm">
+              <div class="col-2">
                 Categoria:
+              </div>
+
+              <div class="col-2">
                 <select class="form-control" id="cat_lite" data-target="prodlite" th:attr="data-url=@{/produto/listBy.json}" onchange="fill_produtos(this);">
                   <option value="*">Todas</option>
                   <option th:each="option : ${categorias}" th:value="${option.id}">
@@ -83,45 +84,42 @@
                   </option>
                 </select>
               </div>
-              <div class="col-sm">
+
+              <div class="col-2">
                 Produto:
+              </div>
+
+              <div class="col-2">
                 <select class="form-control" id="prodlite">
                   <option id="all" value="*">Todos</option>
                   <option th:each="option : ${produtos}" th:value="${option.id}" th:text="${option.nome}"></option>
                 </select>
               </div>
-              <div class="col-sm">
-                Periodo: <input type="date" class="form-control"> a <input type="date" class="form-control">
+
+              <div class="col-2">
+                Periodo:
+              </div>
+
+              <div class="col-1">
+                <input type="date" class="form-control" id="lite_data_inicial"/>
+              </div>
+
+              <div class="col-1">
+                <input type="date" class="form-control" id="lite_data_final"/>
               </div>
             </div>
-          </div>
-        </h5>
-        <ul class="list-group list-group-horizontal">
-          <li class="list-group-item"></li>
-          <li class="list-group-item">
-            <canvas id="canvas" width="640" height="480"></canvas>
-          </li>
-          <li class="list-group-item">
-            <ul class="list-group">
-              <li class="list-group-item">Cras justo odio</li>
-              <li class="list-group-item">Dapibus ac facilisis in</li>
-              <li class="list-group-item">Morbi leo risus</li>
-              <li class="list-group-item">Porta ac consectetur ac</li>
-              <li class="list-group-item">Vestibulum at eros</li>
-              <li class="list-group-item">Cras justo odio</li>
-              <li class="list-group-item">Dapibus ac facilisis in</li>
-              <li class="list-group-item">Morbi leo risus</li>
-              <li class="list-group-item">Porta ac consectetur ac</li>
-              <li class="list-group-item">Vestibulum at eros</li>
-            </ul>
-          </li>
-        </ul>
+          </small>
+        </h4>
+      </div>
+      
+      <div class="card-body">
+        <canvas id="canvas" width="640" height="480"></canvas>
       </div>
     </div>
 
     <div class="card mb-4 shadow-sm">
       <div class="card-header">
-        <h4 class="my-0 font-weight-normal">Acessos</h4>
+        <h4 class="my-0 font-weight-normal">Acessos / Download - Versão Lite</h4>
       </div>
       <div class="card-body">
         <canvas id="map_acessos" width="640" height="480"></canvas>
