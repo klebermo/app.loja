@@ -1,5 +1,5 @@
 <th:block th:fragment="copy">
-  <div class="container" id="container">
+  <div class="container" id="container" th:attr="data-map=@{/img/worldmap.svg}">
     <h4>Inicio</h4>
 
     <hr/>
@@ -52,7 +52,7 @@
       </div>
 
       <div class="card-body">
-        <canvas id="canvas_pro" width="640" height="480"></canvas>
+        <canvas id="canvas_pro" width="1080" height="720"></canvas>
       </div>
     </div>
 
@@ -61,7 +61,7 @@
         <h4 class="my-0 font-weight-normal">Acessos / Compras - Versão Pro</h4>
       </div>
       <div class="card-body">
-        <canvas id="map_compras" width="640" height="480"></canvas>
+        <canvas class="map" id="map_compras" width="1080" height="720"></canvas>
       </div>
     </div>
 
@@ -111,9 +111,9 @@
           </small>
         </h4>
       </div>
-      
+
       <div class="card-body">
-        <canvas id="canvas" width="640" height="480"></canvas>
+        <canvas id="canvas_lite" width="1080" height="720"></canvas>
       </div>
     </div>
 
@@ -122,7 +122,7 @@
         <h4 class="my-0 font-weight-normal">Acessos / Download - Versão Lite</h4>
       </div>
       <div class="card-body">
-        <canvas id="map_acessos" width="640" height="480"></canvas>
+        <canvas class="map" id="map_acessos" width="1080" height="720"></canvas>
       </div>
     </div>
   </div>
