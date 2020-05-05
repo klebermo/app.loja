@@ -1,7 +1,7 @@
 package org.loja.model;
 
 public abstract class Model extends Object {
-  public abstract Integer getId();
+  public abstract Object getId();
 
   @Override
   public boolean equals(Object object) {
