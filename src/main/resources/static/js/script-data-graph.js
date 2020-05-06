@@ -1,11 +1,3 @@
-var g_pro = document.getElementById('canvas_pro');
-var ctx_pro = g_pro.getContext('2d');
-
-var g_lite = document.getElementById('canvas_lite');
-var ctx_lite = g_lite.getContext('2d');
-
-main();
-
 function roundToPIPScale(number) {
   return Math.round(number * 1000000) / 1000000
 }
@@ -95,7 +87,26 @@ function drawGraph(context,canvas,data,maxValueCount) {
   drawGraphAxis(context,data,boxSize);
 }
 
-function main() {
+function draw_graph_pro() {
+  var g_pro = document.getElementById('canvas_pro');
+  var ctx_pro = g_pro.getContext('2d');
+
+  var chartData = [];
+
+  for(var i=0; i<100; i++) {
+    var randomPrice =  (Math.random()*0.0001) +1.25;
+    chartData.push(randomPrice);
+    if(chartData.length > 100) {
+     chartData.splice(0, 1);
+    }
+    drawGraph(ctx_pro,g_pro,chartData);
+  }
+}
+
+function draw_graph_lite() {
+  var g_lite = document.getElementById('canvas_lite');
+  var ctx_lite = g_lite.getContext('2d');
+
   var chartData = [];
 
   for(var i=0; i<100; i++) {
@@ -104,8 +115,6 @@ function main() {
     if(chartData.length > 100){
      chartData.splice(0, 1);
     }
-
-    drawGraph(ctx_pro,g_pro,chartData);
     drawGraph(ctx_lite,g_lite,chartData);
   }
 }
