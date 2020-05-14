@@ -1,7 +1,6 @@
 package org.loja;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.loja.model.cliente.Cliente;
@@ -10,12 +9,17 @@ import org.loja.model.usuario.Usuario;
 import org.loja.model.usuario.UsuarioService;
 import java.util.List;
 import java.util.ArrayList;
+import org.springframework.beans.factory.annotation.Autowired;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Cookie;
 import org.springframework.web.bind.annotation.CookieValue;
+import javax.servlet.http.Cookie;
 
 @ControllerAdvice
 public class Model {
+  @Autowired
+  private HttpServletRequest request;
+
   @Autowired
   private HttpServletResponse response;
 
@@ -64,40 +68,59 @@ public class Model {
   @ModelAttribute("usuario")
   public Usuario usuario() {
     Usuario result;
+
     String username = SecurityContextHolder.getContext().getAuthentication().getName();
     if(username == null) {
-      result = new Usuario();
+      result = null;
     } else {
       UsuarioService usuarioServ = new UsuarioService();
       AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(usuarioServ);
       result = usuarioServ.findBy("username", username);
     }
+
     return result;
   }
 
   @ModelAttribute("cliente")
-  public Cliente cliente(@CookieValue(value = "cliente", defaultValue = "") String cookie_cliente) {
-    ClienteService clienteServ = new ClienteService();
-    AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
+  public Cliente cliente(@CookieValue(value = "cliente", defaultValue = "") String cliente) {
+    Cliente result;
 
-    Cliente result = new Cliente();
-    Usuario usuario = usuario();
-    if(cookie_cliente.equals("")) {
-      if(usuario == null)
-        result.setId(-1);
-      else
+    if(cliente.equals("")) {
+      Usuario usuario = usuario();
+      if(usuario == null) {
+        ClienteService clienteServ = new ClienteService();
+        AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
+        result = new Cliente(request);
+        clienteServ.insert(result);
+      } else {
+        ClienteService clienteServ = new ClienteService();
+        AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
         result = clienteServ.findBy("usuario", usuario);
-      Cookie cookie = new Cookie("cliente", result.getId().toString());
+      }
+      Cookie cookie = new Cookie("cliente", result.getId());
+      cookie.setMaxAge(-1);
       response.addCookie(cookie);
     } else {
+      Usuario usuario = usuario();
       if(usuario == null) {
-        if(Integer.valueOf(cookie_cliente) == -1)
-          result.setId(-1);
-        else
-          result = clienteServ.findBy("id", Integer.valueOf(cookie_cliente));
-      } else
+        ClienteService clienteServ = new ClienteService();
+        AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
+        result = clienteServ.findBy("id", cliente);
+      } else {
+        ClienteService clienteServ = new ClienteService();
+        AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
         result = clienteServ.findBy("usuario", usuario);
+
+        Cookie cookie1 = new Cookie("cliente", null);
+        cookie1.setMaxAge(0);
+        response.addCookie(cookie1);
+
+        Cookie cookie2 = new Cookie("cliente", result.getId());
+        cookie2.setMaxAge(-1);
+        response.addCookie(cookie2);
+      }
     }
+
     return result;
   }
 
