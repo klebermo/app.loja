@@ -4,9 +4,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.loja.model.credencial.Credencial;
 import org.loja.model.credencial.CredencialDao;
+import org.loja.model.cliente.Cliente;
+import org.loja.model.cliente.ClienteDao;
 import java.util.ArrayList;
 import java.util.UUID;
-import org.loja.model.cliente.Cliente;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Cookie;
 import org.loja.MailSender;
@@ -22,6 +23,9 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
 
   @Autowired
   private CredencialDao credencialDao;
+
+  @Autowired
+  private ClienteDao clienteDao;
 
   @Autowired
   private HttpServletResponse response;
@@ -41,29 +45,8 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     novo.getCredenciais().add(c2);
     usuarioDao.update(novo);
 
-    org.loja.model.cliente.ClienteService clienteServ = new org.loja.model.cliente.ClienteService();
-    org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
-    if(cliente != null) {
-      if(cliente.getId() == -1) {
-        Cliente novo_cliente = new Cliente();
-        clienteServ.insert(novo_cliente);
-        novo_cliente.setUsuario(novo);
-        novo_cliente.setCesta(cliente.getCesta());
-        clienteServ.update(novo_cliente);
-      } else {
-        cliente.setUsuario(novo);
-        clienteServ.update(cliente);
-      }
-    } else {
-      Cliente novo_cliente = new Cliente();
-      clienteServ.insert(novo_cliente);
-      novo_cliente.setUsuario(novo);
-      clienteServ.update(novo_cliente);
-    }
-
-    Cookie cookie = new Cookie("cliente", null);
-    cookie.setMaxAge(0);
-    response.addCookie(cookie);
+    cliente.setUsuario(novo);
+    clienteDao.update(cliente);
 
     try {
       mailSender.sendHTMLMessage(novo.getEmail(), "Cadastro efetuado", "email/register", novo, new java.util.Locale("pt", "br"));
