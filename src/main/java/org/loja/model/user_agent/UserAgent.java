@@ -5,6 +5,7 @@ import org.loja.model.Model;
 import java.util.UUID;
 import javax.persistence.Id;
 import javax.persistence.Column;
+import javax.servlet.http.HttpServletRequest;
 
 @Entity
 public class UserAgent extends Model {
@@ -34,15 +35,27 @@ public class UserAgent extends Model {
 	* Default empty UserAgent constructor
 	*/
 	public UserAgent() {
-		super();
     this.id = UUID.randomUUID().toString().replaceAll("-", "");
+	}
+
+  /**
+	* Default empty UserAgent constructor
+	*/
+	public UserAgent(HttpServletRequest req) {
+		this.id = UUID.randomUUID().toString().replaceAll("-", "");
+    String user_agent = req.getHeader("User-Agent");
+    this.codeName = "";
+    this.name = "";
+    this.version = "";
+    this.cookiesEnabled = "";
+    this.language = "";
+    this.platform = "";
 	}
 
   /**
 	* Default UserAgent constructor
 	*/
 	public UserAgent(String codeName, String name, String version, String cookiesEnabled, String language, String platform) {
-		super();
 		this.id = UUID.randomUUID().toString().replaceAll("-", "");
 		this.codeName = codeName;
 		this.name = name;
@@ -56,7 +69,6 @@ public class UserAgent extends Model {
 	* Default UserAgent constructor
 	*/
 	public UserAgent(String id, String codeName, String name, String version, String cookiesEnabled, String language, String platform) {
-		super();
 		this.id = id;
 		this.codeName = codeName;
 		this.name = name;
