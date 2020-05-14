@@ -52,8 +52,8 @@ public abstract class Controller<E> {
 
   @RequestMapping(value = "/update", method=RequestMethod.GET)
   @PreAuthorize("hasPermission(#user, 'atualiza_'+#this.this.name)")
-  public String update(Model model, @RequestParam(value="id") String id) {
-    model.addAttribute("command", serv.findBy("id", new Integer(id)));
+  public String update(Model model, @RequestParam(value="id") Object id) {
+    model.addAttribute("command", serv.findBy("id", id));
     model.addAttribute("action", "update");
     return "admin/form";
   }
@@ -68,8 +68,8 @@ public abstract class Controller<E> {
 
   @RequestMapping(value = "/delete", method=RequestMethod.GET)
   @PreAuthorize("hasPermission(#user, 'remove_'+#this.this.name)")
-  public String delete(Model model, @RequestParam(value="id") String id) {
-    model.addAttribute("command", serv.findBy("id", new Integer(id)));
+  public String delete(Model model, @RequestParam(value="id") Object id) {
+    model.addAttribute("command", serv.findBy("id", id));
     model.addAttribute("action", "delete");
     return "admin/delete";
   }
