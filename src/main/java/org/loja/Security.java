@@ -47,8 +47,9 @@ public class Security extends WebSecurityConfigurerAdapter {
         .logout()
           .logoutUrl("/logout")
           .deleteCookies("remember-me")
+          .deleteCookies("cliente")
         .and()
-          .rememberMe();
+          .rememberMe().key("remember-me");
   }
 
   @Override
