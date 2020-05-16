@@ -12,69 +12,46 @@ public class UserAgent extends Model {
   @Id
   private String id;
 
-  @Column
-  private String codeName;
+  private String browser;
 
-  @Column
-  private String name;
+  private String browserVersion;
 
-  @Column
-  private String version;
+  private String system;
 
-  @Column
-  private String cookiesEnabled;
+  private String systemVersion;
 
-  @Column
-  private String language;
-
-  @Column
   private String platform;
-
-
-	/**
-	* Default empty UserAgent constructor
-	*/
-	public UserAgent() {
-    this.id = UUID.randomUUID().toString().replaceAll("-", "");
-	}
 
   /**
 	* Default empty UserAgent constructor
 	*/
 	public UserAgent(HttpServletRequest req) {
-		this.id = UUID.randomUUID().toString().replaceAll("-", "");
-    String user_agent = req.getHeader("User-Agent");
-    this.codeName = "";
-    this.name = "";
-    this.version = "";
-    this.cookiesEnabled = "";
-    this.language = "";
+    String user_agent = req.getHeader("user-agent");
+
+    this.id = UUID.randomUUID().toString().replaceAll("-", "");
+    this.browser = "";
+    this.browserVersion = "";
+    this.system = "";
+    this.systemVersion = "";
     this.platform = "";
 	}
 
-  /**
-	* Default UserAgent constructor
+	/**
+	* Default empty UserAgent constructor
 	*/
-	public UserAgent(String codeName, String name, String version, String cookiesEnabled, String language, String platform) {
+	public UserAgent() {
 		this.id = UUID.randomUUID().toString().replaceAll("-", "");
-		this.codeName = codeName;
-		this.name = name;
-		this.version = version;
-		this.cookiesEnabled = cookiesEnabled;
-		this.language = language;
-		this.platform = platform;
 	}
 
 	/**
 	* Default UserAgent constructor
 	*/
-	public UserAgent(String id, String codeName, String name, String version, String cookiesEnabled, String language, String platform) {
+	public UserAgent(String id, String browser, String browserVersion, String system, String systemVersion, String platform) {
 		this.id = id;
-		this.codeName = codeName;
-		this.name = name;
-		this.version = version;
-		this.cookiesEnabled = cookiesEnabled;
-		this.language = language;
+		this.browser = browser;
+		this.browserVersion = browserVersion;
+		this.system = system;
+		this.systemVersion = systemVersion;
 		this.platform = platform;
 	}
 
@@ -95,83 +72,67 @@ public class UserAgent extends Model {
 	}
 
 	/**
-	* Returns value of codeName
+	* Returns value of browser
 	* @return
 	*/
-	public String getCodeName() {
-		return codeName;
+	public String getBrowser() {
+		return browser;
 	}
 
 	/**
-	* Sets new value of codeName
+	* Sets new value of browser
 	* @param
 	*/
-	public void setCodeName(String codeName) {
-		this.codeName = codeName;
+	public void setBrowser(String browser) {
+		this.browser = browser;
 	}
 
 	/**
-	* Returns value of name
+	* Returns value of browserVersion
 	* @return
 	*/
-	public String getName() {
-		return name;
+	public String getBrowserVersion() {
+		return browserVersion;
 	}
 
 	/**
-	* Sets new value of name
+	* Sets new value of browserVersion
 	* @param
 	*/
-	public void setName(String name) {
-		this.name = name;
+	public void setBrowserVersion(String browserVersion) {
+		this.browserVersion = browserVersion;
 	}
 
 	/**
-	* Returns value of version
+	* Returns value of system
 	* @return
 	*/
-	public String getVersion() {
-		return version;
+	public String getSystem() {
+		return system;
 	}
 
 	/**
-	* Sets new value of version
+	* Sets new value of system
 	* @param
 	*/
-	public void setVersion(String version) {
-		this.version = version;
+	public void setSystem(String system) {
+		this.system = system;
 	}
 
 	/**
-	* Returns value of cookiesEnabled
+	* Returns value of systemVersion
 	* @return
 	*/
-	public String getCookiesEnabled() {
-		return cookiesEnabled;
+	public String getSystemVersion() {
+		return systemVersion;
 	}
 
 	/**
-	* Sets new value of cookiesEnabled
+	* Sets new value of systemVersion
 	* @param
 	*/
-	public void setCookiesEnabled(String cookiesEnabled) {
-		this.cookiesEnabled = cookiesEnabled;
-	}
-
-	/**
-	* Returns value of language
-	* @return
-	*/
-	public String getLanguage() {
-		return language;
-	}
-
-	/**
-	* Sets new value of language
-	* @param
-	*/
-	public void setLanguage(String language) {
-		this.language = language;
+	public void setSystemVersion(String systemVersion) {
+		this.systemVersion = systemVersion;
 	}
 
 	/**
@@ -196,6 +157,6 @@ public class UserAgent extends Model {
 	*/
 	@Override
 	public String toString() {
-		return "UserAgent [id=" + id + ", codeName=" + codeName + ", name=" + name + ", version=" + version + ", cookiesEnabled=" + cookiesEnabled + ", language=" + language + ", platform=" + platform + "]";
+		return "UserAgent [id=" + id + ", browser=" + browser + ", browserVersion=" + browserVersion + ", system=" + system + ", systemVersion=" + systemVersion + ", codeName=" + codeName + ", platform=" + platform + "]";
 	}
 }
