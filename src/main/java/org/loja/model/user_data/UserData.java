@@ -48,7 +48,7 @@ public class UserData extends Model {
 		this.state = "";
 		this.city = "";
 		this.dataAcesso = new Date();
-		this.urlAcesso = "";
+		this.urlAcesso = req.getRequestURI();
   }
 
   /**
