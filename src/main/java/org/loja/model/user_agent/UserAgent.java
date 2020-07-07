@@ -40,13 +40,14 @@ public class UserAgent extends Model {
 	* Default empty UserAgent constructor
 	*/
 	public UserAgent() {
-		this.id = UUID.randomUUID().toString().replaceAll("-", "");
+		super();
 	}
 
 	/**
 	* Default UserAgent constructor
 	*/
 	public UserAgent(String id, String browser, String browserVersion, String system, String systemVersion, String platform) {
+		super();
 		this.id = id;
 		this.browser = browser;
 		this.browserVersion = browserVersion;
@@ -157,6 +158,6 @@ public class UserAgent extends Model {
 	*/
 	@Override
 	public String toString() {
-		return "UserAgent [id=" + id + ", browser=" + browser + ", browserVersion=" + browserVersion + ", system=" + system + ", systemVersion=" + systemVersion + ", codeName=" + codeName + ", platform=" + platform + "]";
+		return "UserAgent [id=" + id + ", browser=" + browser + ", browserVersion=" + browserVersion + ", system=" + system + ", systemVersion=" + systemVersion + ", platform=" + platform + "]";
 	}
 }
