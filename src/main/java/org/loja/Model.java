@@ -90,7 +90,7 @@ public class Model {
       if(usuario == null) {
         ClienteService clienteServ = new ClienteService();
         AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
-        result = new Cliente(request);
+        result = new Cliente();
         clienteServ.insert(result);
       } else {
         ClienteService clienteServ = new ClienteService();
