@@ -15,12 +15,8 @@ import org.loja.model.cesta.Cesta;
 import org.loja.model.pedido.Pedido;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
 import java.util.UUID;
 import org.loja.model.produto.Produto;
-import org.loja.model.user_data.UserData;
-import org.loja.model.user_agent.UserAgent;
 import javax.servlet.http.HttpServletRequest;
 
 @Entity
@@ -40,10 +36,6 @@ public class Cliente extends Model implements Serializable {
   @OrderColumn
   private List<Pedido> pedidos;
 
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @MapKey(name = "id")
-  private Map<UserData, UserAgent> acessos;
-
 	/**
 	* Default empty Cliente constructor
 	*/
@@ -52,34 +44,23 @@ public class Cliente extends Model implements Serializable {
 	}
 
   /**
-	* Default empty Cliente constructor
-	*/
-	public Cliente(HttpServletRequest req) {
-		this.id = UUID.randomUUID().toString().replaceAll("-", "");
-    this.acessos = new HashMap<UserData, UserAgent>();
-    this.acessos.put(new UserData(req), new  UserAgent(req));
-	}
-
-  /**
 	* Default Cliente constructor
 	*/
-	public Cliente(Usuario usuario, Cesta cesta, List<Pedido> pedidos, Map<UserData, UserAgent> acessos) {
+	public Cliente(Usuario usuario, Cesta cesta, List<Pedido> pedidos) {
 		this.id = UUID.randomUUID().toString().replaceAll("-", "");
 		this.usuario = usuario;
 		this.cesta = cesta;
 		this.pedidos = pedidos;
-		this.acessos = acessos;
 	}
 
 	/**
 	* Default Cliente constructor
 	*/
-	public Cliente(String id, Usuario usuario, Cesta cesta, List<Pedido> pedidos, Map<UserData, UserAgent> acessos) {
+	public Cliente(String id, Usuario usuario, Cesta cesta, List<Pedido> pedidos) {
 		this.id = id;
 		this.usuario = usuario;
 		this.cesta = cesta;
 		this.pedidos = pedidos;
-		this.acessos = acessos;
 	}
 
 	/**
@@ -146,22 +127,6 @@ public class Cliente extends Model implements Serializable {
 		this.pedidos = pedidos;
 	}
 
-	/**
-	* Returns value of acessos
-	* @return
-	*/
-	public Map<UserData, UserAgent> getAcessos() {
-		return acessos;
-	}
-
-	/**
-	* Sets new value of acessos
-	* @param
-	*/
-	public void setAcessos(Map<UserData, UserAgent> acessos) {
-		this.acessos = acessos;
-	}
-
   @Override
   public String toString() {
     return usuario.toString();
@@ -175,11 +140,5 @@ public class Cliente extends Model implements Serializable {
     }
 
     return result;
-  }
-
-  public void novoAcesso(HttpServletRequest request) {
-    if(this.acessos == null)
-      this.acessos = new HashMap<UserData, UserAgent>();
-    this.acessos.put(new UserData(), new UserAgent());
   }
 }
