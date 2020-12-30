@@ -84,7 +84,6 @@ public abstract class Dao<E> {
     } else {
       sql = sql + " WHERE "+f.getName().toLowerCase()+" = '"+keyword+"'";
     }
-    System.out.println("sql: "+sql);
 
     EntityManager entityManager = getEntityManager();
     entityManager.getTransaction().begin();
