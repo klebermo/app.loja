@@ -1,5 +1,3 @@
-var size = 0;
-
 function load_message_count() {
   var message_count = document.getElementById("message_count");
   var url = message_count.dataset.url;
@@ -16,43 +14,40 @@ function load_message_count() {
 }
 
 function getItemPorPagina() {
-  var porPagina = document.getElementById("itemPorPagina");
-  return porPagina.querySelector(".active").innerText;
+  var itemPorPagina = document.getElementById("itemPorPagina");
+  return itemPorPagina.querySelector(".active").dataset.item;
 }
 
 function setItemsPorPagina(value) {
-  var current = getItemPorPagina();
-  if(value !== current) {
-    var list = document.getElementById('itemPorPagina');
-    for(var i=0; i<list.children.length; i++)
-      if(list.children[i].classList.contains('active'))
-        list.children[i].classList.remove('active');
-    for(var i=0; i<list.children.length; i++)
-      if(list.children[i].innerText == value)
-        list.children[i].classList.add('active');
-  }
+  var list = document.getElementById('itemPorPagina');
+  for(var i=0; i<list.children.length; i++)
+    if(list.children[i].classList.contains('active'))
+      list.children[i].classList.remove('active');
+  for(var i=0; i<list.children.length; i++)
+    if(list.children[i].innerText == value)
+      list.children[i].classList.add('active');
   clear_content();
   load_content();
 }
 
 function getPagina() {
-  var pagination = document.getElementById("pagination");
-  return pagination.dataset.pagina;
+  var paginas = document.getElementById("pagination").children;
+  var index = 0;
+  for(; index<paginas.length; index++) {
+    if(paginas[index].classList.contains("active"))
+      return paginas[index].innerText;
+  }
+  return 1;
 }
 
 function setPagina(value) {
-  var current = getPagina();
-  var pagination = document.getElementById('pagination');
-  var page_items = pagination.querySelectorAll('.page-item');
-  if(value !== current) {
-    for(var i=0; i<page_items.length; i++)
-      if(page_items[i].classList.contains('active'))
-        page_items[i].classList.remove('active');
-    for(var i=0; i<page_items.length; i++)
-      if(page_items[i].querySelector('.page-link').innerText == value)
-        page_items[i].classList.add('active');
-    pagination.setAttribute('data-pagina', value);
-  }
+  var page_items = document.getElementsByClassName("page-item");
+  for(var i=0; i<page_items.length; i++)
+    if(page_items[i].classList.contains('active'))
+      page_items[i].classList.remove('active');
+  for(var i=0; i<page_items.length; i++)
+    if(page_items[i].innerText == value)
+      page_items[i].classList.add('active');
   clear_content();
   load_content();
 }
@@ -129,16 +124,15 @@ function clear_content() {
   document.getElementById('pagination').innerHTML = '';
 }
 
-function load_pagination() {
+function load_pagination(size, pagina, porPagina) {
   var page_item = document.getElementById('pagination');
 
   if(page_item) {
-    var pagina = getPagina();
-    var porPagina = getItemPorPagina();
     var total = Math.ceil(size / porPagina);
 
     var previous = document.createElement('li');
     previous.classList.add('page-item');
+
     var a_previous = document.createElement('a');
     a_previous.classList.add('page-link');
     a_previous.setAttribute('href', '#');
@@ -149,6 +143,7 @@ function load_pagination() {
     }
     a_previous.setAttribute('onclick', 'getPrevious();');
     a_previous.innerText = 'Previous';
+
     previous.appendChild(a_previous);
     page_item.appendChild(previous);
 
@@ -170,6 +165,7 @@ function load_pagination() {
 
     var next = document.createElement('li');
     next.classList.add('page-item');
+
     var a_next = document.createElement('a');
     a_next.classList.add('page-link');
     a_next.setAttribute('href', '#');
@@ -180,6 +176,7 @@ function load_pagination() {
     }
     a_next.setAttribute('onclick', 'getPrevious();');
     a_next.innerText = 'Next';
+
     next.appendChild(a_next);
     page_item.appendChild(next);
   }
@@ -188,58 +185,33 @@ function load_pagination() {
 function search(e) {
   var value = e.value;
   var table = document.getElementById('table-search');
-  var url = table.dataset.json;
-
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      if(value.length > 0) {
-        table.innerHTML = '';
-        var myObj = JSON.parse(this.responseText);
-
-        var columns = [];
-        var foo = document.getElementById('table-header');
-        for (var i = 0; i < foo.children.length; i++)
-          if(foo.children[i].hasAttribute('scope'))
-            columns.push(foo.children[i].textContent);
-
-        var counter = 0;
-        for(var x in myObj) {
-          counter++;
-          var data = myObj[x];
-          var row = add_row(data);
-          add_col_first(row, data);
-          for(var y in columns) {
-            var col = columns[y];
-            var data1 = data[col];
-            add_col(row, data1);
-          }
-          add_col_last(row, data);
-          table.appendChild(row);
-        }
-        document.getElementById('table-body').style.display = 'none';
-        document.getElementById('table-search').removeAttribute('style');
-        size = counter;
-      } else {
-        document.getElementById('table-search').style.display = 'none';
-        document.getElementById('table-body').removeAttribute('style');
-      }
-    }
-  };
-  var search_url = url + '?keyword=' + value + '&pagina=' + getPagina() + '&itemsPorPagina=' + getItemPorPagina();
-  xmlhttp.open("GET", search_url, true);
-  xmlhttp.send();
 }
 
 function load_content() {
   var table = document.getElementById("table-body");
 
   if(table) {
-    var json = table.dataset.json;
+    var url = table.dataset.json;
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         var myObj = JSON.parse(this.responseText);
+
+        var pagina = getPagina();
+        var itemPorPagina = getItemPorPagina();
+        load_pagination(myObj.length, pagina, itemPorPagina);
+        console.log("* size: " + myObj.length);
+        console.log("* pagina: " + pagina);
+        console.log("* porPagina: " + itemPorPagina);
+
+        var startingIndex = itemPorPagina * (pagina-1);
+        if (startingIndex < 0) {
+          startingIndex = 0;
+        }
+        var endingIndex = startingIndex + itemPorPagina;
+        if (endingIndex > myObj.length) {
+          endingIndex = myObj.length;
+        }
 
         var columns = [];
         var foo = document.getElementById('table-header');
@@ -247,9 +219,7 @@ function load_content() {
           if(foo.children[i].hasAttribute('scope'))
             columns.push(foo.children[i].textContent);
 
-        var counter = 0;
-        for(var x in myObj) {
-          counter++;
+        for(var x=startingIndex; x<endingIndex; x++) {
           var data = myObj[x];
           var row = add_row(data);
           add_col_first(row, data);
@@ -261,14 +231,11 @@ function load_content() {
           add_col_last(row, data);
           table.appendChild(row);
         }
-        size = counter;
       }
     };
-    var url = json + '?pagina=' + getPagina() + '&itemsPorPagina=' + getItemPorPagina();
     xmlhttp.open("GET", url, true);
     xmlhttp.send();
   }
-  load_pagination();
 }
 
 function open_tab(e) {
