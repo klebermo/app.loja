@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 
@@ -57,11 +56,11 @@ public class Home {
 
       org.loja.model.topic.TopicService topicServ = new org.loja.model.topic.TopicService();
       AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(topicServ);
-      java.util.List<org.loja.model.topic.Topic> lista = topicServ.select();
+      java.util.List<?> lista = topicServ.select();
 
-      for(org.loja.model.topic.Topic t : lista)
-        if(t.getResposta() == null)
-          result.add(t);
+      for(Object t : lista)
+        if(((org.loja.model.topic.Topic)t).getResposta() == null)
+          result.add((org.loja.model.topic.Topic)t);
 
       model.addAttribute("messages", "messages");
       model.addAttribute("unread", result);
@@ -71,11 +70,9 @@ public class Home {
     @RequestMapping("/message_count")
     @ResponseBody
     public Integer message_count() {
-      java.util.List<org.loja.model.topic.Topic> result = new java.util.ArrayList<org.loja.model.topic.Topic>();
-
       org.loja.model.topic.TopicService topicServ = new org.loja.model.topic.TopicService();
       AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(topicServ);
-      java.util.List<org.loja.model.topic.Topic> lista = topicServ.select();
+      java.util.List<?> lista = topicServ.select();
 
       return lista.size();
     }

@@ -52,8 +52,8 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   }
 
   @ModelAttribute("credenciais")
-  public List<org.loja.model.credencial.Credencial> credenciais() {
-    List result;
+  public List<?> credenciais() {
+    List<?> result;
     try {
       org.loja.model.credencial.CredencialService credencialServ = new org.loja.model.credencial.CredencialService();
       org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(credencialServ);
@@ -65,12 +65,12 @@ public class UsuarioController extends org.loja.model.Controller<Usuario> {
   }
 
   @ModelAttribute("autorizacoes")
-  public List<org.loja.model.autorizacao.Autorizacao> autorizacoes() {
-    List result;
+  public List<?> autorizacoes() {
+    List<?> result;
     try {
       org.loja.model.autorizacao.AutorizacaoService autorizacaoServ = new org.loja.model.autorizacao.AutorizacaoService();
       org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(autorizacaoServ);
-      result = autorizacaoServ.select();
+      result = (List<?>)autorizacaoServ.select();
     } catch (Exception e) {
       result = new ArrayList<org.loja.model.autorizacao.Autorizacao>();
     }

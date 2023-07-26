@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import org.apache.commons.io.IOUtils;
-import java.util.UUID;
 import java.util.Base64;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -32,6 +31,7 @@ public class ArquivoService extends org.loja.model.Service<Arquivo> {
     FileOutputStream out = new FileOutputStream(file);
     byte[] bytes_final = bytes.split(",")[1].getBytes();
     out.write(Base64.getDecoder().decode(bytes_final));
+    out.close();
 
     Arquivo arquivo = new Arquivo();
     arquivo.setFileName(file_name);
@@ -42,7 +42,7 @@ public class ArquivoService extends org.loja.model.Service<Arquivo> {
   }
 
   public HttpEntity<byte[]> download(Integer arquivo_id) throws Exception {
-    Arquivo arquivo = this.dao.findBy("id", arquivo_id);
+    Arquivo arquivo = (Arquivo)this.dao.findBy("id", arquivo_id);
 
     File file = new File(arquivo.getFileName());
 		FileInputStream in = new FileInputStream(file);
@@ -70,6 +70,7 @@ public class ArquivoService extends org.loja.model.Service<Arquivo> {
     FileOutputStream out = new FileOutputStream(file);
     byte[] bytes_final = bytes.split(",")[1].getBytes();
     out.write(Base64.getDecoder().decode(bytes_final));
+    out.close();
   }
 
   public void remove(Integer id) throws Exception {

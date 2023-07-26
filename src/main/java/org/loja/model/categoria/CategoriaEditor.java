@@ -9,7 +9,7 @@ public class CategoriaEditor extends PropertyEditorSupport {
       Integer id = Integer.parseInt(text);
       CategoriaService serv = new CategoriaService();
       org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(serv);
-      Categoria categoria = serv.findBy("id", id);
+      Categoria categoria = (Categoria)serv.findBy("id", id);
       setValue(categoria);
     } else {
       setValue(null);

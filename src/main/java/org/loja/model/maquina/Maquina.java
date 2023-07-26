@@ -6,7 +6,6 @@ import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import java.util.Date;
 
 @Entity
 public class Maquina extends Model {

@@ -2,14 +2,12 @@ package org.loja.model.registro;
 
 import com.google.gson.Gson;
 import org.springframework.stereotype.Component;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import org.loja.model.cliente.Cliente;
 import org.loja.model.cliente.ClienteService;
@@ -30,22 +28,22 @@ public class CheckRegistro extends TextWebSocketHandler {
 		Cliente cliente_data = value.getCliente();
 		ClienteService clienteServ = new ClienteService();
     org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
-		Cliente cliente = clienteServ.findBy("id", cliente_data.getId());
+		Cliente cliente = (Cliente)clienteServ.findBy("id", cliente_data.getId());
 
 		Produto produto_data = value.getProduto();
 		ProdutoService produtoServ = new ProdutoService();
     org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(produtoServ);
-		Produto produto = produtoServ.findBy("nome", produto_data.getNome());
+		Produto produto = (Produto)produtoServ.findBy("nome", produto_data.getNome());
 
 		Maquina maquina_data = value.getMaquina();
 		MaquinaService maquinaServ = new MaquinaService();
     org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(maquinaServ);
-		Maquina maquina = maquinaServ.findBy("id", maquina_data.getId());
+		Maquina maquina = (Maquina)maquinaServ.findBy("id", maquina_data.getId());
 
 		Boolean foiComprado = false;
 		Pedido target = new Pedido();
 		for(Pedido pedido : cliente.getPedidos()) {
-			if(pedido.getProdutos().contains(produto)) {
+			if(pedido.getProdutos().contains(produto) && maquina != null) {
 				foiComprado = true;
 				target = pedido;
 				break;

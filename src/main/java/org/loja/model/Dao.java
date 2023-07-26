@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.ArrayList;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 
@@ -49,28 +48,28 @@ public abstract class Dao<E> {
     return object;
   }
 
-  public List<E> select() {
+  public List<?> select() {
     EntityManager entityManager = getEntityManager();
 		entityManager.getTransaction().begin();
-		List<E> lista = entityManager.createQuery("SELECT a FROM "+clazz.getSimpleName()+" a").getResultList();
+		List<?> lista = (List<?>)entityManager.createQuery("SELECT a FROM "+clazz.getSimpleName()+" a").getResultList();
 		entityManager.getTransaction().commit();
 		entityManager.close();
     return lista;
   }
 
-  public E findBy(String key, Object value) {
+  public Object findBy(String key, Object value) {
     EntityManager entityManager = getEntityManager();
     entityManager.getTransaction().begin();
-    List result = entityManager.createQuery("SELECT a FROM "+clazz.getSimpleName()+" a WHERE a."+key+" = :value").setParameter("value", value).getResultList();
+    List<?> result = entityManager.createQuery("SELECT a FROM "+clazz.getSimpleName()+" a WHERE a."+key+" = :value").setParameter("value", value).getResultList();
     entityManager.getTransaction().commit();
     entityManager.close();
     if(result.isEmpty())
       return null;
     else
-      return (E) result.get(0);
+      return (Object)result.get(0);
   }
 
-  public List<E> search(String keyword) throws NoSuchFieldException {
+  public List<?> search(String keyword) throws NoSuchFieldException {
     String sql = "SELECT a FROM "+clazz.getSimpleName()+" a";
     Field f = clazz.getDeclaredFields()[1];
     if(f.getType().getSuperclass() == org.loja.model.Model.class) {
@@ -87,7 +86,7 @@ public abstract class Dao<E> {
 
     EntityManager entityManager = getEntityManager();
     entityManager.getTransaction().begin();
-    List result = entityManager.createQuery(sql).getResultList();
+    List<?> result = entityManager.createQuery(sql).getResultList();
     entityManager.getTransaction().commit();
     entityManager.close();
     return result;

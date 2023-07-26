@@ -53,7 +53,7 @@ public class PaypalService extends org.loja.settings.Service<Paypal> {
     Cliente cliente = (Cliente) clienteDao.findBy("id", cliente_id);
     map.put("cliente_id", cliente.getId().toString());
 
-    Payment createdPayment = null;
+    Payment createdPayment = new Payment();
 
     Paypal paypal = (Paypal) this.dao.get();
     String appId = paypal.getClientId();

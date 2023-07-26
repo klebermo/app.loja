@@ -13,7 +13,7 @@ import org.loja.model.produto.CheckUpdate;
 public class Socket implements WebSocketConfigurer {
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		registry.addHandler(new CheckRegistro(), "/check_registration").setAllowedOrigins("*");
-    registry.addHandler(new MakeRegistro(), "/register_product").setAllowedOrigins("*");
+    	registry.addHandler(new MakeRegistro(), "/register_product").setAllowedOrigins("*");
 		registry.addHandler(new CheckUpdate(), "/check_update").setAllowedOrigins("*");
 	}
 }

@@ -22,7 +22,7 @@ public class RecoveryPasswordService extends org.loja.model.Service<RecoveryPass
   private UsuarioDao usuarioDao;
 
   public void recoverPassword(String email) {
-    Usuario usuario = usuarioDao.findBy("email", email);
+    Usuario usuario = (Usuario)usuarioDao.findBy("email", email);
     String token = UUID.randomUUID().toString().replaceAll("-", "");
 
     RecoveryPassword recoveryPassword = new RecoveryPassword();
@@ -44,13 +44,13 @@ public class RecoveryPasswordService extends org.loja.model.Service<RecoveryPass
   }
 
   public void changePassword(String token, String senha) throws Exception {
-    RecoveryPassword recoveryPassword = this.dao.findBy("token", token);
+    RecoveryPassword recoveryPassword = (RecoveryPassword)this.dao.findBy("token", token);
 
     if(recoveryPassword != null) {
-      for(Usuario usuario : usuarioDao.select()) {
-        if(usuario.getRecoveryPassword().contains(recoveryPassword)) {
-          usuario.setPassword(senha);
-          usuarioDao.update(usuario);
+      for(Object usuario : usuarioDao.select()) {
+        if(((Usuario)usuario).getRecoveryPassword().contains(recoveryPassword)) {
+          ((Usuario)usuario).setPassword(senha);
+          usuarioDao.update((Usuario)usuario);
         }
       }
     } else {

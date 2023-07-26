@@ -15,7 +15,7 @@ public class TopicService extends org.loja.model.Service<Topic> {
   private RespostaDao respostaDao;
 
   public void add_resposta(Integer topic_id, Resposta resposta_data) {
-    Topic topic = this.dao.findBy("id", topic_id);
+    Topic topic = (Topic)this.dao.findBy("id", topic_id);
     Resposta resposta = respostaDao.insert(resposta_data);
     topic.setResposta(resposta);
     this.dao.update(topic);

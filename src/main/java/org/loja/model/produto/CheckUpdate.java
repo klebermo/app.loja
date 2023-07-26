@@ -20,7 +20,7 @@ public class CheckUpdate extends TextWebSocketHandler {
 
     ProdutoService produtoServ = new ProdutoService();
     org.loja.AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(produtoServ);
-    Produto current = produtoServ.findBy("nome", value.getProduto().getNome());
+    Produto current = (Produto)produtoServ.findBy("nome", value.getProduto().getNome());
 
     Arquivo [] value_arquivo;
     Arquivo[] current_arquivo;

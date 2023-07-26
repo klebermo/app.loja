@@ -1,8 +1,6 @@
 package org.loja.model.maquina;
 
 import java.beans.PropertyEditorSupport;
-import org.loja.model.maquina.Maquina;
-import org.loja.model.maquina.MaquinaService;
 
 public class MaquinaEditor extends PropertyEditorSupport {
   @Override

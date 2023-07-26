@@ -8,7 +8,6 @@ import java.nio.file.DirectoryNotEmptyException;
 
 import java.io.File;
 import java.io.InputStream;
-import java.io.FileNotFoundException;
 import java.io.OutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -50,7 +49,7 @@ public abstract class Dao<E> {
 			fileIn.close();
 		} catch (Exception e) {
 			try {
-				E object = clazz.newInstance();
+				Object object = clazz.getDeclaredConstructors()[0].newInstance();
 				OutputStream fileOut = Files.newOutputStream(file);
 				ObjectOutputStream out = new ObjectOutputStream(fileOut);
 				out.writeObject(object);
@@ -62,17 +61,17 @@ public abstract class Dao<E> {
 		}
 	}
 
-	public E get() {
-		E object = null;
+	public Object get() {
+		Object object = null;
 		try {
-			object = clazz.newInstance();
+			object = clazz.getDeclaredConstructors()[0].newInstance();
 			InputStream fileIn = Files.newInputStream(file);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
-			object = (E) in.readObject();
+			object = in.readObject();
 			in.close();
 			fileIn.close();
 			if(object == null)
-				object = clazz.newInstance();
+				object = clazz.getDeclaredConstructors()[0].newInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

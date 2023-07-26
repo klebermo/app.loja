@@ -14,10 +14,10 @@ public class PaginaService extends org.loja.model.Service<Pagina> {
   }
 
   public Pagina pagina(String titulo) {
-    for(Pagina p : this.dao.select()) {
-      for(Titulo t : p.getTitulo()) {
+    for(Object p : this.dao.select()) {
+      for(Titulo t : ((Pagina)p).getTitulo()) {
         if(t.getConteudo().equals(titulo))
-          return p;
+          return (Pagina)p;
       }
     }
     return null;

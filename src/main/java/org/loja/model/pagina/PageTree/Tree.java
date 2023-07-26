@@ -2,7 +2,6 @@ package org.loja.model.pagina.PageTree;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Collections;
 import org.loja.model.pagina.Pagina;
 
 public class Tree {
@@ -12,11 +11,17 @@ public class Tree {
     this.root = new Node();
   }
 
-  public Tree(List<Pagina> paginas) {
+  public Tree(List<?> paginas) {
+    this.root = new Node();
+    for(Object pagina : paginas)
+      this.insert((Pagina)pagina);
+  }
+
+  /*public Tree(List<Pagina> paginas) {
     this.root = new Node();
     for(Pagina pagina : paginas)
       this.insert(pagina);
-  }
+  }*/
 
   public Node getRoot() {
     return root;

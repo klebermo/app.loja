@@ -10,10 +10,10 @@ public class CategoriaService extends org.loja.model.Service<Categoria> {
   }
 
   public Categoria categoria(String titulo) {
-    for(Categoria c : this.dao.select()) {
-      for(Titulo t : c.getNome()) {
+    for(Object c : this.dao.select()) {
+      for(Titulo t : ((Categoria)c).getNome()) {
         if(t.getConteudo().equals(titulo))
-          return c;
+          return (Categoria)c;
       }
     }
     return null;

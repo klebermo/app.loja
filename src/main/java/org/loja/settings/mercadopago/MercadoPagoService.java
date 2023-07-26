@@ -8,7 +8,6 @@ import org.loja.model.cesta.Cesta;
 import org.loja.model.cesta.CestaDao;
 import org.loja.model.pedido.Pedido;
 import org.loja.model.pedido.PedidoDao;
-import org.loja.model.titulo.Titulo;
 import org.loja.model.produto.Produto;
 import com.mercadopago.resources.Preference;
 import com.mercadopago.resources.Preference.AutoReturn;
@@ -17,7 +16,6 @@ import com.mercadopago.exceptions.MPConfException;
 import com.mercadopago.resources.datastructures.preference.Payer;
 import com.mercadopago.resources.datastructures.preference.Item;
 import com.mercadopago.resources.datastructures.preference.BackUrls;
-import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
 import java.util.Map;
 import java.util.HashMap;
@@ -37,9 +35,6 @@ public class MercadoPagoService extends org.loja.settings.Service<MercadoPago> {
 
   @Autowired
   private MailSender mailSender;
-
-  @Autowired
-  private HttpServletRequest httpServletRequest;
 
   private Map<String, String> map = new HashMap<String, String>();
 
@@ -91,7 +86,7 @@ public class MercadoPagoService extends org.loja.settings.Service<MercadoPago> {
 
   public String create_order(String transaction_id) {
     Integer cliente_id = Integer.valueOf(map.get("cliente_id"));
-    Cliente cliente = clienteDao.findBy("id", cliente_id);
+    Cliente cliente = (Cliente)clienteDao.findBy("id", cliente_id);
 
     Pedido pedido = new Pedido();
     pedidoDao.insert(pedido);

@@ -8,7 +8,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
 import javax.persistence.CascadeType;
-import javax.persistence.MapKey;
 import javax.persistence.OrderColumn;
 import org.loja.model.usuario.Usuario;
 import org.loja.model.cesta.Cesta;
@@ -17,7 +16,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.UUID;
 import org.loja.model.produto.Produto;
-import javax.servlet.http.HttpServletRequest;
 
 @Entity
 public class Cliente extends Model implements Serializable {

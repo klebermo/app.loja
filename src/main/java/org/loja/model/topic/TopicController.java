@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ModelAttribute;
+
+import java.lang.reflect.InvocationTargetException;
+
 import org.loja.model.resposta.Resposta;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,7 +30,7 @@ public class TopicController extends org.loja.model.Controller<Topic> {
   }
 
   @RequestMapping(value="/new", method=RequestMethod.GET)
-  public String new_topic(Model model, @RequestParam("forum") Integer forum_id) throws InstantiationException, IllegalAccessException {
+  public String new_topic(Model model, @RequestParam("forum") Integer forum_id) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SecurityException {
     model.addAttribute("forum_id", forum_id);
     model.addAttribute("new_topic", this.serv.newObject());
     return "index";

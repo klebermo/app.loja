@@ -1,8 +1,9 @@
 package org.loja.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.ArrayList;
 
 public abstract class Service<E> {
   protected Class<E> clazz;
@@ -26,15 +27,15 @@ public abstract class Service<E> {
     return dao.delete(object);
   }
 
-  public List<E> select() {
+  public List<?> select() {
     return this.dao.select();
   }
 
-  public E findBy(String key, Object value) {
+  public Object findBy(String key, Object value) {
     return this.dao.findBy(key, value);
   }
 
-  public E newObject() throws InstantiationException, IllegalAccessException {
-    return clazz.newInstance();
+  public Object newObject() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SecurityException {
+    return (Object)clazz.getDeclaredConstructors()[0].newInstance();
   }
 }

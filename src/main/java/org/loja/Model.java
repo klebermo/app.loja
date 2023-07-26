@@ -10,22 +10,18 @@ import org.loja.model.usuario.UsuarioService;
 import java.util.List;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.CookieValue;
 import javax.servlet.http.Cookie;
 
 @ControllerAdvice
-public class Model {
-  @Autowired
-  private HttpServletRequest request;
-
+public class Model extends Object {
   @Autowired
   private HttpServletResponse response;
 
   @ModelAttribute("categorias")
-  public List<org.loja.model.categoria.Categoria> categorias() {
-    List result;
+  public List<?> categorias() {
+    List<?> result;
     try {
       org.loja.model.categoria.CategoriaService categoriaServ = new org.loja.model.categoria.CategoriaService();
       AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(categoriaServ);
@@ -38,8 +34,8 @@ public class Model {
   }
 
   @ModelAttribute("produtos")
-  public List<org.loja.model.produto.Produto> produtos() {
-    List result;
+  public List<?> produtos() {
+    List<?> result;
     try {
       org.loja.model.produto.ProdutoService produtoServ = new org.loja.model.produto.ProdutoService();
       AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(produtoServ);
@@ -52,8 +48,8 @@ public class Model {
   }
 
   @ModelAttribute("paginas")
-  public List<org.loja.model.pagina.Pagina> paginas() {
-    List result;
+  public List<?> paginas() {
+    List<?> result;
     try {
       org.loja.model.pagina.PaginaService paginaServ = new org.loja.model.pagina.PaginaService();
       AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(paginaServ);
@@ -75,7 +71,7 @@ public class Model {
     } else {
       UsuarioService usuarioServ = new UsuarioService();
       AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(usuarioServ);
-      result = usuarioServ.findBy("username", username);
+      result = (Usuario)usuarioServ.findBy("username", username);
     }
 
     return result;
@@ -95,7 +91,7 @@ public class Model {
       } else {
         ClienteService clienteServ = new ClienteService();
         AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
-        result = clienteServ.findBy("usuario", usuario);
+        result = (Cliente)clienteServ.findBy("usuario", usuario);
       }
       Cookie cookie = new Cookie("cliente", result.getId());
       cookie.setMaxAge(-1);
@@ -105,11 +101,11 @@ public class Model {
       if(usuario == null) {
         ClienteService clienteServ = new ClienteService();
         AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
-        result = clienteServ.findBy("id", cliente);
+        result = (Cliente)clienteServ.findBy("id", cliente);
       } else {
         ClienteService clienteServ = new ClienteService();
         AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(clienteServ);
-        result = clienteServ.findBy("usuario", usuario);
+        result = (Cliente)clienteServ.findBy("usuario", usuario);
 
         Cookie cookie1 = new Cookie("cliente", null);
         cookie1.setMaxAge(0);
@@ -125,8 +121,8 @@ public class Model {
   }
 
   @ModelAttribute("geral")
-  public org.loja.settings.geral.Geral geral() {
-    org.loja.settings.geral.Geral result;
+  public Object geral() {
+    Object result;
     try {
       org.loja.settings.geral.GeralService geralServ = new org.loja.settings.geral.GeralService();
       AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(geralServ);
@@ -139,7 +135,7 @@ public class Model {
 
   @ModelAttribute("idiomas_selecionados")
   public List<String> idiomas_selecionados() {
-    org.loja.settings.idiomas.Idiomas result;
+    Object result;
     try {
       org.loja.settings.idiomas.IdiomasService idiomasServ = new org.loja.settings.idiomas.IdiomasService();
       AppContextHolder.getContext().getAutowireCapableBeanFactory().autowireBean(idiomasServ);
@@ -147,7 +143,7 @@ public class Model {
     } catch (Exception e) {
       result = new org.loja.settings.idiomas.Idiomas();
     }
-    return result.getListaDeIdiomas();
+    return ((org.loja.settings.idiomas.Idiomas)result).getListaDeIdiomas();
   }
 
   @ModelAttribute("lista_de_idiomas")

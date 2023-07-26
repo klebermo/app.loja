@@ -1,8 +1,6 @@
 package org.loja.model.resposta;
 
 import java.beans.PropertyEditorSupport;
-import org.loja.model.resposta.Resposta;
-import org.loja.model.resposta.RespostaService;
 
 public class RespostaEditor extends PropertyEditorSupport {
   @Override

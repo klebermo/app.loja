@@ -2,7 +2,6 @@ package org.loja.model.credencial;
 
 import org.loja.model.Model;
 import java.util.List;
-import java.util.Date;
 import org.loja.model.autorizacao.Autorizacao;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -13,7 +12,6 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 
 @Entity

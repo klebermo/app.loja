@@ -9,8 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.FetchType;
 import javax.persistence.CascadeType;
-import org.loja.model.usuario.Usuario;
-import org.loja.model.produto.Produto;
 import org.loja.model.maquina.Maquina;
 
 @Entity

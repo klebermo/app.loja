@@ -12,7 +12,7 @@ public abstract class Service<E> {
     this.clazz = clazz;
   }
 
-  public E get() {
+  public Object get() {
     return dao.get();
   }
 

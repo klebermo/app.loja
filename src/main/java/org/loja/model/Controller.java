@@ -2,6 +2,9 @@ package org.loja.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+
+import java.lang.reflect.InvocationTargetException;
+
 import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,8 +17,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.security.core.context.SecurityContextHolder;
-import java.util.List;
 
 public abstract class Controller<E> {
   private Class<E> clazz;
@@ -36,7 +37,7 @@ public abstract class Controller<E> {
 
   @RequestMapping(value = "/insert", method=RequestMethod.GET)
   @PreAuthorize("hasPermission(#user, 'cadastra_'+#this.this.name)")
-  public String insert(Model model) throws InstantiationException, IllegalAccessException {
+  public String insert(Model model) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SecurityException {
     model.addAttribute("command", serv.newObject());
     model.addAttribute("action", "insert");
     return "admin/form";

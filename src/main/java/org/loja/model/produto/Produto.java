@@ -6,7 +6,6 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
-import org.loja.model.titulo.Titulo;
 import org.loja.model.resumo.Resumo;
 import org.loja.model.texto.Texto;
 import javax.persistence.OneToOne;
@@ -20,7 +19,6 @@ import javax.persistence.Column;
 import org.loja.model.imagem.Imagem;
 import org.loja.model.arquivo.Arquivo;
 import java.util.List;
-import java.util.ArrayList;
 import org.loja.model.forum.Forum;
 
 @Entity

@@ -1,15 +1,11 @@
 package org.loja;
 
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.File;
-import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.FileInputStream;
 import org.loja.model.usuario.Usuario;
 import org.loja.model.usuario.UsuarioDao;
 import org.loja.model.cliente.Cliente;
@@ -31,7 +27,6 @@ import org.hibernate.tool.schema.TargetType;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Properties;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -194,14 +189,14 @@ public class Install {
 
     credencialDao.insert(new Credencial("admin"));
     autorizacaoDao.insert(new Autorizacao("admin"));
-    Credencial c1 = credencialDao.findBy("nome", "admin");
-    c1.getAutorizacoes().add(autorizacaoDao.findBy("nome", "admin"));
+    Credencial c1 = (Credencial)credencialDao.findBy("nome", "admin");
+    c1.getAutorizacoes().add((Autorizacao)autorizacaoDao.findBy("nome", "admin"));
     credencialDao.update(c1);
 
     credencialDao.insert(new Credencial("web"));
     autorizacaoDao.insert(new Autorizacao("web"));
-    Credencial c2 = credencialDao.findBy("nome", "web");
-    c2.getAutorizacoes().add(autorizacaoDao.findBy("nome", "web"));
+    Credencial c2 = (Credencial)credencialDao.findBy("nome", "web");
+    c2.getAutorizacoes().add((Autorizacao)autorizacaoDao.findBy("nome", "web"));
     credencialDao.update(c2);
   }
 
@@ -224,19 +219,19 @@ public class Install {
     novo.setEnabled(true);
     novo.setLocked(false);
     novo.setCredenciais(new ArrayList<Credencial>());
-    novo.getCredenciais().add( credencialDao.findBy("nome", "admin") );
-    novo.getCredenciais().add( credencialDao.findBy("nome", "usuario") );
-    novo.getCredenciais().add( credencialDao.findBy("nome", "categoria") );
-    novo.getCredenciais().add( credencialDao.findBy("nome", "produto") );
-    novo.getCredenciais().add( credencialDao.findBy("nome", "credencial") );
-    novo.getCredenciais().add( credencialDao.findBy("nome", "autorizacao") );
-    novo.getCredenciais().add( credencialDao.findBy("nome", "imagem") );
-    novo.getCredenciais().add( credencialDao.findBy("nome", "arquivo") );
-    novo.getCredenciais().add( credencialDao.findBy("nome", "pedido") );
-    novo.getCredenciais().add( credencialDao.findBy("nome", "pagina") );
-    novo.getCredenciais().add( credencialDao.findBy("nome", "cliente") );
-    novo.getCredenciais().add( credencialDao.findBy("nome", "forum") );
-    novo.getCredenciais().add( credencialDao.findBy("nome", "topic") );
+    novo.getCredenciais().add( (Credencial)credencialDao.findBy("nome", "admin") );
+    novo.getCredenciais().add( (Credencial)credencialDao.findBy("nome", "usuario") );
+    novo.getCredenciais().add( (Credencial)credencialDao.findBy("nome", "categoria") );
+    novo.getCredenciais().add( (Credencial)credencialDao.findBy("nome", "produto") );
+    novo.getCredenciais().add( (Credencial)credencialDao.findBy("nome", "credencial") );
+    novo.getCredenciais().add( (Credencial)credencialDao.findBy("nome", "autorizacao") );
+    novo.getCredenciais().add( (Credencial)credencialDao.findBy("nome", "imagem") );
+    novo.getCredenciais().add( (Credencial)credencialDao.findBy("nome", "arquivo") );
+    novo.getCredenciais().add( (Credencial)credencialDao.findBy("nome", "pedido") );
+    novo.getCredenciais().add( (Credencial)credencialDao.findBy("nome", "pagina") );
+    novo.getCredenciais().add( (Credencial)credencialDao.findBy("nome", "cliente") );
+    novo.getCredenciais().add( (Credencial)credencialDao.findBy("nome", "forum") );
+    novo.getCredenciais().add( (Credencial)credencialDao.findBy("nome", "topic") );
     usuarioDao.insert(novo);
 
     Cliente novo_cliente = new Cliente();

@@ -3,7 +3,6 @@ package org.loja.model.pedido;
 import org.loja.model.Model;
 import java.util.List;
 import org.loja.model.produto.Produto;
-import org.loja.model.cliente.Cliente;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;

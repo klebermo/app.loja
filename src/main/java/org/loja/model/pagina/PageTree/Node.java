@@ -59,7 +59,7 @@ public class Node {
   public void removeChild(Pagina child) {
     int i;
     for(i=0; i<children.size(); i++)
-      if(children.get(i).equals(child))
+      if(children.get(i).getContent().equals(child))
         break;
     children.remove(i);
   }

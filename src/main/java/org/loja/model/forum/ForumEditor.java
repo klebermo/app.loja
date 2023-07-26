@@ -1,8 +1,6 @@
 package org.loja.model.forum;
 
 import java.beans.PropertyEditorSupport;
-import org.loja.model.forum.Forum;
-import org.loja.model.forum.ForumService;
 
 public class ForumEditor extends PropertyEditorSupport {
   @Override

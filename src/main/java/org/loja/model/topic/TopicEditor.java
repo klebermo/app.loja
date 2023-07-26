@@ -1,8 +1,6 @@
 package org.loja.model.topic;
 
 import java.beans.PropertyEditorSupport;
-import org.loja.model.topic.Topic;
-import org.loja.model.topic.TopicService;
 
 public class TopicEditor extends PropertyEditorSupport {
   @Override

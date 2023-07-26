@@ -7,9 +7,6 @@ import org.loja.model.credencial.CredencialDao;
 import org.loja.model.cliente.Cliente;
 import org.loja.model.cliente.ClienteDao;
 import java.util.ArrayList;
-import java.util.UUID;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Cookie;
 import org.loja.MailSender;
 
 @Service
@@ -28,9 +25,6 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
   private ClienteDao clienteDao;
 
   @Autowired
-  private HttpServletResponse response;
-
-  @Autowired
   private MailSender mailSender;
 
   public void register(Usuario novo, Cliente cliente) {
@@ -39,8 +33,8 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
     usuarioDao.insert(novo);
 
     novo.setCredenciais(new ArrayList<Credencial>());
-    Credencial c1 = credencialDao.findBy("nome", "web");
-    Credencial c2 = credencialDao.findBy("nome", "topic");
+    Credencial c1 = (Credencial)credencialDao.findBy("nome", "web");
+    Credencial c2 = (Credencial)credencialDao.findBy("nome", "topic");
     novo.getCredenciais().add(c1);
     novo.getCredenciais().add(c2);
     usuarioDao.update(novo);
@@ -56,8 +50,8 @@ public class UsuarioService extends org.loja.model.Service<Usuario> {
   }
 
   public void toggle_credencial(Integer usuario_id, Integer credencial_id) {
-    Usuario usuario = usuarioDao.findBy("id", usuario_id);
-    Credencial credencial = credencialDao.findBy("id", credencial_id);
+    Usuario usuario = (Usuario)usuarioDao.findBy("id", usuario_id);
+    Credencial credencial = (Credencial)credencialDao.findBy("id", credencial_id);
     if(usuario.getCredenciais() == null) {
       usuario.setCredenciais(new ArrayList<Credencial>());
       usuario.getCredenciais().add(credencial);

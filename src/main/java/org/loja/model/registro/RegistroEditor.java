@@ -1,8 +1,6 @@
 package org.loja.model.registro;
 
 import java.beans.PropertyEditorSupport;
-import org.loja.model.registro.Registro;
-import org.loja.model.registro.RegistroService;
 
 public class RegistroEditor extends PropertyEditorSupport {
   @Override
